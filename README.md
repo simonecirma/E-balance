@@ -24,29 +24,29 @@ Meet the team behind E-Balance:
   - Role: Project Manager
   - GitHub: [@matthew-2000](https://github.com/matthew-2000)
 
+- **Simone Cirma**
+  - Developer
+  - GitHub: [@simonecirma](https://github.com/simonecirma)
+
 - **Mario De Luca**
   - Developer
-  - GitHub: TO ADD
+  - GitHub: [@mariodl00](https://github.com/mariodl00)
 
 - **Antonio Di Giorgio**
   - Developer
-  - GitHub: TO ADD
-
-- **Simone Cirmao**
-  - Developer
-  - GitHub: TO ADD
+  - GitHub: [@AntonioDG30](https://github.com/AntonioDG30)
 
 - **Donato Folgieri**
   - Developer
-  - GitHub: TO ADD
+  - GitHub: [@DonatoXVII](https://github.com/DonatoXVII)
 
 - **Daniela Palma**
   - Developer
-  - GitHub: TO ADD
+  - GitHub: [@daniipa00](https://github.com/daniipa00)
 
 - **Emanuele Vitale**
   - Developer
-  - GitHub: TO ADD
+  - GitHub: [@emaanuueele21](https://github.com/emaanuueele21)
 
 ## Technology Stack
 
