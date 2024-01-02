@@ -12,6 +12,42 @@ E-Balance is a project designed to facilitate the energy supply management of un
 - **Energy Source Tracking:** Keep track of the various energy sources in use and their respective contributions to overall energy consumption.
 - **Optimization Gains:** E-Balance aims to identify opportunities for optimization, leading to enhanced resource utilization.
 
+## Team
+
+Meet the team behind E-Balance:
+
+- **Simone Silvestri**
+  - Role: Project Manager
+  - GitHub: [@ssilvestri15](https://github.com/ssilvestri15)
+
+- **Matteo Ercolino**
+  - Role: Project Manager
+  - GitHub: [@matthew-2000](https://github.com/matthew-2000)
+
+- **Mario De Luca**
+  - Developer
+  - GitHub: TO ADD
+
+- **Antonio Di Giorgio**
+  - Developer
+  - GitHub: TO ADD
+
+- **Simone Cirmao**
+  - Developer
+  - GitHub: TO ADD
+
+- **Donato Folgieri**
+  - Developer
+  - GitHub: TO ADD
+
+- **Daniela Palma**
+  - Developer
+  - GitHub: TO ADD
+
+- **Emanuele Vitale**
+  - Developer
+  - GitHub: TO ADD
+
 ## Technology Stack
 
 - Java Servlet
