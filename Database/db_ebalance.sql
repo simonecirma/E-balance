@@ -8,6 +8,7 @@ CREATE TABLE Amministratore
     Nome varchar(50) NOT NULL,
     Cognome varchar(50) NOT NULL,
     DataNascita date NOT NULL,
+    Email varchar(50) NOT NULL,
     Password varchar(50) NOT NULL,
     FlagTipo bit NOT NULL, --  0 = "Amministratore registrato" 1 = "Super-Admin"
     PRIMARY KEY(IdAmministratore)
@@ -50,7 +51,7 @@ CREATE TABLE Vendita
 CREATE TABLE Batteria
 (
     IdBatteria int NOT NULL AUTO_INCREMENT,
-    FlagStatoBatteria boolean NOT NULL,  --  0 = "Batteria non funzionante/guasta" 1 = "Batteria funzionante"
+    FlagStatoBatteria bit NOT NULL,  --  0 = "Batteria non funzionante/guasta" 1 = "Batteria funzionante"
     CapacitaMax float NOT NULL,
     PercentualeCarica int NOT NULL,
     PRIMARY KEY(IdBatteria)
@@ -72,7 +73,7 @@ CREATE TABLE ConsumoEdificio
     PRIMARY KEY(IdEdificio)
 );
 
-CREATE TABLE Consumo
+CREATE TABLE ArchivioConsumo
 (
     IdConsumo int NOT NULL AUTO_INCREMENT,
     DataConsumo date NOT NULL,
@@ -102,13 +103,13 @@ CREATE TABLE Sorgente
     Tipologia varchar(30) NOT NULL,
     DataInstallazine date NOT NULL,
     ProduzioneAttuale float NOT NULL,
-    FlagStatoSorgente boolean NOT NULL,  --  0 = "Sorgente non funzionante/guasta" 1 = "Sorgente funzionante"
+    FlagStatoSorgente bit NOT NULL,  --  0 = "Sorgente non funzionante/guasta" 1 = "Sorgente funzionante"
     FlagAttivazioneSorgente bit NOT NULL, --  0 = "Sorgente non in funzione" 1 = "Sorgente in funzione",
     PRIMARY KEY(IdSorgente),
     FOREIGN KEY(Tipologia) REFERENCES TipoSorgente(Tipo) ON UPDATE cascade ON DELETE cascade
 );
 
-CREATE TABLE Produzione
+CREATE TABLE ArchivioProduzione
 (
     IdProduzione int NOT NULL AUTO_INCREMENT,
     DataProduzione date NOT NULL,
@@ -122,7 +123,7 @@ CREATE TABLE Caricare
 (
     IdProduzione int NOT NULL,
     IdBatteria int NOT NULL,
-    FOREIGN KEY(IdProduzione) REFERENCES Produzione(IdProduzione) ON UPDATE cascade ON DELETE cascade,
+    FOREIGN KEY(IdProduzione) REFERENCES ArchivioProduzione(IdProduzione) ON UPDATE cascade ON DELETE cascade,
     FOREIGN KEY(IdBatteria) REFERENCES Batteria(IdBatteria) ON UPDATE cascade ON DELETE cascade
 );
 
@@ -166,45 +167,43 @@ CREATE TABLE Interagisce
 (
     IdParametro int NOT NULL,
     TipoSorgente varchar(30) NOT NULL,
-    FlagPreferenzaSorgente boolean NOT NULL, -- 0 = "Sorgente non preferita" 1 = "Sorgente Preferita"
+    FlagPreferenzaSorgente bit NOT NULL, -- 0 = "Sorgente non preferita" 1 = "Sorgente Preferita"
     PercentualeUtilizzoSorgente int NOT NULL,
     PrioritaSorgente int NOT NULL,
     FOREIGN KEY(IdParametro) REFERENCES ParametriIA(IdParametro) ON UPDATE cascade ON DELETE cascade,
     FOREIGN KEY(TipoSorgente) REFERENCES TipoSorgente(Tipo) ON UPDATE cascade ON DELETE cascade
 );
 
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Matteo", "Ercolino", "1999-01-01", "Matteo", 1);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Simone", "Silvestri", "2001-06-15", "SimoneS", 0);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Simone", "Cirma", "2001-04-24", "Simone", 0);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Donato", "Folgieri", "2000-05-17", "Donato", 0);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Antonio", "Di Giorgio", "2000-12-05", "Antonio", 0);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Daniela", "Palma", "2002-09-16", "Daniela", 0);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Emanuele", "Vitale", "2002-08-11", "Emanuele", 0);
-INSERT INTO Amministratore( Nome, Cognome, DataNascita, Password, FlagTipo)
-VALUES ( "Mario", "De Luca", "2001-04-24", "Mario", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Matteo", "Ercolino", "1999-01-01", "m.ercolino1@studenti.unisa.it", "Matteo2024!", 1);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Simone", "Silvestri", "2001-06-15", "s.silvestri15@studenti.unisa.it", "Simone2024!", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email,Password, FlagTipo)
+VALUES ( "Simone", "Cirma", "2001-04-24", "s.cirma@studenti.unisa.it", "Simone2024!", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Donato", "Folgieri", "2000-05-17", "d.folgieri@studenti.unisa.it", "Donato2024!", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Antonio", "Di Giorgio", "2000-12-05", "a.digiorgio8@studenti.unisa.it", "Antonio2024!", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Daniela", "Palma", "2002-09-16", "d.palma11@studenti.unisa.it", "Daniela2024!", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Emanuele", "Vitale", "2002-08-11", "e.vitale23@studenti.unisa.it", "Emanuele2024!", 0);
+INSERT INTO Amministratore( Nome, Cognome, DataNascita, Email, Password, FlagTipo)
+VALUES ( "Mario", "De Luca", "2001-04-24", "m.deluca99@studenti.unisa.it", "Mario2024!", 0);
 
 INSERT INTO Contratto( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)
 VALUES ("Enel Energia", 1000000, 0.05, "2000-01-01", 120, 0.03, 03);
 INSERT INTO Contratto( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)
-VALUES ("Enel Energia", 5000000, 0.08, "2010-01-01", 120, 0.05, 05);
+VALUES ("Edison", 5000000, 0.08, "2010-01-01", 120, 0.05, 05);
 INSERT INTO Contratto( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)
 VALUES ("Enel Energia", 6000000, 0.12, "2020-01-01", 120, 0.09, 01);
 
 INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2024-01-01", 02);
+VALUES ("2021-12-31", 03);
 INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2023-01-01", 05);
+VALUES ("2022-12-31", 04);
 INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2022-01-01", 04);
-INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2021-01-01", 03);
+VALUES ("2023-12-31", 05);
 
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(5000, "2022-02-23", 450, 01);
@@ -232,8 +231,6 @@ INSERT INTO Disporre(IdBatteria, IdVendita)
 VALUES(02, 01);
 INSERT INTO Disporre(IdBatteria, IdVendita)
 VALUES(03, 01);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(04, 01);
 INSERT INTO Disporre(IdBatteria, IdVendita)
 VALUES(03, 02);
 INSERT INTO Disporre(IdBatteria, IdVendita)
@@ -345,7 +342,7 @@ FROM
 WHERE DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) <= '2024-01-12';
 
 -- Utilizza la serie di date per eseguire gli statement INSERT INTO
-INSERT INTO Consumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
 SELECT
     DateSeries.DateValue,
     ROUND(RAND() * (700 - 50) + 50) AS ConsumoGiornaliero,
@@ -484,7 +481,7 @@ FROM
 WHERE DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) <= '2024-01-12';
 
 -- Utilizza la serie di date per eseguire gli statement INSERT INTO
-INSERT INTO Produzione(DataProduzione, ProduzioneGiornaliera, IdSorgente)
+INSERT INTO ArchivioProduzione(DataProduzione, ProduzioneGiornaliera, IdSorgente)
 SELECT
     DateSeries.DateValue,
     ROUND(RAND() * (100 - 0) + 0) AS ProduzioneGiornaliera,
@@ -499,12 +496,25 @@ FROM
 -- Elimina la tabella temporanea
 DROP TEMPORARY TABLE IF EXISTS DateSeries;
 
-INSERT INTO Caricare(IdProduzione, IdBatteria)
-VALUES(01, 01);
-INSERT INTO Caricare(IdProduzione, IdBatteria)
-VALUES(01, 02);
-INSERT INTO Caricare(IdProduzione, IdBatteria)
-VALUES(01, 03);
+-- Assicurati di avere una tabella 'Caricare' già creata con le colonne 'IdProduzione' e 'IdBatteria'
+
+-- Query per generare gli INSERT INTO
+DELIMITER //
+CREATE PROCEDURE PopolaTabellaCaricare()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    WHILE i <= 3660 DO
+            INSERT INTO Caricare(IdProduzione, IdBatteria) VALUES(i, 01);
+            INSERT INTO Caricare(IdProduzione, IdBatteria) VALUES(i, 02);
+            INSERT INTO Caricare(IdProduzione, IdBatteria) VALUES(i, 03);
+            SET i = i + 1;
+        END WHILE;
+END //
+DELIMITER ;
+
+-- Esegui la procedura per popolare la tabella
+CALL PopolaTabellaCaricare();
+
 
 
 INSERT INTO CondizioneMeteo(Condizione)

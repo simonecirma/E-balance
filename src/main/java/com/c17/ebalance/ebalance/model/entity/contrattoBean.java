@@ -4,14 +4,14 @@ import java.util.*;
 
 public class contrattoBean {
 
-    int idContratto;
-    String nomeEnte;
-    float consumoMedioAnnuale;
-    float costoMedioUnitario;
-    Date dataSottoscrizione;
-    int durata;
-    float prezzoVendita;
-    int idAmministatore;
+    private int idContratto;
+    private String nomeEnte;
+    private float consumoMedioAnnuale;
+    private float costoMedioUnitario;
+    private Date dataSottoscrizione;
+    private int durata;
+    private float prezzoVendita;
+    private int idAmministatore;
 
     public contrattoBean() {}
 

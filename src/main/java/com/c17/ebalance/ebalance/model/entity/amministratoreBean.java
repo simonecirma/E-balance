@@ -7,18 +7,20 @@ public class amministratoreBean {
     private String nome;
     private String cognome;
     private Date dataNascita;
+    private String email;
     private String password;
     private boolean flagTipo;
 
-    public amministratoreBean() {
+    public amministratoreBean() {}
 
-    }
-
-    public amministratoreBean(int idAmministratore, String nome, String cognome, Date dataNascita, String password, boolean flagTipo) {
+    public amministratoreBean(int idAmministratore, String nome, String cognome,
+                              Date dataNascita, String email,
+                              String password, boolean flagTipo) {
         this.idAmministratore = idAmministratore;
         this.nome = nome;
         this.cognome = cognome;
         this.dataNascita = dataNascita;
+        this.email = email;
         this.password = password;
         this.flagTipo = flagTipo;
     }
@@ -55,6 +57,14 @@ public class amministratoreBean {
         this.dataNascita = dataNascita;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -63,7 +73,7 @@ public class amministratoreBean {
         this.password = password;
     }
 
-    public boolean isFlagTipo() {
+    public boolean getFlagTipo() {
         return flagTipo;
     }
 
@@ -78,6 +88,7 @@ public class amministratoreBean {
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
                 ", dataNascita=" + dataNascita +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", flagTipo=" + flagTipo +
                 '}';
