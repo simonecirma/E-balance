@@ -91,6 +91,7 @@ public class amministratoreDAO {
     public List<amministratoreBean> visualizzaAmministratori() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         List<amministratoreBean> amministratori = new ArrayList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE;
@@ -99,14 +100,14 @@ public class amministratoreDAO {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
 
-            ResultSet rs = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
-            while (rs.next()) {
+            while (resultSet.next()) {
                 amministratoreBean bean = new amministratoreBean();
-                bean.setEmail(rs.getString("email"));
-                bean.setNome(rs.getString("nome"));
-                bean.setCognome(rs.getString("cognome"));
-                bean.setPassword(rs.getString("password"));
+                bean.setEmail(resultSet.getString("Email"));
+                bean.setNome(resultSet.getString("Nome"));
+                bean.setCognome(resultSet.getString("Cognome"));
+                bean.setPassword(resultSet.getString("Password"));
 
                 amministratori.add(bean);
             }
