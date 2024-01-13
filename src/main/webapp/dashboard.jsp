@@ -17,6 +17,6 @@
     <input type="submit" value="Salva modifiche">
 </form>
 <br>
-<a href="login.jsp">Effettua Logout</a>
+<a href="logoutController">Effettua Logout</a>
 </body>
 </html>
