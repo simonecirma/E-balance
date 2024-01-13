@@ -1,16 +1,19 @@
-package com.c17.ebalance.ebalance;
+package com.c17.ebalance.ebalance.IA.controller;
 
-import java.io.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet(name = "datiController", value = "/datiController")
+public class IAController extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "di gio jamma a magia";
+        message = "Hello World";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
