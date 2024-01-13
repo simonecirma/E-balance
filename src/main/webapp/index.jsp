@@ -5,9 +5,8 @@
     <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="accessoController">Hello Servlet</a>
+<a href="login.jsp">Effettua Login</a>
+<br>
+<a href="Configurazione.jsp">Configura il tuo sistema</a>
 </body>
 </html>

@@ -71,4 +71,15 @@ public class amministratoreBean {
         this.flagTipo = flagTipo;
     }
 
+    @Override
+    public String toString() {
+        return "amministratoreBean{" +
+                "idAmministratore=" + idAmministratore +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", dataNascita=" + dataNascita +
+                ", password='" + password + '\'' +
+                ", flagTipo=" + flagTipo +
+                '}';
+    }
 }
