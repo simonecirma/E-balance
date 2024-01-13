@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class accessoServiceImpl implements accessoService{
 
-    amministratoreDAO amminstratoreDAO = new amministratoreDAO();
+    amministratoreDAO amministratoreDAO = new amministratoreDAO();
     @Override
     public amministratoreBean login(String email, String password) throws SQLException {
         return amministratoreDAO.login(email, password);
