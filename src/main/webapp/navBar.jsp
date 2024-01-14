@@ -1,14 +1,27 @@
+<%@ page import="java.util.Date" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%!	
-	String email="";
-%> 
+<%!
+	Boolean tipo;
+	String email = "";
+	String nome = "";
+	String cognome = "";
+	Date dataNascita;
+	String password = "";
+	int idAmministratore;
+%>
 
 <%
-	synchronized(session) 
+	synchronized (session)
 	{
-		session = request.getSession();
-	    email=(String)session.getAttribute("email");
+		session= request.getSession();
+		tipo = (Boolean) session.getAttribute("flagTipo");
+		idAmministratore = (int) session.getAttribute("idAmministratore");
+		cognome = (String) session.getAttribute("cognome");
+		nome = (String) session.getAttribute("nome");
+		password = (String) session.getAttribute("password");
+		email = (String) session.getAttribute("email");
+		dataNascita = (Date) session.getAttribute("dataNascita");
 	}
 %>
 <!DOCTYPE html>

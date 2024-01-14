@@ -1,7 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.c17.ebalance.ebalance.model.entity.amministratoreBean" %>
 <%@ page import="java.util.List" %>
-<% List<amministratoreBean> amministratori = (List<amministratoreBean>) request.getAttribute("amministratori");
+<%@ page import="java.util.Date" %>
+<%
+    List<amministratoreBean> amministratori = (List<amministratoreBean>) request.getAttribute("amministratori");
     if(amministratori == null)
     {
         response.sendRedirect("amministratoreController");
@@ -10,27 +12,31 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Profilo</title>
 </head>
 <body>
     <%@include file="navBar.jsp" %>
     <form action="amministratoreController?action=aggiornaAmministratore" method="post">
         <label>Nome:</label>
-        <input type="text" name="nome" value="<%=session.getAttribute("nome") %>"><br>
+        <input type="text" name="nome" value=<%=nome%>"><br>
         <label>Cognome:</label>
-        <input type="text" name="cognome" value="<%= session.getAttribute("cognome") %>"><br>
+        <input type="text" name="cognome" value="<%=cognome%>"><br>
         <label>Email:</label>
-        <input type="text" name="email" value="<%=session.getAttribute("email") %>"><br>
+        <input type="text" name="email" value="<%=email%>"><br>
         <label>Password:</label>
-        <input type="password" name="password" value="<%=session.getAttribute("password") %>"><br>
+        <input type="password" name="password" value="<%=password%>"><br>
         <label>Data Nascita:</label>
-        <input type="date" name="dataNascita" value="<%=session.getAttribute("dataNascita") %>"><br>
-        <input type="hidden" name="idAmministratore" value="<%=session.getAttribute("idAmministratore") %>"><br>
-        <input type="hidden" name="flagTipo" value="<%=session.getAttribute("flagTipo") %>"><br>
+        <input type="date" name="dataNascita" value="<%=dataNascita%>"><br>
+        <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>"><br>
+        <input type="hidden" name="flagTipo" value="<%=tipo%>"><br>
         <input type="submit" value="Salva modifiche">
     </form>
 
     <br>
+    <%
+        if(tipo!=null){
+            if(tipo){
+    %>
     <table>
         <thead>
         <tr>
@@ -52,8 +58,11 @@
         <tr>
             <td colspan="3">Nessun dato disponibile.</td>
         </tr>
-        <%= "Numero di amministratori: " + (amministratori == null ? "null" : amministratori.size()) %>
-        <% } %>
+        <%
+                }
+            }
+        }
+        %>
         </tbody>
     </table>
 </body>

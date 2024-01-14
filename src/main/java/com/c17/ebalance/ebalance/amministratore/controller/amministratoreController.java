@@ -47,14 +47,7 @@ public class amministratoreController extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        // Aggiornamento amministratore
-        String action = request.getParameter("action");
-
-        if (action != null && action.equals("aggiornaAmministratore")) {
-            aggiornaAmministratore(request, response);
-        } else {
-            response.sendRedirect("profilo.jsp");
-        }
+        doGet(request, response);
     }
 
     private void aggiornaAmministratore(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {

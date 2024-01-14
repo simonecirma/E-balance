@@ -37,7 +37,7 @@ public class accessoController extends HttpServlet {
                 session.setAttribute("password", admin.getPassword());
                 session.setAttribute("nome", admin.getNome());
                 session.setAttribute("cognome", admin.getCognome());
-                session.setAttribute("tipo", admin.getFlagTipo());
+                session.setAttribute("flagTipo", admin.getFlagTipo());
                 session.setAttribute("idAmministratore", admin.getIdAmministratore());
                 session.setAttribute("dataNascita", admin.getDataNascita());
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
