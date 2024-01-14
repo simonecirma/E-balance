@@ -4,20 +4,31 @@
 <html>
 <head>
     <title>Profilo</title>
+    <link href="css/profilo.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <%@include file="navBar.jsp" %>
     <form action="amministratoreController?action=aggiornaAmministratore" method="post">
-        <label>Nome:</label>
-        <input type="text" name="nome" value="<%=nome%>"><br>
-        <label>Cognome:</label>
-        <input type="text" name="cognome" value="<%=cognome%>"><br>
-        <label>Email:</label>
-        <input type="text" name="email" value="<%=email%>"><br>
-        <label>Password:</label>
-        <input type="password" name="password" value="<%=password%>"><br>
-        <label>Data Nascita:</label>
-        <input type="date" name="dataNascita" value="<%=dataNascita%>"><br>
+        <div>
+            <label for="nome">Nome:</label>
+         <input type="text" name="nome" value="<%=nome%>"><br>
+        </div>
+        <div>
+            <label for="cognome">Cognome:</label>
+            <input type="text" name="cognome" value="<%=cognome%>"><br>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="text" name="email" value="<%=email%>"><br>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" name="password" value="<%=password%>"><br>
+        </div>
+        <div>
+         <label for="dataNascita">Data Nascita:</label>
+         <input type="date" name="dataNascita" value="<%=dataNascita%>"><br>
+        </div>
         <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>"><br>
         <input type="hidden" name="flagTipo" value="<%=tipo%>"><br>
         <input type="submit" value="Salva modifiche">

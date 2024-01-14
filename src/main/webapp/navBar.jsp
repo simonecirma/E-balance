@@ -40,7 +40,7 @@
 	<div class="navdiv">
 		<% if (email != null) { %>
 		<a href="dashboard.jsp">
-			<img src="img/Logo.png" alt="Home" width="90" height="80">
+			<img src="img/Logo.png" alt="Home" width="90" height="90">
 		</a>
 		<ul>
 			<li><a href="profilo.jsp">
@@ -49,14 +49,14 @@
 			<li><a href="contratto.jsp">
 				<span>Contratto</span>
 			</a></li>
-			<li><a href="logoutController">
-				<span>Logout</span>
-			</a></li>
 			<% if (tipo) { %>
 			<li><a href="amministratoreController?action=gestisciAmministratori">
 				<span>Gestisci</span>
 			</a></li>
 			<% } %>
+			<li><a href="logoutController">
+				<span>Logout</span>
+			</a></li>
 		</ul>
 	</div>
 	<% } else { %>

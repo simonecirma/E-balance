@@ -29,7 +29,6 @@ body {
 ul {
 	list-style: none;
 	display: flex;
-	align-items: center;
 }
 
 li {
@@ -41,9 +40,7 @@ li a {
 	font-size: 18px;
 	font-weight: bold;
 	margin-right: 25px;
-	transition: color 0.3s;
-	display: flex;
-	align-items: center;
+	display: block;
 	padding: 10px;
 	transition: background-color 0.3s;
 	border-radius: 15px;

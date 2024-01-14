@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="css/amministratori.css" rel="stylesheet" type="text/css">
     <script>
         function toggleFormVisibility() {
             var form = document.getElementById('aggiungiAmministratoreForm');
@@ -41,8 +42,9 @@
     %>
     </tbody>
 </table>
-<button onclick="toggleFormVisibility()">Mostra/Nascondi Form</button>
-
+<div class="btn-container">
+    <button class="btn" onclick="toggleFormVisibility()">Mostra/Nascondi Form</button>
+</div>
     <%
     }
     else {
@@ -57,17 +59,27 @@
     %>
 
 <form id="aggiungiAmministratoreForm" action="amministratoreController?action=aggiungiAmministratore" method="post" style="display: none;">
-    <label>Nome:</label>
-    <input type="text" name="nome" placeholder="Dammi il nome"><br>
-    <label>Cognome:</label>
-    <input type="text" name="cognome" placeholder="Dammi il cognome"><br>
-    <label>Email:</label>
-    <input type="text" name="email" placeholder="Dammi l'email"><br>
-    <label>Password:</label>
-    <input type="password" name="password" placeholder="Dammi la password"><br>
-    <label>Data Nascita:</label>
-    <input type="date" name="dataNascita" placeholder="Dammi la data di nascita"><br>
-    <input type="submit" value="Registra nuovo amministratore">
+    <div>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" value="<%=nome%>"><br>
+    </div>
+    <div>
+        <label for="cognome">Cognome:</label>
+        <input type="text" name="cognome" value="<%=cognome%>"><br>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="text" name="email" value="<%=email%>"><br>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" value="<%=password%>"><br>
+    </div>
+    <div>
+        <label for="dataNascita">Data Nascita:</label>
+        <input type="date" name="dataNascita" value="<%=dataNascita%>"><br>
+    </div>
+    <input type="submit" class="btn1" value="Registra nuovo amministratore">
 </form>
 </body>
 </html>
