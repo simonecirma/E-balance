@@ -6,8 +6,9 @@ import java.sql.*;
 import java.util.*;
 
 public interface contrattoService {
-    contrattoBean visualizzaContratto(int idContratto) throws SQLException;
+    contrattoBean visualizzaContratto() throws SQLException;
     List<contrattoBean> visualizzaStoricoContratti() throws SQLException;
     contrattoBean aggiornaContratto(contrattoBean contratto) throws SQLException;
     contrattoBean aggiungiContratto(contrattoBean contratto) throws SQLException;
 }
+
