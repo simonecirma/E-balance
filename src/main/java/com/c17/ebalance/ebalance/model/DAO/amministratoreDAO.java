@@ -123,4 +123,43 @@ public class amministratoreDAO {
 
         return amministratori;
     }
+
+    public amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        amministratoreBean amministratoreAggiornato = new amministratoreBean();
+
+        try {
+            con = ds.getConnection();
+
+            String query = "UPDATE " + TABLE_NAME_AMMINISTRATORE +
+                    " SET Nome=?, Cognome=?, DataNascita=?, Email=?, Password=? " +
+                    "WHERE IdAmministratore=?";
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, amministratore.getNome());
+            ps.setString(2, amministratore.getCognome());
+            ps.setDate(3, (java.sql.Date) amministratore.getDataNascita());
+            ps.setString(4, amministratore.getEmail());
+            ps.setString(5, amministratore.getPassword());
+            ps.setInt(6, amministratore.getIdAmministratore());
+
+            int righeAggiornate = ps.executeUpdate();
+            if (righeAggiornate > 0) {
+                amministratoreAggiornato = amministratore;
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return amministratoreAggiornato;
+    }
+
 }

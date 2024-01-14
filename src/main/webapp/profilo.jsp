@@ -14,7 +14,7 @@
 </head>
 <body>
     <%@include file="navBar.jsp" %>
-    <form>
+    <form action="amministratoreController?action=modificaAmministratore" method="post">
         <label>Nome:</label>
         <input type="text" name="nome" value="<%=session.getAttribute("nome") %>"><br>
         <label>Cognome:</label>

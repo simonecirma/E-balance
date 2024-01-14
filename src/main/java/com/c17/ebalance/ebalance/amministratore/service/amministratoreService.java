@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface amministratoreService {
     List<amministratoreBean> visualizzaAmministratori() throws SQLException;
+
+    amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException;
+
 }

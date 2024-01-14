@@ -14,4 +14,9 @@ public class amministratoreServiceImpl implements amministratoreService {
     public List<amministratoreBean> visualizzaAmministratori() throws SQLException {
         return amministratoreDAO.visualizzaAmministratori();
     }
+
+    @Override
+    public amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException {
+        return amministratoreDAO.aggiornaAmministratore(amministratore);
+    }
 }

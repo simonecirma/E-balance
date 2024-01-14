@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -32,8 +33,45 @@ public class amministratoreController extends HttpServlet {
         }
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        doGet(request, response);
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        // Aggiornamento amministratore
+        String action = request.getParameter("action");
+
+        if (action != null && action.equals("aggiornaAmministratore")) {
+            aggiornaAmministratore(request, response);
+        } else {
+            response.sendRedirect("profilo.jsp");
+        }
+    }
+
+    private void aggiornaAmministratore(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        amministratoreBean amministratore = new amministratoreBean();
+        amministratore.setNome(nome);
+        amministratore.setCognome(cognome);
+        amministratore.setEmail(email);
+        amministratore.setPassword(password);
+
+        try {
+            amministratoreService.aggiornaAmministratore(amministratore);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("nome", nome);
+        session.setAttribute("cognome", cognome);
+        session.setAttribute("email", email);
+        session.setAttribute("password", password);
+
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
+        dispatcher.forward(request, response);
     }
 
     public void destroy() {
