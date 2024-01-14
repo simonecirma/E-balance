@@ -32,10 +32,17 @@ public class amministratoreController extends HttpServlet {
                 if (action.equalsIgnoreCase("aggiornaAmministratore")) {
                     aggiornaAmministratore(request, response);
                 }
+                if (action.equalsIgnoreCase("aggiungiAmministratore")) {
+                    aggiungiAmministratore(request, response);
+                }
+                if (action.equalsIgnoreCase("gestisciAmministratori")) {
+                    List<amministratoreBean> amministratori = amministratoreService.visualizzaAmministratori();
+                    request.setAttribute("amministratori", amministratori);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
+                    dispatcher.forward(request, response);
+                }
             }
             else {
-                List<amministratoreBean> amministratori = amministratoreService.visualizzaAmministratori();
-                request.setAttribute("amministratori", amministratori);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);
             }
@@ -46,7 +53,7 @@ public class amministratoreController extends HttpServlet {
         }
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
 
@@ -70,7 +77,6 @@ public class amministratoreController extends HttpServlet {
         amministratore.setDataNascita(dataNascita);
         amministratore.setIdAmministratore(idAmministratore);
         amministratore.setFlagTipo(flagTipo);
-        //System.out.println(amministratore.getIdAmministratore()+" "+ amministratore.);
 
         try {
             amministratoreService.aggiornaAmministratore(amministratore);
@@ -90,6 +96,38 @@ public class amministratoreController extends HttpServlet {
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private void aggiungiAmministratore(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+
+        amministratoreBean amministratore = new amministratoreBean();
+
+        amministratore.setNome(request.getParameter("nome"));
+        amministratore.setCognome(request.getParameter("cognome"));
+        amministratore.setEmail(request.getParameter("email"));
+        amministratore.setPassword(request.getParameter("password"));
+        amministratore.setDataNascita(Date.valueOf(request.getParameter("dataNascita")));
+        HttpSession session = request.getSession(true);
+        if(session.getAttribute("email")!=null)
+        {
+            amministratore.setFlagTipo(false);
+        }
+        else
+        {
+            amministratore.setFlagTipo(true);
+        }
+
+
+        try {
+            amministratoreService.aggiungiAmministratore(amministratore);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        response.sendRedirect("amministratoreController?action=gestisciAmministratori");
+
+
     }
 
     public void destroy() {

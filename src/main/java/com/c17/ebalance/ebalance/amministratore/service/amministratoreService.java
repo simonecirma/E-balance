@@ -9,5 +9,6 @@ public interface amministratoreService {
     List<amministratoreBean> visualizzaAmministratori() throws SQLException;
 
     amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException;
+    void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException;
 
 }

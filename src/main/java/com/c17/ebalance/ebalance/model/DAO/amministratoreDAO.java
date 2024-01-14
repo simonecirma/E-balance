@@ -162,4 +162,37 @@ public class amministratoreDAO {
         return amministratoreAggiornato;
     }
 
+    public void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+
+            String query = "INSERT INTO " + TABLE_NAME_AMMINISTRATORE +
+                    "(Nome, Cognome, DataNascita, Email, Password, FlagTipo) " +
+                    "VALUES(?, ?, ?, ?, ?, ?)";
+
+            ps = con.prepareStatement(query);
+
+            ps.setString(1, amministratore.getNome());
+            ps.setString(2, amministratore.getCognome());
+            ps.setDate(3, amministratore.getDataNascita());
+            ps.setString(4, amministratore.getEmail());
+            ps.setString(5, amministratore.getPassword());
+            ps.setBoolean(6, amministratore.getFlagTipo());
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+    }
+
 }

@@ -3,7 +3,7 @@
 
 <%!
 	Boolean tipo;
-	String email = "";
+	String email = null;
 	String nome = "";
 	String cognome = "";
 	Date dataNascita;
@@ -15,13 +15,16 @@
 	synchronized (session)
 	{
 		session= request.getSession();
-		tipo = (Boolean) session.getAttribute("flagTipo");
-		idAmministratore = (int) session.getAttribute("idAmministratore");
-		cognome = (String) session.getAttribute("cognome");
-		nome = (String) session.getAttribute("nome");
-		password = (String) session.getAttribute("password");
-		email = (String) session.getAttribute("email");
-		dataNascita = (Date) session.getAttribute("dataNascita");
+		if(session.getAttribute("idAmministratore")!= null)
+		{
+			tipo = (Boolean) session.getAttribute("flagTipo");
+			idAmministratore = (int) session.getAttribute("idAmministratore");
+			cognome = (String) session.getAttribute("cognome");
+			nome = (String) session.getAttribute("nome");
+			password = (String) session.getAttribute("password");
+			email = (String) session.getAttribute("email");
+			dataNascita = (Date) session.getAttribute("dataNascita");
+		}
 	}
 %>
 <!DOCTYPE html>
@@ -33,33 +36,41 @@
 	</head>
 	<body>
 		<div class="navbar2">
-			<a href="dashboard.jsp">
-				<img src="img/Logo.png" alt="Home" width="90" height="80">
-			</a>
-			<div class="icone">
+			<%
+				if(email != null)
+				{
+			%>
+				<a href="dashboard.jsp">
+					<img src="img/Logo.png" alt="Home" width="90" height="80">
+				</a>
 				<a href="profilo.jsp">
 					<button type="button">Profilo</button>
 				</a>
-				<%
-					if(email != null)
-				  	{
-				%>
-						<a href="logoutController">
-							<button type="button">Logout</button>
-						</a>
-				<%
-				  	}
-					else
-					{
-				%>
-						<a href="login.jsp">
-							<button type="button">Login</button>
-						</a>
-				<%
+				<a href="contratto.jsp">
+					<button type="button">Contratto</button>
+				</a>
+				<a href="logoutController">
+					<button type="button">Logout</button>
+				</a>
+			<%
+				if(tipo)
+				{
+			%>
+				<a href="amministratoreController?action=gestisciAmministratori">
+					<button type="button">Gestisci</button>
+				</a>
+			<%
 					}
-				%>
-			</div>
-			
+				}
+				else
+				{
+			%>
+				<a href="amministratori.jsp">
+					<img src="img/Logo.png" alt="Home" width="90" height="80">
+				</a>
+			<%
+				}
+			%>
 		</div>
 	</body>
 </html>
