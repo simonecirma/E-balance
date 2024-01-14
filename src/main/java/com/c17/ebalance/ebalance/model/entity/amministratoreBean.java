@@ -1,5 +1,6 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.*;
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class amministratoreBean {
 
@@ -93,4 +94,5 @@ public class amministratoreBean {
                 ", flagTipo=" + flagTipo +
                 '}';
     }
+
 }

@@ -139,7 +139,7 @@ public class amministratoreDAO {
 
             ps.setString(1, amministratore.getNome());
             ps.setString(2, amministratore.getCognome());
-            ps.setDate(3, (java.sql.Date) amministratore.getDataNascita());
+            ps.setDate(3, amministratore.getDataNascita());
             ps.setString(4, amministratore.getEmail());
             ps.setString(5, amministratore.getPassword());
             ps.setInt(6, amministratore.getIdAmministratore());

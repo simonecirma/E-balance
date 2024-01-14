@@ -23,7 +23,6 @@
 			<a href="dashboard.jsp">
 				<img src="img/Logo.png" alt="Home" width="90" height="80">
 			</a>
-+
 			<div class="icone">
 				<a href="profilo.jsp">
 					<button type="button">Profilo</button>

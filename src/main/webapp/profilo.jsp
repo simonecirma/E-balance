@@ -14,7 +14,7 @@
 </head>
 <body>
     <%@include file="navBar.jsp" %>
-    <form action="amministratoreController?action=modificaAmministratore" method="post">
+    <form action="amministratoreController?action=aggiornaAmministratore" method="post">
         <label>Nome:</label>
         <input type="text" name="nome" value="<%=session.getAttribute("nome") %>"><br>
         <label>Cognome:</label>
@@ -23,9 +23,13 @@
         <input type="text" name="email" value="<%=session.getAttribute("email") %>"><br>
         <label>Password:</label>
         <input type="password" name="password" value="<%=session.getAttribute("password") %>"><br>
-
+        <label>Data Nascita:</label>
+        <input type="date" name="dataNascita" value="<%=session.getAttribute("dataNascita") %>"><br>
+        <input type="hidden" name="idAmministratore" value="<%=session.getAttribute("idAmministratore") %>"><br>
+        <input type="hidden" name="flagTipo" value="<%=session.getAttribute("flagTipo") %>"><br>
         <input type="submit" value="Salva modifiche">
     </form>
+
     <br>
     <table>
         <thead>
