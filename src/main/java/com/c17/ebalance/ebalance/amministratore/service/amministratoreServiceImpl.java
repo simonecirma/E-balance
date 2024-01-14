@@ -22,4 +22,7 @@ public class amministratoreServiceImpl implements amministratoreService {
     public void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException {
          amministratoreDAO.aggiungiAmministratore(amministratore);
     }
+    public amministratoreBean getById(int id) throws SQLException {
+        return amministratoreDAO.getById(id);
+    }
 }

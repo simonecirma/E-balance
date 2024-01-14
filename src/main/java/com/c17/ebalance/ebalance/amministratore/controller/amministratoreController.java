@@ -2,6 +2,7 @@ package com.c17.ebalance.ebalance.amministratore.controller;
 
 import com.c17.ebalance.ebalance.amministratore.service.*;
 import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
+import com.c17.ebalance.ebalance.model.entity.reportBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "amministratoreController", value = "/amministratoreController")
@@ -22,6 +24,8 @@ public class amministratoreController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private amministratoreService amministratoreService = new amministratoreServiceImpl();
+    private reportService reportService = new reportServiceImpl();
+
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -41,7 +45,21 @@ public class amministratoreController extends HttpServlet {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
                     dispatcher.forward(request, response);
                 }
-            }
+                if (action.equalsIgnoreCase("vediReport")) {
+                    List<reportBean> report = reportService.visualizzaReport();
+                    request.setAttribute("report", report);
+                    List<amministratoreBean> amm = new ArrayList<amministratoreBean>();
+                    amministratoreBean bean = new amministratoreBean();
+                    for (reportBean rep : report) {
+                        int i = rep.getIdAmministratore();
+                        bean = amministratoreService.getById(i);
+                        amm.add(bean);
+                    }
+                    request.setAttribute("amm", amm);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    dispatcher.forward(request, response);
+                }
+                }
             else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);

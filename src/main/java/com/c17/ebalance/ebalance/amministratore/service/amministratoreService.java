@@ -10,5 +10,5 @@ public interface amministratoreService {
 
     amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException;
     void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException;
-
-}
+    amministratoreBean getById(int id) throws SQLException;
+    }
