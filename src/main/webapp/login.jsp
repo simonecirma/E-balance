@@ -3,7 +3,6 @@
 <%!
     String email="";
 %>
-
 <%
     synchronized(session)
     {
