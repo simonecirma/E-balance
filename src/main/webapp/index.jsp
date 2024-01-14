@@ -3,10 +3,18 @@
 <html>
 <head>
     <title>JSP - Hello World</title>
+    <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<a href="login.jsp">Effettua Login</a>
-<br>
-<a href="Configurazione.jsp">Configura il tuo sistema</a>
+<div class="container">
+    <h1>Benvenuto in E-Balance</h1>
+    <div class="overlay">
+        <img src="img/Logo.png" class="background-image">
+        <div class="buttons">
+            <button class="btn"><a href="login.jsp">Effettua Login</a></button>
+            <button class="btn"><a href="Configurazione.jsp">Configura il tuo sistema</a></button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
