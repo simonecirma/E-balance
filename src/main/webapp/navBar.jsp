@@ -14,7 +14,7 @@
 <%
 	synchronized (session)
 	{
-		session= request.getSession();
+		session = request.getSession();
 		if(session.getAttribute("idAmministratore")!= null)
 		{
 			tipo = (Boolean) session.getAttribute("flagTipo");
@@ -27,50 +27,43 @@
 		}
 	}
 %>
+
 <!DOCTYPE html>
 <html lang="it">
-	<head>	
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>GameCenter</title>
-		<link href="css/navBar.css" rel="stylesheet" type="text/css">
-	</head>
-	<body>
-		<div class="navbar2">
-			<%
-				if(email != null)
-				{
-			%>
-				<a href="dashboard.jsp">
-					<img src="img/Logo.png" alt="Home" width="90" height="80">
-				</a>
-				<a href="profilo.jsp">
-					<button type="button">Profilo</button>
-				</a>
-				<a href="contratto.jsp">
-					<button type="button">Contratto</button>
-				</a>
-				<a href="logoutController">
-					<button type="button">Logout</button>
-				</a>
-			<%
-				if(tipo)
-				{
-			%>
-				<a href="amministratoreController?action=gestisciAmministratori">
-					<button type="button">Gestisci</button>
-				</a>
-			<%
-					}
-				}
-				else
-				{
-			%>
-				<a href="amministratori.jsp">
-					<img src="img/Logo.png" alt="Home" width="90" height="80">
-				</a>
-			<%
-				}
-			%>
-		</div>
-	</body>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>GameCenter</title>
+	<link href="css/navBar.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<nav class="navbar">
+	<div class="navdiv">
+		<% if (email != null) { %>
+		<a href="dashboard.jsp">
+			<img src="img/Logo.png" alt="Home" width="90" height="80">
+		</a>
+		<ul>
+			<li><a href="profilo.jsp">
+				<span>Profilo</span>
+			</a></li>
+			<li><a href="contratto.jsp">
+				<span>Contratto</span>
+			</a></li>
+			<li><a href="logoutController">
+				<span>Logout</span>
+			</a></li>
+			<% if (tipo) { %>
+			<li><a href="amministratoreController?action=gestisciAmministratori">
+				<span>Gestisci</span>
+			</a></li>
+			<% } %>
+		</ul>
+	</div>
+	<% } else { %>
+	<a href="amministratori.jsp">
+		<img src="img/Logo.png" alt="Home" width="90" height="80">
+	</a>
+	<% } %>
+</nav>
+</body>
 </html>
