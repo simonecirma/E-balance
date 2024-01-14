@@ -23,9 +23,8 @@ public class amministratoreController extends HttpServlet {
 
         try {
             List<amministratoreBean> amministratori = amministratoreService.visualizzaAmministratori();
-
             request.setAttribute("amministratori", amministratori);
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
             dispatcher.forward(request, response);
 
         } catch (SQLException | ServletException e) {

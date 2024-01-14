@@ -108,7 +108,6 @@ public class amministratoreDAO {
                 bean.setNome(resultSet.getString("Nome"));
                 bean.setCognome(resultSet.getString("Cognome"));
                 bean.setPassword(resultSet.getString("Password"));
-
                 amministratori.add(bean);
             }
 
