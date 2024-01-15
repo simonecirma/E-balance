@@ -29,22 +29,18 @@ public class contrattoController extends HttpServlet {
             if(action!=null){
                 if(action.equalsIgnoreCase("aggiornaContratto")) {
                     aggiornaContratto(request, response);
+
                 }
                 if(action.equalsIgnoreCase("aggiungiContratto")){
                     aggiungiContratto(request, response);
+
                 }
-                if(action.equalsIgnoreCase("vediStorico")){
-                    List<contrattoBean> contratti=contrattoServ.visualizzaStoricoContratti();
-                    request.setAttribute("contratti", contratti);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
-                    dispatcher.forward(request, response);
-                }
-                if(action.equalsIgnoreCase("vediContrattoCorrente")){
-                    contrattoBean contratto=contrattoServ.visualizzaContratto();
-                    request.setAttribute("contratto", contratto);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
-                    dispatcher.forward(request, response);
-                }
+                List<contrattoBean> contratti=contrattoServ.visualizzaStoricoContratti();
+                request.setAttribute("contratti", contratti);
+                contrattoBean contratto=contrattoServ.visualizzaContratto();
+                request.setAttribute("contratto", contratto);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                dispatcher.forward(request, response);
             }else{
                 List<contrattoBean> contratti=contrattoServ.visualizzaStoricoContratti();
                 request.setAttribute("contratti", contratti);
@@ -88,8 +84,7 @@ public class contrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
-        dispatcher.forward(request, response);
+
     }
 
     public void aggiungiContratto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -107,7 +102,7 @@ public class contrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        response.sendRedirect("contrattoController?action=vediStorico");
+
     }
 
     public void destroy() {
