@@ -49,6 +49,9 @@
 			<li><a href="contratto.jsp">
 				<span>Contratto</span>
 			</a></li>
+			<li><a href="amministratoreController?action=vediReport">
+				<span>Report</span>
+			</a></li>
 			<% if (tipo) { %>
 			<li><a href="amministratoreController?action=gestisciAmministratori">
 				<span>Gestisci</span>
