@@ -59,6 +59,7 @@
 			</a></li>
 		</ul>
 	</div>
+
 	<% } else { %>
 	<a href="amministratori.jsp">
 		<img src="img/Logo.png" alt="Home" width="90" height="80">
