@@ -15,12 +15,7 @@
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         }
     </script>
-    <script>
-        function toggleFormVisibility() {
-            var form = document.getElementById('aggiornaContrattoForm');
-            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-        }
-    </script>
+
 </head>
 <body>
 <%@include file="navBar.jsp" %>
