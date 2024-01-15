@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 public class contrattoDAO {
 
     static Logger logger = Logger.getLogger(amministratoreDAO.class.getName());
@@ -29,14 +30,14 @@ public class contrattoDAO {
         }
     }
 
-    public static contrattoBean visualizzaContratto(int idContratto) throws SQLException{
+    public static contrattoBean visualizzaContratto() throws SQLException{
         Connection con=null;
         PreparedStatement ps=null;
         contrattoBean bean=new contrattoBean();
         try{
-            String query="SELECT * FROM Contratto WHERE IdContratto=?";
+            con= ds.getConnection();
+            String query="SELECT * FROM Contratto ORDER BY DataSottoscrizione DESC LIMIT 1";
             ps=con.prepareStatement(query);
-            ps.setInt(1, idContratto);
             ResultSet rs=ps.executeQuery();
             while(rs.next()){
                 bean.setIdContratto(rs.getInt("IdContratto"));
@@ -60,6 +61,7 @@ public class contrattoDAO {
         List<contrattoBean> contratti=new ArrayList<>();
 
         try{
+            con= ds.getConnection();
             String query="SELECT * FROM Contratto";
             ps=con.prepareStatement(query);
             ResultSet rs=ps.executeQuery();
@@ -86,10 +88,13 @@ public class contrattoDAO {
         PreparedStatement ps=null;
         contrattoBean bean=new contrattoBean();
         try{
+            con= ds.getConnection();
             String query="UPDATE Contratto " +
-                    "SET NomeEnte= '?', ConsumoMedioAnnuale=?, CostoMedioUnitario=?, " +
+                    "SET NomeEnte= ?, ConsumoMedioAnnuale=?, CostoMedioUnitario=?, " +
                     "DataSottoscrizione=?, Durata=?, PrezzoVendita=?, IdAmministratore=? " +
                     "WHERE IdContratto=?";
+            ps=con.prepareStatement(query);
+
             ps.setString(1, contratto.getNomeEnte());
             ps.setFloat(2, contratto.getConsumoMedioAnnuale());
             ps.setFloat(3, contratto.getCostoMedioUnitario());
@@ -100,14 +105,7 @@ public class contrattoDAO {
             ps.setInt(8, contratto.getIdContratto());
             int rows=ps.executeUpdate();
             if(rows>0){
-                bean.setIdContratto(contratto.getIdContratto());
-                bean.setNomeEnte(contratto.getNomeEnte());
-                bean.setConsumoMedioAnnuale(contratto.getConsumoMedioAnnuale());
-                bean.setCostoMedioUnitario(contratto.getCostoMedioUnitario());
-                bean.setDataSottoscrizione(contratto.getDataSottoscrizione());
-                bean.setDurata(contratto.getDurata());
-                bean.setPrezzoVendita(contratto.getPrezzoVendita());
-                bean.setIdAmministatore(contratto.getIdAmministatore());
+                bean=contratto;
             }
         }catch(Exception e){
             logger.log(Level.WARNING, e.getMessage());
@@ -121,9 +119,11 @@ public class contrattoDAO {
         contrattoBean bean=new contrattoBean();
 
         try{
+            con= ds.getConnection();
             String query="INSERT INTO Contratto( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, " +
                     "DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)" +
                     "VALUES(?, ?, ?, ?, ?, ?, ?)";
+            ps=con.prepareStatement(query);
             ps.setString(1, contratto.getNomeEnte());
             ps.setFloat(2, contratto.getConsumoMedioAnnuale());
             ps.setFloat(3, contratto.getCostoMedioUnitario());
@@ -133,13 +133,7 @@ public class contrattoDAO {
             ps.setInt(7, contratto.getIdAmministatore());
             int rows=ps.executeUpdate();
             if(rows>0){
-                bean.setNomeEnte(contratto.getNomeEnte());
-                bean.setConsumoMedioAnnuale(contratto.getConsumoMedioAnnuale());
-                bean.setCostoMedioUnitario(contratto.getCostoMedioUnitario());
-                bean.setDataSottoscrizione(contratto.getDataSottoscrizione());
-                bean.setDurata(contratto.getDurata());
-                bean.setPrezzoVendita(contratto.getPrezzoVendita());
-                bean.setIdAmministatore(contratto.getIdAmministatore());
+                bean=contratto;
             }
         }catch(Exception e){
             logger.log(Level.WARNING, e.getMessage());

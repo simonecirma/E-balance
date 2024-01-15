@@ -8,9 +8,9 @@ import java.util.List;
 
 public class contrattoServiceImpl implements contrattoService{
     private contrattoDAO contrattoDao=new contrattoDAO();
-     @Override
-     public contrattoBean visualizzaContratto(int idContratto) throws SQLException{
-        return contrattoDao.visualizzaContratto(idContratto);
+    @Override
+    public contrattoBean visualizzaContratto() throws SQLException{
+        return contrattoDao.visualizzaContratto();
     }
 
     @Override

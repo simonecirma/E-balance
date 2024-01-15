@@ -195,4 +195,33 @@ public class amministratoreDAO {
 
     }
 
-}
+    public amministratoreBean getById(int id) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        amministratoreBean amministratore = new amministratoreBean();
+
+        try {
+            con = ds.getConnection();
+
+            String query = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE IdAmministratore = ?";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                amministratore.setNome(rs.getString("Nome"));
+                amministratore.setCognome(rs.getString("Cognome"));
+                amministratore.setDataNascita(rs.getDate("DataNascita"));
+                amministratore.setEmail(rs.getString("Email"));
+                amministratore.setPassword(rs.getString("Password"));
+                amministratore.setFlagTipo(rs.getBoolean("FlagTipo"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return amministratore;
+    }
+    }
