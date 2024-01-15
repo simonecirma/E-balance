@@ -16,6 +16,7 @@
         }
     </script>
 
+
 </head>
 <body>
 <%@include file="navBar.jsp" %>
@@ -47,6 +48,11 @@
     </tbody>
 
     <tbody>
+    <tr>
+        <th>Nome Ente</th>
+        <th>Consumo Medio Annuale</th>
+        <th>Costo Medio Unitario</th>
+    </tr>
     <% if(contratto!=null){%>
 
     <tr>
@@ -61,22 +67,7 @@
 
 </table>
 
-<form id="redirectForm">
-    <select id="actionSelector">
-        <option value="vediContrattoCorrente">Contratto Corrente</option>
-        <option value="vediStorico">Storico</option>
-    </select>
-    <button type="button" onclick="redirect()">Vai</button>
-</form>
 
-<script>
-    function redirect() {
-        var selectedAction = document.getElementById('actionSelector').value;
-        if (selectedAction === 'vediContrattoCorrente' || selectedAction === 'vediStorico') {
-            window.location.href = 'contrattoController?action=' + selectedAction;
-        }
-    }
-</script>
 
 <button onclick="toggleFormVisibility()">Mostra/Nascondi Form</button>
 
@@ -103,20 +94,22 @@
     <input type="submit" value="Registra nuovo contratto">
 </form>
 
-<form id="aggiornaContrattoForm" action="contrattoController?action=aggiornaContratto" method="post" style="display: none;">
+
+
+<form id="aggiornaContrattoForm" action="contrattoController?action=aggiornaContratto" method="post">
     <label>Ente:</label>
-    <input type="text" name="nomeEnte" value="<%=contratto.getNomeEnte()%>"><br>
+    <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
     <label>Consumo Annuale:</label>
-    <input type="text" name="consumoMedioAnnuale" value="<%=contratto.getConsumoMedioAnnuale()%>"><br>
+    <input type="text" name="consumoMedioAnnuale" value="<%=contratto != null ? contratto.getConsumoMedioAnnuale() : 0%>"><br>
     <label>Costo Unitario:</label>
-    <input type="text" name="costoMedioUnitario" value="<%=contratto.getCostoMedioUnitario()%>"><br>
+    <input type="text" name="costoMedioUnitario" value="<%=contratto != null ? contratto.getCostoMedioUnitario() : 0%>"><br>
     <label>Data Sottoscrizione:</label>
-    <input type="date" name="dataSottoscrizione" value="<%=contratto.getDataSottoscrizione()%>"><br>
+    <input type="date" name="dataSottoscrizione" value="<%=contratto != null ? contratto.getDataSottoscrizione() : null%>"><br>
     <label>Durata:</label>
-    <input type="text" name="durata" value="<%=contratto.getDurata()%>"><br>
+    <input type="text" name="durata" value="<%=contratto != null ? contratto.getDurata() : 0%>"><br>
     <label>Prezzo:</label>
-    <input type="text" name="prezzoVendita" value="<%=contratto.getPrezzoVendita()%>"><br>
-    <input type="hidden" name="idContratto" value="<%=contratto.getIdContratto()%>">
+    <input type="text" name="prezzoVendita" value="<%=contratto != null ? contratto.getPrezzoVendita() : 0%>"><br>
+    <input type="hidden" name="idContratto" value="<%=contratto != null ? contratto.getIdContratto() : 0%>">
     <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
     <input type="submit" value="Conferma modifica">
 </form>

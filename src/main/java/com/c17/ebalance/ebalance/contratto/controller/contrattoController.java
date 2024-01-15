@@ -46,6 +46,10 @@ public class contrattoController extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
             }else{
+                List<contrattoBean> contratti=contrattoServ.visualizzaStoricoContratti();
+                request.setAttribute("contratti", contratti);
+                contrattoBean contratto=contrattoServ.visualizzaContratto();
+                request.setAttribute("contratto", contratto);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);
             }

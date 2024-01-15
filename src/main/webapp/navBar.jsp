@@ -46,7 +46,7 @@
 			<li><a href="profilo.jsp">
 				<span>Profilo</span>
 			</a></li>
-			<li><a href="contratto.jsp">
+			<li><a href="contrattoController">
 				<span>Contratto</span>
 			</a></li>
 			<li><a href="amministratoreController?action=vediReport">
