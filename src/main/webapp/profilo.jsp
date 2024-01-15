@@ -11,23 +11,23 @@
     <form action="amministratoreController?action=aggiornaAmministratore" method="post">
         <div>
             <label for="nome">Nome:</label>
-         <input type="text" name="nome" value="<%=nome%>"><br>
+         <input type="text" id="nome" name="nome" value="<%=nome%>"><br>
         </div>
         <div>
             <label for="cognome">Cognome:</label>
-            <input type="text" name="cognome" value="<%=cognome%>"><br>
+            <input type="text" id="cognome" name="cognome" value="<%=cognome%>"><br>
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="text" name="email" value="<%=email%>"><br>
+            <input type="text" id="email" name="email" value="<%=email%>"><br>
         </div>
         <div>
             <label for="password">Password:</label>
-            <input type="password" name="password" value="<%=password%>"><br>
+            <input type="password" id="password" name="password" value="<%=password%>"><br>
         </div>
         <div>
          <label for="dataNascita">Data Nascita:</label>
-         <input type="date" name="dataNascita" value="<%=dataNascita%>"><br>
+         <input type="date" id="dataNascita" name="dataNascita" value="<%=dataNascita%>"><br>
         </div>
         <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>"><br>
         <input type="hidden" name="flagTipo" value="<%=tipo%>"><br>

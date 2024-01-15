@@ -54,15 +54,19 @@ public class contrattoController extends HttpServlet {
         }
     }
 
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        doGet(request, response);
+    }
+
     public void aggiornaContratto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id=Integer.parseInt(request.getParameter("IdContratto"));
-        String ente=request.getParameter("NomeEnte");
-        float consumo=Float.parseFloat(request.getParameter("ConsumoMedioAnnuale"));
-        float costo=Float.parseFloat(request.getParameter("CostoMedioUnitario"));
-        Date data=Date.valueOf(request.getParameter("DataSottoscrizione"));
-        int durata=Integer.parseInt(request.getParameter("Durata"));
-        float prezzo=Float.parseFloat(request.getParameter("PrezzoVendita"));
-        int admin=Integer.parseInt(request.getParameter("IdAmministratore"));
+        int id=Integer.parseInt(request.getParameter("idContratto"));
+        String ente=request.getParameter("nomeEnte");
+        float consumo=Float.parseFloat(request.getParameter("consumoMedioAnnuale"));
+        float costo=Float.parseFloat(request.getParameter("costoMedioUnitario"));
+        Date data=Date.valueOf(request.getParameter("dataSottoscrizione"));
+        int durata=Integer.parseInt(request.getParameter("durata"));
+        float prezzo=Float.parseFloat(request.getParameter("prezzoVendita"));
+        int admin=Integer.parseInt(request.getParameter("idAmministratore"));
 
         contrattoBean bean=new contrattoBean();
 
@@ -86,13 +90,13 @@ public class contrattoController extends HttpServlet {
 
     public void aggiungiContratto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         contrattoBean bean=new contrattoBean();
-        bean.setNomeEnte(request.getParameter("NomeEnte"));
-        bean.setConsumoMedioAnnuale(Float.parseFloat(request.getParameter("ConsumoMedioAnnuale")));
-        bean.setCostoMedioUnitario(Float.parseFloat(request.getParameter("CostoMedioUnitario")));
-        bean.setDataSottoscrizione(Date.valueOf(request.getParameter("DataSottoscrizione")));
-        bean.setDurata(Integer.parseInt(request.getParameter("Durata")));
-        bean.setPrezzoVendita(Float.parseFloat(request.getParameter("PrezzoVendita")));
-        bean.setIdAmministatore(Integer.parseInt(request.getParameter("IdAmministratore")));
+        bean.setNomeEnte(request.getParameter("nomeEnte"));
+        bean.setConsumoMedioAnnuale(Float.parseFloat(request.getParameter("consumoMedioAnnuale")));
+        bean.setCostoMedioUnitario(Float.parseFloat(request.getParameter("costoMedioUnitario")));
+        bean.setDataSottoscrizione(Date.valueOf(request.getParameter("dataSottoscrizione")));
+        bean.setDurata(Integer.parseInt(request.getParameter("durata")));
+        bean.setPrezzoVendita(Float.parseFloat(request.getParameter("prezzoVendita")));
+        bean.setIdAmministatore(Integer.parseInt(request.getParameter("idAmministratore")));
         try{
             contrattoServ.aggiungiContratto(bean);
         }catch(SQLException e){

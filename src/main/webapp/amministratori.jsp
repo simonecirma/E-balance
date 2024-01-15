@@ -60,23 +60,23 @@
 <form id="aggiungiAmministratoreForm" action="amministratoreController?action=aggiungiAmministratore" method="post" style="display: none;">
     <div>
         <label for="nome">Nome:</label>
-        <input type="text" name="nome" value="<%=nome%>"><br>
+        <input type="text" id="nome" name="nome" placeholder="Dammi il nome"><br>
     </div>
     <div>
         <label for="cognome">Cognome:</label>
-        <input type="text" name="cognome" value="<%=cognome%>"><br>
+        <input type="text" id="cognome" name="cognome" placeholder="Dammi il cognome"><br>
     </div>
     <div>
         <label for="email">Email:</label>
-        <input type="text" name="email" value="<%=email%>"><br>
+        <input type="text" id="email" name="email" placeholder="Dammi l'email"><br>
     </div>
     <div>
         <label for="password">Password:</label>
-        <input type="password" name="password" value="<%=password%>"><br>
+        <input type="password" id="password" name="password" placeholder="Dammi la password"><br>
     </div>
     <div>
         <label for="dataNascita">Data Nascita:</label>
-        <input type="date" name="dataNascita" value="<%=dataNascita%>"><br>
+        <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita"><br>
     </div>
     <input type="submit" class="btn1" value="Registra nuovo amministratore">
 </form>
