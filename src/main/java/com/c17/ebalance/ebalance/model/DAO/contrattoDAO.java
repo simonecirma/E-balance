@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class contrattoDAO {
 
-    static Logger logger = Logger.getLogger(amministratoreDAO.class.getName());
+    static Logger logger = Logger.getLogger(AmministratoreDAO.class.getName());
 
     private static DataSource ds;
 

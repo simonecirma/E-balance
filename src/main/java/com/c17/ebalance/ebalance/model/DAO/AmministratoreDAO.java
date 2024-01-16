@@ -1,6 +1,6 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
-import com.c17.ebalance.ebalance.model.entity.*;
+import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -11,47 +11,37 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class amministratoreDAO {
+public class AmministratoreDAO {
 
-    static Logger logger = Logger.getLogger(amministratoreDAO.class.getName());
+    private static Logger logger = Logger.getLogger(AmministratoreDAO.class.getName());
     private static DataSource ds;
 
-    static
-    {
-        try
-        {
+    static {
+        try {
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
             ds = (DataSource) envCtx.lookup("jdbc/ebalance");
-
-        }
-        catch (NamingException e)
-        {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+    private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
 
-    private static final String TABLE_NAME_AMMINISTRATORE= "Amministratore";
-
-    public static synchronized amministratoreBean login(String email, String password) throws SQLException
-    {
+    public static synchronized amministratoreBean login(final String email, final String password) throws SQLException {
         PreparedStatement ps = null;
         amministratoreBean bean = new amministratoreBean();
-        String sql = "SELECT * FROM " + amministratoreDAO.TABLE_NAME_AMMINISTRATORE + " WHERE Email = ? AND Password = ?";
-        try(Connection con = ds.getConnection())
-        {
+        String sql = "SELECT * FROM " + AmministratoreDAO.TABLE_NAME_AMMINISTRATORE + " WHERE Email = ? AND Password = ?";
+        try (Connection con = ds.getConnection()) {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-            while (rs.next())
-            {
+            while (rs.next()) {
                 bean.setIdAmministratore(rs.getInt("IdAmministratore"));
                 bean.setNome(rs.getString("Nome"));
                 bean.setCognome(rs.getString("Cognome"));
@@ -60,32 +50,19 @@ public class amministratoreDAO {
                 bean.setPassword(rs.getString("Password"));
                 bean.setFlagTipo(rs.getBoolean("FlagTipo"));
             }
-
-        }
-        catch(SQLException e)
-        {
+        } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
-        }
-        finally
-        {
-            if(ps != null)
-            {
+        } finally {
+            if (ps != null) {
                 ps.close();
             }
         }
 
-
-
-        if(bean == null || bean.getEmail() == null || bean.getEmail().trim().isEmpty())
-        {
-
+        if (bean == null || bean.getEmail() == null || bean.getEmail().trim().isEmpty()) {
             return null;
-        }
-        else
-        {
+        } else {
             return bean;
         }
-
     }
 
     public List<amministratoreBean> visualizzaAmministratori() throws SQLException {

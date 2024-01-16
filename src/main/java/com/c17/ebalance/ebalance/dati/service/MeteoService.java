@@ -1,4 +1,4 @@
 package com.c17.ebalance.ebalance.dati.service;
 
-public interface produzioneService {
+public interface MeteoService {
 }

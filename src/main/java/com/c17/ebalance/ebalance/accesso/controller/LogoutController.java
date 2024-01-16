@@ -9,17 +9,13 @@ import jakarta.servlet.ServletException;
 import java.io.IOException;
 
 @WebServlet("/logoutController")
-public class logoutController extends HttpServlet {
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public class LogoutController extends HttpServlet {
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         session.invalidate();
         response.sendRedirect("login.jsp");
     }
-
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
-
 }

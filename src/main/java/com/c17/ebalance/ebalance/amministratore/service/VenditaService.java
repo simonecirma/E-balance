@@ -1,4 +1,4 @@
 package com.c17.ebalance.ebalance.amministratore.service;
 
-public interface venditaService {
+public interface VenditaService {
 }

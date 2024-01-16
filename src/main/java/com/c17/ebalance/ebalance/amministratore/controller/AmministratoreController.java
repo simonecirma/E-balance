@@ -1,6 +1,9 @@
 package com.c17.ebalance.ebalance.amministratore.controller;
 
-import com.c17.ebalance.ebalance.amministratore.service.*;
+import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
+import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
+import com.c17.ebalance.ebalance.amministratore.service.ReportService;
+import com.c17.ebalance.ebalance.amministratore.service.ReportServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.reportBean;
 import jakarta.servlet.RequestDispatcher;
@@ -14,25 +17,23 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "amministratoreController", value = "/amministratoreController")
-public class amministratoreController extends HttpServlet {
+public class AmministratoreController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private amministratoreService amministratoreService = new amministratoreServiceImpl();
-    private reportService reportService = new reportServiceImpl();
+    private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
+    private ReportService reportService = new ReportServiceImpl();
 
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
         String action = request.getParameter("action");
 
         try {
-            if(action != null) {
+            if (action != null) {
                 if (action.equalsIgnoreCase("aggiornaAmministratore")) {
                     aggiornaAmministratore(request, response);
                 }
@@ -59,25 +60,18 @@ public class amministratoreController extends HttpServlet {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
                 }
-                }
-            else {
+                } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);
             }
-
-
         } catch (SQLException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
-
-    private void aggiornaAmministratore(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-
+    private void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
@@ -116,7 +110,7 @@ public class amministratoreController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void aggiungiAmministratore(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    private void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
 
         amministratoreBean amministratore = new amministratoreBean();
 
@@ -126,15 +120,11 @@ public class amministratoreController extends HttpServlet {
         amministratore.setPassword(request.getParameter("password"));
         amministratore.setDataNascita(Date.valueOf(request.getParameter("dataNascita")));
         HttpSession session = request.getSession(true);
-        if(session.getAttribute("email")!=null)
-        {
+        if (session.getAttribute("email") != null) {
             amministratore.setFlagTipo(false);
-        }
-        else
-        {
+        } else {
             amministratore.setFlagTipo(true);
         }
-
 
         try {
             amministratoreService.aggiungiAmministratore(amministratore);
@@ -142,12 +132,8 @@ public class amministratoreController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-
         response.sendRedirect("amministratoreController?action=gestisciAmministratori");
-
-
     }
-
     public void destroy() {
     }
 }

@@ -1,14 +1,14 @@
 package com.c17.ebalance.ebalance.amministratore.service;
 
-import com.c17.ebalance.ebalance.model.DAO.amministratoreDAO;
+import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAO;
 import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class amministratoreServiceImpl implements amministratoreService {
+public class AmministratoreServiceImpl implements AmministratoreService {
 
-    private amministratoreDAO amministratoreDAO = new amministratoreDAO();
+    private AmministratoreDAO amministratoreDAO = new AmministratoreDAO();
 
     @Override
     public List<amministratoreBean> visualizzaAmministratori() throws SQLException {
@@ -16,13 +16,13 @@ public class amministratoreServiceImpl implements amministratoreService {
     }
 
     @Override
-    public amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException {
+    public amministratoreBean aggiornaAmministratore(final amministratoreBean amministratore) throws SQLException {
         return amministratoreDAO.aggiornaAmministratore(amministratore);
     }
-    public void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException {
+    public void aggiungiAmministratore(final amministratoreBean amministratore) throws SQLException {
          amministratoreDAO.aggiungiAmministratore(amministratore);
     }
-    public amministratoreBean getById(int id) throws SQLException {
+    public amministratoreBean getById(final int id) throws SQLException {
         return amministratoreDAO.getById(id);
     }
 }

@@ -1,7 +1,8 @@
 package com.c17.ebalance.ebalance.accesso.controller;
 
-import com.c17.ebalance.ebalance.accesso.service.*;
-import com.c17.ebalance.ebalance.model.entity.*;
+import com.c17.ebalance.ebalance.accesso.service.AccessoService;
+import com.c17.ebalance.ebalance.accesso.service.accessoServiceImpl;
+import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,16 +10,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 
 @WebServlet(name = "accessoController", value = "/accessoController")
-public class accessoController extends HttpServlet {
+public class AccessoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    accessoService accessoService = new accessoServiceImpl();
+    private AccessoService accessoService = new accessoServiceImpl();
 
 
 
@@ -30,8 +29,8 @@ public class accessoController extends HttpServlet {
 
         try {
             admin = accessoService.login(email, pass);
-            if(admin != null)
-            {
+            if (admin != null) {
+
                 HttpSession session = request.getSession(true);
                 session.setAttribute("email", admin.getEmail());
                 session.setAttribute("password", admin.getPassword());
@@ -42,14 +41,11 @@ public class accessoController extends HttpServlet {
                 session.setAttribute("dataNascita", admin.getDataNascita());
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 dispatcher.forward(request, response);
-            }
-            else
-            {
+            } else {
 
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ServletException e) {

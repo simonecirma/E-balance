@@ -15,9 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
-public class reportDAO {
+public class ReportDAO {
 
-    static Logger logger = Logger.getLogger(reportDAO.class.getName());
+    static Logger logger = Logger.getLogger(ReportDAO.class.getName());
     private static DataSource ds;
 
     static
