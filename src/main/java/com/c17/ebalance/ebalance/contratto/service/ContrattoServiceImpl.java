@@ -1,17 +1,18 @@
 package com.c17.ebalance.ebalance.contratto.service;
 
-import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import com.c17.ebalance.ebalance.model.DAO.ContrattoDAO;
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
+import com.c17.ebalance.ebalance.model.DAO.ContrattoDAOImpl;
 
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
 
 public class ContrattoServiceImpl implements ContrattoService {
-    private ContrattoDAO contrattoDao = new ContrattoDAO();
+    private ContrattoDAO contrattoDao = new ContrattoDAOImpl();
     @Override
     public ContrattoBean visualizzaContratto() throws SQLException {
-        return ContrattoDAO.visualizzaContratto();
+        return contrattoDao.visualizzaContratto();
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ContrattoServiceImpl implements ContrattoService {
 
     @Override
     public void aggiungiContratto(final ContrattoBean contrattoNuovo) throws SQLException {
-        ContrattoBean contrattoAttuale = ContrattoDAO.visualizzaContratto();
+        ContrattoBean contrattoAttuale = contrattoDao.visualizzaContratto();
 
         if (contrattoAttuale.getIdContratto() > 0) {
 

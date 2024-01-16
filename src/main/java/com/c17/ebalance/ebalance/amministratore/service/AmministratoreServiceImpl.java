@@ -1,6 +1,7 @@
 package com.c17.ebalance.ebalance.amministratore.service;
 
 import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAO;
+import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 
 import java.sql.SQLException;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class AmministratoreServiceImpl implements AmministratoreService {
 
-    private AmministratoreDAO amministratoreDAO = new AmministratoreDAO();
+    private AmministratoreDAO amministratoreDAO = new AmministratoreDAOImpl();
 
     public Boolean verificaSuperAdmin() throws SQLException {
         return amministratoreDAO.verificaSuperAdmin();
