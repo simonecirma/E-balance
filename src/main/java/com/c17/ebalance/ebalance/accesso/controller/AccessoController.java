@@ -1,8 +1,8 @@
 package com.c17.ebalance.ebalance.accesso.controller;
 
 import com.c17.ebalance.ebalance.accesso.service.AccessoService;
-import com.c17.ebalance.ebalance.accesso.service.accessoServiceImpl;
-import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
+import com.c17.ebalance.ebalance.accesso.service.AccessoServiceImpl;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,13 +17,13 @@ import java.sql.SQLException;
 public class AccessoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private AccessoService accessoService = new accessoServiceImpl();
+    private AccessoService accessoService = new AccessoServiceImpl();
 
 
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
-        amministratoreBean admin = new amministratoreBean();
+        AmministratoreBean admin = new AmministratoreBean();
         String email = request.getParameter("email");
         String pass = request.getParameter("password");
 
@@ -55,7 +55,7 @@ public class AccessoController extends HttpServlet {
 
     }
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
 

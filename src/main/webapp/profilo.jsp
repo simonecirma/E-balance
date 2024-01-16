@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.c17.ebalance.ebalance.model.entity.amministratoreBean" %>
+<%@ page import="com.c17.ebalance.ebalance.model.entity.AmministratoreBean" %>
 <%@ page import="java.util.List" %>
 <html>
 <head>

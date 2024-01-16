@@ -1,6 +1,6 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
-import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -32,9 +32,9 @@ public class AmministratoreDAO {
     }
     private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
 
-    public static synchronized amministratoreBean login(final String email, final String password) throws SQLException {
+    public static synchronized AmministratoreBean login(final String email, final String password) throws SQLException {
         PreparedStatement ps = null;
-        amministratoreBean bean = new amministratoreBean();
+        AmministratoreBean bean = new AmministratoreBean();
         String sql = "SELECT * FROM " + AmministratoreDAO.TABLE_NAME_AMMINISTRATORE + " WHERE Email = ? AND Password = ?";
         try (Connection con = ds.getConnection()) {
             ps = con.prepareStatement(sql);
@@ -65,12 +65,12 @@ public class AmministratoreDAO {
         }
     }
 
-    public List<amministratoreBean> visualizzaAmministratori() throws SQLException {
+    public List<AmministratoreBean> visualizzaAmministratori() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        List<amministratoreBean> amministratori = new ArrayList<>();
+        List<AmministratoreBean> amministratori = new ArrayList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE;
 
         try {
@@ -80,7 +80,7 @@ public class AmministratoreDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                amministratoreBean bean = new amministratoreBean();
+                AmministratoreBean bean = new AmministratoreBean();
                 bean.setEmail(resultSet.getString("Email"));
                 bean.setNome(resultSet.getString("Nome"));
                 bean.setCognome(resultSet.getString("Cognome"));
@@ -90,28 +90,30 @@ public class AmministratoreDAO {
 
         } finally {
             try {
-                if (preparedStatement != null)
+                if (preparedStatement != null) {
                     preparedStatement.close();
+                }
             } finally {
-                if (connection != null)
+                if (connection != null) {
                     connection.close();
+                }
             }
         }
 
         return amministratori;
     }
 
-    public amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException {
+    public AmministratoreBean aggiornaAmministratore(final AmministratoreBean amministratore) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
-        amministratoreBean amministratoreAggiornato = new amministratoreBean();
+        AmministratoreBean amministratoreAggiornato = new AmministratoreBean();
 
         try {
             con = ds.getConnection();
 
-            String query = "UPDATE " + TABLE_NAME_AMMINISTRATORE +
-                    " SET Nome=?, Cognome=?, DataNascita=?, Email=?, Password=? " +
-                    "WHERE IdAmministratore=?";
+            String query = "UPDATE " + TABLE_NAME_AMMINISTRATORE
+                    + " SET Nome=?, Cognome=?, DataNascita=?, Email=?, Password=? "
+                    + "WHERE IdAmministratore=?";
             ps = con.prepareStatement(query);
 
             ps.setString(1, amministratore.getNome());
@@ -139,15 +141,15 @@ public class AmministratoreDAO {
         return amministratoreAggiornato;
     }
 
-    public void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException {
+    public void aggiungiAmministratore(final AmministratoreBean amministratore) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
 
-            String query = "INSERT INTO " + TABLE_NAME_AMMINISTRATORE +
-                    "(Nome, Cognome, DataNascita, Email, Password, FlagTipo) " +
-                    "VALUES(?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_AMMINISTRATORE
+                    + "(Nome, Cognome, DataNascita, Email, Password, FlagTipo) "
+                    + "VALUES(?, ?, ?, ?, ?, ?)";
 
             ps = con.prepareStatement(query);
 
@@ -172,10 +174,10 @@ public class AmministratoreDAO {
 
     }
 
-    public amministratoreBean getById(int id) throws SQLException {
+    public AmministratoreBean getById(final int id) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
-        amministratoreBean amministratore = new amministratoreBean();
+        AmministratoreBean amministratore = new AmministratoreBean();
 
         try {
             con = ds.getConnection();

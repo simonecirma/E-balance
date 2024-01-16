@@ -1,14 +1,14 @@
 package com.c17.ebalance.ebalance.amministratore.service;
 
-import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface AmministratoreService {
-    List<amministratoreBean> visualizzaAmministratori() throws SQLException;
+    List<AmministratoreBean> visualizzaAmministratori() throws SQLException;
 
-    amministratoreBean aggiornaAmministratore(amministratoreBean amministratore) throws SQLException;
-    void aggiungiAmministratore(amministratoreBean amministratore) throws SQLException;
-    amministratoreBean getById(int id) throws SQLException;
+    AmministratoreBean aggiornaAmministratore(AmministratoreBean amministratore) throws SQLException;
+    void aggiungiAmministratore(AmministratoreBean amministratore) throws SQLException;
+    AmministratoreBean getById(int id) throws SQLException;
     }

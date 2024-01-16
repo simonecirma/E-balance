@@ -4,7 +4,7 @@ import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
 import com.c17.ebalance.ebalance.amministratore.service.ReportService;
 import com.c17.ebalance.ebalance.amministratore.service.ReportServiceImpl;
-import com.c17.ebalance.ebalance.model.entity.amministratoreBean;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.reportBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -41,7 +41,7 @@ public class AmministratoreController extends HttpServlet {
                     aggiungiAmministratore(request, response);
                 }
                 if (action.equalsIgnoreCase("gestisciAmministratori")) {
-                    List<amministratoreBean> amministratori = amministratoreService.visualizzaAmministratori();
+                    List<AmministratoreBean> amministratori = amministratoreService.visualizzaAmministratori();
                     request.setAttribute("amministratori", amministratori);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
                     dispatcher.forward(request, response);
@@ -49,8 +49,8 @@ public class AmministratoreController extends HttpServlet {
                 if (action.equalsIgnoreCase("vediReport")) {
                     List<reportBean> report = reportService.visualizzaReport();
                     request.setAttribute("report", report);
-                    List<amministratoreBean> amm = new ArrayList<amministratoreBean>();
-                    amministratoreBean bean = new amministratoreBean();
+                    List<AmministratoreBean> amm = new ArrayList<AmministratoreBean>();
+                    AmministratoreBean bean = new AmministratoreBean();
                     for (reportBean rep : report) {
                         int i = rep.getIdAmministratore();
                         bean = amministratoreService.getById(i);
@@ -80,7 +80,7 @@ public class AmministratoreController extends HttpServlet {
         int idAmministratore = Integer.parseInt(request.getParameter("idAmministratore"));
         boolean flagTipo = Boolean.parseBoolean(request.getParameter("flagTipo"));
 
-        amministratoreBean amministratore = new amministratoreBean();
+        AmministratoreBean amministratore = new AmministratoreBean();
 
         amministratore.setNome(nome);
         amministratore.setCognome(cognome);
@@ -112,7 +112,7 @@ public class AmministratoreController extends HttpServlet {
 
     private void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
 
-        amministratoreBean amministratore = new amministratoreBean();
+        AmministratoreBean amministratore = new AmministratoreBean();
 
         amministratore.setNome(request.getParameter("nome"));
         amministratore.setCognome(request.getParameter("cognome"));

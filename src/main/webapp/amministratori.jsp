@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.c17.ebalance.ebalance.model.entity.amministratoreBean" %>
+<%@ page import="com.c17.ebalance.ebalance.model.entity.AmministratoreBean" %>
 <%@ page import="java.util.List" %>
 <%
-    List<amministratoreBean> amministratori = (List<amministratoreBean>) request.getAttribute("amministratori");
+    List<AmministratoreBean> amministratori = (List<AmministratoreBean>) request.getAttribute("amministratori");
 %>
 <html>
 <head>
@@ -31,7 +31,7 @@
     </thead>
     <tbody>
     <% if (amministratori != null && !amministratori.isEmpty()) {
-        for (amministratoreBean admin : amministratori) { %>
+        for (AmministratoreBean admin : amministratori) { %>
         <tr>
             <td><%= admin.getEmail() %></td>
             <td><%= admin.getNome() %></td>

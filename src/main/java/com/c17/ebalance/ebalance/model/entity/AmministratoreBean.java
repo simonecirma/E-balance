@@ -1,8 +1,7 @@
 package com.c17.ebalance.ebalance.model.entity;
 import java.sql.Date;
-import java.time.LocalDate;
 
-public class amministratoreBean {
+public class AmministratoreBean {
 
     private int idAmministratore;
     private String nome;
@@ -12,11 +11,10 @@ public class amministratoreBean {
     private String password;
     private boolean flagTipo;
 
-    public amministratoreBean() {}
+    public AmministratoreBean() {
+    }
 
-    public amministratoreBean(int idAmministratore, String nome, String cognome,
-                              Date dataNascita, String email,
-                              String password, boolean flagTipo) {
+    public AmministratoreBean(final int idAmministratore, final String nome, final String cognome, final Date dataNascita, final String email, final String password, final boolean flagTipo) {
         this.idAmministratore = idAmministratore;
         this.nome = nome;
         this.cognome = cognome;
@@ -38,7 +36,7 @@ public class amministratoreBean {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(final String nome) {
         this.nome = nome;
     }
 
@@ -46,7 +44,7 @@ public class amministratoreBean {
         return cognome;
     }
 
-    public void setCognome(String cognome) {
+    public void setCognome(final String cognome) {
         this.cognome = cognome;
     }
 
@@ -54,7 +52,7 @@ public class amministratoreBean {
         return dataNascita;
     }
 
-    public void setDataNascita(Date dataNascita) {
+    public void setDataNascita(final Date dataNascita) {
         this.dataNascita = dataNascita;
     }
 
@@ -62,7 +60,7 @@ public class amministratoreBean {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -70,29 +68,28 @@ public class amministratoreBean {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
     public boolean getFlagTipo() {
         return flagTipo;
     }
-
-    public void setFlagTipo(boolean flagTipo) {
+    public void setFlagTipo(final boolean flagTipo) {
         this.flagTipo = flagTipo;
     }
 
     @Override
     public String toString() {
-        return "amministratoreBean{" +
-                "idAmministratore=" + idAmministratore +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                ", dataNascita=" + dataNascita +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", flagTipo=" + flagTipo +
-                '}';
+        return "amministratoreBean{"
+                + "idAmministratore=" + idAmministratore
+                + ", nome='" + nome + '\''
+                + ", cognome='" + cognome + '\''
+                + ", dataNascita=" + dataNascita
+                + ", email='" + email + '\''
+                + ", password='" + password + '\''
+                + ", flagTipo=" + flagTipo
+                + '}';
     }
 
 }

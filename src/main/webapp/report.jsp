@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.c17.ebalance.ebalance.model.entity.reportBean" %>
-<%@ page import="com.c17.ebalance.ebalance.model.entity.amministratoreBean" %>
+<%@ page import="com.c17.ebalance.ebalance.model.entity.AmministratoreBean" %>
 <%@ page import="java.util.List" %>
 <%
     List<reportBean> report = (List<reportBean>) request.getAttribute("report");
-    List<amministratoreBean> amm = (List<amministratoreBean>) request.getAttribute("amm");
+    List<AmministratoreBean> amm = (List<AmministratoreBean>) request.getAttribute("amm");
 %>
 <html>
 <head>
@@ -27,7 +27,7 @@
         <tbody>
         <% if (report != null && !report.isEmpty()) {
             for (int i = 0; i < report.size(); i++) { %>
-                <% amministratoreBean bean = new amministratoreBean();
+                <% AmministratoreBean bean = new AmministratoreBean();
                    reportBean rep = new reportBean();
                    rep = report.get(i);
                    bean = amm.get(i);%>
