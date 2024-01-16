@@ -34,6 +34,16 @@ public class AmministratoreController extends HttpServlet {
 
         try {
             if (action != null) {
+                if (action.equalsIgnoreCase("verificaSuperAdmin")) {
+                    if (amministratoreService.verificaSuperAdmin()) {
+                        request.setAttribute("result", "Risulta già un sistema configurato, accedi!");
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                }
                 if (action.equalsIgnoreCase("aggiornaAmministratore")) {
                     aggiornaAmministratore(request, response);
                 }
@@ -45,6 +55,11 @@ public class AmministratoreController extends HttpServlet {
                     request.setAttribute("amministratori", amministratori);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
                     dispatcher.forward(request, response);
+                }
+                if (action.equalsIgnoreCase("rimuoviAmministratore")) {
+                    int idAmministratore = Integer.parseInt(request.getParameter("idAmministratore"));
+                    amministratoreService.rimuoviAmministratore(idAmministratore);
+                    response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
                 }
                 if (action.equalsIgnoreCase("vediReport")) {
                     List<ReportBean> report = reportService.visualizzaReport();
@@ -132,7 +147,7 @@ public class AmministratoreController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        response.sendRedirect("amministratoreController?action=gestisciAmministratori");
+        response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
     }
     public void destroy() {
     }

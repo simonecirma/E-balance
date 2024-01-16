@@ -105,4 +105,5 @@ public class ContrattoBean {
                 + ", idAmministatore=" + idAmministatore
                 + '}';
     }
+
 }

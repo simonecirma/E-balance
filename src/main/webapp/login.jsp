@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%!
-    String email="";
+    String email = "";
+    String result = "";
 %>
 <%
     synchronized(session)
@@ -9,6 +10,8 @@
         session = request.getSession();
         email=(String)session.getAttribute("email");
     }
+
+    result = (String) request.getAttribute("result");
 %>
 <!DOCTYPE html>
 <html lang="it">
@@ -34,6 +37,14 @@
 <hr>
 <div class="container">
         <h1 id="log">Login</h1>
+        <%
+            if(result != null)
+            {
+        %>
+        <h3><%=result%></h3>
+        <%
+            }
+        %>
         <form method="post" name="invio" action="AccessoController" onsubmit="return validate()">
                 <div class="cont1">
                     <label for="email">Email</label>

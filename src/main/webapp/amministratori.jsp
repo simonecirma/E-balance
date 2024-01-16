@@ -37,7 +37,13 @@
             <td><%= admin.getEmail() %></td>
             <td><%= admin.getNome() %></td>
             <td><%= admin.getCognome() %></td>
-            <td>Elimina</td>
+            <%if (admin.getFlagTipo())
+            {%>
+            <td></td>
+            <%}
+            else{%>
+            <td><a href="AmministratoreController?action=rimuoviAmministratore&idAmministratore=<%= admin.getIdAmministratore() %>">Elimina</a></td>
+            <%}%>
         </tr>
     <% }
     }
@@ -56,6 +62,7 @@
             toggleFormVisibility();
         };
     </script>
+    <h1 align="center">Aggiungi i tuoi dati personali</h1>
     <%
         }
     %>

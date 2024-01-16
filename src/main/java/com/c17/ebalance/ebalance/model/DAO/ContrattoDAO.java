@@ -21,6 +21,8 @@ public class ContrattoDAO {
 
     private static Logger logger = Logger.getLogger(AmministratoreDAO.class.getName());
 
+    private static final String TABLE_NAME_CONTRATTO = "Contratto";
+
     private static DataSource ds;
 
     static {
@@ -41,7 +43,7 @@ public class ContrattoDAO {
         ContrattoBean bean = new ContrattoBean();
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM Contratto ORDER BY DataSottoscrizione DESC LIMIT 1";
+            String query = "SELECT * FROM "  + TABLE_NAME_CONTRATTO + " ORDER BY DataSottoscrizione DESC LIMIT 1";
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -67,7 +69,8 @@ public class ContrattoDAO {
 
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM Contratto";
+            String query = "SELECT * FROM "  + TABLE_NAME_CONTRATTO + " WHERE IdContratto < (SELECT MAX(IdContratto) "
+                    + "FROM " + TABLE_NAME_CONTRATTO + ") ORDER BY IdContratto DESC";
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

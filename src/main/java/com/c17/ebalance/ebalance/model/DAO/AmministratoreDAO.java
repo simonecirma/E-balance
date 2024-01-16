@@ -30,6 +30,38 @@ public class AmministratoreDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+
+    public boolean verificaSuperAdmin() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        boolean result;
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE IdAmministratore = 1";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                result = true;
+            } else {
+                result = false;
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+
+        return result;
+    }
     private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
 
     public static synchronized AmministratoreBean login(final String email, final String password) throws SQLException {
@@ -81,10 +113,12 @@ public class AmministratoreDAO {
 
             while (resultSet.next()) {
                 AmministratoreBean bean = new AmministratoreBean();
+                bean.setIdAmministratore(resultSet.getInt("IdAmministratore"));
                 bean.setEmail(resultSet.getString("Email"));
                 bean.setNome(resultSet.getString("Nome"));
                 bean.setCognome(resultSet.getString("Cognome"));
                 bean.setPassword(resultSet.getString("Password"));
+                bean.setFlagTipo(resultSet.getBoolean("FlagTipo"));
                 amministratori.add(bean);
             }
 
@@ -203,4 +237,29 @@ public class AmministratoreDAO {
         }
         return amministratore;
     }
+
+    public void rimuoviAmministratore(final int idAmministratore) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+
+            String query = "DELETE FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE IdAmministratore = ?";
+
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idAmministratore);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
     }
+
+}

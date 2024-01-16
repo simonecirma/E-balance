@@ -42,7 +42,7 @@ public class AccessoController extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 dispatcher.forward(request, response);
             } else {
-
+                request.setAttribute("result", "Credenziali sbagliate, riprova!");
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             }

@@ -1,9 +1,12 @@
 package com.c17.ebalance.ebalance.contratto.service;
 
+import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import com.c17.ebalance.ebalance.model.DAO.ContrattoDAO;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 
 public class ContrattoServiceImpl implements ContrattoService {
@@ -19,12 +22,36 @@ public class ContrattoServiceImpl implements ContrattoService {
     }
 
     @Override
-    public ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException {
-        return contrattoDao.aggiornaContratto(contratto);
+    public void aggiornaContratto(final ContrattoBean contratto) throws SQLException {
+        contrattoDao.aggiornaContratto(contratto);
     }
 
     @Override
-    public ContrattoBean aggiungiContratto(final ContrattoBean contratto) throws SQLException {
-        return contrattoDao.aggiungiContratto(contratto);
+    public void aggiungiContratto(final ContrattoBean contrattoNuovo) throws SQLException {
+        ContrattoBean contrattoAttuale = ContrattoDAO.visualizzaContratto();
+
+        if (contrattoAttuale.getIdContratto() > 0) {
+            System.out.println(contrattoAttuale.toString());
+            Date dataAttuale = new Date(System.currentTimeMillis());
+
+            // Converte le date in oggetti Calendar
+            Calendar calDataDiRiferimento = Calendar.getInstance();
+            calDataDiRiferimento.setTime(contrattoAttuale.getDataSottoscrizione());
+
+            Calendar calDataAttuale = Calendar.getInstance();
+            calDataAttuale.setTime(dataAttuale);
+
+            // Calcola il periodo tra le due date
+            int anniDifferenza = calDataAttuale.get(Calendar.YEAR) - calDataDiRiferimento.get(Calendar.YEAR);
+            int mesiDifferenza = calDataAttuale.get(Calendar.MONTH) - calDataDiRiferimento.get(Calendar.MONTH);
+
+            // Calcola il numero totale di mesi passati
+            int mesiPassati = anniDifferenza * 12 + mesiDifferenza;
+
+            contrattoAttuale.setDurata(mesiPassati);
+            contrattoDao.aggiornaContratto(contrattoAttuale);
+        }
+
+        contrattoDao.aggiungiContratto(contrattoNuovo);
     }
 }

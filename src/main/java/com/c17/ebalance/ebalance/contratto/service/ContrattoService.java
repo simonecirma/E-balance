@@ -9,7 +9,7 @@ import java.util.List;
 public interface ContrattoService {
     ContrattoBean visualizzaContratto() throws SQLException;
     List<ContrattoBean> visualizzaStoricoContratti() throws SQLException;
-    ContrattoBean aggiornaContratto(ContrattoBean contratto) throws SQLException;
-    ContrattoBean aggiungiContratto(ContrattoBean contratto) throws SQLException;
+    void aggiornaContratto(ContrattoBean contratto) throws SQLException;
+    void aggiungiContratto(ContrattoBean contrattoNuovo) throws SQLException;
 }
 
