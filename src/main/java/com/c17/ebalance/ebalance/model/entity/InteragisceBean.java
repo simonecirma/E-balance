@@ -1,17 +1,17 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.*;
 
-public class interagisceBean {
+public class InteragisceBean {
     private int idParametro;
     private String tipoSorgente;
     private boolean flagPreferenzaSorgente;
     private int percentualeUtilizzoSorgente;
     private int prioritaSorgente;
 
-    public interagisceBean() {}
+    public InteragisceBean() { }
 
-    public interagisceBean(int idParametro, String tipoSorgente, boolean flagPreferenzaSorgente,
-                           int percentualeUtilizzoSorgente, int prioritaSorgente) {
+    public InteragisceBean(final int idParametro, final String tipoSorgente,
+                           final boolean flagPreferenzaSorgente,
+                           final int percentualeUtilizzoSorgente, final int prioritaSorgente) {
         this.idParametro = idParametro;
         this.tipoSorgente = tipoSorgente;
         this.flagPreferenzaSorgente = flagPreferenzaSorgente;
@@ -23,7 +23,7 @@ public class interagisceBean {
         return idParametro;
     }
 
-    public void setIdParametro(int idParametro) {
+    public void setIdParametro(final int idParametro) {
         this.idParametro = idParametro;
     }
 
@@ -31,7 +31,7 @@ public class interagisceBean {
         return tipoSorgente;
     }
 
-    public void setTipoSorgente(String tipoSorgente) {
+    public void setTipoSorgente(final String tipoSorgente) {
         this.tipoSorgente = tipoSorgente;
     }
 
@@ -39,7 +39,7 @@ public class interagisceBean {
         return flagPreferenzaSorgente;
     }
 
-    public void setFlagPreferenzaSorgente(boolean flagPreferenzaSorgente) {
+    public void setFlagPreferenzaSorgente(final boolean flagPreferenzaSorgente) {
         this.flagPreferenzaSorgente = flagPreferenzaSorgente;
     }
 
@@ -47,7 +47,7 @@ public class interagisceBean {
         return percentualeUtilizzoSorgente;
     }
 
-    public void setPercentualeUtilizzoSorgente(int percentualeUtilizzoSorgente) {
+    public void setPercentualeUtilizzoSorgente(final int percentualeUtilizzoSorgente) {
         this.percentualeUtilizzoSorgente = percentualeUtilizzoSorgente;
     }
 
@@ -55,18 +55,18 @@ public class interagisceBean {
         return prioritaSorgente;
     }
 
-    public void setPrioritaSorgente(int prioritaSorgente) {
+    public void setPrioritaSorgente(final int prioritaSorgente) {
         this.prioritaSorgente = prioritaSorgente;
     }
 
     @Override
     public String toString() {
-        return "interagisceBean{" +
-                "idParametro=" + idParametro +
-                ", tipoSorgente='" + tipoSorgente + '\'' +
-                ", flagPreferenzaSorgente=" + flagPreferenzaSorgente +
-                ", percentualeUtilizzoSorgente=" + percentualeUtilizzoSorgente +
-                ", prioritaSorgente=" + prioritaSorgente +
-                '}';
+        return "interagisceBean{"
+                + "idParametro=" + idParametro
+                + ", tipoSorgente='" + tipoSorgente + '\''
+                + ", flagPreferenzaSorgente=" + flagPreferenzaSorgente
+                + ", percentualeUtilizzoSorgente=" + percentualeUtilizzoSorgente
+                + ", prioritaSorgente=" + prioritaSorgente
+                + '}';
     }
 }

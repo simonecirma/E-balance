@@ -2,7 +2,7 @@ package com.c17.ebalance.ebalance.contratto.controller;
 
 import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
-import com.c17.ebalance.ebalance.model.entity.contrattoBean;
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +15,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "contrattoController", value = "/contrattoController")
+@WebServlet(name = "ContrattoController", value = "/ContrattoController")
 public class ContrattoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ContrattoService contrattoService = new ContrattoServiceImpl();
@@ -33,16 +33,16 @@ public class ContrattoController extends HttpServlet {
                     aggiungiContratto(request, response);
 
                 }
-                List<contrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
+                List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
                 request.setAttribute("contratti", contratti);
-                contrattoBean contratto = contrattoService.visualizzaContratto();
+                ContrattoBean contratto = contrattoService.visualizzaContratto();
                 request.setAttribute("contratto", contratto);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);
             } else {
-                List<contrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
+                List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
                 request.setAttribute("contratti", contratti);
-                contrattoBean contratto = contrattoService.visualizzaContratto();
+                ContrattoBean contratto = contrattoService.visualizzaContratto();
                 request.setAttribute("contratto", contratto);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);
@@ -66,7 +66,7 @@ public class ContrattoController extends HttpServlet {
         float prezzo = Float.parseFloat(request.getParameter("prezzoVendita"));
         int admin = Integer.parseInt(request.getParameter("idAmministratore"));
 
-        contrattoBean bean = new contrattoBean();
+        ContrattoBean bean = new ContrattoBean();
 
         bean.setIdContratto(id);
         bean.setNomeEnte(ente);
@@ -86,7 +86,7 @@ public class ContrattoController extends HttpServlet {
     }
 
     public void aggiungiContratto(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
-        contrattoBean bean = new contrattoBean();
+        ContrattoBean bean = new ContrattoBean();
         bean.setNomeEnte(request.getParameter("nomeEnte"));
         bean.setConsumoMedioAnnuale(Float.parseFloat(request.getParameter("consumoMedioAnnuale")));
         bean.setCostoMedioUnitario(Float.parseFloat(request.getParameter("costoMedioUnitario")));

@@ -1,15 +1,16 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.*;
+import java.util.Date;
 
-public class produzioneBean {
+public class ProduzioneBean {
     private int idProduzione;
     private Date dataProduzione;
     private float produzioneGiornaliera;
     private int idSorgente;
 
-    public produzioneBean() {}
+    public ProduzioneBean() { }
 
-    public produzioneBean(int idProduzione, Date dataProduzione, float produzioneGiornaliera, int idSorgente) {
+    public ProduzioneBean(final int idProduzione, final Date dataProduzione,
+                          final float produzioneGiornaliera, final int idSorgente) {
         this.idProduzione = idProduzione;
         this.dataProduzione = dataProduzione;
         this.produzioneGiornaliera = produzioneGiornaliera;
@@ -20,7 +21,7 @@ public class produzioneBean {
         return idProduzione;
     }
 
-    public void setIdProduzione(int idProduzione) {
+    public void setIdProduzione(final int idProduzione) {
         this.idProduzione = idProduzione;
     }
 
@@ -28,7 +29,7 @@ public class produzioneBean {
         return dataProduzione;
     }
 
-    public void setDataProduzione(Date dataProduzione) {
+    public void setDataProduzione(final Date dataProduzione) {
         this.dataProduzione = dataProduzione;
     }
 
@@ -36,17 +37,17 @@ public class produzioneBean {
         return produzioneGiornaliera;
     }
 
-    public void setProduzioneGiornaliera(float produzioneGiornaliera) {
+    public void setProduzioneGiornaliera(final float produzioneGiornaliera) {
         this.produzioneGiornaliera = produzioneGiornaliera;
     }
 
     @Override
     public String toString() {
-        return "produzioneBean{" +
-                "idProduzione=" + idProduzione +
-                ", dataProduzione=" + dataProduzione +
-                ", produzioneGiornaliera=" + produzioneGiornaliera +
-                ", idSorgente=" + idSorgente +
-                '}';
+        return "produzioneBean{"
+                + "idProduzione=" + idProduzione
+                + ", dataProduzione=" + dataProduzione
+                + ", produzioneGiornaliera=" + produzioneGiornaliera
+                + ", idSorgente=" + idSorgente
+                + '}';
     }
 }

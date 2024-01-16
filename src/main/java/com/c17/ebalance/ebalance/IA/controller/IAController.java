@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(name = "datiController", value = "/datiController")
+@WebServlet(name = "IAController", value = "/IAController")
 public class IAController extends HttpServlet {
 
 

@@ -1,14 +1,14 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.*;
 
-public class consumoEdificioBean {
+public class ConsumoEdificioBean {
     private int idEdificio;
     private String nomeEdificio;
     private float consumoAttuale;
 
-    public consumoEdificioBean() {}
+    public ConsumoEdificioBean() { }
 
-    public consumoEdificioBean(int idEdificio, String nomeEdificio, float consumoAttuale) {
+    public ConsumoEdificioBean(final int idEdificio, final String nomeEdificio,
+                               final float consumoAttuale) {
         this.idEdificio = idEdificio;
         this.nomeEdificio = nomeEdificio;
         this.consumoAttuale = consumoAttuale;
@@ -18,7 +18,7 @@ public class consumoEdificioBean {
         return idEdificio;
     }
 
-    public void setIdEdificio(int idEdificio) {
+    public void setIdEdificio(final int idEdificio) {
         this.idEdificio = idEdificio;
     }
 
@@ -26,7 +26,7 @@ public class consumoEdificioBean {
         return nomeEdificio;
     }
 
-    public void setNomeEdificio(String nomeEdificio) {
+    public void setNomeEdificio(final String nomeEdificio) {
         this.nomeEdificio = nomeEdificio;
     }
 
@@ -34,16 +34,16 @@ public class consumoEdificioBean {
         return consumoAttuale;
     }
 
-    public void setConsumoAttuale(float consumoAttuale) {
+    public void setConsumoAttuale(final float consumoAttuale) {
         this.consumoAttuale = consumoAttuale;
     }
 
     @Override
     public String toString() {
-        return "consumoEdificioBean{" +
-                "idEdificio=" + idEdificio +
-                ", nomeEdificio='" + nomeEdificio + '\'' +
-                ", consumoAttuale=" + consumoAttuale +
-                '}';
+        return "consumoEdificioBean{"
+                + "idEdificio=" + idEdificio
+                + ", nomeEdificio='" + nomeEdificio + '\''
+                + ", consumoAttuale=" + consumoAttuale
+                + '}';
     }
 }

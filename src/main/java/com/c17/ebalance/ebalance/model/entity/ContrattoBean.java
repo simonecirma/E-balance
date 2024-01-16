@@ -1,8 +1,8 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-import java.util.*;
+import java.util.Date;
 
-public class contrattoBean {
+public class ContrattoBean {
 
     private int idContratto;
     private String nomeEnte;
@@ -13,11 +13,11 @@ public class contrattoBean {
     private float prezzoVendita;
     private int idAmministatore;
 
-    public contrattoBean() {}
+    public ContrattoBean() { }
 
-    public contrattoBean(int idContratto, String nomeEnte, float consumoMedioAnnuale,
-                         float costoMedioUnitario, Date dataSottoscrizione, int durata,
-                         float prezzoVendita, int idAmministatore) {
+    public ContrattoBean(final int idContratto, final String nomeEnte, final float consumoMedioAnnuale,
+                         final float costoMedioUnitario, final Date dataSottoscrizione, final int durata,
+                         final float prezzoVendita, final int idAmministatore) {
         this.idContratto = idContratto;
         this.nomeEnte = nomeEnte;
         this.consumoMedioAnnuale = consumoMedioAnnuale;
@@ -32,7 +32,7 @@ public class contrattoBean {
         return idContratto;
     }
 
-    public void setIdContratto(int idContratto) {
+    public void setIdContratto(final int idContratto) {
         this.idContratto = idContratto;
     }
 
@@ -40,7 +40,7 @@ public class contrattoBean {
         return nomeEnte;
     }
 
-    public void setNomeEnte(String nomeEnte) {
+    public void setNomeEnte(final String nomeEnte) {
         this.nomeEnte = nomeEnte;
     }
 
@@ -48,7 +48,7 @@ public class contrattoBean {
         return consumoMedioAnnuale;
     }
 
-    public void setConsumoMedioAnnuale(float consumoMedioAnnuale) {
+    public void setConsumoMedioAnnuale(final float consumoMedioAnnuale) {
         this.consumoMedioAnnuale = consumoMedioAnnuale;
     }
 
@@ -56,7 +56,7 @@ public class contrattoBean {
         return costoMedioUnitario;
     }
 
-    public void setCostoMedioUnitario(float costoMedioUnitario) {
+    public void setCostoMedioUnitario(final float costoMedioUnitario) {
         this.costoMedioUnitario = costoMedioUnitario;
     }
 
@@ -64,7 +64,7 @@ public class contrattoBean {
         return dataSottoscrizione;
     }
 
-    public void setDataSottoscrizione(Date dataSottoscrizione) {
+    public void setDataSottoscrizione(final Date dataSottoscrizione) {
         this.dataSottoscrizione = dataSottoscrizione;
     }
 
@@ -72,7 +72,7 @@ public class contrattoBean {
         return durata;
     }
 
-    public void setDurata(int durata) {
+    public void setDurata(final int durata) {
         this.durata = durata;
     }
 
@@ -80,7 +80,7 @@ public class contrattoBean {
         return prezzoVendita;
     }
 
-    public void setPrezzoVendita(float prezzoVendita) {
+    public void setPrezzoVendita(final float prezzoVendita) {
         this.prezzoVendita = prezzoVendita;
     }
 
@@ -88,21 +88,21 @@ public class contrattoBean {
         return idAmministatore;
     }
 
-    public void setIdAmministatore(int idAmministatore) {
+    public void setIdAmministatore(final int idAmministatore) {
         this.idAmministatore = idAmministatore;
     }
 
     @Override
     public String toString() {
-        return "contrattoBean{" +
-                "idContratto=" + idContratto +
-                ", nomeEnte='" + nomeEnte + '\'' +
-                ", consumoMedioAnnuale=" + consumoMedioAnnuale +
-                ", costoMedioUnitario=" + costoMedioUnitario +
-                ", dataSottoscrizione=" + dataSottoscrizione +
-                ", durata=" + durata +
-                ", prezzoVendita=" + prezzoVendita +
-                ", idAmministatore=" + idAmministatore +
-                '}';
+        return "contrattoBean{"
+                + "idContratto=" + idContratto
+                + ", nomeEnte='" + nomeEnte + '\''
+                + ", consumoMedioAnnuale=" + consumoMedioAnnuale
+                + ", costoMedioUnitario=" + costoMedioUnitario
+                + ", dataSottoscrizione=" + dataSottoscrizione
+                + ", durata=" + durata
+                + ", prezzoVendita=" + prezzoVendita
+                + ", idAmministatore=" + idAmministatore
+                + '}';
     }
 }

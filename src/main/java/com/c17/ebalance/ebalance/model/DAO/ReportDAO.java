@@ -1,6 +1,7 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
-import com.c17.ebalance.ebalance.model.entity.*;
+
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -17,32 +18,28 @@ import java.util.List;
 
 public class ReportDAO {
 
-    static Logger logger = Logger.getLogger(ReportDAO.class.getName());
+    private static Logger logger = Logger.getLogger(ReportDAO.class.getName());
     private static DataSource ds;
 
-    static
-    {
-        try
-        {
+    static {
+        try {
             Context initCtx = new InitialContext();
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
             ds = (DataSource) envCtx.lookup("jdbc/ebalance");
 
-        }
-        catch (NamingException e)
-        {
+        } catch (NamingException e) {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
-    private static final String TABLE_NAME_REPORT= "Report";
+    private static final String TABLE_NAME_REPORT = "Report";
 
-    public List<reportBean> visualizzaReport() throws SQLException{
+    public List<ReportBean> visualizzaReport() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        List<reportBean> report = new ArrayList<>();
+        List<ReportBean> report = new ArrayList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME_REPORT;
 
         try {
@@ -52,18 +49,20 @@ public class ReportDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                reportBean bean = new reportBean();
+                ReportBean bean = new ReportBean();
                 bean.setDataEmissione(resultSet.getDate("DataEmissione"));
                 bean.setIdAmministratore(resultSet.getInt("IdAmministratore"));
                 report.add(bean);
             }
         } finally {
             try {
-                if (preparedStatement != null)
+                if (preparedStatement != null) {
                     preparedStatement.close();
+                }
             } finally {
-                if (connection != null)
+                if (connection != null) {
                     connection.close();
+                }
             }
         }
         return report;

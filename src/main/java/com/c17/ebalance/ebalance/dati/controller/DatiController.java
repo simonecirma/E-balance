@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "datiController", value = "/datiController")
+@WebServlet(name = "DatiController", value = "/DatiController")
 public class DatiController extends HttpServlet {
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {

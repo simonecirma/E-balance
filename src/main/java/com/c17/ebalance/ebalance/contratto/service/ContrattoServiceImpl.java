@@ -1,30 +1,30 @@
 package com.c17.ebalance.ebalance.contratto.service;
 
-import com.c17.ebalance.ebalance.model.entity.contrattoBean;
-import com.c17.ebalance.ebalance.model.DAO.contrattoDAO;
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
+import com.c17.ebalance.ebalance.model.DAO.ContrattoDAO;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class ContrattoServiceImpl implements ContrattoService {
-    private contrattoDAO contrattoDao = new contrattoDAO();
+    private ContrattoDAO contrattoDao = new ContrattoDAO();
     @Override
-    public contrattoBean visualizzaContratto() throws SQLException {
-        return contrattoDAO.visualizzaContratto();
+    public ContrattoBean visualizzaContratto() throws SQLException {
+        return ContrattoDAO.visualizzaContratto();
     }
 
     @Override
-    public List<contrattoBean> visualizzaStoricoContratti() throws SQLException {
+    public List<ContrattoBean> visualizzaStoricoContratti() throws SQLException {
         return contrattoDao.visualizzaStoricoContratti();
     }
 
     @Override
-    public contrattoBean aggiornaContratto(final contrattoBean contratto) throws SQLException {
+    public ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException {
         return contrattoDao.aggiornaContratto(contratto);
     }
 
     @Override
-    public contrattoBean aggiungiContratto(final contrattoBean contratto) throws SQLException {
+    public ContrattoBean aggiungiContratto(final ContrattoBean contratto) throws SQLException {
         return contrattoDao.aggiungiContratto(contratto);
     }
 }

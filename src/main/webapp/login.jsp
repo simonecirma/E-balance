@@ -34,7 +34,7 @@
 <hr>
 <div class="container">
         <h1 id="log">Login</h1>
-        <form method="post" name="invio" action="accessoController" onsubmit="return validate()">
+        <form method="post" name="invio" action="AccessoController" onsubmit="return validate()">
                 <div class="cont1">
                     <label for="email">Email</label>
                     <input type="email" name="email" id="email">

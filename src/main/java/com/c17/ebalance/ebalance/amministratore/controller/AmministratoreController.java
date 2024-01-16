@@ -5,7 +5,7 @@ import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImp
 import com.c17.ebalance.ebalance.amministratore.service.ReportService;
 import com.c17.ebalance.ebalance.amministratore.service.ReportServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
-import com.c17.ebalance.ebalance.model.entity.reportBean;
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "amministratoreController", value = "/amministratoreController")
+@WebServlet(name = "AmministratoreController", value = "/AmministratoreController")
 public class AmministratoreController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -47,11 +47,11 @@ public class AmministratoreController extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
                 if (action.equalsIgnoreCase("vediReport")) {
-                    List<reportBean> report = reportService.visualizzaReport();
+                    List<ReportBean> report = reportService.visualizzaReport();
                     request.setAttribute("report", report);
                     List<AmministratoreBean> amm = new ArrayList<AmministratoreBean>();
                     AmministratoreBean bean = new AmministratoreBean();
-                    for (reportBean rep : report) {
+                    for (ReportBean rep : report) {
                         int i = rep.getIdAmministratore();
                         bean = amministratoreService.getById(i);
                         amm.add(bean);

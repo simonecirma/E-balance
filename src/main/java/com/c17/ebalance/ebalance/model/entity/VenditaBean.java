@@ -1,16 +1,17 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.*;
+import java.util.Date;
 
-public class venditaBean {
+public class VenditaBean {
     private int idVendita;
     private float energiaVenduta;
     private Date dataVendita;
     private float ricavoTotale;
     private int idAmministratore;
 
-    public venditaBean() {}
+    public VenditaBean() { }
 
-    public venditaBean(int idVendita, float energiaVenduta, Date dataVendita, float ricavoTotale, int idAmministratore) {
+    public VenditaBean(final int idVendita, final float energiaVenduta,
+                       final Date dataVendita, final float ricavoTotale, final int idAmministratore) {
         this.idVendita = idVendita;
         this.energiaVenduta = energiaVenduta;
         this.dataVendita = dataVendita;
@@ -22,7 +23,7 @@ public class venditaBean {
         return idVendita;
     }
 
-    public void setIdVendita(int idVendita) {
+    public void setIdVendita(final int idVendita) {
         this.idVendita = idVendita;
     }
 
@@ -30,7 +31,7 @@ public class venditaBean {
         return energiaVenduta;
     }
 
-    public void setEnergiaVenduta(float energiaVenduta) {
+    public void setEnergiaVenduta(final float energiaVenduta) {
         this.energiaVenduta = energiaVenduta;
     }
 
@@ -38,7 +39,7 @@ public class venditaBean {
         return dataVendita;
     }
 
-    public void setDataVendita(Date dataVendita) {
+    public void setDataVendita(final Date dataVendita) {
         this.dataVendita = dataVendita;
     }
 
@@ -46,7 +47,7 @@ public class venditaBean {
         return ricavoTotale;
     }
 
-    public void setRicavoTotale(float ricavoTotale) {
+    public void setRicavoTotale(final float ricavoTotale) {
         this.ricavoTotale = ricavoTotale;
     }
 
@@ -54,18 +55,18 @@ public class venditaBean {
         return idAmministratore;
     }
 
-    public void setIdAmministratore(int idAmministratore) {
+    public void setIdAmministratore(final int idAmministratore) {
         this.idAmministratore = idAmministratore;
     }
 
     @Override
     public String toString() {
-        return "venditaBean{" +
-                "idVendita=" + idVendita +
-                ", energiaVenduta=" + energiaVenduta +
-                ", dataVendita=" + dataVendita +
-                ", ricavoTotale=" + ricavoTotale +
-                ", idAmministratore=" + idAmministratore +
-                '}';
+        return "venditaBean{"
+                + "idVendita=" + idVendita
+                + ", energiaVenduta=" + energiaVenduta
+                + ", dataVendita=" + dataVendita
+                + ", ricavoTotale=" + ricavoTotale
+                + ", idAmministratore=" + idAmministratore
+                + '}';
     }
 }

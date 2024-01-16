@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet(name = "accessoController", value = "/accessoController")
+@WebServlet(name = "AccessoController", value = "/AccessoController")
 public class AccessoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

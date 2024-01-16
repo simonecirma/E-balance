@@ -8,7 +8,7 @@
 </head>
 <body>
     <%@include file="navBar.jsp" %>
-    <form action="amministratoreController?action=aggiornaAmministratore" method="post">
+    <form action="AmministratoreController?action=aggiornaAmministratore" method="post">
         <div>
             <label for="nome">Nome:</label>
          <input type="text" id="nome" name="nome" value="<%=nome%>"><br>

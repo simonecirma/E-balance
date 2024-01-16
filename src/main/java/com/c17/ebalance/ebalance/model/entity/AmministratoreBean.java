@@ -14,7 +14,10 @@ public class AmministratoreBean {
     public AmministratoreBean() {
     }
 
-    public AmministratoreBean(final int idAmministratore, final String nome, final String cognome, final Date dataNascita, final String email, final String password, final boolean flagTipo) {
+    public AmministratoreBean(final int idAmministratore, final String nome,
+                              final String cognome, final Date dataNascita,
+                              final String email, final String password,
+                              final boolean flagTipo) {
         this.idAmministratore = idAmministratore;
         this.nome = nome;
         this.cognome = cognome;

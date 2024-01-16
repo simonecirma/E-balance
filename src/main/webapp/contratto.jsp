@@ -1,9 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.c17.ebalance.ebalance.model.entity.contrattoBean" %>
+<%@ page import="com.c17.ebalance.ebalance.model.entity.ContrattoBean" %>
 <%@ page import="java.util.List" %>
 <%
-    contrattoBean contratto = (contrattoBean) request.getAttribute("contratto");
-    List<contrattoBean> contratti = (List<contrattoBean>) request.getAttribute("contratti");
+    ContrattoBean contratto = (ContrattoBean) request.getAttribute("contratto");
+    List<ContrattoBean> contratti = (List<ContrattoBean>) request.getAttribute("contratti");
 %>
 
 <html>
@@ -34,7 +34,7 @@
     </thead>
     <tbody>
     <% if (contratti != null && !contratti.isEmpty()) {
-        for (contrattoBean contr : contratti) { %>
+        for (ContrattoBean contr : contratti) { %>
 
     <tr>
         <td><%= contr.getNomeEnte() %></td>
@@ -77,7 +77,7 @@
     };
 </script>
 
-<form id="aggiungiContrattoForm" action="contrattoController?action=aggiungiContratto" method="post" style="display: none;">
+<form id="aggiungiContrattoForm" action="ContrattoController?action=aggiungiContratto" method="post" style="display: none;">
     <label>Ente:</label>
     <input type="text" name="nomeEnte" placeholder="Dammi il nome ente"><br>
     <label>Consumo Annuale:</label>
@@ -96,7 +96,7 @@
 
 
 
-<form id="aggiornaContrattoForm" action="contrattoController?action=aggiornaContratto" method="post">
+<form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post">
     <label>Ente:</label>
     <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
     <label>Consumo Annuale:</label>

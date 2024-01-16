@@ -1,14 +1,15 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-public class parametriIABean {
+public class ParametriIABean {
     private int idParametro;
     private String piano;
     private boolean flagAttivazioneParametro;
     private int idAmministratore;
 
-    public parametriIABean() {}
+    public ParametriIABean() { }
 
-    public parametriIABean(int idParametro, String piano, boolean flagAttivazioneParametro, int idAmministratore) {
+    public ParametriIABean(final int idParametro, final String piano,
+                           final boolean flagAttivazioneParametro, final int idAmministratore) {
         this.idParametro = idParametro;
         this.piano = piano;
         this.flagAttivazioneParametro = flagAttivazioneParametro;
@@ -19,7 +20,7 @@ public class parametriIABean {
         return idParametro;
     }
 
-    public void setIdParametro(int idParametro) {
+    public void setIdParametro(final int idParametro) {
         this.idParametro = idParametro;
     }
 
@@ -27,7 +28,7 @@ public class parametriIABean {
         return piano;
     }
 
-    public void setPiano(String piano) {
+    public void setPiano(final String piano) {
         this.piano = piano;
     }
 
@@ -35,7 +36,7 @@ public class parametriIABean {
         return flagAttivazioneParametro;
     }
 
-    public void setFlagAttivazioneParametro(boolean flagAttivazioneParametro) {
+    public void setFlagAttivazioneParametro(final boolean flagAttivazioneParametro) {
         this.flagAttivazioneParametro = flagAttivazioneParametro;
     }
 
@@ -43,17 +44,17 @@ public class parametriIABean {
         return idAmministratore;
     }
 
-    public void setIdAmministratore(int idAmministratore) {
+    public void setIdAmministratore(final int idAmministratore) {
         this.idAmministratore = idAmministratore;
     }
 
     @Override
     public String toString() {
-        return "parametriIABean{" +
-                "idParametro=" + idParametro +
-                ", piano='" + piano + '\'' +
-                ", flagAttivazioneParametro=" + flagAttivazioneParametro +
-                ", idAmministratore=" + idAmministratore +
-                '}';
+        return "parametriIABean{"
+                + "idParametro=" + idParametro
+                + ", piano='" + piano + '\''
+                + ", flagAttivazioneParametro=" + flagAttivazioneParametro
+                + ", idAmministratore=" + idAmministratore
+                + '}';
     }
 }

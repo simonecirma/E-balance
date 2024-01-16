@@ -59,7 +59,7 @@
     <%
         }
     %>
-<form id="aggiungiAmministratoreForm" action="amministratoreController?action=aggiungiAmministratore" method="post" style="display: none;">
+<form id="aggiungiAmministratoreForm" action="AmministratoreController?action=aggiungiAmministratore" method="post" style="display: none;">
     <div>
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" placeholder="Dammi il nome"><br>

@@ -46,18 +46,18 @@
 			<li><a href="profilo.jsp">
 				<span>Profilo</span>
 			</a></li>
-			<li><a href="contrattoController">
+			<li><a href="ContrattoController">
 				<span>Contratto</span>
 			</a></li>
-			<li><a href="amministratoreController?action=vediReport">
+			<li><a href="AmministratoreController?action=vediReport">
 				<span>Report</span>
 			</a></li>
 			<% if (tipo) { %>
-			<li><a href="amministratoreController?action=gestisciAmministratori">
+			<li><a href="AmministratoreController?action=gestisciAmministratori">
 				<span>Gestisci</span>
 			</a></li>
 			<% } %>
-			<li><a href="logoutController">
+			<li><a href="LogoutController">
 				<span>Logout</span>
 			</a></li>
 		</ul>

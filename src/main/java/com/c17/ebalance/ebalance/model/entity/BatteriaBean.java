@@ -1,15 +1,15 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.*;
 
-public class batteriaBean {
+public class BatteriaBean {
     private int idBatteria;
     private boolean flagStatoBatteria;
     private float capacitaMax;
     private int percentualeCarica;
 
-    public batteriaBean() {}
+    public BatteriaBean() { }
 
-    public batteriaBean(int idBatteria, boolean flagStatoBatteria, float capacitaMax, int percentualeCarica) {
+    public BatteriaBean(final int idBatteria, final boolean flagStatoBatteria,
+                        final float capacitaMax, final int percentualeCarica) {
         this.idBatteria = idBatteria;
         this.flagStatoBatteria = flagStatoBatteria;
         this.capacitaMax = capacitaMax;
@@ -20,7 +20,7 @@ public class batteriaBean {
         return idBatteria;
     }
 
-    public void setIdBatteria(int idBatteria) {
+    public void setIdBatteria(final int idBatteria) {
         this.idBatteria = idBatteria;
     }
 
@@ -28,7 +28,7 @@ public class batteriaBean {
         return flagStatoBatteria;
     }
 
-    public void setFlagStatoBatteria(boolean flagStatoBatteria) {
+    public void setFlagStatoBatteria(final boolean flagStatoBatteria) {
         this.flagStatoBatteria = flagStatoBatteria;
     }
 
@@ -36,7 +36,7 @@ public class batteriaBean {
         return capacitaMax;
     }
 
-    public void setCapacitaMax(float capacitaMax) {
+    public void setCapacitaMax(final float capacitaMax) {
         this.capacitaMax = capacitaMax;
     }
 
@@ -44,17 +44,17 @@ public class batteriaBean {
         return percentualeCarica;
     }
 
-    public void setPercentualeCarica(int percentualeCarica) {
+    public void setPercentualeCarica(final int percentualeCarica) {
         this.percentualeCarica = percentualeCarica;
     }
 
     @Override
     public String toString() {
-        return "batteriaBean{" +
-                "idBatteria=" + idBatteria +
-                ", flagStatoBatteria=" + flagStatoBatteria +
-                ", capacitaMax=" + capacitaMax +
-                ", percentualeCarica=" + percentualeCarica +
-                '}';
+        return "batteriaBean{"
+                + "idBatteria=" + idBatteria
+                + ", flagStatoBatteria=" + flagStatoBatteria
+                + ", capacitaMax=" + capacitaMax
+                + ", percentualeCarica=" + percentualeCarica
+                + '}';
     }
 }

@@ -1,8 +1,8 @@
 package com.c17.ebalance.ebalance.model.entity;
 import java.sql.Time;
-import java.util.*;
+import java.util.Date;
 
-public class meteoBean {
+public class MeteoBean {
     private int idMeteo;
     private Date dataRilevazione;
     private Time oraRilevazione;
@@ -10,10 +10,12 @@ public class meteoBean {
     private int probabilitaPioggia;
     private String condizioniMetereologiche;
 
-    public meteoBean() {}
+    public MeteoBean() { }
 
-    public meteoBean(int idMeteo, Date dataRilevazione, Time oraRilevazione, float velocitaVento, int probabilitaPioggia,
-                     String condizioniMetereologiche) {
+    public MeteoBean(final int idMeteo, final Date dataRilevazione,
+                     final Time oraRilevazione, final float velocitaVento,
+                     final int probabilitaPioggia,
+                     final String condizioniMetereologiche) {
         this.idMeteo = idMeteo;
         this.dataRilevazione = dataRilevazione;
         this.oraRilevazione = oraRilevazione;
@@ -26,7 +28,7 @@ public class meteoBean {
         return idMeteo;
     }
 
-    public void setIdMeteo(int idMeteo) {
+    public void setIdMeteo(final int idMeteo) {
         this.idMeteo = idMeteo;
     }
 
@@ -34,7 +36,7 @@ public class meteoBean {
         return dataRilevazione;
     }
 
-    public void setDataRilevazione(Date dataRilevazione) {
+    public void setDataRilevazione(final Date dataRilevazione) {
         this.dataRilevazione = dataRilevazione;
     }
 
@@ -42,7 +44,7 @@ public class meteoBean {
         return oraRilevazione;
     }
 
-    public void setOraRilevazione(Time oraRilevazione) {
+    public void setOraRilevazione(final Time oraRilevazione) {
         this.oraRilevazione = oraRilevazione;
     }
 
@@ -50,7 +52,7 @@ public class meteoBean {
         return velocitaVento;
     }
 
-    public void setVelocitaVento(float velocitaVento) {
+    public void setVelocitaVento(final float velocitaVento) {
         this.velocitaVento = velocitaVento;
     }
 
@@ -58,7 +60,7 @@ public class meteoBean {
         return probabilitaPioggia;
     }
 
-    public void setProbabilitaPioggia(int probabilitaPioggia) {
+    public void setProbabilitaPioggia(final int probabilitaPioggia) {
         this.probabilitaPioggia = probabilitaPioggia;
     }
 
@@ -66,19 +68,19 @@ public class meteoBean {
         return condizioniMetereologiche;
     }
 
-    public void setCondizioniMetereologiche(String condizioniMetereologiche) {
+    public void setCondizioniMetereologiche(final String condizioniMetereologiche) {
         this.condizioniMetereologiche = condizioniMetereologiche;
     }
 
     @Override
     public String toString() {
-        return "meteoBean{" +
-                "idMeteo=" + idMeteo +
-                ", dataRilevazione=" + dataRilevazione +
-                ", oraRilevazione=" + oraRilevazione +
-                ", velocitaVento=" + velocitaVento +
-                ", probabilitaPioggia=" + probabilitaPioggia +
-                ", condizioniMetereologiche='" + condizioniMetereologiche + '\'' +
-                '}';
+        return "meteoBean{"
+                + "idMeteo=" + idMeteo
+                + ", dataRilevazione=" + dataRilevazione
+                + ", oraRilevazione=" + oraRilevazione
+                + ", velocitaVento=" + velocitaVento
+                + ", probabilitaPioggia=" + probabilitaPioggia
+                + ", condizioniMetereologiche='" + condizioniMetereologiche + '\''
+                + '}';
     }
 }
