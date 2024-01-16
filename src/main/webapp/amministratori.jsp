@@ -27,6 +27,7 @@
         <th>Email</th>
         <th>Nome</th>
         <th>Cognome</th>
+        <th>Elimina Admin</th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,7 @@
             <td><%= admin.getEmail() %></td>
             <td><%= admin.getNome() %></td>
             <td><%= admin.getCognome() %></td>
+            <td>Elimina</td>
         </tr>
     <% }
     }

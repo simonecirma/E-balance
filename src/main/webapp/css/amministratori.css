@@ -1,8 +1,12 @@
 table {
-    width: 40%;
+    width: auto;
     margin: auto;
     border-collapse: collapse;
+}
+
+.tabArrotondata{
     border-radius: 8px;
+    overflow: hidden;
 }
 
 th, td {
@@ -18,8 +22,23 @@ tbody tr:nth-child(even) {
     background-color: #e6f7e6;
 }
 
+table tr td:last-child {
+    text-align: center;
+}
+
+input[type="button"]{
+    width: 80px;
+    border-radius: 5px;
+    min-height: 1.5vw;
+    background-color: #4caf50;
+}
+
+input[type="button"]:hover {
+    background-color: #45a049;
+}
+
 form {
-    width: 40%;
+    width: 520px;
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
@@ -29,6 +48,7 @@ form {
     flex-direction: column;
     margin: auto;
     margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 label {
@@ -93,4 +113,6 @@ form .btn1{
 .btn:hover {
     background-color: #45a049;
 }
+
+
 
