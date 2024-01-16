@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Contratto</title>
+    <link href="css/amministratori.css" rel="stylesheet" type="text/css">
     <script>
         function toggleFormVisibility() {
             var form = document.getElementById('aggiungiContrattoForm');
@@ -31,12 +32,14 @@
 %>
 <h1> Contratto attuale</h1>
 <table>
-    <tbody>
+    <thead>
     <tr>
         <th>Nome Ente</th>
         <th>Consumo Medio Annuale</th>
         <th>Costo Medio Unitario</th>
     </tr>
+    </thead>
+    <tbody>
     <tr>
         <td><%= contratto.getNomeEnte() %></td>
         <td><%= contratto.getConsumoMedioAnnuale() %></td>
@@ -46,12 +49,14 @@
 </table>
 <h1> Storico contratti passati</h1>
 <table>
-    <tbody>
+    <thead>
     <tr>
         <th>Nome Ente</th>
         <th>Consumo Medio Annuale</th>
         <th>Costo Medio Unitario</th>
     </tr>
+    </thead>
+    <tbody>
     <% if (contratti != null && !contratti.isEmpty()) {
         for (ContrattoBean contr : contratti) { %>
 
@@ -71,9 +76,9 @@
 </table>
 
 
-
-<button onclick="toggleFormVisibility2 ()">Modifica contratto attuale</button><br>
-
+<div class="btn-container">
+<button class="btn" onclick="toggleFormVisibility2 ()">Modifica contratto attuale</button><br>
+</div>
 
 
 
@@ -96,8 +101,9 @@
     <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
     <input type="submit" value="Conferma modifica">
 </form>
-
-    <button onclick="toggleFormVisibility ()">Aggiungi un nuovo contratto</button>
+<div class="btn-container">
+    <button class="btn" onclick="toggleFormVisibility ()">Aggiungi un nuovo contratto</button>
+</div>
 <%
     }
     else {
