@@ -17,7 +17,7 @@
 <html lang="it">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Ebalance Login</title>
+    <title>Login</title>
     <link href="css/login.css" rel="stylesheet" type="text/css">
     <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
 </head>

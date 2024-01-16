@@ -10,8 +10,7 @@ public class AmministratoreServiceImpl implements AmministratoreService {
 
     private AmministratoreDAO amministratoreDAO = new AmministratoreDAO();
 
-    public Boolean verificaSuperAdmin() throws SQLException
-    {
+    public Boolean verificaSuperAdmin() throws SQLException {
         return amministratoreDAO.verificaSuperAdmin();
     }
     @Override

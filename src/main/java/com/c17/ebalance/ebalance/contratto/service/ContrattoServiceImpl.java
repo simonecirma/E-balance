@@ -1,10 +1,8 @@
 package com.c17.ebalance.ebalance.contratto.service;
 
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import com.c17.ebalance.ebalance.model.DAO.ContrattoDAO;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
@@ -31,15 +29,13 @@ public class ContrattoServiceImpl implements ContrattoService {
         ContrattoBean contrattoAttuale = ContrattoDAO.visualizzaContratto();
 
         if (contrattoAttuale.getIdContratto() > 0) {
-            System.out.println(contrattoAttuale.toString());
-            Date dataAttuale = new Date(System.currentTimeMillis());
 
             // Converte le date in oggetti Calendar
             Calendar calDataDiRiferimento = Calendar.getInstance();
             calDataDiRiferimento.setTime(contrattoAttuale.getDataSottoscrizione());
 
             Calendar calDataAttuale = Calendar.getInstance();
-            calDataAttuale.setTime(dataAttuale);
+            calDataAttuale.setTime(contrattoNuovo.getDataSottoscrizione());
 
             // Calcola il periodo tra le due date
             int anniDifferenza = calDataAttuale.get(Calendar.YEAR) - calDataDiRiferimento.get(Calendar.YEAR);
@@ -53,5 +49,9 @@ public class ContrattoServiceImpl implements ContrattoService {
         }
 
         contrattoDao.aggiungiContratto(contrattoNuovo);
+    }
+
+    public boolean verificaPrimoContratto() throws SQLException {
+        return contrattoDao.verificaPrimoContratto();
     }
 }

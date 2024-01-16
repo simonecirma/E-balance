@@ -9,7 +9,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Contratto</title>
     <script>
         function toggleFormVisibility() {
             var form = document.getElementById('aggiungiContrattoForm');
@@ -27,7 +27,7 @@
 <%@include file="navBar.jsp" %>
 <br>
 <%
-    if(email!=null){
+    if(contratto!=null){
 %>
 <h1> Contratto attuale</h1>
 <table>
@@ -37,14 +37,11 @@
         <th>Consumo Medio Annuale</th>
         <th>Costo Medio Unitario</th>
     </tr>
-    <% if(contratto!=null){%>
     <tr>
         <td><%= contratto.getNomeEnte() %></td>
         <td><%= contratto.getConsumoMedioAnnuale() %></td>
         <td><%= contratto.getCostoMedioUnitario()%></td>
     </tr>
-    <%}
-    %>
     </tbody>
 </table>
 <h1> Storico contratti passati</h1>
@@ -82,7 +79,6 @@
 
 
 
-
 <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post" style="display: none;">
     <label>Ente:</label>
     <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
@@ -111,7 +107,7 @@
         toggleFormVisibility();
     };
 </script>
-<h1 align="center">Aggiungi i dati del contratto</h1>
+<h1>Aggiungi i dati del contratto</h1>
 <%
     }
 %>

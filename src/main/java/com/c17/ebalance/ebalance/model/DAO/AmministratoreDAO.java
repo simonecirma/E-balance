@@ -37,7 +37,7 @@ public class AmministratoreDAO {
         ResultSet resultSet = null;
         boolean result;
 
-        String selectSQL = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE IdAmministratore = 1";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE FlagTipo = 1";
 
         try {
             connection = ds.getConnection();

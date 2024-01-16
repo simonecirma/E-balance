@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>Benvenuti su E-Balance</title>
     <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>

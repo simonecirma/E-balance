@@ -6,7 +6,7 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Gestione amministratori</title>
     <link href="css/amministratori.css" rel="stylesheet" type="text/css">
     <script>
         function toggleFormVisibility() {

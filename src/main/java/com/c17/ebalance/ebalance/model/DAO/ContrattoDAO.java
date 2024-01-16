@@ -97,8 +97,8 @@ public class ContrattoDAO {
         ContrattoBean bean = new ContrattoBean();
         try {
             con = ds.getConnection();
-            String query = "UPDATE Contratto "
-                    + "SET NomeEnte= ?, ConsumoMedioAnnuale=?, CostoMedioUnitario=?, "
+            String query = "UPDATE " + TABLE_NAME_CONTRATTO
+                    + " SET NomeEnte= ?, ConsumoMedioAnnuale=?, CostoMedioUnitario=?, "
                     + "DataSottoscrizione=?, Durata=?, PrezzoVendita=?, IdAmministratore=? "
                     + "WHERE IdContratto=?";
             ps = con.prepareStatement(query);
@@ -128,7 +128,7 @@ public class ContrattoDAO {
 
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO Contratto( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, "
+            String query = "INSERT INTO " + TABLE_NAME_CONTRATTO + "( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, "
                     + "DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)"
                     + "VALUES(?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
@@ -147,5 +147,41 @@ public class ContrattoDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
         return bean;
+    }
+
+    public boolean verificaPrimoContratto() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int cont = 0;
+        boolean result;
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_CONTRATTO;
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                cont++;
+            }
+            if (cont <= 1) {
+                result = true;
+            } else {
+                result = false;
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+
+        return result;
     }
 }

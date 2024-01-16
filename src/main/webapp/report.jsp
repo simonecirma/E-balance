@@ -8,7 +8,7 @@
 %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Report</title>
 </head>
 <body>
     <%@include file="navBar.jsp" %>

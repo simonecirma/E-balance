@@ -1,5 +1,6 @@
 package com.c17.ebalance.ebalance.amministratore.controller;
 
+import com.c17.ebalance.ebalance.accesso.controller.AccessoController;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
 import com.c17.ebalance.ebalance.amministratore.service.ReportService;
@@ -40,7 +41,7 @@ public class AmministratoreController extends HttpServlet {
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                         dispatcher.forward(request, response);
                     } else {
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
                         dispatcher.forward(request, response);
                     }
                 }
@@ -125,7 +126,7 @@ public class AmministratoreController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+    private void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
 
         AmministratoreBean amministratore = new AmministratoreBean();
 
@@ -147,7 +148,18 @@ public class AmministratoreController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
+        if (session.getAttribute("email") != null) {
+            response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
+        } else {
+            AmministratoreBean admin = AccessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);
+            if (admin != null) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                response.sendRedirect("AmministratoreController?action=verificaSuperAdmin");
+            }
+        }
+
     }
     public void destroy() {
     }

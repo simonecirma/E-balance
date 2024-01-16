@@ -1,7 +1,5 @@
 package com.c17.ebalance.ebalance.contratto.controller;
 
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
@@ -21,7 +19,6 @@ import java.util.List;
 public class ContrattoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ContrattoService contrattoService = new ContrattoServiceImpl();
-    private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
@@ -99,8 +96,8 @@ public class ContrattoController extends HttpServlet {
         bean.setIdAmministatore(Integer.parseInt(request.getParameter("idAmministratore")));
         try {
             contrattoService.aggiungiContratto(bean);
-            if (!amministratoreService.verificaSuperAdmin()) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
+            if (contrattoService.verificaPrimoContratto()) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException e) {
