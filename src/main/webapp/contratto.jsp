@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>Contratto</title>
-    <link href="css/amministratori.css" rel="stylesheet" type="text/css">
+    <link href="css/contratto.css" rel="stylesheet" type="text/css">
     <script>
         function toggleFormVisibility() {
             var form = document.getElementById('aggiungiContrattoForm');
@@ -85,22 +85,37 @@
 
 
 <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post" style="display: none;">
-    <label>Ente:</label>
-    <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
-    <label>Consumo Annuale:</label>
-    <input type="text" name="consumoMedioAnnuale" value="<%=contratto != null ? contratto.getConsumoMedioAnnuale() : 0%>"><br>
-    <label>Costo Unitario:</label>
-    <input type="text" name="costoMedioUnitario" value="<%=contratto != null ? contratto.getCostoMedioUnitario() : 0%>"><br>
-    <label>Data Sottoscrizione:</label>
-    <input type="date" name="dataSottoscrizione" value="<%=contratto != null ? contratto.getDataSottoscrizione() : null%>"><br>
-    <label>Durata:</label>
-    <input type="text" name="durata" value="<%=contratto != null ? contratto.getDurata() : 0%>"><br>
-    <label>Prezzo:</label>
-    <input type="text" name="prezzoVendita" value="<%=contratto != null ? contratto.getPrezzoVendita() : 0%>"><br>
+    <div>
+        <label>Ente:</label>
+        <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
+    </div>
+    <div>
+        <label>Consumo Annuale:</label>
+        <input type="text" name="consumoMedioAnnuale" value="<%=contratto != null ? contratto.getConsumoMedioAnnuale() : 0%>"><br>
+    </div>
+    <div>
+        <label>Costo Unitario:</label>
+        <input type="text" name="costoMedioUnitario" value="<%=contratto != null ? contratto.getCostoMedioUnitario() : 0%>"><br>
+    </div>
+    <div>
+        <label>Data Sottoscrizione:</label>
+        <input type="date" name="dataSottoscrizione" value="<%=contratto != null ? contratto.getDataSottoscrizione() : null%>"><br>
+    </div>
+    <div>
+        <label>Durata:</label>
+        <input type="text" name="durata" value="<%=contratto != null ? contratto.getDurata() : 0%>"><br>
+    </div>
+    <div>
+        <label>Prezzo:</label>
+        <input type="text" name="prezzoVendita" value="<%=contratto != null ? contratto.getPrezzoVendita() : 0%>"><br>
+    </div>
     <input type="hidden" name="idContratto" value="<%=contratto != null ? contratto.getIdContratto() : 0%>">
     <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
-    <input type="submit" value="Conferma modifica">
+    <div class="btnCont">
+        <input type="submit" class="btn1" value="Conferma modifica">
+    </div>
 </form>
+<br>
 <div class="btn-container">
     <button class="btn" onclick="toggleFormVisibility ()">Aggiungi un nuovo contratto</button>
 </div>
@@ -119,20 +134,34 @@
 %>
 
 <form id="aggiungiContrattoForm" action="ContrattoController?action=aggiungiContratto" method="post" style="display: none;">
-    <label>Ente:</label>
-    <input type="text" name="nomeEnte" placeholder="Dammi il nome ente"><br>
-    <label>Consumo Annuale:</label>
-    <input type="text" name="consumoMedioAnnuale" placeholder="Dammi il consumo medio annuale"><br>
-    <label>Costo Unitario:</label>
-    <input type="text" name="costoMedioUnitario" placeholder="Dammi il costo medio unitario"><br>
-    <label>Data Sottoscrizione:</label>
-    <input type="date" name="dataSottoscrizione" placeholder="Dammi la data di sottoscrizione"><br>
-    <label>Durata:</label>
-    <input type="text" name="durata" placeholder="Dammi la durata del contratto"><br>
-    <label>Prezzo:</label>
-    <input type="text" name="prezzoVendita" placeholder="Dammi il prezzo di vendita"><br>
+    <div>
+        <label for="ente">Ente:</label>
+        <input type="text" name="nomeEnte" id="ente" placeholder="Dammi il nome ente"><br>
+    </div>
+    <div>
+        <label for="consumo">Consumo Annuale:</label>
+        <input type="text" name="consumoMedioAnnuale" id ="consumo" placeholder="Dammi il consumo medio annuale"><br>
+    </div>
+    <div>
+        <label for="costo">Costo Unitario:</label>
+        <input type="text" name="costoMedioUnitario" id="costo" placeholder="Dammi il costo medio unitario"><br>
+    </div>
+    <div>
+        <label for="data">Data Sottoscrizione:</label>
+        <input type="date" name="dataSottoscrizione" id="data" placeholder="Dammi la data di sottoscrizione"><br>
+    </div>
+    <div>
+        <label for="durata">Durata:</label>
+        <input type="text" name="durata" id="durata" placeholder="Dammi la durata del contratto"><br>
+    </div>
+    <div>
+        <label for="prezzo">Prezzo:</label>
+        <input type="text" name="prezzoVendita" id="prezzo" placeholder="Dammi il prezzo di vendita"><br>
+    </div>
     <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
-    <input type="submit" value="Registra nuovo contratto">
+    <div class="btnCont">
+        <input type="submit" class="btn1" value="Registra nuovo contratto">
+    </div>
 </form>
 
 </body>

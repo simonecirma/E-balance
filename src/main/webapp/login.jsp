@@ -22,6 +22,7 @@
     <!-- <link rel="shortcut icon" href="img/favicon.ico" /> -->
 </head>
 <body>
+<script src="js/Login.js"></script>
 <%//@include file="navBar.jsp" %>
 <%
     if(email != null)
@@ -29,35 +30,26 @@
         response.sendRedirect("./dashboard.jsp");
     }
 %>
-<div class="header-container">
-    <h1>E-Balance</h1>
-    <img src="img/Logo2.jpg" class="background-image">
-</div>
-<br>
-<hr>
-<div class="container">
-        <h1 id="log">Login</h1>
-        <%
-            if(result != null)
-            {
-        %>
-        <h3><%=result%></h3>
-        <%
-            }
-        %>
         <form method="post" name="invio" action="AccessoController" onsubmit="return validate()">
-                <div class="cont1">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email">
+            <div class="container">
+                <div class="left">
+                    <img src="img/Logo.png" alt="Logo">
                 </div>
-            <br>
-            <div class="cont2">
-                <label>Password</label>
-                <input type="password" name="password" id="password">
+                <div class="right">
+                    <h1>Login</h1>
+                    <input type="email" name="email" placeholder="Email">
+                    <input type="password" name="password" placeholder="Password">
+                    <%
+                        if(result != null)
+                        {
+                    %>
+                    <h3><%=result%></h3>
+                    <%
+                        }
+                    %>
+                    <input type="submit" id="submit" value="Accedi">
+                </div>
             </div>
-        <input type="submit" id="submit" value="Accedi">
-    </form>
-</div>
-
+        </form>
 </body>
 </html>
