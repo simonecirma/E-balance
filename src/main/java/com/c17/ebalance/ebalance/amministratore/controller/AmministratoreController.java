@@ -87,7 +87,7 @@ public class AmministratoreController extends HttpServlet {
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
-    private void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+    public void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
@@ -126,7 +126,7 @@ public class AmministratoreController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
-    private void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
+    public void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
 
         AmministratoreBean amministratore = new AmministratoreBean();
 
