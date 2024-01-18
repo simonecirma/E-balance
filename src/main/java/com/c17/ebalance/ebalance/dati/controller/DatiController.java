@@ -67,6 +67,7 @@ public class DatiController extends HttpServlet {
                         bean = amministratoreService.getById(i);
                         amm.add(bean);
                     }
+
                     request.setAttribute("amm", amm);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
