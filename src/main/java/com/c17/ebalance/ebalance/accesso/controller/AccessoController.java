@@ -29,8 +29,7 @@ public class AccessoController extends HttpServlet {
         try {
             amministratore = login(email, pass, session);
             if (amministratore != null) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("DatiController?action=generaDashboard");
             } else {
                 request.setAttribute("result", "Credenziali sbagliate, riprova!");
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");

@@ -35,7 +35,7 @@ public class InteragisceBean {
         this.tipoSorgente = tipoSorgente;
     }
 
-    public boolean isFlagPreferenzaSorgente() {
+    public boolean getFlagPreferenzaSorgente() {
         return flagPreferenzaSorgente;
     }
 

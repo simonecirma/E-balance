@@ -97,8 +97,7 @@ public class ContrattoController extends HttpServlet {
         try {
             contrattoService.aggiungiContratto(bean);
             if (contrattoService.verificaPrimoContratto()) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("DatiController?action=generaDashboard");
             }
         } catch (SQLException e) {
             e.printStackTrace();

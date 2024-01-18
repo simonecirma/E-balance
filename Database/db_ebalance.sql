@@ -33,6 +33,7 @@ CREATE TABLE Report
     IdReport int NOT NULL AUTO_INCREMENT,
     DataEmissione date NOT NULL,
     IdAmministratore int NOT NULL,
+    NomeReport varchar(20) NOT NULL,
     PRIMARY KEY(IdReport),
     FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE cascade
 );
@@ -101,7 +102,7 @@ CREATE TABLE Sorgente
 (
     IdSorgente int NOT NULL AUTO_INCREMENT,
     Tipologia varchar(30) NOT NULL,
-    DataInstallazine date NOT NULL,
+    DataInstallazione date NOT NULL,
     ProduzioneAttuale float NOT NULL,
     FlagStatoSorgente bit NOT NULL,  --  0 = "Sorgente non funzionante/guasta" 1 = "Sorgente funzionante"
     FlagAttivazioneSorgente bit NOT NULL, --  0 = "Sorgente non in funzione" 1 = "Sorgente in funzione",
@@ -198,12 +199,12 @@ VALUES ("Edison", 5000000, 0.08, "2010-01-01", 120, 0.05, 05);
 INSERT INTO Contratto( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)
 VALUES ("Enel Energia", 6000000, 0.12, "2020-01-01", 120, 0.09, 01);
 
-INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2021-12-31", 03);
-INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2022-12-31", 04);
-INSERT INTO Report(DataEmissione, IdAmministratore)
-VALUES ("2023-12-31", 05);
+INSERT INTO Report(DataEmissione, IdAmministratore, NomeReport)
+VALUES ("2021-12-31", 03, "Report1.pdf");
+INSERT INTO Report(DataEmissione, IdAmministratore, NomeReport)
+VALUES ("2022-12-31", 04, "Report2.pdf");
+INSERT INTO Report(DataEmissione, IdAmministratore, NomeReport)
+VALUES ("2023-12-31", 05, "Report3.pdf");
 
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(5000, "2022-02-23", 450, 01);
@@ -444,27 +445,27 @@ VALUES("Pannello Fotovoltaico");
 INSERT INTO TipoSorgente(Tipo)
 VALUES("Servizio Elettrico Nazionale");
 
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Servizio Elettrico Nazionale", "2000-01-01", 0, 1, 0);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 10, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 5, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 25, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 40, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 2, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 80, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 19, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 54, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 9, 1, 1);
-INSERT INTO Sorgente(Tipologia, DataInstallazine, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
+INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 82, 1, 1);
 
 -- Crea una tabella temporanea con una colonna di date

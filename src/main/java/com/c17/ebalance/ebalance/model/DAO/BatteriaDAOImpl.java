@@ -1,6 +1,8 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
-import com.c17.ebalance.ebalance.model.entity.ConsumoEdificioBean;
+
+import com.c17.ebalance.ebalance.model.entity.BatteriaBean;
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -11,13 +13,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.List;
 
-public class ConsumoDAOImpl implements ConsumoDAO {
+public class BatteriaDAOImpl implements BatteriaDAO {
 
-    private static Logger logger = Logger.getLogger(ConsumoDAOImpl.class.getName());
+    private static Logger logger = Logger.getLogger(BatteriaDAOImpl.class.getName());
     private static DataSource ds;
 
     static {
@@ -31,16 +33,15 @@ public class ConsumoDAOImpl implements ConsumoDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
-    private static final String TABLE_NAME_CONSUMO = "ConsumoEdificio";
-    private static final String TABLE_NAME_ARCHIVIO = "ArchivioConsumo";
+    private static final String TABLE_NAME_BATTERIA = "Batteria";
 
-    public List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException {
+    public List<BatteriaBean> visualizzaBatteria() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        List<ConsumoEdificioBean> consumo = new ArrayList<>();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME_CONSUMO;
+        List<BatteriaBean> batteria = new ArrayList<>();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_BATTERIA;
 
         try {
             connection = ds.getConnection();
@@ -49,11 +50,12 @@ public class ConsumoDAOImpl implements ConsumoDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                ConsumoEdificioBean bean = new ConsumoEdificioBean();
-                bean.setIdEdificio(resultSet.getInt("IdEdificio"));
-                bean.setNomeEdificio(resultSet.getString("NomeEdificio"));
-                bean.setConsumoAttuale(resultSet.getFloat("ConsumoAttuale"));
-                consumo.add(bean);
+                BatteriaBean bean = new BatteriaBean();
+                bean.setIdBatteria(resultSet.getInt("IdBatteria"));
+                bean.setFlagStatoBatteria(resultSet.getBoolean("FlagStatoBatteria"));
+                bean.setCapacitaMax(resultSet.getFloat("CapacitaMax"));
+                bean.setPercentualeCarica(resultSet.getInt("PercentualeCarica"));
+                batteria.add(bean);
             }
         } finally {
             try {
@@ -66,6 +68,7 @@ public class ConsumoDAOImpl implements ConsumoDAO {
                 }
             }
         }
-        return consumo;
+        return batteria;
     }
+
 }

@@ -32,7 +32,7 @@ public class ParametriIABean {
         this.piano = piano;
     }
 
-    public boolean isFlagAttivazioneParametro() {
+    public boolean getFlagAttivazioneParametro() {
         return flagAttivazioneParametro;
     }
 

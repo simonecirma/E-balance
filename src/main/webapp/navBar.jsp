@@ -39,7 +39,7 @@
 <nav class="navbar">
 	<div class="navdiv">
 		<% if (email != null) { %>
-		<a href="dashboard.jsp">
+		<a href="DatiController?action=generaDashboard">
 			<img src="img/Logo.png" alt="Home" width="90" height="90">
 		</a>
 		<ul>
