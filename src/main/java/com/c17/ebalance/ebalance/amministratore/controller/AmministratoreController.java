@@ -26,9 +26,6 @@ public class AmministratoreController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
-    private ReportService reportService = new ReportServiceImpl();
-
-
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
         String action = request.getParameter("action");
@@ -62,21 +59,7 @@ public class AmministratoreController extends HttpServlet {
                     amministratoreService.rimuoviAmministratore(idAmministratore);
                     response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
                 }
-                if (action.equalsIgnoreCase("vediReport")) {
-                    List<ReportBean> report = reportService.visualizzaReport();
-                    request.setAttribute("report", report);
-                    List<AmministratoreBean> amm = new ArrayList<AmministratoreBean>();
-                    AmministratoreBean bean = new AmministratoreBean();
-                    for (ReportBean rep : report) {
-                        int i = rep.getIdAmministratore();
-                        bean = amministratoreService.getById(i);
-                        amm.add(bean);
-                    }
-                    request.setAttribute("amm", amm);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                    dispatcher.forward(request, response);
-                }
-                } else {
+            } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);
             }

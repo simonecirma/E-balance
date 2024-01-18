@@ -32,9 +32,9 @@ public class VenditaDAOImpl implements VenditaDAO {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT SUM (EnergiaVenduta) "
+            String query = "SELECT SUM(EnergiaVenduta) "
                     + "AS EnergiaTOTVenduta FROM Vendita "
-                    + "WHERE DataVendita BETWEEN ? AND ?";
+                    + "WHERE DataVendita BETWEEN ? AND ? ";
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);
@@ -54,7 +54,7 @@ public class VenditaDAOImpl implements VenditaDAO {
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "SELECT SUM (RicavoTotale) "
+            String query = "SELECT SUM(RicavoTotale) "
                     + "AS RicavoTOT FROM Vendita "
                     + "WHERE DataVendita BETWEEN ? AND ?";
             ps = con.prepareStatement(query);

@@ -5,6 +5,19 @@
 <%
     List<ReportBean> report = (List<ReportBean>) request.getAttribute("report");
     List<AmministratoreBean> amm = (List<AmministratoreBean>) request.getAttribute("amm");
+
+    float energia = 0.0F; // Valore di default
+    Object energiaObj = request.getAttribute("energia");
+    if (energiaObj instanceof Number) {
+        energia =  ((Number) energiaObj).floatValue();
+    }
+
+    float ricavo = 0.0F; // Valore di default
+    Object ricavoObj = request.getAttribute("ricavo");
+    if (ricavoObj instanceof Number) {
+        ricavo =  ((Number) ricavoObj).floatValue();
+    }
+
 %>
 <html>
 <head>
@@ -43,6 +56,49 @@
         </tbody>
     </table>
 
+    <form id="produzioneForm" action="DatiController?action=energiaVenduta" method="post">
+        Data inizio: <input type="date" name="dataInizio"><br>
+        Data fine: <input type="date" name="dataFine"><br>
+        <input type="submit">
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Energia</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td><%=energia%></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <form id="ricavoForm" action="DatiController?action=ricavoTotale" method="post">
+        Data inizio: <input type="date" name="dataInizio"><br>
+        Data fine: <input type="date" name="dataFine"><br>
+        <input type="submit">
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Ricavo</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr>
+            <td><%=ricavo%></td>
+
+        </tr>
+        </tbody>
+    </table>
 
 
 </body>
