@@ -17,10 +17,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
-public class ContrattoDAOImpl implements ContrattoDAO{
+public class ContrattoDAOImpl implements ContrattoDAO {
 
-    private static Logger logger = Logger.getLogger(AmministratoreDAOImpl.class.getName());
-
+    private static Logger logger = Logger.getLogger(ContrattoDAOImpl.class.getName());
     private static final String TABLE_NAME_CONTRATTO = "Contratto";
 
     private static DataSource ds;
