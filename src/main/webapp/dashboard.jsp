@@ -6,7 +6,7 @@
     float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
     List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
     //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
-    float produzioneSorgente[] = (float[]) request.getAttribute("produzioneSorgente");
+    float sommaProduzione[] = (float[]) request.getAttribute("sommaProduzione");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
     List<InteragisceBean> interazioneParametri = (List<InteragisceBean>) request.getAttribute("interazioneParametri");
 %>
@@ -27,10 +27,10 @@
         </tr>
         </thead>
         <tbody>
-        <% if (produzioneSorgente != null) {
-            for(int i=0;i<produzioneSorgente.length;i++) { %>
+        <% if (sommaProduzione != null) {
+            for(int i=0;i<sommaProduzione.length;i++) { %>
         <tr>
-            <td><%= produzioneSorgente[i] %></td>
+            <td><%= sommaProduzione[i] %></td>
         </tr>
         <% }
         }
