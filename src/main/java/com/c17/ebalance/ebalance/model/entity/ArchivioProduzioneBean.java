@@ -1,16 +1,16 @@
 package com.c17.ebalance.ebalance.model.entity;
 import java.util.Date;
 
-public class ProduzioneBean {
+public class ArchivioProduzioneBean {
     private int idProduzione;
     private Date dataProduzione;
     private float produzioneGiornaliera;
     private int idSorgente;
 
-    public ProduzioneBean() { }
+    public ArchivioProduzioneBean() { }
 
-    public ProduzioneBean(final int idProduzione, final Date dataProduzione,
-                          final float produzioneGiornaliera, final int idSorgente) {
+    public ArchivioProduzioneBean(final int idProduzione, final Date dataProduzione,
+                                  final float produzioneGiornaliera, final int idSorgente) {
         this.idProduzione = idProduzione;
         this.dataProduzione = dataProduzione;
         this.produzioneGiornaliera = produzioneGiornaliera;
