@@ -23,7 +23,7 @@ public class ProduzioneServiceImpl implements ProduzioneService {
     }
 
     @Override
-    public float[] ottieniProduzione() throws SQLException {
+    public String[][] ottieniProduzione() throws SQLException {
         return produzioneDAO.ottieniProduzione();
     }
 

@@ -14,4 +14,9 @@ public class ConsumoServiceImpl implements ConsumoService {
     public List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException {
         return consumoDAO.visualizzaConsumo();
     }
+
+    @Override
+    public float ottieniConsumiEdifici() throws SQLException {
+        return consumoDAO.ottieniConsumiEdifici();
+    }
 }

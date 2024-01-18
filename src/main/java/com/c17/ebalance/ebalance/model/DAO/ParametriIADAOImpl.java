@@ -2,8 +2,6 @@ package com.c17.ebalance.ebalance.model.DAO;
 
 import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
 import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
-import com.c17.ebalance.ebalance.model.entity.ReportBean;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -108,5 +106,43 @@ public class ParametriIADAOImpl implements ParametriIADAO {
             }
         }
         return interagisce;
+    }
+
+    @Override
+    public List<InteragisceBean> ottieniParametriAttivi() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        List<InteragisceBean> parametriAttivi = new ArrayList<>();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_INTERAGISCE + " WHERE idParametro IN (SELECT idparametro FROM "
+                + TABLE_NAME_PARAMETRI +" WHERE FlagAttivazioneParametro = TRUE) ORDER BY PrioritaSorgente";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                InteragisceBean bean = new InteragisceBean();
+                bean.setIdParametro(resultSet.getInt("IdParametro"));
+                bean.setTipoSorgente(resultSet.getString("TipoSorgente"));
+                bean.setFlagPreferenzaSorgente(resultSet.getBoolean("FlagPreferenzaSorgente"));
+                bean.setPercentualeUtilizzoSorgente(resultSet.getInt("PercentualeUtilizzoSorgente"));
+                bean.setPrioritaSorgente(resultSet.getInt("PrioritaSorgente"));
+                parametriAttivi.add(bean);
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return parametriAttivi;
     }
 }

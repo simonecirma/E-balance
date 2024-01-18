@@ -3,6 +3,9 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/Database/db_ebalance.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/c17/ebalance/ebalance/model/DAO/AmministratoreDAOImpl.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c17/ebalance/ebalance/model/DAO/ConsumoDAOImpl.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/c17/ebalance/ebalance/model/DAO/ContrattoDAOImpl.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/c17/ebalance/ebalance/model/DAO/ParametriIADAOImpl.java" dialect="MySQL" />
+    <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>

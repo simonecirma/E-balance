@@ -22,6 +22,7 @@ public class IAController extends HttpServlet {
         try {
             List<ParametriIABean> parametriIA = ottieniParametri();
             List<InteragisceBean> interazioneParametri = ottieniInterazioneParametri();
+            List<InteragisceBean> parametriAttivi = ottieniInterazioneParametri();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -38,6 +39,9 @@ public class IAController extends HttpServlet {
         return IAService.visualizzaInterazioneParametri();
     }
 
+    public List<InteragisceBean> ottieniParametriAttivi() throws SQLException {
+        return IAService.ottieniParametriAttivi();
+    }
     public void destroy() {
     }
 }

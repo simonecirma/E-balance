@@ -33,16 +33,20 @@ public class DatiController extends HttpServlet {
                     //request.setAttribute("batteria", batteria);
                     float percentualeBatterie = batteriaService.ottieniPercetualeBatteria();
                     request.setAttribute("percentualeBatterie", percentualeBatterie);
-                    List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
-                    request.setAttribute("consumoEdificio", consumoEdificio);
+                    //List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
+                    //request.setAttribute("consumoEdificio", consumoEdificio);
+                    float consumoEdifici = consumoService.ottieniConsumiEdifici();
+                    request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
                     //request.setAttribute("sorgente", sorgente);
-                    float sommaProduzione[] = produzioneService.ottieniProduzione();
+                    String sommaProduzione[][] = produzioneService.ottieniProduzione();
                     request.setAttribute("sommaProduzione", sommaProduzione);
-                    List<ParametriIABean> parametriIA = iaController.ottieniParametri();
+                    /*List<ParametriIABean> parametriIA = iaController.ottieniParametri();
                     request.setAttribute("parametriIA", parametriIA);
                     List<InteragisceBean> interazioneParametri = iaController.ottieniInterazioneParametri();
-                    request.setAttribute("interazioneParametri", interazioneParametri);
+                    request.setAttribute("interazioneParametri", interazioneParametri);*/
+                    List<InteragisceBean> parametriAttivi = iaController.ottieniParametriAttivi();
+                    request.setAttribute("parametriAttivi", parametriAttivi);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                     dispatcher.forward(request, response);
                 }

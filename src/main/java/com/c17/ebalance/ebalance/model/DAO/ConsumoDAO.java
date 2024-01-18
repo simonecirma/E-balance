@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ConsumoDAO {
     public List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException;
+
+    float ottieniConsumiEdifici() throws SQLException;
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface IAService {
     public List<ParametriIABean> visualizzaParametri() throws SQLException;
     public List<InteragisceBean> visualizzaInterazioneParametri() throws SQLException;
+    List<InteragisceBean> ottieniParametriAttivi() throws SQLException;
 }

@@ -19,4 +19,9 @@ public class IAServiceImpl implements IAService{
     public List<InteragisceBean> visualizzaInterazioneParametri() throws SQLException {
         return parametriIA.visualizzaInterazioneParametri();
     }
+
+    @Override
+    public List<InteragisceBean> ottieniParametriAttivi() throws SQLException {
+        return parametriIA.ottieniParametriAttivi();
+    }
 }

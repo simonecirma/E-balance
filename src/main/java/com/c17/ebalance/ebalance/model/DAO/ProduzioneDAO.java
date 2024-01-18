@@ -10,6 +10,6 @@ public interface ProduzioneDAO {
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException;
     public List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException;
 
-    float[] ottieniProduzione() throws SQLException;
+    String[][] ottieniProduzione() throws SQLException;
 
 }

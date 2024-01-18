@@ -8,5 +8,5 @@ import java.util.List;
 public interface ParametriIADAO {
     public List<ParametriIABean> visualizzaParametri() throws SQLException;
     public List<InteragisceBean> visualizzaInterazioneParametri() throws SQLException;
-
+    List<InteragisceBean> ottieniParametriAttivi() throws SQLException;
 }

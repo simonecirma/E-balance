@@ -68,4 +68,35 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         }
         return consumo;
     }
+
+    @Override
+    public float ottieniConsumiEdifici() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        float consumoEdifici = 0.0f;
+        String selectSQL = "SELECT ROUND(SUM(ConsumoAttuale),2) AS Consumo FROM " + TABLE_NAME_CONSUMO;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                consumoEdifici = resultSet.getFloat("Consumo");
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return consumoEdifici;
+    }
 }
