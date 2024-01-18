@@ -1,11 +1,10 @@
 package com.c17.ebalance.ebalance.dati.controller;
 
+import com.c17.ebalance.ebalance.IA.controller.IAController;
 import com.c17.ebalance.ebalance.dati.service.*;
-import com.c17.ebalance.ebalance.model.entity.ArchivioProduzioneBean;
-import com.c17.ebalance.ebalance.model.entity.BatteriaBean;
-import com.c17.ebalance.ebalance.model.entity.ConsumoEdificioBean;
-import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
+import com.c17.ebalance.ebalance.model.entity.*;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +16,8 @@ import java.util.List;
 @WebServlet(name = "DatiController", value = "/DatiController")
 public class DatiController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    private IAController iaController = new IAController();
     private BatteriaService batteriaService = new BatteriaServiceImpl();
     private ConsumoService consumoService = new ConsumoServiceImpl();
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
@@ -26,13 +27,25 @@ public class DatiController extends HttpServlet {
         String action = request.getParameter("action");
         try {
             if (action != null) {
-
+                if (action.equalsIgnoreCase("generaDashboard")) {
+                    List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
+                    request.setAttribute("batteria", batteria);
+                    List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
+                    request.setAttribute("consumoEdificio", consumoEdificio);
+                    List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
+                    request.setAttribute("sorgente", sorgente);
+                    List<ParametriIABean> parametriIA = iaController.ottieniParametri();
+                    request.setAttribute("parametriIA", parametriIA);
+                    List<InteragisceBean> interazioneParametri = iaController.ottieniInterazioneParametri();
+                    request.setAttribute("interazioneParametri", interazioneParametri);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
+                    dispatcher.forward(request, response);
+                }
             } else {
-                List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
-                List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
-                List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
+                dispatcher.forward(request, response);
             }
-        } catch (SQLException e) {
+        } catch (ServletException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

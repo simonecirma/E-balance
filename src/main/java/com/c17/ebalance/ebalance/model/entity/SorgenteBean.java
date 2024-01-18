@@ -54,7 +54,7 @@ public class SorgenteBean {
         this.produzioneAttuale = produzioneAttuale;
     }
 
-    public boolean isFlagStatoSorgente() {
+    public boolean getFlagStatoSorgente() {
         return flagStatoSorgente;
     }
 
@@ -62,7 +62,7 @@ public class SorgenteBean {
         this.flagStatoSorgente = flagStatoSorgente;
     }
 
-    public boolean isFlagAttivazioneSorgente() {
+    public boolean getFlagAttivazioneSorgente() {
         return flagAttivazioneSorgente;
     }
 

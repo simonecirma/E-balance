@@ -32,7 +32,8 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
-    private static final String TABLE_NAME = "ArchivioProduzione";
+    private static final String TABLE_NAME_ARCHIVIO = "ArchivioProduzione";
+    private static final String TABLE_NAME_SORGENTE = "Sorgente";
 
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException {
         Connection connection = null;
@@ -40,7 +41,8 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         ResultSet resultSet = null;
 
         List<ArchivioProduzioneBean> produzione = new ArrayList<>();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME;
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_ARCHIVIO;
+
 
         try {
             connection = ds.getConnection();
@@ -50,6 +52,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
 
             while (resultSet.next()) {
                 ArchivioProduzioneBean bean = new ArchivioProduzioneBean();
+                bean.setIdProduzione(resultSet.getInt("IdProduzione"));
                 bean.setDataProduzione(resultSet.getDate("DataProduzione"));
                 bean.setProduzioneGiornaliera(resultSet.getFloat("ProduzioneGiornaliera"));
                 produzione.add(bean);
@@ -68,7 +71,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         return produzione;
     }
 
-    private static final String TABLE_NAME_SORGENTE = "Sorgente";
+
     @Override
     public List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException {
         Connection connection = null;
@@ -86,8 +89,9 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
 
             while (resultSet.next()) {
                 SorgenteBean bean = new SorgenteBean();
+                bean.setIdSorgente(resultSet.getInt("IdSorgente"));
                 bean.setProduzioneAttuale(resultSet.getFloat("ProduzioneAttuale"));
-                bean.setDataInstallazione(resultSet.getDate("DataIstallazione"));
+                bean.setDataInstallazione(resultSet.getDate("DataInstallazione"));
                 bean.setTipologia(resultSet.getString("Tipologia"));
                 bean.setFlagAttivazioneSorgente(resultSet.getBoolean("FlagAttivazioneSorgente"));
                 bean.setFlagStatoSorgente(resultSet.getBoolean("FlagStatoSorgente"));

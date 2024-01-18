@@ -27,7 +27,7 @@
 <%
     if(email != null)
     {
-        response.sendRedirect("./dashboard.jsp");
+        response.sendRedirect("DatiController?action=generaDashboard");
     }
 %>
         <form method="post" name="invio" action="AccessoController" onsubmit="return validate()">

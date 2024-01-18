@@ -51,6 +51,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
 
             while (resultSet.next()) {
                 BatteriaBean bean = new BatteriaBean();
+                bean.setIdBatteria(resultSet.getInt("IdBatteria"));
                 bean.setFlagStatoBatteria(resultSet.getBoolean("FlagStatoBatteria"));
                 bean.setCapacitaMax(resultSet.getFloat("CapacitaMax"));
                 bean.setPercentualeCarica(resultSet.getInt("PercentualeCarica"));

@@ -32,6 +32,7 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         }
     }
     private static final String TABLE_NAME_CONSUMO = "ConsumoEdificio";
+    private static final String TABLE_NAME_ARCHIVIO = "ArchivioConsumo";
 
     public List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException {
         Connection connection = null;
@@ -49,6 +50,7 @@ public class ConsumoDAOImpl implements ConsumoDAO {
 
             while (resultSet.next()) {
                 ConsumoEdificioBean bean = new ConsumoEdificioBean();
+                bean.setIdEdificio(resultSet.getInt("IdEdificio"));
                 bean.setNomeEdificio(resultSet.getString("NomeEdificio"));
                 bean.setConsumoAttuale(resultSet.getFloat("ConsumoAttuale"));
                 consumo.add(bean);

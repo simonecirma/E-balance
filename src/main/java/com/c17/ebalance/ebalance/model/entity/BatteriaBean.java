@@ -24,7 +24,7 @@ public class BatteriaBean {
         this.idBatteria = idBatteria;
     }
 
-    public boolean isFlagStatoBatteria() {
+    public boolean getFlagStatoBatteria() {
         return flagStatoBatteria;
     }
 
