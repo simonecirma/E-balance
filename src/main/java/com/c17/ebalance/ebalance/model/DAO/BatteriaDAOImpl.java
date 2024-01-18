@@ -71,4 +71,37 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         return batteria;
     }
 
+    @Override
+    public float ottieniPercentualeBatterie() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        float percentuale = 0.0f;
+        String selectSQL = "SELECT  ROUND(SUM(PercentualeCarica)/3,2) AS Percentuale FROM " + TABLE_NAME_BATTERIA
+                + " WHERE FlagStatoBatteria = 1 ";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                percentuale = resultSet.getFloat("Percentuale");
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return percentuale;
+    }
+
 }

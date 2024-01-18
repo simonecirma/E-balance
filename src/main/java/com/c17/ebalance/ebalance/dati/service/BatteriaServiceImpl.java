@@ -14,4 +14,9 @@ public class BatteriaServiceImpl implements BatteriaService {
     public List<BatteriaBean> visualizzaBatteria() throws SQLException {
         return batteriaDAO.visualizzaBatteria();
     }
+
+    @Override
+    public float ottieniPercetualeBatteria() throws SQLException {
+        return batteriaDAO.ottieniPercentualeBatterie();
+    }
 }

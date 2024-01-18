@@ -110,4 +110,41 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         }
         return produzione;
     }
+
+    @Override
+    public float[] ottieniProduzione() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        float produzione[] = { 0.0f, 0.0f };
+        int i = 0;
+
+        String selectSQL = "SELECT  ROUND(SUM(ProduzioneAttuale),2) AS Produzione, Tipologia FROM " +TABLE_NAME_SORGENTE
+                            + " GROUP BY Tipologia";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                produzione[i] = resultSet.getFloat("Produzione");
+                i++;
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return produzione;
+    }
+
 }

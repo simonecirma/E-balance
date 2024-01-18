@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "DatiController", value = "/DatiController")
@@ -28,12 +29,16 @@ public class DatiController extends HttpServlet {
         try {
             if (action != null) {
                 if (action.equalsIgnoreCase("generaDashboard")) {
-                    List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
-                    request.setAttribute("batteria", batteria);
+                    //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
+                    //request.setAttribute("batteria", batteria);
+                    float percentualeBatterie = batteriaService.ottieniPercetualeBatteria();
+                    request.setAttribute("percentualeBatterie", percentualeBatterie);
                     List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
                     request.setAttribute("consumoEdificio", consumoEdificio);
-                    List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
-                    request.setAttribute("sorgente", sorgente);
+                    //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
+                    //request.setAttribute("sorgente", sorgente);
+                    float sommaProduzione[] = produzioneService.ottieniProduzione();
+                    request.setAttribute("sommaProduzione", sommaProduzione);
                     List<ParametriIABean> parametriIA = iaController.ottieniParametri();
                     request.setAttribute("parametriIA", parametriIA);
                     List<InteragisceBean> interazioneParametri = iaController.ottieniInterazioneParametri();

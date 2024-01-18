@@ -2,9 +2,11 @@
 <%@ page import="com.c17.ebalance.ebalance.model.entity.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<BatteriaBean> batterie = (List<BatteriaBean>) request.getAttribute("batteria");
+    //List<BatteriaBean> batterie = (List<BatteriaBean>) request.getAttribute("batteria");
+    float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
     List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
-    List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
+    //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
+    float produzioneSorgente[] = (float[]) request.getAttribute("produzioneSorgente");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
     List<InteragisceBean> interazioneParametri = (List<InteragisceBean>) request.getAttribute("interazioneParametri");
 %>
@@ -14,50 +16,21 @@
 </head>
 <body>
     <%@include file="navBar.jsp" %>
+    <h1>
+        Percentuale carica Batterie : <%= percentualeBatterie%>
+    </h1>
+    <br><br>
     <table>
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Percentuale Carica</th>
-            <th>Capacità</th>
-            <th>stato</th>
+            <th>Prod</th>
         </tr>
         </thead>
         <tbody>
-        <% if (batterie != null && !batterie.isEmpty()) {
-            for (BatteriaBean batt : batterie) { %>
+        <% if (produzioneSorgente != null) {
+            for(int i=0;i<produzioneSorgente.length;i++) { %>
         <tr>
-            <td><%= batt.getIdBatteria() %></td>
-            <td><%= batt.getPercentualeCarica() %></td>
-            <td><%= batt.getCapacitaMax() %></td>
-            <td><%= batt.getFlagStatoBatteria() %></td>
-        </tr>
-        <% }
-        }
-        %>
-        </tbody>
-    </table><br><br>
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Tipologia</th>
-            <th>Data</th>
-            <th>Produ</th>
-            <th>stato</th>
-            <th>attivazione</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% if (sorgenti != null && !sorgenti.isEmpty()) {
-            for (SorgenteBean sorgente : sorgenti) { %>
-        <tr>
-            <td><%= sorgente.getIdSorgente() %></td>
-            <td><%= sorgente.getTipologia() %></td>
-            <td><%= sorgente.getDataInstallazione() %></td>
-            <td><%= sorgente.getProduzioneAttuale() %></td>
-            <td><%= sorgente.getFlagStatoSorgente() %></td>
-            <td><%= sorgente.getFlagAttivazioneSorgente() %></td>
+            <td><%= produzioneSorgente[i] %></td>
         </tr>
         <% }
         }

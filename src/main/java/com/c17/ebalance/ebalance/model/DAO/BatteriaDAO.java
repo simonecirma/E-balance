@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BatteriaDAO {
     public List<BatteriaBean> visualizzaBatteria() throws SQLException;
+
+    float ottieniPercentualeBatterie() throws SQLException;
 }

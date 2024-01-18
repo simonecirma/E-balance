@@ -21,4 +21,10 @@ public class ProduzioneServiceImpl implements ProduzioneService {
     public List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException {
         return produzioneDAO.visualizzaProduzioneSorgente();
     }
+
+    @Override
+    public float[] ottieniProduzione() throws SQLException {
+        return produzioneDAO.ottieniProduzione();
+    }
+
 }

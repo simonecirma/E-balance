@@ -10,4 +10,7 @@ public interface ProduzioneService {
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException;
 
     public List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException;
+
+    float[] ottieniProduzione() throws SQLException;
+
 }

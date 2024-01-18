@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BatteriaService {
     public List<BatteriaBean> visualizzaBatteria() throws SQLException;
+
+    float ottieniPercetualeBatteria() throws SQLException;
 }
