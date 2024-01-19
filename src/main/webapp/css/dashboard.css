@@ -173,7 +173,6 @@ th {
     background-color: white;
     border: 2px solid black;
 }
-
 .battery span {
     height: 25%;
     margin: 3.5px;
@@ -183,8 +182,6 @@ th {
 .section-expanded .battery span{
     border-radius: 20px;
 }
-
-
 .battery .box,
 .battery span {
     background-color: white;

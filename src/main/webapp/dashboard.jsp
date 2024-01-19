@@ -23,7 +23,7 @@
     <div class="dashboard">
         <div class="section" onclick="toggleExpansion(1)">
             <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro.png" id="img"></button></a>
+                <img src="img/indietro1.png" id="img"></button></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 4 -->
@@ -49,7 +49,7 @@
         <div class="section" onclick="toggleExpansion(2)">
             <a href="DatiController?action=generaDashboard">
                 <button class="section-button">
-                <img src="img/indietro.png" id="img"></button></a>
+                <img src="img/indietro1.png" id="img"></button></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 1 -->
@@ -83,7 +83,7 @@
 
         <div class="section" onclick="toggleExpansion(3)">
             <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro.png" id="img"></button></a>
+                <img src="img/indietro1.png" id="img"></button></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
@@ -95,7 +95,7 @@
         </div>
         <div class="section" onclick="toggleExpansion(4)">
             <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro.png" id="img"></button></a>
+                <img src="img/indietro1.png" id="img"></button></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 2 -->
@@ -108,7 +108,7 @@
         </div>
         <div class="section" onclick="toggleExpansion(5)">
             <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro.png" id="img"></button></a>
+                <img src="img/indietro1.png" id="img"></button></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 5 -->
@@ -144,7 +144,6 @@
                     <%
                         }
                     %>
-
                     <table id="tab1">
                         <tbody>
                         <tr>
@@ -174,7 +173,7 @@
         </div>
         <div class="section" onclick="toggleExpansion(6)">
             <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro.png" id="img"></button></a>
+                <img src="img/indietro1.png" id="img"></button></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 6 -->
