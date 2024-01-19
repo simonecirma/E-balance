@@ -31,7 +31,6 @@
                <div class="chart-container">
                  <canvas class="my-chart"></canvas>
                </div>
-
                <div class="details">
                  <ul></ul>
                </div>

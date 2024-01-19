@@ -9,7 +9,6 @@ function toggleExpansion(index) {
         }
     });
 
-    // Nasconde gli altri div quando uno è espanso
     document.querySelectorAll('.dashboard .section:not(.section-expanded)').forEach((section) => {
         section.style.display = 'none';
     });
