@@ -1,12 +1,6 @@
 language: java
 jdk:
-  - openjdk11
-
-before_install:
-  - curl -LO https://corretto.aws/downloads/latest/amazon-corretto-17-x64-linux-jdk.tar.gz
-  - tar -xvf amazon-corretto-17-x64-linux-jdk.tar.gz
-  - export JAVA_HOME=$PWD/amazon-corretto-17.0.0.0-jdk
-  - export PATH=$JAVA_HOME/bin:$PATH
+  - openjdk17
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
@@ -15,8 +9,7 @@ addons:
   sonarcloud:
     organization: "ssilvestri15"
     token:
-      secure: "EtwfcmV8LYLT1hEet1sgS0jcWTdcgIfDtjKwp899n6M+Q2FBQNitqzdmxPkRUeY290bmF6s03hsVViyJvXQDyNgwmzwOcGGuUJIcK7/TsSHDBgu1wymzpDqKN5hDQsrCdI0vClAnhO5aQ11vX6qRZU4ng464/2pFd4prZq+qx8HouaVFArvZGy7JptUu7iZshVApHRvjZ50mJHyIVIeZkfBK4Yleq0UWNPVRWXqHNsXFZeYj5sHttZPmjEbWn/4PrPAC7tNn9KSI3Y/sHa4ZlTpZJXcOsj4yBq/J5uzdJ+1hbT0g65xb4WGSrO3J7vcUE2DTLsTzI9GfWgq+dEuZ/Sv69Si5r1Ya8ekGvBlAjLoLWu2itIaoxrmvTUy34jaqPE0nePyRL578AC3cYoLeNCUHVcl/Y6+gN3bEuAmYinf4wBw6N2BQxFGIoUuae+y9Cd/WDIU2PWxK9PsKc1z+hDlYZ2+8TV3I3wlGtIRgsyZFrYKn1oildJh4N7abQspme3UHFvvgMK2CIMvscs1iLy17ehp+yBtAZspFBsLeDA2d++/BXZIgFDpAPQiegVt7RvE4wJehgTvCrH02kjGoyPzaTqRLZmDfwHEpLcCToRIvMuO1aSVnyZBhVN8mdNqU5aRgMpPdPyNayvMywUIj/OqnoKurEnZYIy6hTls+Rk8="
-
+      secure: "ohVbzcE1lgOc/xJxngREI086ecqdSt2Jk0o99UxZJboCMvhFOmDGavj+fl/DOkPdUcXoVReosCvvNwYlGv7HH0NO1dpHb4LzHd7jZ+wCrLJobEqZKHYlwv2TiIXwkRKWiWj3YwuFUvPugR5e0cRieDyqPOtU1odWcyS3uj7ps/piV82mwRCguK65c0xSkJpypjT9p78R6TT/TrkdG5Gu/bkNjugmnl7ttHT0iIassGlxQ/l/alILlurEXY8WI2N+BCfMaQT+eKSr/IiI2qVUT8f65NguBh/8c6o15+Xn5ljw4EpM1xa6as4iosR7cNww/AeXJ+twz8svYr2SprJ8KN8eJ+PfClTtrCuoBkEQzcGFmUcjlkkCTVc4o1syb7WxgCrs1ocGc1UPOlEIzvDgpIBkyFCKFQPwmponeEAadBkhXHF3oSeQ7jIZtXyomPcnRd+TN20Q29fguWtG/FWjDOsovypuE9LcdfY0/eQAK7nzQYFxDmZZYC6jiqUnqiLPpLUIEumIoRtj6OwLrZwnfooUqPdR01lnWhjeLywHM7ppPNete/9pE4JAWx19gMsugnTzsr30fPxFi2AGU2V1ks4JTMe3zxEbnUbYP2P+MIZrDSfeBJaWD54HHEMMRWPbTHcFOaAipzTnq0/7ahNga/AfBwKyIAPSgtA56bto2mE="
 
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ssilvestri15_ebalance_c17
