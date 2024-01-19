@@ -1,9 +1,15 @@
 language: java
 jdk:
-  - openjdk11
+  - openjdk17
 
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
+addons:
+  sonarcloud:
+    organization: "ssilvestri15"
+    token:
+      secure: "ohVbzcE1lgOc/xJxngREI086ecqdSt2Jk0o99UxZJboCMvhFOmDGavj+fl/DOkPdUcXoVReosCvvNwYlGv7HH0NO1dpHb4LzHd7jZ+wCrLJobEqZKHYlwv2TiIXwkRKWiWj3YwuFUvPugR5e0cRieDyqPOtU1odWcyS3uj7ps/piV82mwRCguK65c0xSkJpypjT9p78R6TT/TrkdG5Gu/bkNjugmnl7ttHT0iIassGlxQ/l/alILlurEXY8WI2N+BCfMaQT+eKSr/IiI2qVUT8f65NguBh/8c6o15+Xn5ljw4EpM1xa6as4iosR7cNww/AeXJ+twz8svYr2SprJ8KN8eJ+PfClTtrCuoBkEQzcGFmUcjlkkCTVc4o1syb7WxgCrs1ocGc1UPOlEIzvDgpIBkyFCKFQPwmponeEAadBkhXHF3oSeQ7jIZtXyomPcnRd+TN20Q29fguWtG/FWjDOsovypuE9LcdfY0/eQAK7nzQYFxDmZZYC6jiqUnqiLPpLUIEumIoRtj6OwLrZwnfooUqPdR01lnWhjeLywHM7ppPNete/9pE4JAWx19gMsugnTzsr30fPxFi2AGU2V1ks4JTMe3zxEbnUbYP2P+MIZrDSfeBJaWD54HHEMMRWPbTHcFOaAipzTnq0/7ahNga/AfBwKyIAPSgtA56bto2mE="
+
 script:
-  - mvn test jacoco:report
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ssilvestri15_ebalance_c17
