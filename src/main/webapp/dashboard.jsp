@@ -15,47 +15,63 @@
 <html>
 <head>
     <title>Dashboard</title>
+    <link href="css/dashboard.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+    <script src="js/dashboard.js"></script>
     <%@include file="navBar.jsp" %>
-    <h1>
-        Percentuale carica Batterie : <%= percentualeBatterie%>
-    </h1>
-    <br><br>
-    <table>
-        <thead>
-        <tr>
-            <th>Prod</th>
-            <th>Sorg</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% if (sommaProduzione != null) {
-            for(int i=0;i<sommaProduzione.length;i++) { %>
-        <tr>
-            <td><%= sommaProduzione[i][0] %></td>
-            <td><%= sommaProduzione[i][1] %></td>
+    <div class="dashboard">
+        <div class="section" onclick="toggleExpansion(1)">
+            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <div class="content">
+                <!-- Contenuto della sezione 4 -->
+                <h3>Stato attuale batteria</h3>
+                <%= percentualeBatterie%>
+                <!-- <div class="programming-stats">
+               <div class="chart-container">
+                 <canvas class="my-chart"></canvas>
+               </div>
 
-        </tr>
-        <% }
-        }
-        %>
-        </tbody>
-    </table><br><br>
+               <div class="details">
+                 <ul></ul>
+               </div>
+             </div>-->
+            </div>
+        </div>
 
-        <% if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
-            for (InteragisceBean par : parametriAttivi) {
-                if (par.getFlagPreferenzaSorgente())
-                {
-        %>
-                Preferenza Sorgente: <%= par.getTipoSorgente() %> <br>
-        <%
-                }
-        %>
-                Percentuale Utilizzo "<%= par.getTipoSorgente() %>": <%= par.getPercentualeUtilizzoSorgente()%><br>
-        <%
-            }
-        %>
+        <div class="section" onclick="toggleExpansion(2)">
+            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <div class="content">
+                <!-- Contenuto della sezione 1 -->
+                <h3>Energia prodotta</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Prod</th>
+                        <th>Sorg</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% if (sommaProduzione != null) {
+                        for(int i=0;i<sommaProduzione.length;i++) { %>
+                    <tr>
+                        <td><%= sommaProduzione[i][0] %></td>
+                        <td><%= sommaProduzione[i][1] %></td>
+
+                    </tr>
+                    <% }
+                    }
+                    %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" onclick="toggleExpansion(3)">
+            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <div class="content">
+                <!-- Contenuto della sezione 3 -->
+                <h3>Priorità sorgenti</h3>
                 <table>
                     <tbody>
                     <tr>
@@ -63,25 +79,131 @@
                         <td>
                             <table>
                                 <% for (InteragisceBean par : parametriAttivi) {
-                                        if (par.getFlagPreferenzaSorgente())
-                                        {
+                                    if (par.getFlagPreferenzaSorgente())
+                                    {
                                 %>
                                 <thead><tr><th>1- <%= par.getTipoSorgente() %></th></thead>
                                 <tbody><tr><td>2- <%= par.getTipoSorgente() %></td></tr></tbody>
                                 <%
-                                        }
+                                    }
                                 %>
                             </table>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-        <%          }
-        }
-        %>
+                <%
+                                }
+                %>
 
-    <h1>
-        Consumo attuale edifici : <%= consumoEdifici%>
-    </h1>
+            </div>
+        </div>
+        <div class="section" onclick="toggleExpansion(4)">
+            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <div class="content">
+                <!-- Contenuto della sezione 2 -->
+                <h3>Consumi attuale</h3>
+                <%= consumoEdifici%>
+            </div>
+        </div>
+        <div class="section" onclick="toggleExpansion(5)">
+            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <div class="content">
+                <!-- Contenuto della sezione 5 -->
+                <h3>Parametri IA</h3>
+                <% if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
+                    for (InteragisceBean par : parametriAttivi) {
+                        if (par.getFlagPreferenzaSorgente())
+                        {
+                %>
+                Preferenza Sorgente: <%= par.getTipoSorgente() %> <br>
+                <%
+                    }
+                %>
+                Percentuale Utilizzo "<%= par.getTipoSorgente() %>": <%= par.getPercentualeUtilizzoSorgente()%><br>
+                <%
+                    }
+                %>
+                <%
+                   }
+                %>
+            </div>
+        </div>
+        <div class="section" onclick="toggleExpansion(6)">
+            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <div class="content">
+                <!-- Contenuto della sezione 6 -->
+                <h3>Previsioni meteo</h3>
+            </div>
+        </div>
+    </div>
+<script>
+    function toggleExpansion(index) {
+        const sections = document.querySelectorAll('.dashboard .section');
+
+        sections.forEach((section, i) => {
+            if (i + 1 === index) {
+                section.classList.toggle('section-expanded');
+            } else {
+                section.classList.remove('section-expanded');
+            }
+        });
+
+        // Nasconde gli altri div quando uno è espanso
+        document.querySelectorAll('.dashboard .section:not(.section-expanded)').forEach((section) => {
+            section.style.display = 'none';
+        });
+
+        // Mostra tutti i div quando nessuno è espanso
+        if (!document.querySelector('.dashboard .section-expanded')) {
+            document.querySelectorAll('.dashboard .section').forEach((section) => {
+                section.style.display = 'block';
+            });
+        }
+    }
+    const chartData = {
+        labels: ["Python", "Java", "JavaScript", "C#", "Others"],
+        data: [30, 17, 10, 7, 36],
+    };
+
+    const myChart = document.querySelector(".my-chart");
+    const ul = document.querySelector(".programming-stats .details ul");
+
+    new Chart(myChart, {
+        type: "doughnut",
+        data: {
+            labels: chartData.labels,
+            datasets: [
+                {
+                    label: "Language Popularity",
+                    data: chartData.data,
+                },
+            ],
+        },
+        options: {
+            borderWidth: 10,
+            borderRadius: 2,
+            hoverBorderWidth: 0,
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+        },
+    });
+
+    const populateUl = () => {
+        chartData.labels.forEach((l, i) => {
+            let li = document.createElement("li");
+            li.innerHTML = `${l}: <span class='percentage'>${chartData.data[i]}%</span>`;
+            ul.appendChild(li);
+        });
+    };
+
+    populateUl();
+
+</script>
+
+    </script>
 </body>
 </html>
