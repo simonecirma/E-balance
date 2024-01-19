@@ -5,15 +5,21 @@
     height: 540px;
     margin-top: 10px;
 }
+.content{
+    text-align: center;
+}
 .dashboard .section {
     position: relative;
     border: 2px solid #000;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 10px;
     cursor: pointer;
     transition: transform 0.5s ease-in-out;
     text-align: center;
     overflow: hidden;
+}
+h3{
+    margin-top: 20px;
 }
 .dashboard .section:hover {
     transform: scale(1.05);
@@ -34,32 +40,22 @@
     top: 10px;
     left: 10px;
     cursor: pointer;
-    font-size: 16px;
-    color: #fff;
-    background-color: #333;
     padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
     display: none;
+    background-color: white;
+    width: 80px;
+    height: 50px;
+    border-radius: 50px;
 }
 .section-expanded .section-button {
     display: block;
 }
-.chart-heading {
-    font-family: "Rubik", sans-serif;
-    color: #023047;
-    text-transform: uppercase;
-    font-size: 24px;
-    text-align: center;
+.content > *:not(.initial-content) {
+    display: none; /
 }
-
-.chart-container {
-    width: 70%;
+.dashboard .section.section-expanded .expanded-content {
+    display: block;
 }
-.chart-container .section-expanded{
-    width: 100%;
-}
-
 .programming-stats {
     font-family: "Rubik", sans-serif;
     display: flex;
@@ -88,7 +84,159 @@
     text-transform: uppercase;
 }
 
-.programming-stats .details .percentage {
-    font-weight: 700;
-    color: #e63946;
+#img{
+    width: 60px;
+    height: 30px;
+}
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 15px auto;
+}
+#tab{
+    width: 90%;
+    font-size: 13px;
+}
+#tab1{
+    width: 90%;
+    font-size: 13px;
+    margin-top: -10px;
+}
+.section-expanded .content table{
+    width: 70%;
+    font-size: 16px;
+    margin: 15px auto;
+}
+.section-expanded .content #tab{
+    width: 70%;
+    font-size: 16px;
+    margin: 15px auto;
+}
+.section-expanded .content #tab1{
+    width: 70%;
+    font-size: 16px;
+    margin: 15px auto;
+}
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Aggiunto per dividere le colonne */
+.single-column {
+    width: 30%; /* Imposta la larghezza desiderata della colonna di sinistra */
+}
+.battery {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 120px;
+    width: 70px;
+    border: 2px solid black;;
+    border-radius: 10px;
+}
+.section-expanded .battery{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 190px;
+    width: 130px;
+    border: 2px solid black;;
+    border-radius: 20px;
+}
+.batt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+.section-expanded .batt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.box {
+    position: absolute;
+    height: 10px;
+    width: 300px;
+    bottom: 100%;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.battery span {
+    height: 25%;
+    margin: 3.5px;
+    width: 95%;
+    border-radius: 10px;
+}
+.section-expanded .battery span{
+    border-radius: 20px;
+}
+
+
+.battery .box,
+.battery span {
+    background-color: white;
+}
+
+.battery .box {
+    animation: none;
+}
+
+#s1 {
+    background-color: red;
+}
+
+#s2 {
+    background-color: orange;
+}
+
+#s3{
+    background-color: yellow;
+}
+
+#s4 {
+    background-color: limegreen;
+}
+
+.battery .box,
+.battery span {
+    animation: none;
+}
+#batteryText{
+    margin-top: 10px;
+}
+.battery .box {
+    height: 10px;
+    width: 30px;
+}
+.section-expanded .battery .box{
+    height: 20px;
+    width: 60px;
+}
+
+@keyframes anime {
+    0% {
+        background-color: red;
+    }
+    25% {
+        background-color: orange;
+    }
+    50% {
+        background-color: yellow;
+    }
+    100% {
+        background-color: limegreen;
+    }
 }

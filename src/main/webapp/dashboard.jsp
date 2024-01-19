@@ -22,187 +22,232 @@
     <%@include file="navBar.jsp" %>
     <div class="dashboard">
         <div class="section" onclick="toggleExpansion(1)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <a href="DatiController?action=generaDashboard"><button class="section-button">
+                <img src="img/indietro.png" id="img"></button></a>
             <div class="content">
+                <div class="initial-content">
                 <!-- Contenuto della sezione 4 -->
-                <h3>Stato attuale batteria</h3>
-                <%= percentualeBatterie%>
-                <!-- <div class="programming-stats">
-               <div class="chart-container">
-                 <canvas class="my-chart"></canvas>
-               </div>
-               <div class="details">
-                 <ul></ul>
-               </div>
-             </div>-->
+                    <h3>Stato attuale batteria</h3>
+                    <div class="batt">
+                        <div class="battery" id="battery">
+                            <div class="box"></div>
+                            <span id="s1"></span>
+                            <span id="s2"></span>
+                            <span id="s3"></span>
+                            <span id="s4"></span>
+                            <span id="s5"></span>
+                        </div>
+                    </div>
+                    <input type="hidden" id="batteryInput" value="<%= percentualeBatterie%>" oninput="updateBattery()">
+                    <div id="batteryText">0%</div>
+                </div>
+                <div class="expanded-content">
+                </div>
             </div>
         </div>
 
         <div class="section" onclick="toggleExpansion(2)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <a href="DatiController?action=generaDashboard">
+                <button class="section-button">
+                <img src="img/indietro.png" id="img"></button></a>
             <div class="content">
+                <div class="initial-content">
                 <!-- Contenuto della sezione 1 -->
-                <h3>Energia prodotta</h3>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Prod</th>
-                        <th>Sorg</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% if (sommaProduzione != null) {
-                        for(int i=0;i<sommaProduzione.length;i++) { %>
-                    <tr>
-                        <td><%= sommaProduzione[i][0] %></td>
-                        <td><%= sommaProduzione[i][1] %></td>
+                    <h3>Energia prodotta</h3>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Prod</th>
+                            <th>Sorg</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% if (sommaProduzione != null) {
+                            for(int i=0;i<sommaProduzione.length;i++) { %>
+                        <tr>
+                            <td><%= sommaProduzione[i][0] %></td>
+                            <td><%= sommaProduzione[i][1] %></td>
 
-                    </tr>
-                    <% }
-                    }
-                    %>
-                    </tbody>
-                </table>
+                        </tr>
+                        <% }
+                        }
+                        %>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="expanded-content">
+
+                </div>
             </div>
         </div>
 
         <div class="section" onclick="toggleExpansion(3)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <a href="DatiController?action=generaDashboard"><button class="section-button">
+                <img src="img/indietro.png" id="img"></button></a>
             <div class="content">
+                <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
-                <h3>Priorità sorgenti</h3>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td>Priorità Sorgenti</td>
-                        <td>
-                            <table>
-                                <% for (InteragisceBean par : parametriAttivi) {
-                                    if (par.getFlagPreferenzaSorgente())
-                                    {
-                                %>
-                                <thead><tr><th>1- <%= par.getTipoSorgente() %></th></thead>
-                                <tbody><tr><td>2- <%= par.getTipoSorgente() %></td></tr></tbody>
-                                <%
-                                    }
-                                %>
-                            </table>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <%
-                                }
-                %>
-
+                    <h3>Priorità sorgenti</h3>
+                </div>
+                <div class="expanded-content">
+                </div>
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(4)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <a href="DatiController?action=generaDashboard"><button class="section-button">
+                <img src="img/indietro.png" id="img"></button></a>
             <div class="content">
+                <div class="initial-content">
                 <!-- Contenuto della sezione 2 -->
-                <h3>Consumi attuale</h3>
-                <%= consumoEdifici%>
+                    <h3>Consumi attuali</h3>
+                </div>
+                <div class="expanded-content">
+                    <%= consumoEdifici%>
+                </div>
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(5)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <a href="DatiController?action=generaDashboard"><button class="section-button">
+                <img src="img/indietro.png" id="img"></button></a>
             <div class="content">
+                <div class="initial-content">
                 <!-- Contenuto della sezione 5 -->
-                <h3>Parametri IA</h3>
-                <% if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
-                    for (InteragisceBean par : parametriAttivi) {
-                        if (par.getFlagPreferenzaSorgente())
-                        {
-                %>
-                Preferenza Sorgente: <%= par.getTipoSorgente() %> <br>
-                <%
-                    }
-                %>
-                Percentuale Utilizzo "<%= par.getTipoSorgente() %>": <%= par.getPercentualeUtilizzoSorgente()%><br>
-                <%
-                    }
-                %>
-                <%
-                   }
-                %>
+                    <h3>Parametri IA</h3>
+                    <%
+                        if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
+                    %>
+                    <table id="tab">
+                        <thead>
+
+                        </thead>
+                        <tbody>
+                        <%
+                            for (InteragisceBean par : parametriAttivi) {
+                                if (par.getFlagPreferenzaSorgente()) {
+                        %>
+                        <tr>
+                            <td>Preferenza Sorgente: <%= par.getTipoSorgente() %></td>
+                            <td></td> <!-- Colonna vuota per allineare la tabella -->
+                        </tr>
+                        <%
+                            }
+                        %>
+                        <tr>
+                            <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
+                            <td><%= par.getPercentualeUtilizzoSorgente()%></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <%
+                        }
+                    %>
+
+                    <table id="tab1">
+                        <tbody>
+                        <tr>
+                            <td rowspan="2">Priorità Sorgenti</td>
+                            <% for (InteragisceBean par : parametriAttivi) {
+                                if (par.getFlagPreferenzaSorgente())
+                                {
+                            %>
+                            <td>1- <%= par.getTipoSorgente() %></td>
+                        </tr>
+                        <tr>
+                            <td>2- <%= par.getTipoSorgente() %></td>
+                            <%
+                                }
+                            %>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <%
+                        }
+                    %>
+                </div>
+                <div class="expanded-content">
+
+            </div>
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(6)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button" onclick="closeSection(1)">Chiudi</button></a>
+            <a href="DatiController?action=generaDashboard"><button class="section-button">
+                <img src="img/indietro.png" id="img"></button></a>
             <div class="content">
+                <div class="initial-content">
                 <!-- Contenuto della sezione 6 -->
-                <h3>Previsioni meteo</h3>
+                    <h3>Previsioni meteo</h3>
+                </div>
+                <div class="expanded-content">
+                </div>
             </div>
         </div>
     </div>
-<script>
-    function toggleExpansion(index) {
-        const sections = document.querySelectorAll('.dashboard .section');
+    <script>
+        function toggleExpansion(index) {
+            const sections = document.querySelectorAll('.dashboard .section');
 
-        sections.forEach((section, i) => {
-            if (i + 1 === index) {
-                section.classList.toggle('section-expanded');
-            } else {
-                section.classList.remove('section-expanded');
-            }
-        });
-
-        // Nasconde gli altri div quando uno è espanso
-        document.querySelectorAll('.dashboard .section:not(.section-expanded)').forEach((section) => {
-            section.style.display = 'none';
-        });
-
-        // Mostra tutti i div quando nessuno è espanso
-        if (!document.querySelector('.dashboard .section-expanded')) {
-            document.querySelectorAll('.dashboard .section').forEach((section) => {
-                section.style.display = 'block';
+            sections.forEach((section, i) => {
+                if (i + 1 === index) {
+                    section.classList.add('section-expanded');
+                } else {
+                    section.classList.remove('section-expanded');
+                }
             });
+
+            // Nasconde gli altri div quando uno è espanso
+            document.querySelectorAll('.dashboard .section:not(.section-expanded)').forEach((section) => {
+                section.style.display = 'none';
+            });
+
+            // Mostra tutti i div quando nessuno è espanso
+            if (!document.querySelector('.dashboard .section-expanded')) {
+                document.querySelectorAll('.dashboard .section').forEach((section) => {
+                    section.style.display = 'block';
+                });
+            }
         }
-    }
-    const chartData = {
-        labels: ["Python", "Java", "JavaScript", "C#", "Others"],
-        data: [30, 17, 10, 7, 36],
-    };
 
-    const myChart = document.querySelector(".my-chart");
-    const ul = document.querySelector(".programming-stats .details ul");
+        function updateBattery() {
+            const input = document.getElementById('batteryInput');
+            const battery = document.getElementById('battery');
+            const batteryText = document.getElementById('batteryText');
+            const spans = battery.querySelectorAll('span');
+            let value = parseInt(input.value, 10);
 
-    new Chart(myChart, {
-        type: "doughnut",
-        data: {
-            labels: chartData.labels,
-            datasets: [
-                {
-                    label: "Language Popularity",
-                    data: chartData.data,
-                },
-            ],
-        },
-        options: {
-            borderWidth: 10,
-            borderRadius: 2,
-            hoverBorderWidth: 0,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-        },
-    });
+            if (isNaN(value) || value < 0 || value > 100) {
+                value = 0;
+            }
 
-    const populateUl = () => {
-        chartData.labels.forEach((l, i) => {
-            let li = document.createElement("li");
-            li.innerHTML = `${l}: <span class='percentage'>${chartData.data[i]}%</span>`;
-            ul.appendChild(li);
-        });
-    };
+            const numberOfColoredSpans = Math.max(1, Math.floor((value / 100) * spans.length));
 
-    populateUl();
+            spans.forEach((span) => {
+                span.style.backgroundColor = 'white';
+            });
 
-</script>
+            for (let i = 0; i < numberOfColoredSpans; i++) {
+                spans[i].style.backgroundColor = getBatteryColor(value);
+            }
 
+            batteryText.textContent = value + '%';
+        }
+
+        function getBatteryColor(value) {
+            if (value > 74) {
+                return 'limegreen';
+            } else if (value > 49) {
+                return 'yellow';
+            } else if (value > 24) {
+                return 'orange';
+            } else {
+                return 'red';
+            }
+        }
+
+        updateBattery();
     </script>
+
 </body>
 </html>
