@@ -3,11 +3,14 @@ jdk:
   - openjdk11
 
 before_install:
-  - wget -O /tmp/corretto-17.tar.gz https://corretto.aws/downloads/resources/latest/amazon-corretto-17-x64-linux-jdk.tar.gz
-  - tar xvf /tmp/corretto-17.tar.gz
-  - export JAVA_HOME=/tmp/amazon-corretto-17.x.y.z-jdk
+  - export CORRETTO_VERSION=$(curl -s https://corretto.aws/[latest/latest_checksum]/ | grep -o 'amazon-corretto-17.*-linux-jdk.tar.gz' | cut -d'-' -f3)
+  - export CORRETTO_CHECKSUM_URL="https://corretto.aws/[latest/latest_checksum]/${CORRETTO_VERSION}/amazon-corretto-${CORRETTO_VERSION}-x64-linux-jdk.tar.gz"
+  - export CORRETTO_TAR_FILE="/tmp/amazon-corretto-${CORRETTO_VERSION}-x64-linux-jdk.tar.gz"
+  - wget -O $CORRETTO_TAR_FILE $CORRETTO_CHECKSUM_URL
+  - tar xvf $CORRETTO_TAR_FILE
+  - export JAVA_HOME=/tmp/amazon-corretto-${CORRETTO_VERSION}-x64-linux-jdk
   - export PATH=$JAVA_HOME/bin:$PATH
-
+  
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
