@@ -2,8 +2,21 @@ language: java
 jdk:
   - openjdk11
 
+before_install:
+  - wget -O /tmp/corretto-17.tar.gz https://corretto.aws/downloads/resources/latest/amazon-corretto-17-x64-linux-jdk.tar.gz
+  - tar xvf /tmp/corretto-17.tar.gz
+  - export JAVA_HOME=/tmp/amazon-corretto-17.x.y.z-jdk
+  - export PATH=$JAVA_HOME/bin:$PATH
+
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
+addons:
+  sonarcloud:
+    organization: "ssilvestri15"
+    token:
+      secure: "EtwfcmV8LYLT1hEet1sgS0jcWTdcgIfDtjKwp899n6M+Q2FBQNitqzdmxPkRUeY290bmF6s03hsVViyJvXQDyNgwmzwOcGGuUJIcK7/TsSHDBgu1wymzpDqKN5hDQsrCdI0vClAnhO5aQ11vX6qRZU4ng464/2pFd4prZq+qx8HouaVFArvZGy7JptUu7iZshVApHRvjZ50mJHyIVIeZkfBK4Yleq0UWNPVRWXqHNsXFZeYj5sHttZPmjEbWn/4PrPAC7tNn9KSI3Y/sHa4ZlTpZJXcOsj4yBq/J5uzdJ+1hbT0g65xb4WGSrO3J7vcUE2DTLsTzI9GfWgq+dEuZ/Sv69Si5r1Ya8ekGvBlAjLoLWu2itIaoxrmvTUy34jaqPE0nePyRL578AC3cYoLeNCUHVcl/Y6+gN3bEuAmYinf4wBw6N2BQxFGIoUuae+y9Cd/WDIU2PWxK9PsKc1z+hDlYZ2+8TV3I3wlGtIRgsyZFrYKn1oildJh4N7abQspme3UHFvvgMK2CIMvscs1iLy17ehp+yBtAZspFBsLeDA2d++/BXZIgFDpAPQiegVt7RvE4wJehgTvCrH02kjGoyPzaTqRLZmDfwHEpLcCToRIvMuO1aSVnyZBhVN8mdNqU5aRgMpPdPyNayvMywUIj/OqnoKurEnZYIy6hTls+Rk8="
+
+
 script:
-  - mvn test jacoco:report
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ssilvestri15_ebalance_c17
