@@ -4,6 +4,7 @@ import com.c17.ebalance.ebalance.model.DAO.ProduzioneDAO;
 import com.c17.ebalance.ebalance.model.DAO.ProduzioneDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.ArchivioProduzioneBean;
 import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
+import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,6 +26,11 @@ public class ProduzioneServiceImpl implements ProduzioneService {
     @Override
     public String[][] ottieniProduzione() throws SQLException {
         return produzioneDAO.ottieniProduzione();
+    }
+
+    @Override
+    public List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException {
+        return produzioneDAO.ottieniTipoSorgente();
     }
 
 }

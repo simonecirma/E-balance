@@ -51,12 +51,14 @@ public class DatiController extends HttpServlet {
                     //request.setAttribute("sorgente", sorgente);
                     String sommaProduzione[][] = produzioneService.ottieniProduzione();
                     request.setAttribute("sommaProduzione", sommaProduzione);
-                    /*List<ParametriIABean> parametriIA = iaController.ottieniParametri();
+                    List<ParametriIABean> parametriIA = iaController.ottieniParametri();
                     request.setAttribute("parametriIA", parametriIA);
                     List<InteragisceBean> interazioneParametri = iaController.ottieniInterazioneParametri();
-                    request.setAttribute("interazioneParametri", interazioneParametri);*/
+                    request.setAttribute("interazioneParametri", interazioneParametri);
                     List<InteragisceBean> parametriAttivi = iaController.ottieniParametriAttivi();
                     request.setAttribute("parametriAttivi", parametriAttivi);
+                    List<TipoSorgenteBean> tipoSorgente = produzioneService.ottieniTipoSorgente();
+                    request.setAttribute("tipoSorgente", tipoSorgente);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                     dispatcher.forward(request, response);
                 }

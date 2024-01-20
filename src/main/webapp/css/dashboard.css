@@ -255,6 +255,31 @@ th {
     width: 60px;
 }
 
+#sortable-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 60%;
+    display: block; /* Modifica display a block */
+}
+
+#sortable-list li {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    margin: 0 0 5px;
+    padding: 10px;
+    cursor: grab;
+}
+
+#sortable-list li:hover {
+    background-color: #e0e0e0;
+}
+
+#sortable-list li span {
+    position: absolute;
+    margin-left: -1.3em;
+}
+
 @keyframes anime {
     0% {
         background-color: red;

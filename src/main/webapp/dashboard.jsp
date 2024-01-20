@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.c17.ebalance.ebalance.model.entity.*" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     //List<BatteriaBean> batterie = (List<BatteriaBean>) request.getAttribute("batteria");
@@ -8,17 +10,21 @@
     float consumoEdifici = (float) request.getAttribute("consumoEdifici");
     //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
     String sommaProduzione[][] = (String[][]) request.getAttribute("sommaProduzione");
-    //List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
-    //List<InteragisceBean> interazioneParametri = (List<InteragisceBean>) request.getAttribute("interazioneParametri");
+    List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
+    List<InteragisceBean> interazioneParametri = (List<InteragisceBean>) request.getAttribute("interazioneParametri");
     List<InteragisceBean> parametriAttivi = (List<InteragisceBean>) request.getAttribute("parametriAttivi");
+    List<TipoSorgenteBean> tipoSorgente = (List<TipoSorgenteBean>) request.getAttribute("tipoSorgente");
 %>
 <html>
 <head>
     <title>Dashboard</title>
     <link href="css/dashboard.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/dashboard.js"></script>
 </head>
 <body>
-    <script src="js/dashboard.js"></script>
     <%@include file="navBar.jsp" %>
     <div class="dashboard">
         <div class="section" onclick="toggleExpansion(1)">
@@ -113,37 +119,98 @@
                 <div class="initial-content-IA">
                 <!-- Contenuto della sezione 5 -->
                     <h3>Parametri IA</h3>
+                    <!--
+                    <%
+                        if (parametriIA != null && !parametriAttivi.isEmpty()) {
+                    %>
+                    <table id="tabIA">
+                        <tbody>
+                        <%
+                            for (InteragisceBean par : parametriAttivi) {
+                                if (par.getFlagPreferenzaSorgente()) {
+                        %>
+                        <tr>
+                            <td>Preferenza Sorgente:</td><td> <%= par.getTipoSorgente() %></td>
+                                <%
+                            }
+                                }
+                        %>
+                        </tbody>
+                    </table>
+                    <table id="tab1IA">
+                        <tbody>
+                        <%
+                            for (InteragisceBean par : parametriAttivi) {
+                        %>
+                        <tr>
+                            <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
+                            <td><%= par.getPercentualeUtilizzoSorgente()%></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <table id="tab1IA">
+                        <tbody>
+                        <tr>
+                            <td rowspan="<%= parametriAttivi.size() + 1 %>">Priorità Sorgenti</td>
+                        </tr>
+                        <%
+                            int i = 1;
+                            for (InteragisceBean par : parametriAttivi) {%>
+                        <tr>
+                            <td><%=i%>- <%= par.getTipoSorgente() %></td>
+                        </tr>
+                        <%
+                                i++;
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <%
+                        }
+                    %>
+                    -->
                 </div>
                 <div class="expanded-content">
                     <div class="expandendIA">
                         <div class="tabelle">
+                            <h1>Piano per la salvaguardia ambientale</h1>
                             <%
-                                if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
+                                if (parametriIA != null && !parametriIA.isEmpty()) {
+                                    for (ParametriIABean parametri : parametriIA) {
+                                        if(parametri.getPiano().equalsIgnoreCase("Salvaguardia Ambientale"))
+                                        {
                             %>
                             <table id="tabIA">
                                 <tbody>
                                 <%
-                                    for (InteragisceBean par : parametriAttivi) {
-                                        if (par.getFlagPreferenzaSorgente()) {
+                                        for (InteragisceBean inter : interazioneParametri) {
+                                            if(parametri.getIdParametro() == inter.getIdParametro()){
+                                                if (inter.getFlagPreferenzaSorgente()) {
                                 %>
                                 <tr>
-                                    <td>Preferenza Sorgente:</td><td> <%= par.getTipoSorgente() %></td>
-                                        <%
-                            }
-                                }
-                        %>
+                                    <td>Preferenza Sorgente:</td><td> <%= inter.getTipoSorgente() %></td>
+                                <%
+                                                }
+                                            }
+                                        }
+                                %>
                                 </tbody>
                             </table>
                             <table id="tab1IA">
                                 <tbody>
                                 <%
-                                    for (InteragisceBean par : parametriAttivi) {
+                                    for (InteragisceBean inter : interazioneParametri) {
+                                        if(parametri.getIdParametro() == inter.getIdParametro()){
                                 %>
                                 <tr>
-                                    <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
-                                    <td><%= par.getPercentualeUtilizzoSorgente()%></td>
+                                    <td>Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</td>
+                                    <td><%= inter.getPercentualeUtilizzoSorgente()%></td>
                                 </tr>
                                 <%
+                                        }
                                     }
                                 %>
                                 </tbody>
@@ -151,30 +218,198 @@
                             <table id="tab1IA">
                                 <tbody>
                                 <tr>
-                                    <td rowspan="<%= parametriAttivi.size() + 1 %>">Priorità Sorgenti</td>
+                                    <td rowspan="<%= interazioneParametri.size() + 1 %>">Priorità Sorgenti</td>
                                 </tr>
                                 <%
                                     int i = 1;
-                                    for (InteragisceBean par : parametriAttivi) {%>
+                                    for (InteragisceBean inter : interazioneParametri) {
+                                        if(parametri.getIdParametro() == inter.getIdParametro()){
+                                %>
                                 <tr>
-                                    <td><%=i%>- <%= par.getTipoSorgente() %></td>
+                                    <td><%=i%>- <%= inter.getTipoSorgente() %></td>
                                 </tr>
                                 <%
                                         i++;
+                                        }
                                     }
                                 %>
                                 </tbody>
                             </table>
-
+                            <%
+                                        }
+                                    }
+                                }
+                            %>
                         </div>
-                        <%
-                            }
-                        %>
                         <div class="tabelle2">
-
+                            <h1>Piano per l'efficienza economica</h1>
+                            <%
+                                if (parametriIA != null && !parametriIA.isEmpty()) {
+                                    for (ParametriIABean parametri : parametriIA) {
+                                        if(parametri.getPiano().equalsIgnoreCase("Efficienza Economica"))
+                                        {
+                            %>
+                            <table id="tabIA">
+                                <tbody>
+                                <%
+                                    for (InteragisceBean inter : interazioneParametri) {
+                                        if(parametri.getIdParametro() == inter.getIdParametro()){
+                                            if (inter.getFlagPreferenzaSorgente()) {
+                                %>
+                                <tr>
+                                    <td>Preferenza Sorgente:</td><td> <%= inter.getTipoSorgente() %></td>
+                                        <%
+                                                }
+                                            }
+                                        }
+                                %>
+                                </tbody>
+                            </table>
+                            <table id="tab1IA">
+                                <tbody>
+                                <%
+                                    for (InteragisceBean inter : interazioneParametri) {
+                                        if(parametri.getIdParametro() == inter.getIdParametro()){
+                                %>
+                                <tr>
+                                    <td>Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</td>
+                                    <td><%= inter.getPercentualeUtilizzoSorgente()%></td>
+                                </tr>
+                                <%
+                                        }
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+                            <table id="tab1IA">
+                                <tbody>
+                                <tr>
+                                    <td rowspan="<%= interazioneParametri.size() + 1 %>">Priorità Sorgenti</td>
+                                </tr>
+                                <%
+                                    int i = 1;
+                                    for (InteragisceBean inter : interazioneParametri) {
+                                        if(parametri.getIdParametro() == inter.getIdParametro()){
+                                %>
+                                <tr>
+                                    <td><%=i%>- <%= inter.getTipoSorgente() %></td>
+                                </tr>
+                                <%
+                                            i++;
+                                        }
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+                            <%
+                                        }
+                                    }
+                                }
+                            %>
                         </div>
                         <div class="form">
+                            <h1>Piano Personalizzato</h1>
+                            <%
+                                if (parametriIA != null && !parametriIA.isEmpty()) {
+                                    for (ParametriIABean parametri : parametriIA) {
+                                        if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
+                                        {
+                                            for (InteragisceBean inter : interazioneParametri) {
+                                                if(parametri.getIdParametro() == inter.getIdParametro()){
+                                                    if (inter.getFlagPreferenzaSorgente()) {
+                            %>
+                            <form id="priority-form">
 
+                                <%
+                                    if (tipoSorgente != null && !tipoSorgente.isEmpty()) {
+                                        Iterator<?> it = tipoSorgente.iterator();
+                                %>
+                                    <label for="preferenzaSorgente">Seleziona la sorgente preferita</label>
+                                    <select name="preferenzaSorgente" id="preferenzaSorgente">
+                                    <option selected="selected" value="<%=inter.getTipoSorgente()%>"><%=inter.getTipoSorgente()%></option>
+                                    <%
+                                        while (it.hasNext())
+                                        {
+                                            TipoSorgenteBean bean = (TipoSorgenteBean) it.next();
+                                    %>
+                                    <option value="<%=bean.getTipo() %>"><%=bean.getTipo()%></option>
+                                    <%
+                                        }
+                                    %>
+                                    </select><br>
+                                <%
+                                        }
+                                    }
+                                %>
+
+                                <label for="percentualeUtilizzo">Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</label>
+                                <input type="range" id="percentualeUtilizzo" name="<%= inter.getTipoSorgente() %>" min="0" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this)">
+                                <span id="percentualeUtilizzoValue"><%= inter.getPercentualeUtilizzoSorgente() %></span>%<br>
+                                <script>
+                                    function updateSliderValue(input) {
+                                        // Ottieni l'elemento span che mostra il valore
+                                        var valueSpan = document.getElementById("percentualeUtilizzoValue");
+
+                                        // Aggiorna il valore nel tuo elemento span
+                                        valueSpan.textContent = input.value;
+                                    }
+                                </script>
+                                <%
+                                                }
+                                            }
+                                            }
+                                        }
+                                    }
+                                %>
+                                <ul id="sortable-list">
+                                    <% if (parametriIA != null && !parametriIA.isEmpty()) {
+                                        for (ParametriIABean parametri : parametriIA) {
+                                            if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
+                                            {
+                                                for (InteragisceBean inter : interazioneParametri) {
+                                                    if(parametri.getIdParametro() == inter.getIdParametro()) {
+                                    %>
+                                    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%=inter.getTipoSorgente()%></li>
+                                    <% }
+                                    }
+                                    }
+                                    }
+                                    }
+                                    %>
+                                </ul>
+
+
+                                <!-- Aggiunto l'input hidden per inviare i dati della lista al server -->
+                                <input type="hidden" name="sortableListData" id="sortableListData">
+
+                                <!-- Aggiunto il submit button -->
+                                <input type="submit" value="Invia">
+                                <script>
+                                    $(function() {
+                                        $("#sortable-list").sortable();
+                                        $("#sortable-list").disableSelection();
+
+                                        $("#priority-form").submit(function(event) {
+                                            event.preventDefault();
+                                            var priorities = [];
+                                            $("#sortable-list li").each(function(index) {
+                                                var itemText = $(this).text().trim();
+                                                priorities.push({ index: index, text: itemText });
+                                            });
+
+                                            // Imposta i dati della lista nell'input hidden prima di inviare il modulo
+                                            $("#sortableListData").val(JSON.stringify(priorities));
+
+                                            // Ora puoi inviare il modulo al server con i dati della lista
+                                            this.submit();
+                                        });
+                                    });
+                                </script>
+
+
+
+
+                            </form>
                         </div>
                         </div>
                     </div>

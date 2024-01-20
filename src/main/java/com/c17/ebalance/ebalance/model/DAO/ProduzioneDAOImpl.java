@@ -2,6 +2,7 @@ package com.c17.ebalance.ebalance.model.DAO;
 
 import com.c17.ebalance.ebalance.model.entity.ArchivioProduzioneBean;
 import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
+import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -34,6 +35,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     }
     private static final String TABLE_NAME_ARCHIVIO = "ArchivioProduzione";
     private static final String TABLE_NAME_SORGENTE = "Sorgente";
+    private static final String TABLE_NAME_TIPO_SORGENTE = "TipoSorgente";
 
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException {
         Connection connection = null;
@@ -146,5 +148,39 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             }
         }
 
+    }
+
+    @Override
+    public List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        List<TipoSorgenteBean> tipoSorgente = new ArrayList<>();
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_TIPO_SORGENTE;
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                TipoSorgenteBean bean = new TipoSorgenteBean();
+                bean.setTipo(resultSet.getString("Tipo"));
+                tipoSorgente.add(bean);
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return tipoSorgente;
     }
 }

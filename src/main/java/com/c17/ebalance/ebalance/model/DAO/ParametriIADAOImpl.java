@@ -78,7 +78,7 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         ResultSet resultSet = null;
 
         List<InteragisceBean> interagisce = new ArrayList<>();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME_INTERAGISCE;
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_INTERAGISCE + " ORDER BY PrioritaSorgente";
 
         try {
             connection = ds.getConnection();
