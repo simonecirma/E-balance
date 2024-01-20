@@ -28,8 +28,8 @@
     <%@include file="navBar.jsp" %>
     <div class="dashboard">
         <div class="section" onclick="toggleExpansion(1)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro1.png" id="img"></button></a>
+            <a href="DatiController?action=generaDashboard">
+                <img src="img/indietro.png" id="img"></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 4 -->
@@ -54,8 +54,7 @@
 
         <div class="section" onclick="toggleExpansion(2)">
             <a href="DatiController?action=generaDashboard">
-                <button class="section-button">
-                <img src="img/indietro1.png" id="img"></button></a>
+                <img src="img/indietro.png" id="img"></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 1 -->
@@ -88,8 +87,8 @@
         </div>
 
         <div class="section" onclick="toggleExpansion(3)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro1.png" id="img"></button></a>
+            <a href="DatiController?action=generaDashboard">
+                <img src="img/indietro.png" id="img"></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
@@ -100,8 +99,8 @@
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(4)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro1.png" id="img"></button></a>
+            <a href="DatiController?action=generaDashboard">
+                <img src="img/indietro.png" id="img"></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 2 -->
@@ -113,8 +112,8 @@
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(5)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro1.png" id="img"></button></a>
+            <a href="DatiController?action=generaDashboard">
+                <img src="img/indietro.png" id="img"></a>
             <div class="contentIA">
                 <div class="initial-content-IA">
                 <!-- Contenuto della sezione 5 -->
@@ -307,118 +306,124 @@
                                 }
                             %>
                         </div>
-                        <div class="form">
-                            <h1>Piano Personalizzato</h1>
-                            <%
-                                if (parametriIA != null && !parametriIA.isEmpty()) {
-                                    for (ParametriIABean parametri : parametriIA) {
-                                        if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
-                                        {
-                                            for (InteragisceBean inter : interazioneParametri) {
-                                                if(parametri.getIdParametro() == inter.getIdParametro()){
-                                                    if (inter.getFlagPreferenzaSorgente()) {
-                            %>
-                            <form id="priority-form">
+                        <div class="tabelle3">
 
+                                <h1>Piano Personalizzato</h1>
                                 <%
-                                    if (tipoSorgente != null && !tipoSorgente.isEmpty()) {
-                                        Iterator<?> it = tipoSorgente.iterator();
-                                %>
-                                    <label for="preferenzaSorgente">Seleziona la sorgente preferita</label>
-                                    <select name="preferenzaSorgente" id="preferenzaSorgente">
-                                    <option selected="selected" value="<%=inter.getTipoSorgente()%>"><%=inter.getTipoSorgente()%></option>
-                                    <%
-                                        while (it.hasNext())
-                                        {
-                                            TipoSorgenteBean bean = (TipoSorgenteBean) it.next();
-                                    %>
-                                    <option value="<%=bean.getTipo() %>"><%=bean.getTipo()%></option>
-                                    <%
-                                        }
-                                    %>
-                                    </select><br>
-                                <%
-                                        }
-                                    }
-                                %>
-
-                                <label for="percentualeUtilizzo">Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</label>
-                                <input type="range" id="percentualeUtilizzo" name="<%= inter.getTipoSorgente() %>" min="0" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this)">
-                                <span id="percentualeUtilizzoValue"><%= inter.getPercentualeUtilizzoSorgente() %></span>%<br>
-                                <script>
-                                    function updateSliderValue(input) {
-                                        // Ottieni l'elemento span che mostra il valore
-                                        var valueSpan = document.getElementById("percentualeUtilizzoValue");
-
-                                        // Aggiorna il valore nel tuo elemento span
-                                        valueSpan.textContent = input.value;
-                                    }
-                                </script>
-                                <%
-                                                }
-                                            }
-                                            }
-                                        }
-                                    }
-                                %>
-                                <ul id="sortable-list">
-                                    <% if (parametriIA != null && !parametriIA.isEmpty()) {
+                                    if (parametriIA != null && !parametriIA.isEmpty()) {
                                         for (ParametriIABean parametri : parametriIA) {
                                             if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
                                             {
                                                 for (InteragisceBean inter : interazioneParametri) {
-                                                    if(parametri.getIdParametro() == inter.getIdParametro()) {
+                                                    if(parametri.getIdParametro() == inter.getIdParametro()){
+                                                        if (inter.getFlagPreferenzaSorgente()) {
+                                %>
+                                <form id="priority-form-1" style="margin-top: -10px;">
+                                    <%
+                                        if (tipoSorgente != null && !tipoSorgente.isEmpty()) {
+                                            Iterator<?> it = tipoSorgente.iterator();
                                     %>
-                                    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%=inter.getTipoSorgente()%></li>
-                                    <% }
-                                    }
-                                    }
-                                    }
-                                    }
-                                    %>
-                                </ul>
+                                    <table class="IATab">
+                                        <tr>
+                                            <td>
+                                                <label for="preferenzaSorgente">Seleziona la sorgente preferita</label>
+                                                <br>
+                                                <select name="preferenzaSorgente" id="preferenzaSorgente">
+                                                    <option selected="selected" value="<%=inter.getTipoSorgente()%>"><%=inter.getTipoSorgente()%></option>
+                                                        <%
+                                while (it.hasNext())
+                                {
+                                    TipoSorgenteBean bean = (TipoSorgenteBean) it.next();
+                            %>
+                                                    <option value="<%=bean.getTipo() %>"><%=bean.getTipo()%></option>
+                                                        <%
+                                }
+                            %>
+                                            </td>
+                                        </tr>
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <label for="percentualeUtilizzo1">Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</label>
+                                                <br>
+                                                <input type="range" id="percentualeUtilizzo1" name="<%= inter.getTipoSorgente() %>" min="0" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this)">
+                                                <span id="percentualeUtilizzoValue1"><%= inter.getPercentualeUtilizzoSorgente() %></span>%
+                                            </td>
+                                        </tr>
+                                        <script>
+                                            function updateSliderValue(input) {
+                                                // Ottieni l'elemento span che mostra il valore
+                                                var valueSpan = document.getElementById("percentualeUtilizzoValue");
 
+                                                // Aggiorna il valore nel tuo elemento span
+                                                valueSpan.textContent = input.value;
+                                            }
+                                        </script>
+                                        <%
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        %>
+                                        <tr>
+                                            <td class="sortable-list-container">
+                                                <ul id="sortable-list">
+                                                    <% if (parametriIA != null && !parametriIA.isEmpty()) {
+                                                        for (ParametriIABean parametri : parametriIA) {
+                                                            if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
+                                                            {
+                                                                for (InteragisceBean inter : interazioneParametri) {
+                                                                    if(parametri.getIdParametro() == inter.getIdParametro()) {
+                                                    %>
+                                                    <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span><%=inter.getTipoSorgente()%></li>
 
-                                <!-- Aggiunto l'input hidden per inviare i dati della lista al server -->
-                                <input type="hidden" name="sortableListData" id="sortableListData">
+                                                    <% }
+                                                    }
+                                                    }
+                                                    }
+                                                    }
+                                                    %>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <input type="hidden" name="sortableListData" id="sortableListData">
+                                    <input type="submit" value="Invia">
+                                    <script>
+                                        $(function() {
+                                            $("#sortable-list").sortable();
+                                            $("#sortable-list").disableSelection();
 
-                                <!-- Aggiunto il submit button -->
-                                <input type="submit" value="Invia">
-                                <script>
-                                    $(function() {
-                                        $("#sortable-list").sortable();
-                                        $("#sortable-list").disableSelection();
+                                            $("#priority-form").submit(function(event) {
+                                                event.preventDefault();
+                                                var priorities = [];
+                                                $("#sortable-list li").each(function(index) {
+                                                    var itemText = $(this).text().trim();
+                                                    priorities.push({ index: index, text: itemText });
+                                                });
 
-                                        $("#priority-form").submit(function(event) {
-                                            event.preventDefault();
-                                            var priorities = [];
-                                            $("#sortable-list li").each(function(index) {
-                                                var itemText = $(this).text().trim();
-                                                priorities.push({ index: index, text: itemText });
+                                                // Imposta i dati della lista nell'input hidden prima di inviare il modulo
+                                                $("#sortableListData").val(JSON.stringify(priorities));
+
+                                                // Ora puoi inviare il modulo al server con i dati della lista
+                                                this.submit();
                                             });
-
-                                            // Imposta i dati della lista nell'input hidden prima di inviare il modulo
-                                            $("#sortableListData").val(JSON.stringify(priorities));
-
-                                            // Ora puoi inviare il modulo al server con i dati della lista
-                                            this.submit();
                                         });
-                                    });
-                                </script>
-
-
-
-
-                            </form>
+                                    </script>
+                                </form>
+                            </div>
                         </div>
-                        </div>
-                    </div>
 
+                </div>
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(6)">
-            <a href="DatiController?action=generaDashboard"><button class="section-button">
-                <img src="img/indietro1.png" id="img"></button></a>
+            <a href="DatiController?action=generaDashboard">
+                <img src="img/indietro.png" id="img"></a>
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 6 -->

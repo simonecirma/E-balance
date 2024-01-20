@@ -4,6 +4,7 @@
     justify-content: center;
     height: 540px;
     margin-top: 10px;
+    width: 100%;
 }
 .content{
     text-align: center;
@@ -26,28 +27,31 @@ h3{
 }
 .dashboard .section.section-expanded {
     margin: 10px;
-    width: 92%;
-    height: 92%;
+    width: 100%;
+    height: 95%;
     transform: scale(1);
     z-index: 2;
+    cursor: default;
 }
 .dashboard .section:not(.section-expanded) {
-    width: 400px;
-    height: 250px;
+    width: 420px;
+    height: 240px;
 }
-.section-button {
+#img{
     position: absolute;
     top: 10px;
     left: 10px;
     cursor: pointer;
-    padding: 5px 10px;
     display: none;
-    background-color: white;
-    width: 80px;
+    width: 50px;
     height: 50px;
+    transition: background-color 0.7s ease;
     border-radius: 50px;
 }
-.section-expanded .section-button {
+#img:hover{
+    background-color: #26bd26;
+}
+.section-expanded #img{
     display: block;
 }
 .content > *:not(.initial-content) {
@@ -87,13 +91,10 @@ h3{
     text-transform: uppercase;
 }
 
-#img{
-    width: 60px;
-    height: 30px;
-}
+
 table {
     border-collapse: collapse;
-    width: 80%;
+    width: 90%;
     margin: 15px auto;
 }
 #tab{
@@ -112,17 +113,17 @@ table {
     margin-top: 20px;
 }
 .expandendIA div{
-    height: 400px;
+    height: 420px;
     width: 33%;
     margin: 10px;
     border: 2px solid black;
 }
 .dashboard .section.section-expanded #tab1IA{
-    width: 80%;
+    width: 90%;
     font-size: 16px;
 }
 .dashboard .section.section-expanded #tabIA{
-    width: 80%;
+    width: 90%;
     font-size: 16px;
 }
 #tabIA{
@@ -135,17 +136,17 @@ table {
     margin-top: -10px;
 }
 .section-expanded .content table{
-    width: 70%;
+    width: 90%;
     font-size: 16px;
     margin: 15px auto;
 }
 .section-expanded .content #tab{
-    width: 70%;
+    width: 90%;
     font-size: 16px;
     margin: 15px auto;
 }
 .section-expanded .content #tab1{
-    width: 70%;
+    width: 90%;
     font-size: 16px;
     margin: 15px auto;
 }
@@ -189,7 +190,7 @@ th {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 .section-expanded .batt{
     display: flex;
@@ -259,8 +260,9 @@ th {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 60%;
-    display: block; /* Modifica display a block */
+    width: 93%;
+    display: block;
+    align-self: center;
 }
 
 #sortable-list li {
@@ -269,6 +271,8 @@ th {
     margin: 0 0 5px;
     padding: 10px;
     cursor: grab;
+    width: 100%;
+    text-align: center; /* Testo centrato */
 }
 
 #sortable-list li:hover {
@@ -278,6 +282,40 @@ th {
 #sortable-list li span {
     position: absolute;
     margin-left: -1.3em;
+}
+
+
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Bordo inferiore delle celle */
+    border-right: 1px solid #ddd; /* Bordo destro delle celle */
+    vertical-align: middle; /* Allinea il contenuto al centro verticalmente */
+    text-align: center; /* Allinea il contenuto al centro orizzontalmente */
+}
+
+th {
+    border-top: 2px solid #ddd; /* Bordo superiore dell'intestazione */
+}
+
+/* Stile per la select */
+select {
+    width: 70%; /* Larghezza massima con padding */
+    margin-bottom: 10px; /* Distanza dal basso */
+    text-align:center;
+    margin-top: 10px;
+}
+
+/* Stile per il range input */
+input[type="range"] {
+    width: 70%; /* Larghezza massima con padding */
+    margin-top: 10px; /* Distanza dal basso */
+}
+
+/* Stile per la sortable list */
+.sortable-list-container {
+    margin-top: 10px; /* Distanza dallo spazio sopra */
 }
 
 @keyframes anime {
