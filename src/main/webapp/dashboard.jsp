@@ -117,20 +117,23 @@
                         if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
                     %>
                     <table id="tab">
-                        <thead>
-
-                        </thead>
                         <tbody>
                         <%
                             for (InteragisceBean par : parametriAttivi) {
                                 if (par.getFlagPreferenzaSorgente()) {
                         %>
                         <tr>
-                            <td>Preferenza Sorgente: <%= par.getTipoSorgente() %></td>
-                            <td></td> <!-- Colonna vuota per allineare la tabella -->
-                        </tr>
+                            <td>Preferenza Sorgente:</td><td> <%= par.getTipoSorgente() %></td>
                         <%
                             }
+                                }
+                        %>
+                        </tbody>
+                    </table>
+                    <table id="tab1">
+                        <tbody>
+                        <%
+                            for (InteragisceBean par : parametriAttivi) {
                         %>
                         <tr>
                             <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
@@ -141,32 +144,30 @@
                         %>
                         </tbody>
                     </table>
-                    <%
-                        }
-                    %>
                     <table id="tab1">
                         <tbody>
                         <tr>
-                            <td rowspan="2">Priorità Sorgenti</td>
-                            <% for (InteragisceBean par : parametriAttivi) {
-                                if (par.getFlagPreferenzaSorgente())
-                                {
-                            %>
-                            <td>1- <%= par.getTipoSorgente() %></td>
+                            <td rowspan="<%= parametriAttivi.size() + 1 %>">Priorità Sorgenti</td>
                         </tr>
+                        <%
+                            int i = 1;
+                            for (InteragisceBean par : parametriAttivi) {%>
                         <tr>
-                            <td>2- <%= par.getTipoSorgente() %></td>
-                            <%
-                                }
-                            %>
+                            <td><%=i%>- <%= par.getTipoSorgente() %></td>
                         </tr>
+                        <%
+                                i++;
+                            }
+                        %>
                         </tbody>
                     </table>
-                    <%
-                        }
-                    %>
+
                 </div>
+                <%
+                    }
+                %>
                 <div class="expanded-content">
+                    ciaooooo
 
             </div>
             </div>
