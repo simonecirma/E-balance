@@ -109,67 +109,76 @@
         <div class="section" onclick="toggleExpansion(5)">
             <a href="DatiController?action=generaDashboard"><button class="section-button">
                 <img src="img/indietro1.png" id="img"></button></a>
-            <div class="content">
-                <div class="initial-content">
+            <div class="contentIA">
+                <div class="initial-content-IA">
                 <!-- Contenuto della sezione 5 -->
                     <h3>Parametri IA</h3>
-                    <%
-                        if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
-                    %>
-                    <table id="tab">
-                        <tbody>
-                        <%
-                            for (InteragisceBean par : parametriAttivi) {
-                                if (par.getFlagPreferenzaSorgente()) {
-                        %>
-                        <tr>
-                            <td>Preferenza Sorgente:</td><td> <%= par.getTipoSorgente() %></td>
-                        <%
+                </div>
+                <div class="expanded-content">
+                    <div class="expandendIA">
+                        <div class="tabelle">
+                            <%
+                                if (parametriAttivi != null && !parametriAttivi.isEmpty()) {
+                            %>
+                            <table id="tabIA">
+                                <tbody>
+                                <%
+                                    for (InteragisceBean par : parametriAttivi) {
+                                        if (par.getFlagPreferenzaSorgente()) {
+                                %>
+                                <tr>
+                                    <td>Preferenza Sorgente:</td><td> <%= par.getTipoSorgente() %></td>
+                                        <%
                             }
                                 }
                         %>
-                        </tbody>
-                    </table>
-                    <table id="tab1">
-                        <tbody>
-                        <%
-                            for (InteragisceBean par : parametriAttivi) {
-                        %>
-                        <tr>
-                            <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
-                            <td><%= par.getPercentualeUtilizzoSorgente()%></td>
-                        </tr>
+                                </tbody>
+                            </table>
+                            <table id="tab1IA">
+                                <tbody>
+                                <%
+                                    for (InteragisceBean par : parametriAttivi) {
+                                %>
+                                <tr>
+                                    <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
+                                    <td><%= par.getPercentualeUtilizzoSorgente()%></td>
+                                </tr>
+                                <%
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+                            <table id="tab1IA">
+                                <tbody>
+                                <tr>
+                                    <td rowspan="<%= parametriAttivi.size() + 1 %>">Priorità Sorgenti</td>
+                                </tr>
+                                <%
+                                    int i = 1;
+                                    for (InteragisceBean par : parametriAttivi) {%>
+                                <tr>
+                                    <td><%=i%>- <%= par.getTipoSorgente() %></td>
+                                </tr>
+                                <%
+                                        i++;
+                                    }
+                                %>
+                                </tbody>
+                            </table>
+
+                        </div>
                         <%
                             }
                         %>
-                        </tbody>
-                    </table>
-                    <table id="tab1">
-                        <tbody>
-                        <tr>
-                            <td rowspan="<%= parametriAttivi.size() + 1 %>">Priorità Sorgenti</td>
-                        </tr>
-                        <%
-                            int i = 1;
-                            for (InteragisceBean par : parametriAttivi) {%>
-                        <tr>
-                            <td><%=i%>- <%= par.getTipoSorgente() %></td>
-                        </tr>
-                        <%
-                                i++;
-                            }
-                        %>
-                        </tbody>
-                    </table>
+                        <div class="tabelle2">
 
-                </div>
-                <%
-                    }
-                %>
-                <div class="expanded-content">
-                    ciaooooo
+                        </div>
+                        <div class="form">
 
-            </div>
+                        </div>
+                        </div>
+                    </div>
+
             </div>
         </div>
         <div class="section" onclick="toggleExpansion(6)">

@@ -51,9 +51,12 @@ h3{
     display: block;
 }
 .content > *:not(.initial-content) {
-    display: none; /
+    display: none;
 }
-.dashboard .section.section-expanded .expanded-content {
+.contentIA > *:not(.initial-content-IA) {
+    display: none;
+}
+.section-expanded .contentIA > *:not(.initial-content-IA) {
     display: block;
 }
 .programming-stats {
@@ -98,6 +101,35 @@ table {
     font-size: 13px;
 }
 #tab1{
+    width: 90%;
+    font-size: 13px;
+    margin-top: -10px;
+}
+.expandendIA{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+.expandendIA div{
+    height: 400px;
+    width: 33%;
+    margin: 10px;
+    border: 2px solid black;
+}
+.dashboard .section.section-expanded #tab1IA{
+    width: 80%;
+    font-size: 16px;
+}
+.dashboard .section.section-expanded #tabIA{
+    width: 80%;
+    font-size: 16px;
+}
+#tabIA{
+    width: 90%;
+    font-size: 13px;
+}
+#tab1IA{
     width: 90%;
     font-size: 13px;
     margin-top: -10px;
