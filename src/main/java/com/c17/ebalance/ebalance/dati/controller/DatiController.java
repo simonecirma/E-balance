@@ -13,11 +13,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import java.io.IOException;
 
 @WebServlet(name = "DatiController", value = "/DatiController")
 public class DatiController extends HttpServlet {
@@ -72,18 +75,28 @@ public class DatiController extends HttpServlet {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
                 }
-                if (action.equalsIgnoreCase("energiaVenduta")) {
+                if (action.equalsIgnoreCase("energiaVenduta_ricavoTotale")) {
                     float energia = getEnergia(request, response);
                     request.setAttribute("energia", energia);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                    dispatcher.forward(request, response);
-                }
-                if (action.equalsIgnoreCase("ricavoTotale")) {
-                    float ricavo;
-                    ricavo = getRicavo(request, response);
+                    float ricavo = getRicavo(request, response);
                     request.setAttribute("ricavo", ricavo);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                    dispatcher.forward(request, response);
+
+                    String servletPath = request.getServletContext().getRealPath("");
+                    String totalPath = servletPath + File.separator + "output"  + ".pdf";
+
+                    File pdfFile = PdfGenerator.generatePdf(energia, ricavo, totalPath);
+
+                    response.setContentType("application/pdf");
+                    response.setHeader("Content-Disposition", "attachment; filename=output.pdf");
+
+                    try (OutputStream out = response.getOutputStream(); FileInputStream in = new FileInputStream(pdfFile)) {
+                        byte[] buffer = new byte[4096];
+                        int length;
+                        while ((length = in.read(buffer)) > 0) {
+                            out.write(buffer, 0, length);
+                        }
+                    }
+                    pdfFile.delete();
                 }
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");

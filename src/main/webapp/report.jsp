@@ -56,50 +56,11 @@
         </tbody>
     </table>
 
-    <form id="produzioneForm" action="DatiController?action=energiaVenduta" method="post">
+    <form id="generaPdf" action="DatiController?action=energiaVenduta_ricavoTotale" method="post">
         Data inizio: <input type="date" name="dataInizio"><br>
         Data fine: <input type="date" name="dataFine"><br>
-        <input type="submit">
+        <input type="submit" value="Genera Pdf">
     </form>
-
-    <table>
-        <thead>
-        <tr>
-            <th>Energia</th>
-
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td><%=energia%></td>
-
-        </tr>
-        </tbody>
-    </table>
-
-    <form id="ricavoForm" action="DatiController?action=ricavoTotale" method="post">
-        Data inizio: <input type="date" name="dataInizio"><br>
-        Data fine: <input type="date" name="dataFine"><br>
-        <input type="submit">
-    </form>
-
-    <table>
-        <thead>
-        <tr>
-            <th>Ricavo</th>
-
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr>
-            <td><%=ricavo%></td>
-
-        </tr>
-        </tbody>
-    </table>
-
 
 </body>
 </html>
