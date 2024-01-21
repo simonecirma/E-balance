@@ -5,14 +5,16 @@ public class ReportBean {
     private int idReport;
     private Date dataEmissione;
     private int idAmministratore;
+    private String nomeReport;
 
     public ReportBean() { }
 
     public ReportBean(final int idReport, final Date dataEmissione,
-                      final int idAmministratore) {
+                      final int idAmministratore, String nomeReport) {
         this.idReport = idReport;
         this.dataEmissione = dataEmissione;
         this.idAmministratore = idAmministratore;
+        this.nomeReport=nomeReport;
     }
 
     public int getIdReport() {
@@ -39,12 +41,20 @@ public class ReportBean {
         this.idAmministratore = idAmministratore;
     }
 
+    public String getNomeReport() {
+        return nomeReport;
+    }
+    public void setNomeReport(String nomeReport) {
+        this.nomeReport = nomeReport;
+    }
+
     @Override
     public String toString() {
-        return "reportBean{"
-                + "idReport=" + idReport
-                + ", dataEmissione=" + dataEmissione
-                + ", idAmministratore=" + idAmministratore
-                + '}';
+        return "ReportBean{" +
+                "idReport=" + idReport +
+                ", dataEmissione=" + dataEmissione +
+                ", idAmministratore=" + idAmministratore +
+                ", nomeReport='" + nomeReport + '\'' +
+                '}';
     }
 }

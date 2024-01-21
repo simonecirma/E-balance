@@ -14,4 +14,14 @@ public class ReportServiceImpl implements ReportService {
     public List<ReportBean> visualizzaReport() throws SQLException {
         return reportDAO.visualizzaReport();
     }
+
+    @Override
+    public int ultimoReport() throws SQLException {
+        return reportDAO.ultimoReport();
+    }
+
+    @Override
+    public void aggiungiReport(ReportBean report) throws SQLException {
+        reportDAO.aggiungiReport(report);
+    }
 }

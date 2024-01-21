@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface ReportService {
     List<ReportBean> visualizzaReport() throws SQLException;
+
+    int ultimoReport() throws SQLException;
+
+    void aggiungiReport(ReportBean bean) throws SQLException;
 }

@@ -7,10 +7,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,6 +63,51 @@ public class ReportDAOImpl implements ReportDAO{
             }
         }
         return report;
+    }
+
+    @Override
+    public int ultimoReport() throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int n = 0;
+        try {
+            con = ds.getConnection();
+            String query = "SELECT IdReport FROM " + TABLE_NAME_REPORT + " ORDER BY DataEmissione DESC Limit 1";
+            ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                n = rs.getInt("IdReport");
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        }
+        return n;
+    }
+
+    @Override
+    public void aggiungiReport(ReportBean report) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try {
+            con = ds.getConnection();
+            String query = "INSERT INTO " + TABLE_NAME_REPORT + "(DataEmissione, IdAmministratore, NomeReport)" +
+                    "VALUES(?, ?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setDate(1, (Date) report.getDataEmissione());
+            ps.setInt(2, report.getIdAmministratore());
+            ps.setString(3, report.getNomeReport());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
 }

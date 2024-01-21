@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class VenditaServiceImpl implements VenditaService {
-    public VenditaDAO venditaDAO = new VenditaDAOImpl();
+    private VenditaDAO venditaDAO = new VenditaDAOImpl();
 
     @Override
     public float getEnergiaVendutaPerData(Date dataInizio, Date dataFine) throws SQLException {
