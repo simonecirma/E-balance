@@ -56,7 +56,7 @@
         </tbody>
     </table>
 
-    <form id="generaPdf" action="DatiController?action=energiaVenduta_ricavoTotale" method="post">
+    <form id="generaPdf" action="DatiController?action=bilancioTotale" method="post">
         Data inizio: <input type="date" name="dataInizio"><br>
         Data fine: <input type="date" name="dataFine"><br>
         <input type="submit" value="Genera Pdf">

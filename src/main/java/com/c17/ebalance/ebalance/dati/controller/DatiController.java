@@ -16,6 +16,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -34,7 +38,7 @@ public class DatiController extends HttpServlet {
     private BatteriaService batteriaService = new BatteriaServiceImpl();
     private ConsumoService consumoService = new ConsumoServiceImpl();
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
-    private VenditaService venditaService = new VenditaServiceImpl();
+    private BilancioService bilancioService = new BilancioServiceImpl();
     private ReportService reportService = new ReportServiceImpl();
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
 
@@ -104,28 +108,8 @@ public class DatiController extends HttpServlet {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
                 }
-                if (action.equalsIgnoreCase("energiaVenduta_ricavoTotale")) {
-                    float energia = getEnergia(request, response);
-                    request.setAttribute("energia", energia);
-                    float ricavo = getRicavo(request, response);
-                    request.setAttribute("ricavo", ricavo);
-
-                    String servletPath = request.getServletContext().getRealPath("");
-                    String totalPath = servletPath + File.separator + "output"  + ".pdf";
-
-                    File pdfFile = PdfGenerator.generatePdf(energia, ricavo, totalPath);
-
-                    response.setContentType("application/pdf");
-                    response.setHeader("Content-Disposition", "attachment; filename=output.pdf");
-
-                    try (OutputStream out = response.getOutputStream(); FileInputStream in = new FileInputStream(pdfFile)) {
-                        byte[] buffer = new byte[4096];
-                        int length;
-                        while ((length = in.read(buffer)) > 0) {
-                            out.write(buffer, 0, length);
-                        }
-                    }
-                    pdfFile.delete();
+                if (action.equalsIgnoreCase("bilancioTotale")) {
+                    bilancioService.generaReport(request, response);
                 }
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
@@ -138,22 +122,6 @@ public class DatiController extends HttpServlet {
 
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
-    }
-
-    public float getEnergia(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-        Date dataInizio = java.sql.Date.valueOf(request.getParameter("dataInizio"));
-        Date dataFine = java.sql.Date.valueOf(request.getParameter("dataFine"));
-        float energia;
-        energia=venditaService.getEnergiaVendutaPerData((java.sql.Date) dataInizio, (java.sql.Date) dataFine);
-        return energia;
-    }
-
-    public float getRicavo(HttpServletRequest request, HttpServletResponse response) throws SQLException {
-        Date dataInizio = java.sql.Date.valueOf(request.getParameter("dataInizio"));
-        Date dataFine = java.sql.Date.valueOf(request.getParameter("dataFine"));
-        float ricavo;
-        ricavo=venditaService.getRicavoTotalePerData((java.sql.Date) dataInizio, (java.sql.Date) dataFine);
-        return ricavo;
     }
 
     public void destroy() {
