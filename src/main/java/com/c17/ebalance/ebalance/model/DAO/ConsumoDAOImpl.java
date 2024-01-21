@@ -108,8 +108,10 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         ResultSet resultSet = null;
 
         List<ArchivioConsumoBean> archivioConsumi = new ArrayList<>();
-        String selectSQL = " SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM "  + TABLE_NAME_ARCHIVIO
-                + " GROUP BY DataConsumo ORDER BY Consumo DESC limit 10; ";
+        String selectSQL = " SELECT Consumo, DataConsumo " +
+                " FROM ( SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM "  + TABLE_NAME_ARCHIVIO
+                + " GROUP BY DataConsumo ORDER BY Consumo DESC limit 10 ) AS Subquery" +
+                " ORDER BY DataConsumo";
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);

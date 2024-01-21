@@ -8,7 +8,7 @@
     float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
     //List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
     float consumoEdifici = (float) request.getAttribute("consumoEdifici");
-    List<ArchivioConsumoBean> archivioConsumi = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumi");
+    List<ArchivioConsumoBean> archivioConsumo = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumo");
     //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
     String sommaProduzione[][] = (String[][]) request.getAttribute("sommaProduzione");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
@@ -118,17 +118,24 @@
                 <!-- Contenuto della sezione 2 -->
                     <h3>Archivio Consumi</h3>
                     <%
-                        if (archivioConsumi != null && !archivioConsumi.isEmpty()) {
+                        if (archivioConsumo != null && !archivioConsumo.isEmpty()) {
                     %>
                     <table >
+                        <thread>
+                            <tr>
+                                <th>Data consumo:</th>
+                                <th>Consumo giornaliero:</th>
+                            </tr>
+                        </thread>
                         <tbody>
                         <%
-                            for (ArchivioConsumoBean archivio : archivioConsumi) {
+                            for (ArchivioConsumoBean archivio : archivioConsumo) {
                         %>
                         <tr>
-                            <td>Data consumo:</td><td> <%= archivio.getDataConsumo() %></td>
-                            <td>Consumo giornaliero:</td><td> <%= archivio.getConsumoGiornaliero() %></td>
-                                <%
+                            <td> <%= archivio.getDataConsumo() %></td>
+                            <td> <%= archivio.getConsumoGiornaliero() %></td>
+                        </tr>
+                        <%
                                 }
                         %>
                         </tbody>
