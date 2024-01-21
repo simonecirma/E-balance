@@ -9,4 +9,8 @@ public interface ParametriIADAO {
     public List<ParametriIABean> visualizzaParametri() throws SQLException;
     public List<InteragisceBean> visualizzaInterazioneParametri() throws SQLException;
     List<InteragisceBean> ottieniParametriAttivi() throws SQLException;
+
+    void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String[] prioritaSorgenti) throws SQLException;
+
+    boolean aggiornaPianoAttivo(String piano, int idAmministratore) throws SQLException;
 }

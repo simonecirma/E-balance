@@ -1,6 +1,8 @@
 package com.c17.ebalance.ebalance.dati.controller;
 
 import com.c17.ebalance.ebalance.IA.controller.IAController;
+import com.c17.ebalance.ebalance.IA.service.IAService;
+import com.c17.ebalance.ebalance.IA.service.IAServiceImpl;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
 import com.c17.ebalance.ebalance.amministratore.service.ReportService;
@@ -13,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -27,6 +30,7 @@ public class DatiController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private IAController iaController = new IAController();
+    private IAService iaService = new IAServiceImpl();
     private BatteriaService batteriaService = new BatteriaServiceImpl();
     private ConsumoService consumoService = new ConsumoServiceImpl();
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
@@ -61,6 +65,27 @@ public class DatiController extends HttpServlet {
                     request.setAttribute("tipoSorgente", tipoSorgente);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                     dispatcher.forward(request, response);
+                }
+                if (action.equalsIgnoreCase("selezionaPiano")) {
+                    HttpSession session = request.getSession(true);
+                    String piano = request.getParameter("piano");
+                    if (piano.equalsIgnoreCase("SalvaguardiaAmbientale")) {
+                        iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute("idAmministratore"));
+                    } else if (piano.equalsIgnoreCase("EfficienzaEconomica")) {
+                        iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute("idAmministratore"));
+                    } else if (piano.equalsIgnoreCase("Personalizzato")) {
+                        String preferenzaSorgente = request.getParameter("preferenzaSorgente");
+                        int percentualeUtilizzoPannelli = Integer.parseInt(request.getParameter("Pannello fotovoltaico"));
+                        int percentualeUtilizzoSEN = Integer.parseInt(request.getParameter("Servizio Elettrico Nazionale"));
+                        String sortableListData = request.getParameter("sortableListData");
+                        iaService.aggiornaPianoPersonalizzato(preferenzaSorgente, percentualeUtilizzoPannelli, percentualeUtilizzoSEN, sortableListData);
+                        System.out.println(session.getAttribute("idAmministratore"));
+                        if (!iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute("idAmministratore"))) {
+                            request.setAttribute("result", "errore aggiornamento piano");
+                        }
+                    }
+                    response.sendRedirect("DatiController?action=generaDashboard");
+
                 }
                 if (action.equalsIgnoreCase("vediReport")) {
                     List<ReportBean> report = reportService.visualizzaReport();

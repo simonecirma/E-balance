@@ -14,6 +14,7 @@
     List<InteragisceBean> interazioneParametri = (List<InteragisceBean>) request.getAttribute("interazioneParametri");
     List<InteragisceBean> parametriAttivi = (List<InteragisceBean>) request.getAttribute("parametriAttivi");
     List<TipoSorgenteBean> tipoSorgente = (List<TipoSorgenteBean>) request.getAttribute("tipoSorgente");
+    String result = (String) request.getAttribute("result");
 %>
 <html>
 <head>
@@ -26,6 +27,14 @@
 </head>
 <body>
     <%@include file="navBar.jsp" %>
+    <%
+        if(result != null)
+        {
+    %>
+    <h3><%=result%></h3>
+    <%
+        }
+    %>
     <div class="dashboard">
         <div class="section" onclick="toggleExpansion(1)">
             <a href="DatiController?action=generaDashboard">
@@ -105,6 +114,7 @@
                 <div class="initial-content">
                 <!-- Contenuto della sezione 2 -->
                     <h3>Consumi attuali</h3>
+                    <%= consumoEdifici%>
                 </div>
                 <div class="expanded-content">
                     <%= consumoEdifici%>
@@ -239,6 +249,7 @@
                                     }
                                 }
                             %>
+                            <a href="DatiController?action=selezionaPiano&piano=SalvaguardiaAmbientale"><input type="submit" value="Seleziona piano di salvaguardia ambientale"></a>
                         </div>
                         <div class="tabelle2">
                             <h1>Piano per l'efficienza economica</h1>
@@ -305,10 +316,11 @@
                                     }
                                 }
                             %>
+                            <a href="DatiController?action=selezionaPiano&piano=EfficienzaEconomica"><input type="submit" value="Seleziona piano per l'efficienza economica"></a>
                         </div>
                         <div class="tabelle3">
 
-                                <h1>Piano Personalizzato</h1>
+                                <h1>Piano personalizzato</h1>
                                 <%
                                     if (parametriIA != null && !parametriIA.isEmpty()) {
                                         for (ParametriIABean parametri : parametriIA) {
@@ -318,7 +330,7 @@
                                                     if(parametri.getIdParametro() == inter.getIdParametro()){
                                                         if (inter.getFlagPreferenzaSorgente()) {
                                 %>
-                                <form id="priority-form-1" style="margin-top: -10px;">
+                                <form id="priority-form-1" style="margin-top: -10px;" action="DatiController?action=selezionaPiano&piano=Personalizzato" method="post">
                                     <%
                                         if (tipoSorgente != null && !tipoSorgente.isEmpty()) {
                                             Iterator<?> it = tipoSorgente.iterator();
@@ -349,14 +361,14 @@
                                             <td>
                                                 <label for="percentualeUtilizzo1">Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</label>
                                                 <br>
-                                                <input type="range" id="percentualeUtilizzo1" name="<%= inter.getTipoSorgente() %>" min="0" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this)">
-                                                <span id="percentualeUtilizzoValue1"><%= inter.getPercentualeUtilizzoSorgente() %></span>%
+                                                <input type="range" id="percentualeUtilizzo1" name="<%= inter.getTipoSorgente() %>" min="0" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this, '<%= inter.getTipoSorgente() %>')">
+                                                <span id="<%= inter.getTipoSorgente() %>Value"><%= inter.getPercentualeUtilizzoSorgente() %></span>%
                                             </td>
                                         </tr>
                                         <script>
-                                            function updateSliderValue(input) {
+                                            function updateSliderValue(input, tipoSorgente) {
                                                 // Ottieni l'elemento span che mostra il valore
-                                                var valueSpan = document.getElementById("percentualeUtilizzoValue");
+                                                var valueSpan = document.getElementById(tipoSorgente + "Value");
 
                                                 // Aggiorna il valore nel tuo elemento span
                                                 valueSpan.textContent = input.value;
@@ -398,12 +410,15 @@
                                             $("#sortable-list").sortable();
                                             $("#sortable-list").disableSelection();
 
-                                            $("#priority-form").submit(function(event) {
+                                            $("#priority-form-1").submit(function(event) {
                                                 event.preventDefault();
                                                 var priorities = [];
+
                                                 $("#sortable-list li").each(function(index) {
                                                     var itemText = $(this).text().trim();
-                                                    priorities.push({ index: index, text: itemText });
+                                                    var tipoSorgente = $(this).data("tipo-sorgente");
+
+                                                    priorities.push({ index: index, text: itemText, tipoSorgente: tipoSorgente });
                                                 });
 
                                                 // Imposta i dati della lista nell'input hidden prima di inviare il modulo
@@ -412,7 +427,15 @@
                                                 // Ora puoi inviare il modulo al server con i dati della lista
                                                 this.submit();
                                             });
+
+                                            // Aggiungi il gestore degli eventi al clic su un elemento <li>
+                                            $("#sortable-list li").on("click", function() {
+                                                var tipoSorgenteValue = $(this).text().trim();
+                                                alert("Valore di tipoSorgente: " + tipoSorgenteValue);
+                                                // Esegui altre azioni o invia il valore alla servlet come necessario
+                                            });
                                         });
+
                                     </script>
                                 </form>
                             </div>

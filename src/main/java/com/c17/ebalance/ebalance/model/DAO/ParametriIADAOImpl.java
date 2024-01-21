@@ -145,4 +145,103 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         }
         return parametriAttivi;
     }
+
+    @Override
+    public void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String[] prioritaSorgenti) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+
+        List<InteragisceBean> interagisce = new ArrayList<>();
+        String selectSQL = "UPDATE " + TABLE_NAME_INTERAGISCE + " SET FlagPreferenzaSorgente = ?, PercentualeUtilizzoSorgente = ?,"
+                + " PrioritaSorgente = ? WHERE IdParametro = '3' AND TipoSorgente = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            if (preferenzaSorgente.equalsIgnoreCase("Pannello fotovoltaico")) {
+                preparedStatement.setBoolean(1, true);
+            } else {
+                preparedStatement.setBoolean(1, false);
+            }
+            preparedStatement.setInt(2, percentualeUtilizzoPannelli);
+            if (prioritaSorgenti[0].equalsIgnoreCase("Pannello fotovoltaico")) {
+                preparedStatement.setInt(3, 1);
+            } else {
+                preparedStatement.setInt(3, 2);
+            }
+            preparedStatement.setString(4, "Pannello fotovoltaico");
+            preparedStatement.executeUpdate();
+            preparedStatement2 = connection.prepareStatement(selectSQL);
+            if (preferenzaSorgente.equalsIgnoreCase("Servizio Elettrico Nazionale")) {
+                preparedStatement2.setBoolean(1, true);
+            } else {
+                preparedStatement2.setBoolean(1, false);
+            }
+            preparedStatement2.setInt(2, percentualeUtilizzoSEN);
+            if (prioritaSorgenti[0].equalsIgnoreCase("Servizio Elettrico Nazionale")) {
+                preparedStatement2.setInt(3, 1);
+            } else {
+                preparedStatement2.setInt(3, 2);
+            }
+            preparedStatement2.setString(4, "Servizio Elettrico Nazionale");
+            preparedStatement2.executeUpdate();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (preparedStatement2 != null) {
+                    preparedStatement2.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean aggiornaPianoAttivo(String piano, int idAmministratore) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        ResultSet resultSet = null;
+        boolean result;
+        String selectSQL = "UPDATE " + TABLE_NAME_PARAMETRI + " SET FlagAttivazioneParametro = 0, IdAmministratore = ? WHERE FlagAttivazioneParametro = 1";
+        String selectSQL1 = "UPDATE " + TABLE_NAME_PARAMETRI + " SET FlagAttivazioneParametro = 1, IdAmministratore = ? WHERE Piano = ?";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, idAmministratore);
+            preparedStatement.executeUpdate();
+            preparedStatement2 = connection.prepareStatement(selectSQL1);
+            preparedStatement2.setInt(1, idAmministratore);
+            if (piano.equalsIgnoreCase("SalvaguardiaAmbientale")) {
+                preparedStatement2.setString(2, "Salvaguardia Ambientale");
+            } else if (piano.equalsIgnoreCase("EfficienzaEconomica")) {
+                preparedStatement2.setString(2, "Efficienza Economica");
+            } else if (piano.equalsIgnoreCase("Personalizzato")) {
+                preparedStatement2.setString(2, "Personalizzato");
+            }
+            int row = preparedStatement2.executeUpdate();
+            if (row > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+    }
 }
