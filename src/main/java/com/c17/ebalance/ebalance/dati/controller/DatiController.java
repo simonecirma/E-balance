@@ -51,6 +51,8 @@ public class DatiController extends HttpServlet {
                     //request.setAttribute("consumoEdificio", consumoEdificio);
                     float consumoEdifici = consumoService.ottieniConsumiEdifici();
                     request.setAttribute("consumoEdifici", consumoEdifici);
+                    List<ArchivioConsumoBean> archivioConsumo = consumoService.visualizzaStoricoConsumi();
+                    request.setAttribute("archivioConsumo", archivioConsumo);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
                     //request.setAttribute("sorgente", sorgente);
                     String sommaProduzione[][] = produzioneService.ottieniProduzione();

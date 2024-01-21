@@ -1,5 +1,6 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
+import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
 import com.c17.ebalance.ebalance.model.entity.ConsumoEdificioBean;
 
 import javax.naming.Context;
@@ -98,5 +99,40 @@ public class ConsumoDAOImpl implements ConsumoDAO {
             }
         }
         return consumoEdifici;
+    }
+
+    @Override
+    public List<ArchivioConsumoBean> visualizzaStoricoConsumi() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        List<ArchivioConsumoBean> archivioConsumi = new ArrayList<>();
+        String selectSQL = " SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM "  + TABLE_NAME_ARCHIVIO
+                + " GROUP BY DataConsumo ORDER BY Consumo DESC limit 10; ";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                ArchivioConsumoBean bean = new ArchivioConsumoBean();
+                bean.setConsumoGiornaliero(resultSet.getInt("Consumo"));
+                bean.setDataConsumo(resultSet.getDate("DataConsumo"));
+                archivioConsumi.add(bean);
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return archivioConsumi;
     }
 }

@@ -8,6 +8,7 @@
     float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
     //List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
     float consumoEdifici = (float) request.getAttribute("consumoEdifici");
+    List<ArchivioConsumoBean> archivioConsumi = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumi");
     //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
     String sommaProduzione[][] = (String[][]) request.getAttribute("sommaProduzione");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
@@ -101,9 +102,11 @@
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
-                    <h3>Priorità sorgenti</h3>
+                    <h3>Consumi attuali</h3>
+                    <%= consumoEdifici%>
                 </div>
                 <div class="expanded-content">
+                    <%= consumoEdifici%>
                 </div>
             </div>
         </div>
@@ -113,11 +116,29 @@
             <div class="content">
                 <div class="initial-content">
                 <!-- Contenuto della sezione 2 -->
-                    <h3>Consumi attuali</h3>
-                    <%= consumoEdifici%>
+                    <h3>Archivio Consumi</h3>
+                    <%
+                        if (archivioConsumi != null && !archivioConsumi.isEmpty()) {
+                    %>
+                    <table >
+                        <tbody>
+                        <%
+                            for (ArchivioConsumoBean archivio : archivioConsumi) {
+                        %>
+                        <tr>
+                            <td>Data consumo:</td><td> <%= archivio.getDataConsumo() %></td>
+                            <td>Consumo giornaliero:</td><td> <%= archivio.getConsumoGiornaliero() %></td>
+                                <%
+                                }
+                        %>
+                        </tbody>
+                    </table>
+                    <%
+                        }
+                    %>
                 </div>
                 <div class="expanded-content">
-                    <%= consumoEdifici%>
+
                 </div>
             </div>
         </div>
