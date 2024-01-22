@@ -21,7 +21,7 @@ public class ReportBean {
         return idReport;
     }
 
-    public void setIdReport(final int idReport) {
+    public void setIdReport(int idReport) {
         this.idReport = idReport;
     }
 
@@ -29,7 +29,7 @@ public class ReportBean {
         return dataEmissione;
     }
 
-    public void setDataEmissione(final Date dataEmissione) {
+    public void setDataEmissione(Date dataEmissione) {
         this.dataEmissione = dataEmissione;
     }
 
@@ -37,7 +37,7 @@ public class ReportBean {
         return idAmministratore;
     }
 
-    public void setIdAmministratore(final int idAmministratore) {
+    public void setIdAmministratore(int idAmministratore) {
         this.idAmministratore = idAmministratore;
     }
 

@@ -73,14 +73,25 @@ public class ReportDAOImpl implements ReportDAO{
         int n = 0;
         try {
             con = ds.getConnection();
-            String query = "SELECT IdReport FROM " + TABLE_NAME_REPORT + " ORDER BY DataEmissione DESC Limit 1";
+            String query = "SELECT COUNT(IdReport) AS count FROM " + TABLE_NAME_REPORT;
             ps = con.prepareStatement(query);
             rs = ps.executeQuery();
             while (rs.next()) {
-                n = rs.getInt("IdReport");
+                n = rs.getInt("count");
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        }
+        finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
         }
         return n;
     }
@@ -94,7 +105,12 @@ public class ReportDAOImpl implements ReportDAO{
             String query = "INSERT INTO " + TABLE_NAME_REPORT + "(DataEmissione, IdAmministratore, NomeReport)" +
                     "VALUES(?, ?, ?)";
             ps = con.prepareStatement(query);
-            ps.setDate(1, (Date) report.getDataEmissione());
+
+            java.util.Date utilDate;
+            utilDate = report.getDataEmissione();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+            ps.setDate(1, sqlDate);
             ps.setInt(2, report.getIdAmministratore());
             ps.setString(3, report.getNomeReport());
             ps.executeUpdate();
