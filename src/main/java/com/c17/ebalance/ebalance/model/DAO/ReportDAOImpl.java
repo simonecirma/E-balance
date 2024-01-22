@@ -48,6 +48,7 @@ public class ReportDAOImpl implements ReportDAO{
             while (resultSet.next()) {
                 ReportBean bean = new ReportBean();
                 bean.setDataEmissione(resultSet.getDate("DataEmissione"));
+                bean.setNomeReport(resultSet.getString("NomeReport"));
                 bean.setIdAmministratore(resultSet.getInt("IdAmministratore"));
                 report.add(bean);
             }
