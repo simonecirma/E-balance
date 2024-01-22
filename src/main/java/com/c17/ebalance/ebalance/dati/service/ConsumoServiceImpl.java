@@ -35,6 +35,7 @@ public class ConsumoServiceImpl implements ConsumoService {
     public void simulaConsumo() throws SQLException {
         data = calendario.getTime();
         java.sql.Date sqlDate = new java.sql.Date(data.getTime());
+
         for (int i = 0; i < 24; i++) {
             Random random = new Random();
             int numEdifici = consumoDAO.ottieniNumEdifici();

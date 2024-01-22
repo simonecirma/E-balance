@@ -45,6 +45,7 @@ public class DatiController extends HttpServlet {
     public void init() throws ServletException {
         new Thread(this::eseguiSimulazioneConsumi).start();
         new Thread(this::eseguiSimulazioneProduzione).start();
+        new Thread(this::eseguiSimulazioneProduzioneSEN).start();
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -148,6 +149,16 @@ public class DatiController extends HttpServlet {
         while (true) {
             try {
                 produzioneService.simulaProduzione();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    protected void eseguiSimulazioneProduzioneSEN() {
+        while (true) {
+            try {
+                produzioneService.simulaProduzioneSEN();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

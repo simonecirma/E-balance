@@ -51,14 +51,27 @@ public class ProduzioneServiceImpl implements ProduzioneService {
                 produzioneSimulata = (float) (Math.round(produzioneSimulata * 100.0) / 100.0);
                 produzioneDAO.simulaProduzione(y+1, produzioneSimulata,  sqlDate);
             }
-            //float produzioneNecessaria = (float) (Math.round(produzioneDAO.ottieniProduzioneNecessaria() * 100.0) / 100.0);
-            //produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
             try {
                 Thread.sleep(10000); // Ritardo di 10 secondi
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+        calendario.add(Calendar.DAY_OF_YEAR, 1);
+    }
+
+    public void simulaProduzioneSEN() throws SQLException {
+        data = calendario.getTime();
+        java.sql.Date sqlDate = new java.sql.Date(data.getTime());
+        try {
+            Thread.sleep(1000); // Ritardo di 10 secondi
+            float produzioneNecessaria = (float) (Math.round(produzioneDAO.ottieniProduzioneNecessaria() * 100.0) / 100.0);
+            produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
+            Thread.sleep(9000); // Ritardo di 10 secondi
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         calendario.add(Calendar.DAY_OF_YEAR, 1);
     }
 

@@ -33,6 +33,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     private static final String TABLE_NAME_ARCHIVIO = "ArchivioProduzione";
     private static final String TABLE_NAME_SORGENTE = "Sorgente";
     private static final String TABLE_NAME_TIPO_SORGENTE = "TipoSorgente";
+    private static final String TABLE_NAME_CONSUMO = "ConsumoEdificio";
 
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException {
         Connection connection = null;
@@ -281,7 +282,8 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         ResultSet resultSet = null;
 
         float produzioneNecessaria = 0.0f;
-        String selectSQL = "SELECT COUNT(IdSorgente) AS IdSorgente FROM " + TABLE_NAME_SORGENTE;
+        String selectSQL = "SELECT ROUND(SUM(ConsumoAttuale),2) - (SELECT ROUND(SUM(ProduzioneAttuale),2) FROM " + TABLE_NAME_SORGENTE
+                + " WHERE IdSorgente != 1) AS ProduzioneNecessaria FROM " + TABLE_NAME_CONSUMO;
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
@@ -289,7 +291,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                produzioneNecessaria = resultSet.getInt("IdSorgente");
+                produzioneNecessaria = resultSet.getInt("ProduzioneNecessaria");
             }
         } finally {
             try {
@@ -306,7 +308,60 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     }
 
     @Override
-    public void simulaProduzioneSEN(float produzioneNecessaria, Date sqlDate) throws SQLException {
+    public void simulaProduzioneSEN(float produzioneNecessaria, Date data) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+        PreparedStatement preparedStatement4 = null;
+        PreparedStatement preparedStatement5 = null;
+
+        String selectSQL = "SELECT FlagAttivazioneSorgente, FlagStatoSorgente FROM " + TABLE_NAME_SORGENTE
+                + " WHERE IdSorgente = 1";
+        String updateSQL = "UPDATE " + TABLE_NAME_SORGENTE + " SET ProduzioneAttuale = ? WHERE IdSorgente = 1";
+        String selectSQL2 = "SELECT * FROM " + TABLE_NAME_ARCHIVIO + " WHERE IdSorgente = 1 AND DataProduzione = ?";
+        String insertSQL = "INSERT INTO " + TABLE_NAME_ARCHIVIO + " (DataProduzione, ProduzioneGiornaliera, IdSorgente) VALUES (?, 0, 1)";
+        String updateSQL2 = "UPDATE " + TABLE_NAME_ARCHIVIO + " SET ProduzioneGiornaliera = ProduzioneGiornaliera + ? WHERE IdSorgente = 1 AND DataProduzione = ?";
+
+        try {
+            connection = ds.getConnection();
+
+            preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet resultset = preparedStatement.executeQuery();
+
+            while (resultset.next()) {
+                if (resultset.getBoolean("FlagStatoSorgente") && resultset.getBoolean("FlagAttivazioneSorgente")) {
+                    preparedStatement2 = connection.prepareStatement(updateSQL);
+                    preparedStatement2.setFloat(1, produzioneNecessaria);
+                    preparedStatement2.executeUpdate();
+
+                    preparedStatement3 = connection.prepareStatement(selectSQL2);
+                    preparedStatement3.setDate(1, data);
+                    ResultSet resultSet2 = preparedStatement3.executeQuery();
+
+                    if (!resultSet2.next()) {
+                        preparedStatement4 = connection.prepareStatement(insertSQL);
+                        preparedStatement4.setDate(1, data);
+                        preparedStatement4.executeUpdate();
+                    }
+
+                    preparedStatement5 = connection.prepareStatement(updateSQL2);
+                    preparedStatement5.setFloat(1, produzioneNecessaria);
+                    preparedStatement5.setDate(2, data);
+                    preparedStatement5.executeUpdate();
+                }
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (preparedStatement2 != null) preparedStatement2.close();
+                if (preparedStatement3 != null) preparedStatement3.close();
+                if (preparedStatement4 != null) preparedStatement4.close();
+                if (preparedStatement5 != null) preparedStatement5.close();
+            } finally {
+                if (connection != null) connection.close();
+            }
+        }
 
     }
 
