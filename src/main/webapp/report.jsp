@@ -34,8 +34,6 @@
         <tr>
             <td><%= rep.getDataEmissione() %></td>
             <td><%= bean.getNome() %> <%=bean.getCognome()%></td>
-            <% System.out.println (rep.getNomeReport()); %>
-            <% System.out.println (rep.getDataEmissione()); %>
             <td><a href="report\<%=rep.getNomeReport()%>" target="_blank">Apri</a></td>
         </tr>
         <%   }

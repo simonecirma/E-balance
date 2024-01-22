@@ -115,12 +115,10 @@ public class DatiController extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
                 if (action.equalsIgnoreCase("bilancioTotale")) {
-                    if (action.equalsIgnoreCase("bilancioTotale")) {
-                        ReportBean report = reportService.generaReport(request, response);
-                        reportService.aggiungiReport(report);
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                        dispatcher.forward(request, response);
-                    }
+                    ReportBean report = reportService.generaReport(request, response);
+                    reportService.aggiungiReport(report);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    dispatcher.forward(request, response);
                 }
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
