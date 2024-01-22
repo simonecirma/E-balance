@@ -5,19 +5,6 @@
 <%
     List<ReportBean> report = (List<ReportBean>) request.getAttribute("report");
     List<AmministratoreBean> amm = (List<AmministratoreBean>) request.getAttribute("amm");
-
-    float energia = 0.0F; // Valore di default
-    Object energiaObj = request.getAttribute("energia");
-    if (energiaObj instanceof Number) {
-        energia =  ((Number) energiaObj).floatValue();
-    }
-
-    float ricavo = 0.0F; // Valore di default
-    Object ricavoObj = request.getAttribute("ricavo");
-    if (ricavoObj instanceof Number) {
-        ricavo =  ((Number) ricavoObj).floatValue();
-    }
-
 %>
 <html>
 <head>
