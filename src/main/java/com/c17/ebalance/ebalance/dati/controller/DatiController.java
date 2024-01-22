@@ -42,6 +42,11 @@ public class DatiController extends HttpServlet {
     private ReportService reportService = new ReportServiceImpl();
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
 
+    @Override
+    public void init() throws ServletException {
+        new Thread(this::eseguiSimulazioneContinua).start();
+    }
+
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
         try {
@@ -122,6 +127,16 @@ public class DatiController extends HttpServlet {
 
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
+    }
+
+    protected void eseguiSimulazioneContinua() {
+        while (true) {
+            try {
+                consumoService.simulaConsumo();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void destroy() {

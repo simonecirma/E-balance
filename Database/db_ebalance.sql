@@ -122,9 +122,9 @@ CREATE TABLE ArchivioProduzione
 
 CREATE TABLE Caricare
 (
-    IdProduzione int NOT NULL,
+    IdSorgente int NOT NULL,
     IdBatteria int NOT NULL,
-    FOREIGN KEY(IdProduzione) REFERENCES ArchivioProduzione(IdProduzione) ON UPDATE cascade ON DELETE cascade,
+    FOREIGN KEY(IdSorgente) REFERENCES Sorgente(IdSorgente) ON UPDATE cascade ON DELETE cascade,
     FOREIGN KEY(IdBatteria) REFERENCES Batteria(IdBatteria) ON UPDATE cascade ON DELETE cascade
 );
 
@@ -497,25 +497,32 @@ FROM
 -- Elimina la tabella temporanea
 DROP TEMPORARY TABLE IF EXISTS DateSeries;
 
--- Assicurati di avere una tabella 'Caricare' già creata con le colonne 'IdProduzione' e 'IdBatteria'
-
--- Query per generare gli INSERT INTO
-DELIMITER //
-CREATE PROCEDURE PopolaTabellaCaricare()
-BEGIN
-    DECLARE i INT DEFAULT 1;
-    WHILE i <= 3660 DO
-            INSERT INTO Caricare(IdProduzione, IdBatteria) VALUES(i, 01);
-            INSERT INTO Caricare(IdProduzione, IdBatteria) VALUES(i, 02);
-            INSERT INTO Caricare(IdProduzione, IdBatteria) VALUES(i, 03);
-            SET i = i + 1;
-        END WHILE;
-END //
-DELIMITER ;
-
--- Esegui la procedura per popolare la tabella
-CALL PopolaTabellaCaricare();
-
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 01);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 01);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 01);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 02);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 03);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 04);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 05);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 06);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 07);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 08);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 09);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 10);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 11);
 
 
 INSERT INTO CondizioneMeteo(Condizione)

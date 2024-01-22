@@ -11,4 +11,6 @@ public interface ConsumoService {
     float ottieniConsumiEdifici() throws SQLException;
 
     List<ArchivioConsumoBean> visualizzaStoricoConsumi() throws SQLException;
+
+    void simulaConsumo() throws SQLException;
 }
