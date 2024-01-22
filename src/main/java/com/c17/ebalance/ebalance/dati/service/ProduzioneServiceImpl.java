@@ -7,11 +7,16 @@ import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
 import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
 
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class ProduzioneServiceImpl implements ProduzioneService {
 
     private ProduzioneDAO produzioneDAO = new ProduzioneDAOImpl();
+    Calendar calendario = Calendar.getInstance();
+    Date data;
 
     @Override
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException {
@@ -31,6 +36,28 @@ public class ProduzioneServiceImpl implements ProduzioneService {
     @Override
     public List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException {
         return produzioneDAO.ottieniTipoSorgente();
+    }
+
+    @Override
+    public void simulaProduzione() throws SQLException {
+        data = calendario.getTime();
+        java.sql.Date sqlDate = new java.sql.Date(data.getTime());
+        for (int i = 0; i < 24; i++) {
+            Random random = new Random();
+            int sorgentiAttive = produzioneDAO.ottieniSorgenti();
+
+            for (int y = 1; y < sorgentiAttive; y++) {
+                float produzioneSimulata = random.nextFloat() * 80 + 0;
+                produzioneSimulata = (float) (Math.round(produzioneSimulata * 100.0) / 100.0);
+                produzioneDAO.simulaProduzione(y+1, produzioneSimulata,  sqlDate);
+            }
+            try {
+                Thread.sleep(1000); // Ritardo di 10 secondi
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        calendario.add(Calendar.DAY_OF_YEAR, 1);
     }
 
 }

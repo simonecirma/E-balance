@@ -15,4 +15,6 @@ public interface ProduzioneService {
     String[][] ottieniProduzione() throws SQLException;
 
     List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException;
+
+    void simulaProduzione() throws SQLException;
 }

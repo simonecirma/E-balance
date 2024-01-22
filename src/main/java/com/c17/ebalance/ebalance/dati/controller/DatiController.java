@@ -44,7 +44,8 @@ public class DatiController extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        new Thread(this::eseguiSimulazioneContinua).start();
+        new Thread(this::eseguiSimulazioneConsumi).start();
+        new Thread(this::eseguiSimulazioneProduzione).start();
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -129,10 +130,20 @@ public class DatiController extends HttpServlet {
         doGet(request, response);
     }
 
-    protected void eseguiSimulazioneContinua() {
+    protected void eseguiSimulazioneConsumi() {
         while (true) {
             try {
                 consumoService.simulaConsumo();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    protected void eseguiSimulazioneProduzione() {
+        while (true) {
+            try {
+                produzioneService.simulaProduzione();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
