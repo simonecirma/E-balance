@@ -466,7 +466,7 @@ VALUES("Pannello Fotovoltaico", "2023-01-01", 54, 1, 1);
 INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 9, 1, 1);
 INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
-VALUES("Pannello Fotovoltaico", "2023-01-01", 82, 1, 1);
+VALUES("Pannello Fotovoltaico", "2023-01-01", 80, 1, 1);
 
 -- Crea una tabella temporanea con una colonna di date
 CREATE TEMPORARY TABLE DateSeries (DateValue DATE);
@@ -485,7 +485,7 @@ WHERE DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) <= '2024-01-12';
 INSERT INTO ArchivioProduzione(DataProduzione, ProduzioneGiornaliera, IdSorgente)
 SELECT
     DateSeries.DateValue,
-    ROUND(RAND() * (100 - 0) + 0) AS ProduzioneGiornaliera,
+    ROUND(RAND() * (2000 - 0) + 0) AS ProduzioneGiornaliera,
     Numbers.n AS IdSorgente
 FROM
     DateSeries

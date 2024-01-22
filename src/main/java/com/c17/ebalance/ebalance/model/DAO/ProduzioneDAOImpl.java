@@ -274,4 +274,40 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         return numSorgente;
     }
 
+    @Override
+    public float ottieniProduzioneNecessaria() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        float produzioneNecessaria = 0.0f;
+        String selectSQL = "SELECT COUNT(IdSorgente) AS IdSorgente FROM " + TABLE_NAME_SORGENTE;
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                produzioneNecessaria = resultSet.getInt("IdSorgente");
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return produzioneNecessaria;
+    }
+
+    @Override
+    public void simulaProduzioneSEN(float produzioneNecessaria, Date sqlDate) throws SQLException {
+
+    }
+
 }

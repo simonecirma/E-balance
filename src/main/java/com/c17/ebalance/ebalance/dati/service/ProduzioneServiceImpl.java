@@ -47,12 +47,14 @@ public class ProduzioneServiceImpl implements ProduzioneService {
             int sorgentiAttive = produzioneDAO.ottieniSorgenti();
 
             for (int y = 1; y < sorgentiAttive; y++) {
-                float produzioneSimulata = random.nextFloat() * 80 + 0;
+                float produzioneSimulata = random.nextFloat() * 100 + 0;
                 produzioneSimulata = (float) (Math.round(produzioneSimulata * 100.0) / 100.0);
                 produzioneDAO.simulaProduzione(y+1, produzioneSimulata,  sqlDate);
             }
+            //float produzioneNecessaria = (float) (Math.round(produzioneDAO.ottieniProduzioneNecessaria() * 100.0) / 100.0);
+            //produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
             try {
-                Thread.sleep(1000); // Ritardo di 10 secondi
+                Thread.sleep(10000); // Ritardo di 10 secondi
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

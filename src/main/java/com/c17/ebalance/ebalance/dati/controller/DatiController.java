@@ -38,7 +38,6 @@ public class DatiController extends HttpServlet {
     private BatteriaService batteriaService = new BatteriaServiceImpl();
     private ConsumoService consumoService = new ConsumoServiceImpl();
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
-    private BilancioService bilancioService = new BilancioServiceImpl();
     private ReportService reportService = new ReportServiceImpl();
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
 
