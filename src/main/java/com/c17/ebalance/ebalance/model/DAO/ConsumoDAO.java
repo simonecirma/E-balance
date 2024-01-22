@@ -17,4 +17,7 @@ public interface ConsumoDAO {
     void simulaConsumo(float consumoOrario, int IdEdificio, Date data) throws SQLException;
 
     int ottieniNumEdifici() throws SQLException;
+
+    public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException;
+
 }

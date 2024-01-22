@@ -218,4 +218,26 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         }
         return numEdificio;
     }
+
+    public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException{
+        float energia = 0;
+        Connection con = null;
+        PreparedStatement ps = null;
+        try{
+        con = ds.getConnection();
+        String query = "SELECT SUM(EnergiaConsumata)" +
+                "AS EnergiaTOTConsumata FROM Consumo" +
+                "WHERE DataConsumo BETWEEN ? AND ?";
+        ps = con.prepareStatement(query);
+        ps.setDate(1, dataInizio);
+        ps.setDate(2, dataFine);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            energia = rs.getFloat("EnergiaTOTConsumata");
+        }
+    } catch (Exception e) {
+        logger.log(Level.WARNING, e.getMessage());
+    }
+        return energia;
+    }
 }

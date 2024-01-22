@@ -51,6 +51,7 @@ public class ReportServiceImpl implements ReportService {
 
         Date dataInizio = Date.valueOf(request.getParameter("dataInizio"));
         Date dataFine = Date.valueOf(request.getParameter("dataFine"));
+        float energiaconsumo= consumoService.getConsumoPerData(dataInizio, dataFine);
         float energia = venditaService.getEnergiaVendutaPerData(dataInizio, dataFine);
         float ricavo = venditaService.getRicavoTotalePerData(dataInizio, dataFine);
 
