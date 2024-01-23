@@ -25,8 +25,10 @@ import java.util.List;
 import java.io.IOException;
 
 @WebServlet(name = "DatiController", value = "/DatiController")
-public class DatiController extends HttpServlet {
+public class DatiController extends HttpServlet implements Observer{
     private static final long serialVersionUID = 1L;
+
+    private List<Observer> observers = new ArrayList<>();
 
     private IAController iaController = new IAController();
     private IAService iaService = new IAServiceImpl();
@@ -36,25 +38,39 @@ public class DatiController extends HttpServlet {
     private ReportService reportService = new ReportServiceImpl();
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
+    float consumoEdifici;
 
     @Override
     public void init() throws ServletException {
         new Thread(this::simulazioneEnergia).start();
+        addObserver(this);
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
         try {
             if (action != null) {
+                if (action.equalsIgnoreCase("generaDashi")) {
+                    try {
+                        // Restituisci il valore come risposta JSON
+                        response.setContentType("application/json");
+                        response.setCharacterEncoding("UTF-8");
+                        response.getWriter().write("{\"consumoEdifici\": " + consumoEdifici + "}");
+                    } catch (Exception e) {
+                        // Gestisci l'eccezione restituendo un messaggio di errore
+                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        response.getWriter().write("{\"error\": \"Errore interno del server\"}");
+                    }
+                }
                 if (action.equalsIgnoreCase("generaDashboard")) {
+                    //request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
                     //request.setAttribute("batteria", batteria);
                     float percentualeBatterie = batteriaService.ottieniPercetualeBatteria();
                     request.setAttribute("percentualeBatterie", percentualeBatterie);
                     //List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
                     //request.setAttribute("consumoEdificio", consumoEdificio);
-                    float consumoEdifici = consumoService.ottieniConsumiEdifici();
-                    request.setAttribute("consumoEdifici", consumoEdifici);
+
                     List<ArchivioConsumoBean> archivioConsumo = consumoService.visualizzaStoricoConsumi();
                     request.setAttribute("archivioConsumo", archivioConsumo);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
@@ -71,6 +87,7 @@ public class DatiController extends HttpServlet {
                     request.setAttribute("tipoSorgente", tipoSorgente);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                     dispatcher.forward(request, response);
+                    request.removeAttribute("consumoEdifici");
                 }
                 if (action.equalsIgnoreCase("selezionaPiano")) {
                     HttpSession session = request.getSession(true);
@@ -131,6 +148,7 @@ public class DatiController extends HttpServlet {
         while (true) {
             try {
                 simulazioneService.simulazioneEnergia();
+                notifyObservers();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -139,5 +157,26 @@ public class DatiController extends HttpServlet {
 
 
     public void destroy() {
+    }
+
+    @Override
+    public void update() {
+        try {
+            this.consumoEdifici = consumoService.ottieniConsumiEdifici();
+            System.out.println("valore aggiornato: " + consumoEdifici);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
     }
 }

@@ -46,7 +46,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
             produzioneNecessaria = (float) (Math.round((consumoOrarioAttualeTot - produzioneOrariaAttualeTot) * 100.0) / 100.0);
             produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
 
-            Thread.sleep(1000); // Ritardo di 10 secondi
+            Thread.sleep(10000); // Ritardo di 10 secondi
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
