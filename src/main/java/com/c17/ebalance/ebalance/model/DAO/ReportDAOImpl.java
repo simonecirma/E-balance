@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ReportDAOImpl implements ReportDAO{
 
-    private static Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());
+    private static final Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());
     private static DataSource ds;
 
     static {
@@ -84,14 +84,24 @@ public class ReportDAOImpl implements ReportDAO{
             logger.log(Level.WARNING, e.getMessage());
         }
         finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
-            if (rs != null) {
-                rs.close();
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                logger.log(Level.WARNING, "Errore durante la chiusura di PreparedStatement o ResultSet", e);
+            } finally {
+                if (con != null) {
+                    try {
+                        con.close();
+                        System.out.println("connessione chiusa");
+                    } catch (SQLException e) {
+                        logger.log(Level.WARNING, "Errore durante la chiusura della connessione", e);
+                    }
+                }
             }
         }
         return n;
