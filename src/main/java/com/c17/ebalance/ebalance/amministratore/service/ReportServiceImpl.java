@@ -1,5 +1,6 @@
 package com.c17.ebalance.ebalance.amministratore.service;
-
+import com.c17.ebalance.ebalance.dati.service.ConsumoService;
+import com.c17.ebalance.ebalance.dati.service.ConsumoServiceImpl;
 import com.c17.ebalance.ebalance.dati.service.VenditaService;
 import com.c17.ebalance.ebalance.dati.service.VenditaServiceImpl;
 import com.c17.ebalance.ebalance.model.DAO.ReportDAO;
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class ReportServiceImpl implements ReportService {
     public VenditaService venditaService = new VenditaServiceImpl();
+    public ConsumoService consumoService = new ConsumoServiceImpl();
     private ReportDAO reportDAO = new ReportDAOImpl();
 
     @Override
@@ -106,6 +108,8 @@ public class ReportServiceImpl implements ReportService {
             float yCoordinate1 = 551.5F;
             float xCoordinate2 = 400;
             float yCoordinate2 = 551.5F;
+            float xCoordinate9 = 540;
+            float yCoordinate9 = 551.5F;
 
             // Posizione amministratore
             float xCoordinate3 = 475.5F;
@@ -152,6 +156,12 @@ public class ReportServiceImpl implements ReportService {
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 10);
                 contentStream.newLineAtOffset(xCoordinate2, yCoordinate2);
                 contentStream.showText("+"+String.valueOf(ricavo));
+                contentStream.endText();
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 10);
+                contentStream.newLineAtOffset(xCoordinate9, yCoordinate9);
+                contentStream.showText(String.valueOf(energiaconsumo));
                 contentStream.endText();
             }
 

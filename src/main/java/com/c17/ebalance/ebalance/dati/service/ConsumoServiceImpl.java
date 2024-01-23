@@ -55,7 +55,7 @@ public class ConsumoServiceImpl implements ConsumoService {
         calendario.add(Calendar.DAY_OF_YEAR, 1);
     }
 
-    float getConsumoPerData(java.sql.Date dataInizio, java.sql.Date dataFine) throws SQLException{
+    public float getConsumoPerData(java.sql.Date dataInizio, java.sql.Date dataFine) throws SQLException{
         return consumoDAO.getConsumoPerData(dataInizio, dataFine);
     }
 }

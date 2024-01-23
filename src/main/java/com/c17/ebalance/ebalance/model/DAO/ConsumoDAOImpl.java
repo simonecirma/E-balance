@@ -225,15 +225,16 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         PreparedStatement ps = null;
         try{
         con = ds.getConnection();
-        String query = "SELECT SUM(EnergiaConsumata)" +
-                "AS EnergiaTOTConsumata FROM Consumo" +
-                "WHERE DataConsumo BETWEEN ? AND ?";
+        String query = "SELECT SUM(ConsumoGiornaliero) AS " +
+                "ConsumoTotale FROM ArchivioConsumo WHERE " +
+                "DataConsumo BETWEEN ? AND ?";
+
         ps = con.prepareStatement(query);
         ps.setDate(1, dataInizio);
         ps.setDate(2, dataFine);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
-            energia = rs.getFloat("EnergiaTOTConsumata");
+            energia = rs.getFloat("ConsumoTotale");
         }
     } catch (Exception e) {
         logger.log(Level.WARNING, e.getMessage());
