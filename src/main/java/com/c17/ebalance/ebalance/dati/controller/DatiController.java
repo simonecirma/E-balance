@@ -63,7 +63,6 @@ public class DatiController extends HttpServlet implements Observer{
                 if (action.equalsIgnoreCase("generaDashboard")) {
                     Thread.sleep(250);
                     updatePage = false;
-                    request.removeAttribute("consumoEdifici");
                     float consumoEdifici = consumoService.ottieniConsumiEdifici();
                     request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
