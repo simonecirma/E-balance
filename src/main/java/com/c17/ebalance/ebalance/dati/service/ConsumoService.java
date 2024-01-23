@@ -13,7 +13,6 @@ public interface ConsumoService {
 
     List<ArchivioConsumoBean> visualizzaStoricoConsumi() throws SQLException;
 
-    void simulaConsumo() throws SQLException;
 
     float getConsumoPerData(Date dataInizio, Date dataFine) throws SQLException;
 }

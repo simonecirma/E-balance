@@ -16,15 +16,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import java.io.IOException;
@@ -40,12 +35,11 @@ public class DatiController extends HttpServlet {
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
     private ReportService reportService = new ReportServiceImpl();
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
+    private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
 
     @Override
     public void init() throws ServletException {
-        new Thread(this::eseguiSimulazioneConsumi).start();
-        new Thread(this::eseguiSimulazioneProduzione).start();
-        new Thread(this::eseguiSimulazioneProduzioneSEN).start();
+        new Thread(this::simulazioneEnergia).start();
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -133,35 +127,16 @@ public class DatiController extends HttpServlet {
         doGet(request, response);
     }
 
-    protected void eseguiSimulazioneConsumi() {
+    protected void simulazioneEnergia() {
         while (true) {
             try {
-                consumoService.simulaConsumo();
+                simulazioneService.simulazioneEnergia();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    protected void eseguiSimulazioneProduzione() {
-        while (true) {
-            try {
-                produzioneService.simulaProduzione();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    protected void eseguiSimulazioneProduzioneSEN() {
-        while (true) {
-            try {
-                produzioneService.simulaProduzioneSEN();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     public void destroy() {
     }

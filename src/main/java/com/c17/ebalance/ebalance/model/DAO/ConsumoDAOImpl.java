@@ -73,7 +73,7 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        float consumoEdifici = 0.0f;
+        float consumoEdifici = 0.02f;
         String selectSQL = "SELECT ROUND(SUM(ConsumoAttuale),2) AS Consumo FROM " + TABLE_NAME_CONSUMO;
         try {
             connection = ds.getConnection();

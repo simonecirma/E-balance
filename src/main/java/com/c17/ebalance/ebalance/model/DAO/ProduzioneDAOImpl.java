@@ -281,7 +281,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        float produzioneNecessaria = 0.0f;
+        float produzioneNecessaria = 0.02f;
         String selectSQL = "SELECT ROUND(SUM(ConsumoAttuale),2) - (SELECT ROUND(SUM(ProduzioneAttuale),2) FROM " + TABLE_NAME_SORGENTE
                 + " WHERE IdSorgente != 1) AS ProduzioneNecessaria FROM " + TABLE_NAME_CONSUMO;
         try {
