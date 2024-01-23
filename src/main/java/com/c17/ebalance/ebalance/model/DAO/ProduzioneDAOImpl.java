@@ -275,37 +275,6 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         return numSorgente;
     }
 
-    @Override
-    public float ottieniProduzioneNecessaria() throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        float produzioneNecessaria = 0.02f;
-        String selectSQL = "SELECT ROUND(SUM(ConsumoAttuale),2) - (SELECT ROUND(SUM(ProduzioneAttuale),2) FROM " + TABLE_NAME_SORGENTE
-                + " WHERE IdSorgente != 1) AS ProduzioneNecessaria FROM " + TABLE_NAME_CONSUMO;
-        try {
-            connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(selectSQL);
-
-            resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                produzioneNecessaria = resultSet.getInt("ProduzioneNecessaria");
-            }
-        } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
-            }
-        }
-        return produzioneNecessaria;
-    }
 
     @Override
     public void simulaProduzioneSEN(float produzioneNecessaria, Date data) throws SQLException {

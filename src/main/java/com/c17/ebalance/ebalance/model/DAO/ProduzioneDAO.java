@@ -20,7 +20,6 @@ public interface ProduzioneDAO {
 
     int ottieniSorgenti() throws SQLException;
 
-    float ottieniProduzioneNecessaria() throws SQLException;
 
     void simulaProduzioneSEN(float produzioneNecessaria, Date data) throws SQLException;
 }
