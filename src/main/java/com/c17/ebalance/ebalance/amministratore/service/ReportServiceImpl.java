@@ -83,6 +83,7 @@ public class ReportServiceImpl implements ReportService {
         }
 
         String descrizione = "";
+        String descrizione1 = "";
         int n = reportDAO.ultimoReport() + 1;
         String file = "Report" + n + ".pdf";
 
@@ -108,8 +109,8 @@ public class ReportServiceImpl implements ReportService {
             float yCoordinate1 = 551.5F;
             float xCoordinate2 = 400;
             float yCoordinate2 = 551.5F;
-            float xCoordinate9 = 540;
-            float yCoordinate9 = 551.5F;
+            float xCoordinate9 = 240;
+            float yCoordinate9 = 535.5F;
 
             // Posizione amministratore
             float xCoordinate3 = 475.5F;
@@ -126,6 +127,9 @@ public class ReportServiceImpl implements ReportService {
             // Posizione descrizione
             float xCoordinate6 = 55;
             float yCoordinate6 = 551.5F;
+            float xCoordinate10 = 55;
+            float yCoordinate10 = 535.5F;
+
 
             // Posizione data inizio
             float xCoordinate7 = 412.5F;
@@ -138,11 +142,18 @@ public class ReportServiceImpl implements ReportService {
             // Scrivi i valori nel documento
             if(ricavo > 0) {
                 descrizione = "ENERGIA VENDUTA";
+                descrizione1 = "CONSUMO ENERGIA";
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 10);
                 contentStream.newLineAtOffset(xCoordinate6, yCoordinate6);
                 contentStream.showText(descrizione);
+                contentStream.endText();
+
+                contentStream.beginText();
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 10);
+                contentStream.newLineAtOffset(xCoordinate10, yCoordinate10);
+                contentStream.showText(descrizione1);
                 contentStream.endText();
 
                 contentStream.beginText();
