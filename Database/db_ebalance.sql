@@ -334,13 +334,13 @@ CREATE TEMPORARY TABLE DateSeries (DateValue DATE);
 
 -- Genera una serie di date dal 2023-01-12 al 2024-01-12
 INSERT INTO DateSeries (DateValue)
-SELECT DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) AS DateValue
+SELECT DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) AS DateValue
 FROM
     (
         SELECT ROW_NUMBER() OVER () AS n
         FROM information_schema.columns
     ) AS Numbers
-WHERE DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) <= '2024-01-12';
+WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-01-22';
 
 -- Utilizza la serie di date per eseguire gli statement INSERT INTO
 INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
@@ -473,13 +473,13 @@ CREATE TEMPORARY TABLE DateSeries (DateValue DATE);
 
 -- Genera una serie di date dal 2023-01-12 al 2024-01-12
 INSERT INTO DateSeries (DateValue)
-SELECT DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) AS DateValue
+SELECT DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) AS DateValue
 FROM
     (
         SELECT ROW_NUMBER() OVER () AS n
         FROM information_schema.columns
     ) AS Numbers
-WHERE DATE_ADD('2023-01-12', INTERVAL (n-1) DAY) <= '2024-01-12';
+WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-01-22';
 
 -- Utilizza la serie di date per eseguire gli statement INSERT INTO
 INSERT INTO ArchivioProduzione(DataProduzione, ProduzioneGiornaliera, IdSorgente)

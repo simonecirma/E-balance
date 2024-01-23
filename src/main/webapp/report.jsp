@@ -20,8 +20,8 @@
         <thead>
         <tr>
             <th>Data Emissione</th>
-            <th>Nome Amministratore</th>
-            <th>Cognome Amministratore</th>
+            <th>Amministratore</th>
+            <th>Visualizza</th>
         </tr>
         </thead>
         <tbody>
@@ -33,8 +33,8 @@
                    bean = amm.get(i);%>
         <tr>
             <td><%= rep.getDataEmissione() %></td>
-            <td><%= bean.getNome() %></td>
-            <td><%= bean.getCognome()%></td>
+            <td><%= bean.getNome() %> <%=bean.getCognome()%></td>
+            <td><a href="report\<%=rep.getNomeReport()%>" target="_blank">Apri</a></td>
         </tr>
         <%   }
             }

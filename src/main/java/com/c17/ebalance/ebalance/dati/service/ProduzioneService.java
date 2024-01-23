@@ -17,4 +17,5 @@ public interface ProduzioneService {
     List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException;
 
     void simulaProduzione() throws SQLException;
+    void simulaProduzioneSEN() throws SQLException;
 }

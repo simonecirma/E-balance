@@ -86,6 +86,9 @@ public class ReportServiceImpl implements ReportService {
 
         try {
             String servletPath = request.getServletContext().getRealPath("");
+            String filePath = servletPath + "report" + File.separator + "Report" + n + ".pdf";
+            System.out.println(filePath);
+
             // Carica il template PDF esistente
             File templateFile = new File(servletPath + File.separator  + "TemplateReport.pdf");
             PDDocument document = PDDocument.load(templateFile);
@@ -129,7 +132,7 @@ public class ReportServiceImpl implements ReportService {
             float yCoordinate8 = 654;
 
             // Scrivi i valori nel documento
-            if(ricavo>0){
+            if(ricavo > 0) {
                 descrizione = "ENERGIA VENDUTA";
 
                 contentStream.beginText();
@@ -186,19 +189,8 @@ public class ReportServiceImpl implements ReportService {
             // Chiudi il flusso di contenuto
             contentStream.close();
 
-            // Invia il documento come risposta HTTP
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "attachment; filename=Report" + n +".pdf");
-
-            // Salva il documento modificato e chiudi correttamente le risorse
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            document.save(byteArrayOutputStream);
+            document.save(filePath);
             document.close();
-
-            // Scrivi il contenuto nella risposta HTTP
-            response.getOutputStream().write(byteArrayOutputStream.toByteArray());
-            response.getOutputStream().flush();
-            response.getOutputStream().close();
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -45,6 +45,7 @@ public class DatiController extends HttpServlet {
     public void init() throws ServletException {
         new Thread(this::eseguiSimulazioneConsumi).start();
         new Thread(this::eseguiSimulazioneProduzione).start();
+        new Thread(this::eseguiSimulazioneProduzioneSEN).start();
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -114,12 +115,10 @@ public class DatiController extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
                 if (action.equalsIgnoreCase("bilancioTotale")) {
-                    if (action.equalsIgnoreCase("bilancioTotale")) {
-                        ReportBean report = reportService.generaReport(request, response);
-                        reportService.aggiungiReport(report);
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                        dispatcher.forward(request, response);
-                    }
+                    ReportBean report = reportService.generaReport(request, response);
+                    reportService.aggiungiReport(report);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    dispatcher.forward(request, response);
                 }
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
@@ -148,6 +147,16 @@ public class DatiController extends HttpServlet {
         while (true) {
             try {
                 produzioneService.simulaProduzione();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    protected void eseguiSimulazioneProduzioneSEN() {
+        while (true) {
+            try {
+                produzioneService.simulaProduzioneSEN();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
