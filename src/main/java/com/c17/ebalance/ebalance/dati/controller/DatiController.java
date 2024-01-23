@@ -38,7 +38,8 @@ public class DatiController extends HttpServlet implements Observer{
     private ReportService reportService = new ReportServiceImpl();
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
-    float consumoEdifici;
+
+    boolean updatePage = false;
 
     @Override
     public void init() throws ServletException {
@@ -50,27 +51,27 @@ public class DatiController extends HttpServlet implements Observer{
         String action = request.getParameter("action");
         try {
             if (action != null) {
-                if (action.equalsIgnoreCase("generaDashi")) {
+                if (action.equalsIgnoreCase("dashboardObserver")) {
                     try {
-                        // Restituisci il valore come risposta JSON
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write("{\"consumoEdifici\": " + consumoEdifici + "}");
+                        response.getWriter().write("{\"updatePage\": " + updatePage + "}");
                     } catch (Exception e) {
-                        // Gestisci l'eccezione restituendo un messaggio di errore
-                        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        response.getWriter().write("{\"error\": \"Errore interno del server\"}");
+                        e.printStackTrace();
                     }
                 }
                 if (action.equalsIgnoreCase("generaDashboard")) {
-                    //request.setAttribute("consumoEdifici", consumoEdifici);
+                    Thread.sleep(250);
+                    updatePage = false;
+                    request.removeAttribute("consumoEdifici");
+                    float consumoEdifici = consumoService.ottieniConsumiEdifici();
+                    request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
                     //request.setAttribute("batteria", batteria);
                     float percentualeBatterie = batteriaService.ottieniPercetualeBatteria();
                     request.setAttribute("percentualeBatterie", percentualeBatterie);
                     //List<ConsumoEdificioBean> consumoEdificio = consumoService.visualizzaConsumo();
                     //request.setAttribute("consumoEdificio", consumoEdificio);
-
                     List<ArchivioConsumoBean> archivioConsumo = consumoService.visualizzaStoricoConsumi();
                     request.setAttribute("archivioConsumo", archivioConsumo);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
@@ -87,7 +88,7 @@ public class DatiController extends HttpServlet implements Observer{
                     request.setAttribute("tipoSorgente", tipoSorgente);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                     dispatcher.forward(request, response);
-                    request.removeAttribute("consumoEdifici");
+
                 }
                 if (action.equalsIgnoreCase("selezionaPiano")) {
                     HttpSession session = request.getSession(true);
@@ -137,6 +138,8 @@ public class DatiController extends HttpServlet implements Observer{
             }
         } catch (ServletException | SQLException e) {
             throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -161,13 +164,7 @@ public class DatiController extends HttpServlet implements Observer{
 
     @Override
     public void update() {
-        try {
-            this.consumoEdifici = consumoService.ottieniConsumiEdifici();
-            System.out.println("valore aggiornato: " + consumoEdifici);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        updatePage = true;
     }
 
     public void addObserver(Observer observer) {

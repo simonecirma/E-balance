@@ -7,7 +7,7 @@
     //List<BatteriaBean> batterie = (List<BatteriaBean>) request.getAttribute("batteria");
     float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
     //List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
-    //float consumoEdifici = (float) request.getAttribute("consumoEdifici");
+    float consumoEdifici = (float) request.getAttribute("consumoEdifici");
     List<ArchivioConsumoBean> archivioConsumo = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumo");
     //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
     String sommaProduzione[][] = (String[][]) request.getAttribute("sommaProduzione");
@@ -27,6 +27,30 @@
     <script src="js/dashboard.js"></script>
 </head>
 <body>
+    <script>
+        function Observer() {
+            $.ajax({
+                url: "DatiController?action=dashboardObserver",
+                method: "POST",
+                dataType: "json",
+                success: function (response) {
+                    var updatePage = response.updatePage;
+                    console.log(updatePage);
+
+                    if (updatePage === true) {
+                        window.location.reload()
+                    }
+                    Observer();
+                },
+                error: function () {
+                    console.error("Errore nella richiesta AJAX");
+                }
+            });
+        }
+
+        // Chiamare immediatamente la funzione all'avvio della pagina
+        Observer();
+    </script>
     <%@include file="navBar.jsp" %>
     <%
         if(result != null)
@@ -103,10 +127,10 @@
                 <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
                     <h3>Consumi attuali</h3>
-                    <div id="myValueContainer">Consumi Attuali: 0.0</div>
+                    <%=consumoEdifici%>
                 </div>
                 <div class="expanded-content">
-                    <div id="myValueContainer">Consumi Attuali: 0.0</div>
+                    <%=consumoEdifici%>
                 </div>
             </div>
         </div>
@@ -547,32 +571,6 @@
         }
 
         updateBattery();
-    </script>
-
-    <script>
-        // Funzione per ottenere il valore dalla servlet
-        function getMyValue() {
-            $.ajax({
-                url: "DatiController?action=generaDashi",
-                method: "POST",
-                dataType: "json",
-                success: function(response) {
-                    // Aggiorna dinamicamente il valore nella pagina
-                    var consumoEdifici = response.consumoEdifici;
-                    $("#myValueContainer").text("Consumi Attuali: " + consumoEdifici);
-                    console.log(consumoEdifici);
-                },
-                error: function() {
-                    console.error("Errore nella richiesta AJAX");
-                }
-            });
-        }
-
-        // Esegui la funzione ogni 5 secondi (puoi regolare il valore a seconda delle tue esigenze)
-        setInterval(getMyValue, 5000);
-
-        // Chiamare immediatamente la funzione all'avvio della pagina
-        getMyValue();
     </script>
 
 </body>
