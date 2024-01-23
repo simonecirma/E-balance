@@ -183,4 +183,34 @@ public class ContrattoDAOImpl implements ContrattoDAO {
 
         return result;
     }
+    public ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException{
+        PreparedStatement ps = null;
+        ContrattoBean bean = new ContrattoBean();
+
+        String sql = "SELECT * FROM " + TABLE_NAME_CONTRATTO + " WHERE DataSottoscrizione <= ? " +
+                "AND DATE_ADD(DataSottoscrizione, INTERVAL Durata MONTH) >= ? ";
+        try (Connection con = ds.getConnection()) {
+            ps = con.prepareStatement(sql);
+            ps.setDate(1, dataFine);
+            ps.setDate(2, dataInizio);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                bean.setIdContratto(rs.getInt("IdContratto"));
+                bean.setNomeEnte(rs.getString("NomeEnte"));
+                bean.setConsumoMedioAnnuale(rs.getFloat("ConsumoMedioAnnuale"));
+                bean.setCostoMedioUnitario(rs.getFloat("CostoMedioUnitario"));
+                bean.setDataSottoscrizione(rs.getDate("DataSottoscrizione"));
+                bean.setDurata(rs.getInt("Durata"));
+                bean.setPrezzoVendita(rs.getFloat("PrezzoVendita"));
+                bean.setIdAmministatore(rs.getInt("IdAmministratore"));
+            }
+        }catch (SQLException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+        return bean;
+    }
 }

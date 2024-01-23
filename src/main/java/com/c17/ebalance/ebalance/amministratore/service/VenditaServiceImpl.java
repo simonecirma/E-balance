@@ -1,4 +1,4 @@
-package com.c17.ebalance.ebalance.dati.service;
+package com.c17.ebalance.ebalance.amministratore.service;
 
 import com.c17.ebalance.ebalance.model.DAO.VenditaDAO;
 import com.c17.ebalance.ebalance.model.DAO.VenditaDAOImpl;

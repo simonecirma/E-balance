@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ReportDAO {
-    public List<ReportBean> visualizzaReport() throws SQLException;
+    List<ReportBean> visualizzaReport() throws SQLException;
 
     int ultimoReport() throws SQLException;
 

@@ -44,10 +44,43 @@
     </table>
 
     <form id="generaPdf" action="DatiController?action=bilancioTotale" method="post">
-        Data inizio: <input type="date" name="dataInizio"><br>
-        Data fine: <input type="date" name="dataFine"><br>
+        Data inizio: <input type="date" id="dataInizio" name="dataInizio" onchange="minDataSelection()"><br>
+        Data fine: <input type="date" id="dataFine" name="dataFine" onchange="maxDataSelection()"><br>
         <input type="submit" value="Genera Pdf">
     </form>
 
+    <script>
+        function minDataSelection() {
+            // Imposta la data minima consentita
+            var minDate = "2021-01-01";
+
+            // Ottieni l'elemento input di tipo data
+            var datePicker = document.getElementById("dataInizio");
+
+            // Imposta la data minima consentita per la selezione
+            datePicker.min = minDate;
+        }
+
+        function maxDataSelection() {
+            // Ottieni la data corrente
+            var today = new Date();
+
+            // Estrai l'anno, il mese e il giorno
+            var year = today.getFullYear();
+            // Aggiunge uno zero se il mese è inferiore a 10
+            var month = String(today.getMonth() + 1).padStart(2, '0');
+            // Aggiunge uno zero se il giorno è inferiore a 10
+            var day = String(today.getDate()).padStart(2, '0');
+
+            // Crea la stringa della data nel formato "YYYY-MM-DD"
+            var maxDate = year + '-' + month + '-' + day;
+
+            // Ottieni l'elemento input di tipo data
+            var datePicker = document.getElementById("dataFine");
+
+            // Imposta la data massima consentita per la selezione
+            datePicker.max = maxDate;
+        }
+    </script>
 </body>
 </html>

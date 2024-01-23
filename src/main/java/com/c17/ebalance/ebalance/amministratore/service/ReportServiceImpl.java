@@ -1,12 +1,9 @@
 package com.c17.ebalance.ebalance.amministratore.service;
 import com.c17.ebalance.ebalance.dati.service.ConsumoService;
 import com.c17.ebalance.ebalance.dati.service.ConsumoServiceImpl;
-import com.c17.ebalance.ebalance.dati.service.VenditaService;
-import com.c17.ebalance.ebalance.dati.service.VenditaServiceImpl;
 import com.c17.ebalance.ebalance.model.DAO.ReportDAO;
 import com.c17.ebalance.ebalance.model.DAO.ReportDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +13,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.awt.*;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;

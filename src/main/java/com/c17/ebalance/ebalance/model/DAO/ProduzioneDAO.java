@@ -9,8 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ProduzioneDAO {
-    public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException;
-    public List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException;
+    List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException;
+    List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException;
 
     String[][] ottieniProduzione() throws SQLException;
 
@@ -20,6 +20,7 @@ public interface ProduzioneDAO {
 
     int ottieniSorgenti() throws SQLException;
 
-
     void simulaProduzioneSEN(float produzioneNecessaria, Date data) throws SQLException;
+
+    float energiaRinnovabileProdottaPerData(final Date dataInizio, final Date dataFine) throws SQLException;
 }

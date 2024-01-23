@@ -16,7 +16,8 @@ import java.util.logging.Logger;
 
 public class ProduzioneDAOImpl implements ProduzioneDAO {
 
-    private static Logger logger = Logger.getLogger(ProduzioneDAOImpl.class.getName());
+    private static Logger logger =
+            Logger.getLogger(ProduzioneDAOImpl.class.getName());
     private static DataSource ds;
 
     static {
@@ -333,5 +334,28 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         }
 
     }
+    @Override
+    public float energiaRinnovabileProdottaPerData(final Date dataInizio, final Date dataFine) throws SQLException{
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
+        float energiaTotale=0;
+        String selectSQL = "SELECT SUM(ProduzioneGiornaliera) AS Produzione FROM "
+                + TABLE_NAME_ARCHIVIO + " WHERE IdSorgente != 1 AND DataProduzione BETWEEN ? AND ? ";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setDate(1, dataInizio);
+            preparedStatement.setDate(2, dataFine);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                energiaTotale=resultSet.getFloat("Produzione");
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        }
+        return energiaTotale;
+    }
 }

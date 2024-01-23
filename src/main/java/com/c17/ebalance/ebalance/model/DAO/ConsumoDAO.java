@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ConsumoDAO {
-    public List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException;
+    List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException;
 
     float ottieniConsumiEdifici() throws SQLException;
 
@@ -18,6 +18,6 @@ public interface ConsumoDAO {
 
     int ottieniNumEdifici() throws SQLException;
 
-    public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException;
+    float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException;
 
 }
