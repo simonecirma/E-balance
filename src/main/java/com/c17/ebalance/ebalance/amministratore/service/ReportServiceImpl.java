@@ -85,9 +85,9 @@ public class ReportServiceImpl implements ReportService {
 
         try {
             String servletPath = request.getServletContext().getRealPath("");
-            System.out.println(servletPath);
+            String filePath = servletPath + "report" + File.separator + "Report" + n + ".pdf";
+            System.out.println(filePath);
 
-            String filePath = servletPath + "Report" + n + ".pdf";
             // Carica il template PDF esistente
             File templateFile = new File(servletPath + File.separator  + "TemplateReport.pdf");
             PDDocument document = PDDocument.load(templateFile);
