@@ -2,6 +2,7 @@ package com.c17.ebalance.ebalance.contratto.service;
 
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,5 +13,7 @@ public interface ContrattoService {
     void aggiornaContratto(ContrattoBean contratto) throws SQLException;
     void aggiungiContratto(ContrattoBean contrattoNuovo) throws SQLException;
     boolean verificaPrimoContratto() throws SQLException;
+    ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException;
+
 }
 

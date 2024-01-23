@@ -1,18 +1,14 @@
 package com.c17.ebalance.ebalance.dati.service;
 
-import com.c17.ebalance.ebalance.model.DAO.ConsumoDAO;
-import com.c17.ebalance.ebalance.model.DAO.ConsumoDAOImpl;
 import com.c17.ebalance.ebalance.model.DAO.ProduzioneDAO;
 import com.c17.ebalance.ebalance.model.DAO.ProduzioneDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.ArchivioProduzioneBean;
 import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
 import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
 
+import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public class ProduzioneServiceImpl implements ProduzioneService {
 
@@ -38,5 +34,12 @@ public class ProduzioneServiceImpl implements ProduzioneService {
         return produzioneDAO.ottieniTipoSorgente();
     }
 
+    @Override
+    public float energiaRinnovabileProdottaPerData(
+            final Date dataInizio, final Date dataFine)
+            throws SQLException {
+        return produzioneDAO.energiaRinnovabileProdottaPerData(
+                dataInizio, dataFine);
+    }
 
 }

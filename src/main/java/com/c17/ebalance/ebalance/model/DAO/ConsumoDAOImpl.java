@@ -226,7 +226,7 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         try{
         con = ds.getConnection();
         String query = "SELECT SUM(ConsumoGiornaliero) AS " +
-                "ConsumoTotale FROM ArchivioConsumo WHERE " +
+                "ConsumoTotale FROM "+ TABLE_NAME_ARCHIVIO + " WHERE "+
                 "DataConsumo BETWEEN ? AND ?";
 
         ps = con.prepareStatement(query);

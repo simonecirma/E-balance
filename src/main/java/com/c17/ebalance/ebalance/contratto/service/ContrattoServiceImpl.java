@@ -4,6 +4,7 @@ import com.c17.ebalance.ebalance.model.DAO.ContrattoDAO;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import com.c17.ebalance.ebalance.model.DAO.ContrattoDAOImpl;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.List;
@@ -55,4 +56,10 @@ public class ContrattoServiceImpl implements ContrattoService {
     public boolean verificaPrimoContratto() throws SQLException {
         return contrattoDao.verificaPrimoContratto();
     }
+
+    public ContrattoBean getContrattoAttivo(
+            final Date dataInizio, final Date dataFine) throws SQLException {
+        return contrattoDao.getContrattoAttivo(dataInizio, dataFine);
+    }
+
 }
