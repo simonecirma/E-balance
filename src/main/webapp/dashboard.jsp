@@ -137,14 +137,24 @@
         <div class="section" onclick="toggleExpansion(4)">
             <a href="DatiController?action=generaDashboard">
                 <img src="img/indietro.png" id="img"></a>
-            <div class="content">
-                <div class="initial-content">
-                <!-- Contenuto della sezione 2 -->
-                    <h3>Archivio Consumi</h3>
+            <div class="contentConsumi">
+                <div class="initial-content-consumi">
                     <%
                         if (archivioConsumo != null && !archivioConsumo.isEmpty()) {
                     %>
-                    <table >
+                    <div class="text">Archivio Consumi</div>
+                <!-- Contenuto della sezione 2 -->
+                    <div class="chart1">
+                        <canvas id="istogramma"></canvas>
+                    </div>
+                </div>
+                <div class="expandedConsumi">
+                    <h3>Archivio Consumi</h3>
+                    <div class="containerChart">
+                    <div class="chart">
+                        <canvas id="istogramma2"></canvas>
+                    </div>
+                    <table id="consumi">
                         <thread>
                             <tr>
                                 <th>Data consumo:</th>
@@ -160,16 +170,97 @@
                             <td> <%= archivio.getConsumoGiornaliero() %></td>
                         </tr>
                         <%
-                                }
+                            }
                         %>
                         </tbody>
                     </table>
                     <%
                         }
                     %>
-                </div>
-                <div class="expanded-content">
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        var tabella = document.getElementById("consumi");
+                        var date = [];
+                        var consumi = [];
+                        var colors = [];
 
+                        for (var i = 1; i < tabella.rows.length; i++) {
+                            date.push(tabella.rows[i].cells[0].innerText);
+                            consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
+
+                            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.5)';
+                            colors.push(randomColor);
+                        }
+
+                        var ctx = document.getElementById('istogramma').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: date,
+                                datasets: [{
+                                    label: 'Consumo Giornaliero',
+                                    data: consumi,
+                                    backgroundColor: colors,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    <script>
+                        var tabella = document.getElementById("consumi");
+                        var date = [];
+                        var consumi = [];
+                        var colors = [];
+
+                        for (var i = 1; i < tabella.rows.length; i++) {
+                            date.push(tabella.rows[i].cells[0].innerText);
+                            consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
+
+                            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.5)';
+                            colors.push(randomColor);
+                        }
+
+                        var ctx2 = document.getElementById('istogramma2').getContext('2d');
+                        var myChart = new Chart(ctx2, {
+                            type: 'bar',
+                            data: {
+                                labels: date,
+                                datasets: [{
+                                    label: 'Consumo Giornaliero',
+                                    data: consumi,
+                                    backgroundColor: colors,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: false
+                                    }
+                                }
+                            }
+                        });
+                    </script>
                 </div>
             </div>
         </div>
