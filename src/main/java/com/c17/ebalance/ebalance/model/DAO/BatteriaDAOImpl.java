@@ -34,6 +34,9 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         }
     }
     private static final String TABLE_NAME_BATTERIA = "Batteria";
+    private static final String TABLE_NAME_UTILIZZA= "Utilizza";
+    private static final String TABLE_NAME_CARICARE= "Caricare";
+
 
     public List<BatteriaBean> visualizzaBatteria() throws SQLException {
         Connection connection = null;
@@ -54,7 +57,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 bean.setIdBatteria(resultSet.getInt("IdBatteria"));
                 bean.setFlagStatoBatteria(resultSet.getBoolean("FlagStatoBatteria"));
                 bean.setCapacitaMax(resultSet.getFloat("CapacitaMax"));
-                bean.setPercentualeCarica(resultSet.getInt("PercentualeCarica"));
+                bean.setPercentualeCarica(resultSet.getFloat("PercentualeCarica"));
                 batteria.add(bean);
             }
         } finally {
@@ -77,7 +80,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        float percentuale = 0.0f;
+        float percentuale = 0.02f;
         String selectSQL = "SELECT  ROUND(SUM(PercentualeCarica)/3,2) AS Percentuale FROM " + TABLE_NAME_BATTERIA
                 + " WHERE FlagStatoBatteria = 1 ";
 
@@ -102,6 +105,68 @@ public class BatteriaDAOImpl implements BatteriaDAO {
             }
         }
         return percentuale;
+    }
+
+    @Override
+    public void aggiornaConsumiBatteria(float consumoOrario, int idEdificio) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME_BATTERIA + " SET PercentualeCarica  = (((PercentualeCarica*(CapacitaMax/100)) "
+                + "+ (?))/(CapacitaMax/100)) WHERE IdBatteria IN (SELECT IdBatteria FROM " + TABLE_NAME_UTILIZZA + " WHERE IdEdificio = ?)";
+
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setFloat(1, consumoOrario);
+            preparedStatement.setInt(2, idEdificio);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void aggiornaProduzioneBatteria(float produzioneOraria, int idSorgente) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        String updateSQL = "UPDATE " + TABLE_NAME_BATTERIA + " SET PercentualeCarica  = (((PercentualeCarica*(CapacitaMax/100)) "
+                + "+ (?))/(CapacitaMax/100)) WHERE IdBatteria IN (SELECT IdBatteria FROM " + TABLE_NAME_CARICARE + " WHERE IdSorgente = ?)";
+
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(updateSQL);
+            preparedStatement.setFloat(1, produzioneOraria);
+            preparedStatement.setInt(2, idSorgente);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
     }
 
 }

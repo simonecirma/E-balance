@@ -2,10 +2,11 @@
 
 <Context>
     <Resource name="jdbc/ebalance"
-        auth="Container"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        type="javax.sql.DataSource"
-        username="root"
-        password="ebalance"
-        url="jdbc:mysql://localhost:3306/ebalance?serverTimezone=Europe/Rome" maxTotal="100" maxIdle="99" maxWaitMillis="-1"/>
+              auth="Container"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              type="javax.sql.DataSource"
+              username="root"
+              password="ebalance"
+              url="jdbc:mysql://localhost:3306/ebalance?serverTimezone=Europe/Rome"
+              maxTotal="100" maxIdle="99" maxWaitMillis="-1"/>
 </Context>

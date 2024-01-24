@@ -9,4 +9,8 @@ public interface BatteriaDAO {
     List<BatteriaBean> visualizzaBatteria() throws SQLException;
 
     float ottieniPercentualeBatterie() throws SQLException;
+
+    void aggiornaConsumiBatteria(float consumoOrario, int idEdificio) throws SQLException;
+
+    void aggiornaProduzioneBatteria(float produzioneOraria, int idSorgente) throws SQLException;
 }

@@ -4,12 +4,12 @@ public class BatteriaBean {
     private int idBatteria;
     private boolean flagStatoBatteria;
     private float capacitaMax;
-    private int percentualeCarica;
+    private float percentualeCarica;
 
     public BatteriaBean() { }
 
     public BatteriaBean(final int idBatteria, final boolean flagStatoBatteria,
-                        final float capacitaMax, final int percentualeCarica) {
+                        final float capacitaMax, final float percentualeCarica) {
         this.idBatteria = idBatteria;
         this.flagStatoBatteria = flagStatoBatteria;
         this.capacitaMax = capacitaMax;
@@ -40,11 +40,11 @@ public class BatteriaBean {
         this.capacitaMax = capacitaMax;
     }
 
-    public int getPercentualeCarica() {
+    public float getPercentualeCarica() {
         return percentualeCarica;
     }
 
-    public void setPercentualeCarica(final int percentualeCarica) {
+    public void setPercentualeCarica(final float percentualeCarica) {
         this.percentualeCarica = percentualeCarica;
     }
 

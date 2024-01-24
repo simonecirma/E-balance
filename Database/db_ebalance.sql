@@ -54,7 +54,7 @@ CREATE TABLE Batteria
     IdBatteria int NOT NULL AUTO_INCREMENT,
     FlagStatoBatteria bit NOT NULL,  --  0 = "Batteria non funzionante/guasta" 1 = "Batteria funzionante"
     CapacitaMax float NOT NULL,
-    PercentualeCarica int NOT NULL,
+    PercentualeCarica float NOT NULL CHECK (PercentualeCarica >= 0 AND PercentualeCarica <= 100),
     PRIMARY KEY(IdBatteria)
 );
 
@@ -207,6 +207,12 @@ INSERT INTO Report(DataEmissione, IdAmministratore, NomeReport)
 VALUES ("2023-12-31", 05, "Report3.pdf");
 
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(3500, "2021-06-23", 315, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(1000, "2021-10-10", 90, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(5000, "2022-02-23", 450, 01);
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(6000, "2022-04-10", 540, 01);
@@ -216,6 +222,9 @@ INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(20000, "2023-08-01", 1800, 01);
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(3000, "2023-09-07", 270, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(2500, "2023-11-19", 225, 01);
+
 
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
 VALUES(1, 7000, 10);
@@ -446,7 +455,7 @@ INSERT INTO TipoSorgente(Tipo)
 VALUES("Servizio Elettrico Nazionale");
 
 INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
-VALUES("Servizio Elettrico Nazionale", "2000-01-01", 0, 1, 0);
+VALUES("Servizio Elettrico Nazionale", "2000-01-01", 0, 1, 1);
 INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 10, 1, 1);
 INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
