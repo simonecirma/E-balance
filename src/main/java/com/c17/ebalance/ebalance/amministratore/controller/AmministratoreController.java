@@ -26,6 +26,7 @@ public class AmministratoreController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
+    private ReportService reportService = new ReportServiceImpl();
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
         String action = request.getParameter("action");
@@ -59,6 +60,18 @@ public class AmministratoreController extends HttpServlet {
                     amministratoreService.rimuoviAmministratore(idAmministratore);
                     response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
                 }
+                if (action.equalsIgnoreCase("vediReport")) {
+                    visualizzazioneReport(request, response);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    dispatcher.forward(request, response);
+                }
+                if (action.equalsIgnoreCase("generaReport")) {
+                    ReportBean report = reportService.generaReport(request, response);
+                    reportService.aggiungiReport(report);
+                    visualizzazioneReport(request, response);
+                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    dispatcher.forward(request, response);
+                }
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);
@@ -67,9 +80,11 @@ public class AmministratoreController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
+
     public void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
@@ -144,6 +159,26 @@ public class AmministratoreController extends HttpServlet {
         }
 
     }
+
+    private void visualizzazioneReport(final HttpServletRequest request, final HttpServletResponse response) {
+        try {
+            List<ReportBean> listReport = reportService.visualizzaReport();
+            request.setAttribute("listReport", listReport);
+            List<AmministratoreBean> amministratori = new ArrayList<AmministratoreBean>();
+            AmministratoreBean bean = new AmministratoreBean();
+            for (ReportBean rep : listReport) {
+                int i = rep.getIdAmministratore();
+                bean = amministratoreService.getById(i);
+                amministratori.add(bean);
+            }
+            request.setAttribute("amministratori", amministratori);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
     public void destroy() {
     }
 }

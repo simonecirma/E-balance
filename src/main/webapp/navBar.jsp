@@ -49,7 +49,7 @@
 			<li><a href="ContrattoController">
 				<span>Contratto</span>
 			</a></li>
-			<li><a href="DatiController?action=vediReport">
+			<li><a href="AmministratoreController?action=vediReport">
 				<span>Report</span>
 			</a></li>
 			<% if (tipo) { %>

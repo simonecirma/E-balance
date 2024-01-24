@@ -3,8 +3,8 @@
 <%@ page import="com.c17.ebalance.ebalance.model.entity.AmministratoreBean" %>
 <%@ page import="java.util.List" %>
 <%
-    List<ReportBean> report = (List<ReportBean>) request.getAttribute("report");
-    List<AmministratoreBean> amm = (List<AmministratoreBean>) request.getAttribute("amm");
+    List<ReportBean> listReport = (List<ReportBean>) request.getAttribute("listReport");
+    List<AmministratoreBean> amministratori = (List<AmministratoreBean>) request.getAttribute("amministratori");
 %>
 <html>
 <head>
@@ -25,12 +25,12 @@
         </tr>
         </thead>
         <tbody>
-        <% if (report != null && !report.isEmpty()) {
-            for (int i = 0; i < report.size(); i++) { %>
+        <% if (listReport != null && !listReport.isEmpty()) {
+            for (int i = 0; i < listReport.size(); i++) { %>
                 <% AmministratoreBean bean = new AmministratoreBean();
                    ReportBean rep = new ReportBean();
-                   rep = report.get(i);
-                   bean = amm.get(i);%>
+                   rep = listReport.get(i);
+                   bean = amministratori.get(i);%>
         <tr>
             <td><%= rep.getDataEmissione() %></td>
             <td><%= bean.getNome() %> <%=bean.getCognome()%></td>
@@ -43,7 +43,7 @@
         </tbody>
     </table>
 
-    <form id="generaPdf" action="DatiController?action=bilancioTotale" method="post">
+    <form id="generaPdf" action="AmministratoreController?action=generaReport" method="post">
         Data inizio: <input type="date" id="dataInizio" name="dataInizio" onchange="minDataSelection()"><br>
         Data fine: <input type="date" id="dataFine" name="dataFine" onchange="maxDataSelection()"><br>
         <input type="submit" value="Genera Pdf">

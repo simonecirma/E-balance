@@ -35,8 +35,6 @@ public class DatiController extends HttpServlet implements Observer{
     private BatteriaService batteriaService = new BatteriaServiceImpl();
     private ConsumoService consumoService = new ConsumoServiceImpl();
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
-    private ReportService reportService = new ReportServiceImpl();
-    private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
 
     boolean updatePage = false;
@@ -109,27 +107,6 @@ public class DatiController extends HttpServlet implements Observer{
                     }
                     response.sendRedirect("DatiController?action=generaDashboard");
 
-                }
-                if (action.equalsIgnoreCase("vediReport")) {
-                    List<ReportBean> report = reportService.visualizzaReport();
-                    request.setAttribute("report", report);
-                    List<AmministratoreBean> amm = new ArrayList<AmministratoreBean>();
-                    AmministratoreBean bean = new AmministratoreBean();
-                    for (ReportBean rep : report) {
-                        int i = rep.getIdAmministratore();
-                        bean = amministratoreService.getById(i);
-                        amm.add(bean);
-                    }
-
-                    request.setAttribute("amm", amm);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                    dispatcher.forward(request, response);
-                }
-                if (action.equalsIgnoreCase("bilancioTotale")) {
-                    ReportBean report = reportService.generaReport(request, response);
-                    reportService.aggiungiReport(report);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
-                    dispatcher.forward(request, response);
                 }
             } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
