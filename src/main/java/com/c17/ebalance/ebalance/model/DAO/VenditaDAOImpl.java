@@ -1,14 +1,17 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
+import com.c17.ebalance.ebalance.model.entity.VenditaBean;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import javax.xml.transform.Result;
-import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.List;
 
 public class VenditaDAOImpl implements VenditaDAO {
     private static final Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());
@@ -25,27 +28,33 @@ public class VenditaDAOImpl implements VenditaDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+    private static final String TABLE_NAME_VENDITA = "Vendita";
 
-    public float getEnergiaVendutaPerData(final Date dataInizio, final Date dataFine) throws SQLException {
-        float energia = 0;
+    public List<VenditaBean> getVendite(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
+        List<VenditaBean> vendite = new ArrayList<>();
         try {
             con = ds.getConnection();
-            String query = "SELECT SUM(EnergiaVenduta) "
-                    + "AS EnergiaTOTVenduta FROM Vendita "
-                    + "WHERE DataVendita BETWEEN ? AND ? ";
+            String query = "SELECT * FROM " + TABLE_NAME_VENDITA +
+                    " WHERE DataVendita BETWEEN ? AND ? ";
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                energia = rs.getFloat("EnergiaTOTVenduta");
+                VenditaBean bean = new VenditaBean();
+                bean.setIdVendita(rs.getInt("IdAmministratore"));
+                bean.setEnergiaVenduta(rs.getFloat("EnergiaVenduta"));
+                bean.setDataVendita(rs.getDate("DataVendita"));
+                bean.setRicavoTotale(rs.getFloat("RicavoTotale"));
+                bean.setIdAmministratore(rs.getInt("IdAmministratore"));
+                vendite.add(bean);
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         }
-        return energia;
+        return vendite;
     }
 
     public float getRicavoTotalePerData(final Date dataInizio, final Date dataFine) throws SQLException {
@@ -55,8 +64,8 @@ public class VenditaDAOImpl implements VenditaDAO {
         try {
             con = ds.getConnection();
             String query = "SELECT SUM(RicavoTotale) "
-                    + "AS RicavoTOT FROM Vendita "
-                    + "WHERE DataVendita BETWEEN ? AND ?";
+                    + "AS RicavoTOT FROM " + TABLE_NAME_VENDITA +
+                    " WHERE DataVendita BETWEEN ? AND ?";
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);

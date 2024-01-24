@@ -9,6 +9,7 @@ import com.c17.ebalance.ebalance.model.DAO.ReportDAO;
 import com.c17.ebalance.ebalance.model.DAO.ReportDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
+import com.c17.ebalance.ebalance.model.entity.VenditaBean;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -26,6 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReportServiceImpl implements ReportService {
@@ -56,7 +58,8 @@ public class ReportServiceImpl implements ReportService {
 
         Date dataInizio = Date.valueOf(request.getParameter("dataInizio"));
         Date dataFine = Date.valueOf(request.getParameter("dataFine"));
-        float energia = venditaService.getEnergiaVendutaPerData(dataInizio, dataFine);
+        List<VenditaBean> vendite = new ArrayList<>();
+        vendite = venditaService.getVendite(dataInizio, dataFine);
         float ricavo = venditaService.getRicavoTotalePerData(dataInizio, dataFine);
         ContrattoBean bean = contrattoService.getContrattoAttivo(dataInizio, dataFine);
         float energiaConsumo= consumoService.getConsumoPerData(dataInizio, dataFine);
@@ -64,6 +67,7 @@ public class ReportServiceImpl implements ReportService {
         float costoMedioUnitario = bean.getCostoMedioUnitario();
         float correnteConsumata = energiaConsumo-energiaRinnovabileProdotta;
         float speseCorrente = (energiaConsumo-energiaRinnovabileProdotta)*costoMedioUnitario;
+        float resocontoFinale = ricavo - speseCorrente;
 
         HttpSession session = request.getSession(false);
         String nome = "";
@@ -112,95 +116,139 @@ public class ReportServiceImpl implements ReportService {
 
             // Posizione delle celle nel template da riempire
 
-            // Posizione Energia Venduta
-            float xCoordinate1 = 250F;
-            float yCoordinate1 = 430F;
+            // Posizione Corrente Elettrica Consumata
+            float xCoordinate1 = 255;
+            float yCoordinate1 = 422;
 
-            //Posizione Ricavo
-            float xCoordinate2 = 370F;
-            float yCoordinate2 = 430F;
-
-            //Posizione Corrente Elettrica Consumata
-            float xCoordinate9 = 240F;
-            float yCoordinate9 = 395F;
+            //Posizione Ricavo Totale
+            float xCoordinate2 = 370;
+            float yCoordinate2 = 192;
 
             // Posizione amministratore
-            float xCoordinate3 = 450F;
-            float yCoordinate3 = 678F;
+            float xCoordinate3 = 450;
+            float yCoordinate3 = 678;
 
             // Posizione numero report
-            float xCoordinate4 = 130F;
-            float yCoordinate4 = 679F;
+            float xCoordinate4 = 130;
+            float yCoordinate4 = 678;
 
             // Posizione data emissione
-            float xCoordinate5 = 185F;
-            float yCoordinate5 = 654F;
+            float xCoordinate5 = 185;
+            float yCoordinate5 = 655;
 
             // Posizione descrizione
-            float xCoordinate6 = 60F;
-            float yCoordinate6 = 430F;
+            float xCoordinate10 = 50;
+            float yCoordinate10 = 398;
 
             // Posizione descrizione1
-            float xCoordinate10 = 60F;
-            float yCoordinate10 = 395F;
+            float xCoordinate6 = 50;
+            float yCoordinate6 = 422;
 
             // Posizione data inizio
-            float xCoordinate7 = 353F;
-            float yCoordinate7 = 654F;
+            float xCoordinate7 = 353;
+            float yCoordinate7 = 655;
 
             // Posizione data fine
-            float xCoordinate8 = 475F;
-            float yCoordinate8 = 654F;
+            float xCoordinate8 = 475;
+            float yCoordinate8 = 655;
+
+            // Posizione Energia Venduta
+            float xCoordinate9 = 255;
+            float yCoordinate9 = 398;
+
+            // Posizione Ricavo per ogni vendita
+            float xCoordinate12 = 370;
+            float yCoordinate12 = 398;
 
             //Posizione Soldi Spesi Corrente
-            float xCoordinate11 = 480F;
-            float yCoordinate11 = 395F;
+            float xCoordinate11 = 475;
+            float yCoordinate11 = 422;
+            float xCoordinate13 = 475;
+            float yCoordinate13 = 192;
+
+            //Posizione Resoconto Finale
+            float xCoordinate14 = 420;
+            float yCoordinate14 = 160;
+
+            //Posizione Nome Ente Contratto
+            float xCoordinate15 = 304;
+            float yCoordinate15 = 76;
+
+            //Posizione Costo Medio Unitario
+            float xCoordinate16 = 304;
+            float yCoordinate16 = 62;
+
+            //Posizione Prezzo Vendita
+            float xCoordinate17 = 304;
+            float yCoordinate17 = 48;
 
             // Scrivi i valori nel documento
             if(ricavo > 0) {
-                descrizione = "ENERGIA VENDUTA";
+                for (VenditaBean Vbean : vendite) {
 
-                contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-                contentStream.newLineAtOffset(xCoordinate6, yCoordinate6);
-                contentStream.showText(descrizione);
-                contentStream.endText();
+                    descrizione = "VENDITA DEL ";
 
-                contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-                contentStream.newLineAtOffset(xCoordinate1, yCoordinate1);
-                contentStream.showText(String.valueOf(energia));
-                contentStream.endText();
+                    contentStream.beginText();
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                    contentStream.newLineAtOffset(xCoordinate10, yCoordinate10);
+                    contentStream.showText(descrizione+ " " +Vbean.getDataVendita());
+                    contentStream.endText();
+                    yCoordinate10 -= 23;
 
-                contentStream.beginText();
-                contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-                contentStream.newLineAtOffset(xCoordinate2, yCoordinate2);
-                contentStream.showText(String.valueOf(ricavo));
-                contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero
-                contentStream.endText();
+                    contentStream.beginText();
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                    contentStream.newLineAtOffset(xCoordinate9, yCoordinate9);
+                    contentStream.showText(String.valueOf(Vbean.getEnergiaVenduta()));
+                    contentStream.endText();
+                    yCoordinate9 -= 23;
+
+                    contentStream.beginText();
+                    contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                    contentStream.newLineAtOffset(xCoordinate12, yCoordinate12);
+                    contentStream.showText(String.valueOf("+" +Vbean.getRicavoTotale()));
+                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero
+                    contentStream.endText();
+                    yCoordinate12 -= 23;
+
+                    contentStream.beginText();
+                    contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                    contentStream.newLineAtOffset(xCoordinate2, yCoordinate2);
+                    contentStream.showText(String.valueOf("+" +ricavo));
+                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero
+                    contentStream.endText();
+                }
             }
 
             if(correnteConsumata > 0){
                 descrizione1 = "SPESE CORRENTE";
 
                 contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-                contentStream.newLineAtOffset(xCoordinate10, yCoordinate10);
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                contentStream.newLineAtOffset(xCoordinate6, yCoordinate6);
                 contentStream.showText(descrizione1);
                 contentStream.endText();
 
                 contentStream.beginText();
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
-                contentStream.newLineAtOffset(xCoordinate9, yCoordinate9);
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                contentStream.newLineAtOffset(xCoordinate1, yCoordinate1);
                 contentStream.showText(String.valueOf(correnteConsumata));
                 contentStream.endText();
 
                 contentStream.beginText();
                 contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
-                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14);
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
                 contentStream.newLineAtOffset(xCoordinate11, yCoordinate11);
-                contentStream.showText(String.valueOf(speseCorrente));
+                contentStream.showText(String.valueOf("-" +speseCorrente));
+                contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero
+                contentStream.endText();
+
+                contentStream.beginText();
+                contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
+                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+                contentStream.newLineAtOffset(xCoordinate13, yCoordinate13);
+                contentStream.showText(String.valueOf("-" +speseCorrente));
                 contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero
                 contentStream.endText();
             }
@@ -234,6 +282,42 @@ public class ReportServiceImpl implements ReportService {
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);
             contentStream.newLineAtOffset(xCoordinate8, yCoordinate8);
             contentStream.showText(String.valueOf(dataFine));
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
+            contentStream.newLineAtOffset(xCoordinate14, yCoordinate14);
+            if(resocontoFinale > 0){
+                contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde
+                contentStream.showText(String.valueOf("+" +resocontoFinale));
+                contentStream.endText();
+            }else if (resocontoFinale < 0){
+                contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
+                contentStream.showText(String.valueOf(resocontoFinale));
+                contentStream.endText();
+            }else{
+                contentStream.showText(String.valueOf(resocontoFinale));
+                contentStream.endText();
+            }
+            contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.setNonStrokingColor(new Color(47, 47, 47)); //Grigio
+            contentStream.newLineAtOffset(xCoordinate15, yCoordinate15);
+            contentStream.showText(bean.getNomeEnte());
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.newLineAtOffset(xCoordinate16, yCoordinate16);
+            contentStream.showText("Costo Medio Unitario: " +bean.getCostoMedioUnitario());
+            contentStream.endText();
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.newLineAtOffset(xCoordinate17, yCoordinate17);
+            contentStream.showText("Prezzo Vendita Al kWH: " +bean.getPrezzoVendita());
             contentStream.endText();
 
             // Chiudi il flusso di contenuto
