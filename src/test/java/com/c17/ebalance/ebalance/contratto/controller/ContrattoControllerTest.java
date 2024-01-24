@@ -1,15 +1,21 @@
-package com.c17.ebalance.ebalance.contratto.controller;
+package com.c17.ebalance.ebalance.amministratore.controller;
 
+import com.c17.ebalance.ebalance.amministratore.controller.AmministratoreController;
+import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
+import com.c17.ebalance.ebalance.contratto.controller.ContrattoController;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -17,12 +23,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+
+@Nested
 class ContrattoControllerTest {
 
     @Mock
@@ -33,6 +44,9 @@ class ContrattoControllerTest {
 
     @Mock
     private HttpServletResponse response;
+
+    @Mock
+    private HttpSession session;
 
     @Mock
     private RequestDispatcher requestDispatcher;
@@ -47,31 +61,46 @@ class ContrattoControllerTest {
 
     @Test
     void testAggiornaContratto() throws ServletException, IOException, SQLException {
-        when(request.getParameter("idContratto")).thenReturn("1");
-        when(request.getParameter("nomeEnte")).thenReturn("TestEnte");
-        when(request.getParameter("consumoMedioAnnuale")).thenReturn("100.0");
-        when(request.getParameter("costoMedioUnitario")).thenReturn("10.0");
-        when(request.getParameter("dataSottoscrizione")).thenReturn("2022-01-01");
-        when(request.getParameter("durata")).thenReturn("12");
-        when(request.getParameter("prezzoVendita")).thenReturn("120.0");
-        when(request.getParameter("idAmministratore")).thenReturn("1");
+        try{
+            when(request.getParameter("idContratto")).thenReturn("TestId");
+            when(request.getParameter("nomeEnte")).thenReturn("TestEnte");
+            when(request.getParameter("consumoMedioAnnuale")).thenReturn("TestConsumoMedioAnnuale");
+            when(request.getParameter("costoMedioUnitario")).thenReturn("TestCostoMedioUnitario");
+            when(request.getParameter("dataSottoscrizione")).thenReturn("TestDataSottoscrizione");
+            when(request.getParameter("durata")).thenReturn("TestDurata");
+            when(request.getParameter("prezzoVendita")).thenReturn("TestPrezzoVendita");
+            when(request.getParameter("idAmministratore")).thenReturn("TestIdAmministratore");
 
-        contrattoController.aggiornaContratto(request, response);
+            ContrattoBean contrattoAggiornato = new ContrattoBean();
 
-        verify(contrattoService, times(1)).aggiornaContratto(any(ContrattoBean.class));
+            contrattoController.aggiornaContratto(request, response);
+
+            verify(contrattoService, times(1)).aggiornaContratto(any(ContrattoBean.class));
+
+            assertEquals(contrattoAggiornato, request.getAttribute("contratto"));
+
+            ArgumentCaptor<String> argument = ArgumentCaptor.forClass(String.class);
+            verify(requestDispatcher).forward(request, response);
+            verify(requestDispatcher).forward(any(), any());
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     @Test
     void testAggiungiContratto() throws IOException, ServletException, SQLException {
         try {
             HttpServletRequest request = mock(HttpServletRequest.class);
+            when(request.getParameter("idContratto")).thenReturn("TestId");
             when(request.getParameter("nomeEnte")).thenReturn("TestEnte");
-            when(request.getParameter("consumoMedioAnnuale")).thenReturn("100.0");
-            when(request.getParameter("costoMedioUnitario")).thenReturn("10.0");
-            when(request.getParameter("dataSottoscrizione")).thenReturn("2022-01-01");
-            when(request.getParameter("durata")).thenReturn("12");
-            when(request.getParameter("prezzoVendita")).thenReturn("120.0");
-            when(request.getParameter("idAmministratore")).thenReturn("1");
+            when(request.getParameter("consumoMedioAnnuale")).thenReturn("TestConsumoMedioAnnuale");
+            when(request.getParameter("costoMedioUnitario")).thenReturn("TestCostoMedioUnitario");
+            when(request.getParameter("dataSottoscrizione")).thenReturn("TestDataSottoscrizione");
+            when(request.getParameter("durata")).thenReturn("TestDurata");
+            when(request.getParameter("prezzoVendita")).thenReturn("TestPrezzoVendita");
+            when(request.getParameter("idAmministratore")).thenReturn("TestIdAmministratore");
 
             HttpServletResponse response = mock(HttpServletResponse.class);
 
