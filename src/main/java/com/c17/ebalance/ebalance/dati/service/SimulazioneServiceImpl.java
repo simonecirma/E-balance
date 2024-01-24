@@ -26,7 +26,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 float consumoOrario = random.nextFloat() * 15 + 15;
                 consumoOrario = (float) (Math.round(consumoOrario * 100.0) / 100.0);
                 consumoDAO.simulaConsumo(consumoOrario, y+1, sqlDate);
-                batteriaDAO.aggiornaConsumiBatteria(-consumoOrario, y+1);
+                //batteriaDAO.aggiornaConsumiBatteria(-consumoOrario, y+1);
                 consumoOrarioAttualeTot = consumoOrarioAttualeTot + consumoOrario;
             }
 
@@ -37,14 +37,14 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 float produzioneOraria = random2.nextFloat() * 100 + 0;
                 produzioneOraria = (float) (Math.round(produzioneOraria * 100.0) / 100.0);
                 produzioneDAO.simulaProduzione(y+1, produzioneOraria,  sqlDate);
-                batteriaDAO.aggiornaProduzioneBatteria(produzioneOraria, y+1);
+                //batteriaDAO.aggiornaProduzioneBatteria(produzioneOraria, y+1);
                 produzioneOrariaAttualeTot = produzioneOrariaAttualeTot + produzioneOraria;
             }
 
             float produzioneNecessaria = 0.02f;
             produzioneNecessaria = (float) (Math.round((consumoOrarioAttualeTot - produzioneOrariaAttualeTot) * 100.0) / 100.0);
             produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
-            batteriaDAO.aggiornaProduzioneBatteria(produzioneNecessaria/3, 1);
+            //batteriaDAO.aggiornaProduzioneBatteria(produzioneNecessaria/3, 1);
 
             Thread.sleep(10000); // Ritardo di 10 secondi
         } catch (InterruptedException e) {
