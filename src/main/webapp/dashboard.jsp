@@ -9,6 +9,7 @@
     //List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
     float consumoEdifici = (float) request.getAttribute("consumoEdifici");
     List<ArchivioConsumoBean> archivioConsumo = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumo");
+    List<MeteoBean> condizioni = (List<MeteoBean>) request.getAttribute("condizioniMeteo");
     //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
     String sommaProduzione[][] = (String[][]) request.getAttribute("sommaProduzione");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
@@ -594,6 +595,37 @@
                 <div class="initial-content">
                 <!-- Contenuto della sezione 6 -->
                     <h3>Previsioni meteo</h3>
+                    <table>
+                        <thead>
+                        <%
+                            if (condizioni != null && !condizioni.isEmpty()) {
+                        %>
+                        <div class="text">Condizioni Metereologiche</div>
+                        <tr>
+                            <th>Id ::</th>
+                            <th>Data :</th>
+                            <th>Ora :</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            for (MeteoBean bean : condizioni) {
+                        %>
+                        <tr>
+                            <td> <%= bean.getIdMeteo() %></td>
+                            <td> <%= bean.getDataRilevazione() %></td>
+                            <td> <%= bean.getOraRilevazione() %></td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                        </tbody>
+                    </table>
+                    <%
+                        }
+                    %>
+                    </tbody>
+                    </table>
                 </div>
                 <div class="expanded-content">
                 </div>

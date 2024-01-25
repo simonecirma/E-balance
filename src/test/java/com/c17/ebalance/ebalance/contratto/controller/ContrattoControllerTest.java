@@ -1,4 +1,4 @@
-package com.c17.ebalance.ebalance.amministratore.controller;
+package com.c17.ebalance.ebalance.contratto.controller;
 
 import com.c17.ebalance.ebalance.amministratore.controller.AmministratoreController;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;

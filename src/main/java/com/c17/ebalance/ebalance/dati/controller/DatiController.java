@@ -36,6 +36,7 @@ public class DatiController extends HttpServlet implements Observer{
     private ConsumoService consumoService = new ConsumoServiceImpl();
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
+    private MeteoService meteoService = new MeteoServiceImpl();
 
     boolean updatePage = false;
 
@@ -71,6 +72,8 @@ public class DatiController extends HttpServlet implements Observer{
                     //request.setAttribute("consumoEdificio", consumoEdificio);
                     List<ArchivioConsumoBean> archivioConsumo = consumoService.visualizzaStoricoConsumi();
                     request.setAttribute("archivioConsumo", archivioConsumo);
+                    List<MeteoBean> condizioni = meteoService.getCondizioniMeteo();
+                    request.setAttribute("condizioniMeteo", condizioni);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
                     //request.setAttribute("sorgente", sorgente);
                     String sommaProduzione[][] = produzioneService.ottieniProduzione();
