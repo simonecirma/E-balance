@@ -665,6 +665,15 @@ public class ReportServiceImpl implements ReportService {
 
                 }
             }
+
+            //Apertura PDF
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                if (desktop.isSupported(Desktop.Action.OPEN)) {
+                    desktop.open(new File(filePath));
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -673,6 +682,7 @@ public class ReportServiceImpl implements ReportService {
         report.setDataEmissione(date);
         report.setIdAmministratore(id);
         report.setNomeReport(file);
+
         return report;
     }
 
