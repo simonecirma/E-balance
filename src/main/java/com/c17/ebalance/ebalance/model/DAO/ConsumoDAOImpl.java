@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ConsumoDAOImpl implements ConsumoDAO {
+public class ConsumoDAOImpl implements ConsumoDAO{
 
     private static Logger logger = Logger.getLogger(ConsumoDAOImpl.class.getName());
     private static DataSource ds;
@@ -132,6 +132,7 @@ public class ConsumoDAOImpl implements ConsumoDAO {
                 }
             }
         }
+
         return archivioConsumi;
     }
 

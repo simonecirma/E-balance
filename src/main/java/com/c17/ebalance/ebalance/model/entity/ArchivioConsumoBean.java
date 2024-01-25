@@ -1,9 +1,17 @@
 package com.c17.ebalance.ebalance.model.entity;
 
 
-import java.util.Date;
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
 
-public class ArchivioConsumoBean {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class ArchivioConsumoBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
+
+
     private int idConsumo;
     private Date dataConsumo;
     private float consumoGiornaliero;
@@ -25,6 +33,7 @@ public class ArchivioConsumoBean {
 
     public void setIdConsumo(final int idConsumo) {
         this.idConsumo = idConsumo;
+        notifyObservers();
     }
 
     public Date getDataConsumo() {
@@ -41,6 +50,7 @@ public class ArchivioConsumoBean {
 
     public void setConsumoGiornaliero(final float consumoGiornaliero) {
         this.consumoGiornaliero = consumoGiornaliero;
+        notifyObservers();
     }
 
     public int getIdEdificio() {
@@ -49,6 +59,7 @@ public class ArchivioConsumoBean {
 
     public void setIdEdificio(final int idEdificio) {
         this.idEdificio = idEdificio;
+        notifyObservers();
     }
 
     @Override
@@ -59,5 +70,26 @@ public class ArchivioConsumoBean {
                 + ", consumoGiornaliero=" + consumoGiornaliero
                 + ", idEdificio=" + idEdificio
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            try {
+                observer.update();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

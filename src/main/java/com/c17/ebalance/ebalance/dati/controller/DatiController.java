@@ -3,12 +3,9 @@ package com.c17.ebalance.ebalance.dati.controller;
 import com.c17.ebalance.ebalance.IA.controller.IAController;
 import com.c17.ebalance.ebalance.IA.service.IAService;
 import com.c17.ebalance.ebalance.IA.service.IAServiceImpl;
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
-import com.c17.ebalance.ebalance.amministratore.service.ReportService;
-import com.c17.ebalance.ebalance.amministratore.service.ReportServiceImpl;
 import com.c17.ebalance.ebalance.dati.service.*;
 import com.c17.ebalance.ebalance.model.entity.*;
+import com.c17.ebalance.ebalance.utility.Observer;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,7 +22,7 @@ import java.util.List;
 import java.io.IOException;
 
 @WebServlet(name = "DatiController", value = "/DatiController")
-public class DatiController extends HttpServlet implements Observer{
+public class DatiController extends HttpServlet implements Observer {
     private static final long serialVersionUID = 1L;
 
     private List<Observer> observers = new ArrayList<>();
@@ -39,11 +36,13 @@ public class DatiController extends HttpServlet implements Observer{
     private MeteoService meteoService = new MeteoServiceImpl();
 
     boolean updatePage = false;
+    ArchivioConsumoBean archivioConsumi;
 
     @Override
     public void init() throws ServletException {
+        archivioConsumi = new ArchivioConsumoBean();
+        archivioConsumi.addObserver(this);  // Aggiunge la servlet come osservatore
         new Thread(this::simulazioneEnergia).start();
-        addObserver(this);
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -60,8 +59,6 @@ public class DatiController extends HttpServlet implements Observer{
                     }
                 }
                 if (action.equalsIgnoreCase("generaDashboard")) {
-                    Thread.sleep(250);
-                    updatePage = false;
                     float consumoEdifici = consumoService.ottieniConsumiEdifici();
                     request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
@@ -88,7 +85,6 @@ public class DatiController extends HttpServlet implements Observer{
                     request.setAttribute("tipoSorgente", tipoSorgente);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/dashboard.jsp");
                     dispatcher.forward(request, response);
-
                 }
                 if (action.equalsIgnoreCase("selezionaPiano")) {
                     HttpSession session = request.getSession(true);
@@ -117,8 +113,6 @@ public class DatiController extends HttpServlet implements Observer{
             }
         } catch (ServletException | SQLException e) {
             throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -130,7 +124,6 @@ public class DatiController extends HttpServlet implements Observer{
         while (true) {
             try {
                 simulazioneService.simulazioneEnergia();
-                notifyObservers();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -139,6 +132,7 @@ public class DatiController extends HttpServlet implements Observer{
 
 
     public void destroy() {
+        archivioConsumi.removeObserver(this);
     }
 
     @Override
@@ -146,13 +140,4 @@ public class DatiController extends HttpServlet implements Observer{
         updatePage = true;
     }
 
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    private void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update();
-        }
-    }
 }

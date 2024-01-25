@@ -18,6 +18,7 @@
     List<TipoSorgenteBean> tipoSorgente = (List<TipoSorgenteBean>) request.getAttribute("tipoSorgente");
     String result = (String) request.getAttribute("result");
 %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Dashboard</title>
@@ -28,30 +29,6 @@
     <script src="js/dashboard.js"></script>
 </head>
 <body>
-    <script>
-        function Observer() {
-            $.ajax({
-                url: "DatiController?action=dashboardObserver",
-                method: "POST",
-                dataType: "json",
-                success: function (response) {
-                    var updatePage = response.updatePage;
-                    console.log(updatePage);
-
-                    if (updatePage === true) {
-                        window.location.reload()
-                    }
-                    Observer();
-                },
-                error: function () {
-                    console.error("Errore nella richiesta AJAX");
-                }
-            });
-        }
-
-        // Chiamare immediatamente la funzione all'avvio della pagina
-        Observer();
-    </script>
     <%@include file="navBar.jsp" %>
     <%
         if(result != null)
@@ -79,7 +56,9 @@
                             <span id="s5"></span>
                         </div>
                     </div>
-                    <input type="hidden" id="batteryInput" value="<%= percentualeBatterie%>" oninput="updateBattery()">
+                    <div id="percentualeBatterie" name="percentualeBatterie">
+                        <input type="hidden" id="batteryInput" value="<%= percentualeBatterie %>">
+                    </div>
                     <div id="batteryText">0%</div>
                 </div>
                 <div class="expanded-content">
@@ -94,6 +73,7 @@
                 <div class="initial-content">
                 <!-- Contenuto della sezione 1 -->
                     <h3>Energia prodotta</h3>
+                    <div id = "sommaProduzione" name = "sommaProduzione">
                     <table>
                         <thead>
                         <tr>
@@ -102,18 +82,23 @@
                         </tr>
                         </thead>
                         <tbody>
+
                         <% if (sommaProduzione != null) {
                             for(int i=0;i<sommaProduzione.length;i++) { %>
                         <tr>
-                            <td><%= sommaProduzione[i][0] %></td>
-                            <td><%= sommaProduzione[i][1] %></td>
+
+                                <td><%= sommaProduzione[i][0] %></td>
+                                <td><%= sommaProduzione[i][1] %></td>
+
 
                         </tr>
                         <% }
                         }
                         %>
+
                         </tbody>
                     </table>
+                    </div>
                 </div>
                 <div class="expanded-content">
 
@@ -128,7 +113,7 @@
                 <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
                     <h3>Consumi attuali</h3>
-                    <%=consumoEdifici%>
+                    <div id="consumoEdifici" name="consumoEdifici"><%=consumoEdifici%></div>
                 </div>
                 <div class="expanded-content">
                     <%=consumoEdifici%>
@@ -602,9 +587,9 @@
                         %>
                         <div class="text">Condizioni Metereologiche</div>
                         <tr>
-                            <th>Id ::</th>
-                            <th>Data :</th>
-                            <th>Ora :</th>
+                            <th>Data:</th>
+                            <th>Ora:</th>
+                            <th>Previsione:</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -612,9 +597,9 @@
                             for (MeteoBean bean : condizioni) {
                         %>
                         <tr>
-                            <td> <%= bean.getIdMeteo() %></td>
                             <td> <%= bean.getDataRilevazione() %></td>
                             <td> <%= bean.getOraRilevazione() %></td>
+                            <td> <%= bean.getCondizioniMetereologiche()%></td>
                         </tr>
                         <%
                             }
@@ -657,26 +642,56 @@
             }
         }
 
+        /*function Observer() {
+            $.ajax({
+                url: "DatiController?action=dashboardObserver",
+                method: "POST",
+                dataType: "json",
+                success: function (response) {
+                    var updatePage = response.updatePage;
+                    console.log(updatePage);
+
+                    if (updatePage === true) {
+                        $("#sommaProduzione").load(window.location.href + " #sommaProduzione");
+                        $("#consumoEdifici").load(window.location.href + " #consumoEdifici");
+                        $("#percentualeBatterie").load(window.location.href + " #percentualeBatterie");
+
+                        updateBattery();
+                    }
+                    setInterval(Observer, 1000);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("Errore nella richiesta AJAX", textStatus, errorThrown);
+                }
+            });
+
+        }*/
+
         function updateBattery() {
+            // Ottieni il nuovo valore della batteria dal campo nascosto
+            var batteryValue = document.getElementById("batteryInput").value;
+
+            // Esegui le azioni necessarie con il nuovo valore della batteria
+            // Aggiorna la visualizzazione della batteria, come hai già fatto nella funzione originale
             const input = document.getElementById('batteryInput');
             const battery = document.getElementById('battery');
             const batteryText = document.getElementById('batteryText');
             const spans = battery.querySelectorAll('span');
-            let value = parseInt(input.value, 10);
+            let value = parseInt(batteryValue, 10);
 
             if (isNaN(value) || value < 0 || value > 100) {
-                value = 0;
-            }
+            value = 0;
+        }
 
             const numberOfColoredSpans = Math.max(1, Math.floor((value / 100) * spans.length));
 
             spans.forEach((span) => {
-                span.style.backgroundColor = 'white';
-            });
+            span.style.backgroundColor = 'white';
+        });
 
             for (let i = 0; i < numberOfColoredSpans; i++) {
-                spans[i].style.backgroundColor = getBatteryColor(value);
-            }
+            spans[i].style.backgroundColor = getBatteryColor(value);
+        }
 
             batteryText.textContent = value + '%';
         }
@@ -694,6 +709,11 @@
         }
 
         updateBattery();
+
+        // Chiamare immediatamente la funzione all'avvio della pagina
+        //Observer();
+
+
     </script>
 
 </body>
