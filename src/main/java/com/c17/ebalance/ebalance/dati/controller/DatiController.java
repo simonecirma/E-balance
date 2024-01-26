@@ -3,8 +3,21 @@ package com.c17.ebalance.ebalance.dati.controller;
 import com.c17.ebalance.ebalance.IA.controller.IAController;
 import com.c17.ebalance.ebalance.IA.service.IAService;
 import com.c17.ebalance.ebalance.IA.service.IAServiceImpl;
-import com.c17.ebalance.ebalance.dati.service.*;
-import com.c17.ebalance.ebalance.model.entity.*;
+import com.c17.ebalance.ebalance.dati.service.BatteriaService;
+import com.c17.ebalance.ebalance.dati.service.BatteriaServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.ConsumoService;
+import com.c17.ebalance.ebalance.dati.service.ConsumoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.MeteoService;
+import com.c17.ebalance.ebalance.dati.service.MeteoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.ProduzioneService;
+import com.c17.ebalance.ebalance.dati.service.ProduzioneServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.SimulazioneService;
+import com.c17.ebalance.ebalance.dati.service.SimulazioneServiceImpl;
+import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
+import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
+import com.c17.ebalance.ebalance.model.entity.MeteoBean;
+import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
+import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
 import com.c17.ebalance.ebalance.utility.Observer;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -21,6 +34,7 @@ import java.util.List;
 
 import java.io.IOException;
 
+
 @WebServlet(name = "DatiController", value = "/DatiController")
 public class DatiController extends HttpServlet implements Observer {
     private static final long serialVersionUID = 1L;
@@ -34,8 +48,14 @@ public class DatiController extends HttpServlet implements Observer {
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
     private MeteoService meteoService = new MeteoServiceImpl();
+    float[] consumoEdifici = new float[]{633.02f, 633.02f, 633.02f, 633.02f,
+            633.02f, 633.02f, 633.02f, 633.02f, 633.02f, 633.02f};
 
-    boolean updatePage = false;
+    float[] produzioneSorgente = new float[]{324.02f, 324.02f, 324.02f, 324.02f,
+            324.02f, 324.02f, 324.02f, 324.02f, 324.02f, 324.02f};
+
+
+    String nomeMetodo = "";
     ArchivioConsumoBean archivioConsumi;
 
     @Override
@@ -53,13 +73,15 @@ public class DatiController extends HttpServlet implements Observer {
                     try {
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write("{\"updatePage\": " + updatePage + "}");
+                        response.getWriter().write("{\"nomeMetodo\": \"" + nomeMetodo + "\"}");
+                        nomeMetodo = "";
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 if (action.equalsIgnoreCase("generaDashboard")) {
-                    float consumoEdifici = consumoService.ottieniConsumiEdifici();
+                    System.out.println("AOOOOOOOOOOO");
+                    consumoEdifici = consumoService.ottieniConsumiEdifici(consumoEdifici);
                     request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();
                     //request.setAttribute("batteria", batteria);
@@ -73,8 +95,10 @@ public class DatiController extends HttpServlet implements Observer {
                     request.setAttribute("condizioniMeteo", condizioni);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
                     //request.setAttribute("sorgente", sorgente);
-                    String sommaProduzione[][] = produzioneService.ottieniProduzione();
-                    request.setAttribute("sommaProduzione", sommaProduzione);
+                    produzioneSorgente = produzioneService.ottieniProduzioneProdotta(produzioneSorgente);
+                    request.setAttribute("produzioneSorgente", produzioneSorgente);
+                    float produzioneSEN = produzioneService.ottieniProduzioneSEN();
+                    request.setAttribute("produzioneSEN", produzioneSEN);
                     List<ParametriIABean> parametriIA = iaController.ottieniParametri();
                     request.setAttribute("parametriIA", parametriIA);
                     List<InteragisceBean> interazioneParametri = iaController.ottieniInterazioneParametri();
@@ -136,8 +160,8 @@ public class DatiController extends HttpServlet implements Observer {
     }
 
     @Override
-    public void update() {
-        updatePage = true;
+    public void update(String nomeMetodo) {
+        this.nomeMetodo = nomeMetodo;
     }
 
 }

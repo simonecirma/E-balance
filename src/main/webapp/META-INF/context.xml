@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <Context>
     <Resource name="jdbc/ebalance"
               auth="Container"
@@ -7,6 +5,6 @@
               type="javax.sql.DataSource"
               username="root"
               password="ebalance"
-              url="jdbc:mysql://localhost:3306/ebalance?serverTimezone=Europe/Rome"
+              url="jdbc:mysql://localhost:3306/ebalance?serverTimezone=Europe/Rome&amp;useSSL=false"
               maxTotal="100" maxIdle="99" maxWaitMillis="-1"/>
 </Context>

@@ -13,7 +13,9 @@ public interface ProduzioneService {
 
     List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException;
 
-    String[][] ottieniProduzione() throws SQLException;
+    float[] ottieniProduzioneProdotta(float[] produzioneSorgente) throws SQLException;
+
+    float ottieniProduzioneSEN() throws SQLException;
 
     List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException;
 

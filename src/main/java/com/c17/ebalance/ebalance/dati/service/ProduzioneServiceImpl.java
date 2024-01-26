@@ -25,8 +25,17 @@ public class ProduzioneServiceImpl implements ProduzioneService {
     }
 
     @Override
-    public String[][] ottieniProduzione() throws SQLException {
-        return produzioneDAO.ottieniProduzione();
+    public float[] ottieniProduzioneProdotta(float[] produzioneSorgente) throws SQLException {
+        int numElementi = produzioneSorgente.length;
+        for (int i = 1; i < numElementi; i++) {
+            produzioneSorgente[i - 1] = produzioneSorgente[i];
+        }
+        produzioneSorgente[numElementi-1] = produzioneDAO.ottieniProduzioneProdotta();
+        return produzioneSorgente;
+    }
+    @Override
+    public float ottieniProduzioneSEN() throws SQLException {
+        return produzioneDAO.ottieniProduzioneSEN();
     }
 
     @Override

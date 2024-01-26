@@ -113,28 +113,22 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     }
 
     @Override
-    public String[][] ottieniProduzione() throws SQLException {
+    public float ottieniProduzioneProdotta() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        String selectSQL = "SELECT  ROUND(SUM(ProduzioneAttuale),2) AS Produzione, Tipologia FROM " +TABLE_NAME_SORGENTE
-                            + " GROUP BY Tipologia";
+        float produzioneSorgente=0.00f;
+        String selectSQL = "SELECT  ROUND(SUM(ProduzioneAttuale),2) AS ProduzioneSorgente FROM " + TABLE_NAME_SORGENTE
+                            + " WHERE Tipologia != 'Servizio Elettrico Nazionale'";
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
 
             resultSet = preparedStatement.executeQuery();
-            resultSet.last();
-            int numeroElementi = resultSet.getRow();
-            String produzione[][] = new String[numeroElementi][numeroElementi];
-            int i = 0;
-            resultSet.beforeFirst();
+
             while (resultSet.next()) {
-                produzione[i][0] = String.valueOf(resultSet.getFloat("Produzione"));
-                produzione[i][1] = resultSet.getString("Tipologia");
-                i++;
+                produzioneSorgente = resultSet.getFloat("ProduzioneSorgente");
             }
-            return produzione;
         } finally {
             try {
                 if (preparedStatement != null) {
@@ -146,6 +140,38 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
                 }
             }
         }
+        return produzioneSorgente;
+
+    }
+
+    public float ottieniProduzioneSEN() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        float produzioneSEN=0.00f;
+        String selectSQL = "SELECT  ROUND(ProduzioneAttuale,2) AS ProduzioneSEN FROM " + TABLE_NAME_SORGENTE
+                + " WHERE Tipologia = 'Servizio Elettrico Nazionale'";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                produzioneSEN = resultSet.getFloat("ProduzioneSEN");
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return produzioneSEN;
 
     }
 

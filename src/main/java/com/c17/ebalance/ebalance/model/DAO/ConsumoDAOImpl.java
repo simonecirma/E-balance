@@ -7,7 +7,12 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -105,10 +110,10 @@ public class ConsumoDAOImpl implements ConsumoDAO{
         ResultSet resultSet = null;
 
         List<ArchivioConsumoBean> archivioConsumi = new ArrayList<>();
-        String selectSQL = " SELECT Consumo, DataConsumo " +
-                " FROM ( SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM "  + TABLE_NAME_ARCHIVIO
-                + " GROUP BY DataConsumo ORDER BY Consumo DESC limit 10 ) AS Subquery" +
-                " ORDER BY DataConsumo";
+        String selectSQL = " SELECT Consumo, DataConsumo "
+                + " FROM ( SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM "  + TABLE_NAME_ARCHIVIO
+                + " GROUP BY DataConsumo ORDER BY Consumo DESC limit 10 ) AS Subquery"
+                + " ORDER BY DataConsumo";
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
@@ -220,15 +225,15 @@ public class ConsumoDAOImpl implements ConsumoDAO{
         return numEdificio;
     }
 
-    public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException{
+    public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException {
         float energia = 0.02f;
         Connection con = null;
         PreparedStatement ps = null;
-        try{
+        try {
             con = ds.getConnection();
-            String query = "SELECT SUM(ConsumoGiornaliero) AS " +
-                    "ConsumoTotale FROM "+ TABLE_NAME_ARCHIVIO + " WHERE "+
-                    "DataConsumo BETWEEN ? AND ?";
+            String query = "SELECT SUM(ConsumoGiornaliero) AS "
+                    + "ConsumoTotale FROM "+ TABLE_NAME_ARCHIVIO + " WHERE "
+                    + "DataConsumo BETWEEN ? AND ?";
 
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
@@ -249,7 +254,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
                     con.close();
                 }
             }
-            return energia;
         }
+        return energia;
     }
 }

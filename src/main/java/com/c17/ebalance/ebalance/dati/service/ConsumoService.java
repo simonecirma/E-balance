@@ -9,7 +9,7 @@ import java.util.List;
 public interface ConsumoService {
     List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException;
 
-    float ottieniConsumiEdifici() throws SQLException;
+    public float[] ottieniConsumiEdifici(float consumoEdifici[]) throws SQLException;
 
     List<ArchivioConsumoBean> visualizzaStoricoConsumi() throws SQLException;
 

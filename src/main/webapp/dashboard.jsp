@@ -7,11 +7,12 @@
     //List<BatteriaBean> batterie = (List<BatteriaBean>) request.getAttribute("batteria");
     float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
     //List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
-    float consumoEdifici = (float) request.getAttribute("consumoEdifici");
+    float consumoEdifici[] = (float[]) request.getAttribute("consumoEdifici");
     List<ArchivioConsumoBean> archivioConsumo = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumo");
     List<MeteoBean> condizioni = (List<MeteoBean>) request.getAttribute("condizioniMeteo");
-    //List<SorgenteBean> sorgenti = (List<SorgenteBean>) request.getAttribute("sorgente");
-    String sommaProduzione[][] = (String[][]) request.getAttribute("sommaProduzione");
+    //List<SorgenteBean> sorgente = (List<SorgenteBean>) request.getAttribute("sorgente");
+    float produzioneSorgente[] = (float[]) request.getAttribute("produzioneSorgente");
+    float produzioneSEN = (float) request.getAttribute("produzioneSEN");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
     List<InteragisceBean> interazioneParametri = (List<InteragisceBean>) request.getAttribute("interazioneParametri");
     List<InteragisceBean> parametriAttivi = (List<InteragisceBean>) request.getAttribute("parametriAttivi");
@@ -74,30 +75,18 @@
                 <!-- Contenuto della sezione 1 -->
                     <h3>Energia prodotta</h3>
                     <div id = "sommaProduzione" name = "sommaProduzione">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Prod</th>
-                            <th>Sorg</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        <% if (sommaProduzione != null) {
-                            for(int i=0;i<sommaProduzione.length;i++) { %>
-                        <tr>
-
-                                <td><%= sommaProduzione[i][0] %></td>
-                                <td><%= sommaProduzione[i][1] %></td>
-
-
-                        </tr>
-                        <% }
-                        }
+                        Energia prodotta:
+                        <% if (produzioneSorgente != null) {
+                            for(int i=0;i<produzioneSorgente.length;i++) {
                         %>
+                        <%= produzioneSorgente[i] %>
+                        <%
+                                }
+                            }
+                        %>
+                        <br>
 
-                        </tbody>
-                    </table>
+                        Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                     </div>
                 </div>
                 <div class="expanded-content">
@@ -113,10 +102,18 @@
                 <div class="initial-content">
                 <!-- Contenuto della sezione 3 -->
                     <h3>Consumi attuali</h3>
-                    <div id="consumoEdifici" name="consumoEdifici"><%=consumoEdifici%></div>
+                    <div id="consumoEdifici" name="consumoEdifici">
+                        <% if (consumoEdifici != null) {
+                            for(int i=0;i<consumoEdifici.length;i++) {
+                        %>
+                                <%= consumoEdifici[i] %>
+                        <%
+                            }
+                        }
+                        %>
+                    </div>
                 </div>
                 <div class="expanded-content">
-                    <%=consumoEdifici%>
                 </div>
             </div>
         </div>
@@ -642,30 +639,21 @@
             }
         }
 
-        /*function Observer() {
-            $.ajax({
-                url: "DatiController?action=dashboardObserver",
-                method: "POST",
-                dataType: "json",
-                success: function (response) {
-                    var updatePage = response.updatePage;
-                    console.log(updatePage);
-
-                    if (updatePage === true) {
-                        $("#sommaProduzione").load(window.location.href + " #sommaProduzione");
-                        $("#consumoEdifici").load(window.location.href + " #consumoEdifici");
-                        $("#percentualeBatterie").load(window.location.href + " #percentualeBatterie");
-
-                        updateBattery();
-                    }
-                    setInterval(Observer, 1000);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("Errore nella richiesta AJAX", textStatus, errorThrown);
+        function Observer() {
+            $.get("DatiController?action=dashboardObserver", function(data)  {
+                console.log(data.nomeMetodo);
+                if(data.nomeMetodo === "aggiornaPoi" || data.nomeMetodo === "aggiornaPoi" ) {
+                    $("#percentualeBatterie").load(window.location.href + " #percentualeBatterie");
+                    updateBattery();
+                } else if(data.nomeMetodo === "aggiornaPoi" || data.nomeMetodo === "aggiornaPoi" ) {
+                    $("#consumoEdifici").load(window.location.href + " #consumoEdifici");
+                } else if(data.nomeMetodo === "setConsumoGiornaliero" || data.nomeMetodo === "setDataConsumo" ) {
+                    $("#sommaProduzione").load(window.location.href + " #sommaProduzione");
                 }
-            });
 
-        }*/
+                setTimeout(Observer, 10000);
+            });
+        }
 
         function updateBattery() {
             // Ottieni il nuovo valore della batteria dal campo nascosto
@@ -673,7 +661,6 @@
 
             // Esegui le azioni necessarie con il nuovo valore della batteria
             // Aggiorna la visualizzazione della batteria, come hai già fatto nella funzione originale
-            const input = document.getElementById('batteryInput');
             const battery = document.getElementById('battery');
             const batteryText = document.getElementById('batteryText');
             const spans = battery.querySelectorAll('span');
@@ -709,9 +696,7 @@
         }
 
         updateBattery();
-
-        // Chiamare immediatamente la funzione all'avvio della pagina
-        //Observer();
+        Observer();
 
 
     </script>

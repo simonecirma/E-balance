@@ -33,7 +33,7 @@ public class ArchivioConsumoBean implements Observable {
 
     public void setIdConsumo(final int idConsumo) {
         this.idConsumo = idConsumo;
-        notifyObservers();
+        notifyObservers("setIdConsumo");
     }
 
     public Date getDataConsumo() {
@@ -42,6 +42,7 @@ public class ArchivioConsumoBean implements Observable {
 
     public void setDataConsumo(final Date dataConsumo) {
         this.dataConsumo = dataConsumo;
+        notifyObservers("setDataConsumo");
     }
 
     public float getConsumoGiornaliero() {
@@ -50,7 +51,7 @@ public class ArchivioConsumoBean implements Observable {
 
     public void setConsumoGiornaliero(final float consumoGiornaliero) {
         this.consumoGiornaliero = consumoGiornaliero;
-        notifyObservers();
+        notifyObservers("setConsumoGiornaliero");
     }
 
     public int getIdEdificio() {
@@ -59,7 +60,6 @@ public class ArchivioConsumoBean implements Observable {
 
     public void setIdEdificio(final int idEdificio) {
         this.idEdificio = idEdificio;
-        notifyObservers();
     }
 
     @Override
@@ -83,13 +83,9 @@ public class ArchivioConsumoBean implements Observable {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(String nomeMetodo) {
         for (Observer observer : observers) {
-            try {
-                observer.update();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                observer.update(nomeMetodo);
         }
     }
 }

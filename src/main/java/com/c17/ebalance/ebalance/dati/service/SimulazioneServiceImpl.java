@@ -13,12 +13,15 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private BatteriaDAO batteriaDAO = new BatteriaDAOImpl();
     Calendar calendario = Calendar.getInstance();
     Date data;
+    int cont=0;
     @Override
     public void simulazioneEnergia() throws SQLException {
+
         data = calendario.getTime();
         java.sql.Date sqlDate = new java.sql.Date(data.getTime());
         try {
             for (int i = 0; i < 24; i++) {
+                cont++;
                 Random random = new Random();
                 int numEdifici = consumoDAO.ottieniNumEdifici();
                 float consumoOrarioAttualeTot = 0.02f;
@@ -45,6 +48,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 produzioneNecessaria = (float) (Math.round((consumoOrarioAttualeTot - produzioneOrariaAttualeTot) * 100.0) / 100.0);
                 produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
                 //batteriaDAO.aggiornaProduzioneBatteria(produzioneNecessaria/3, 1);
+                System.out.println("simulazione num:" + cont);
 
                 Thread.sleep(10000); // Ritardo di 10 secondi
             }

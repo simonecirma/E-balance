@@ -4,6 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public interface Observer {
-    void update();
+    void update(String nomeMetodo);
 
 }
