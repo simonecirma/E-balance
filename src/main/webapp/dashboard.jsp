@@ -74,11 +74,7 @@
                 <div class="initial-content-energia">
                 <!-- Contenuto della sezione 1 -->
                     <h3>Energia prodotta</h3>
-                    <div class="chart-container1">
-                        <div class="doughnut1">
-                            <canvas id="doughnut"></canvas>
-                        </div>
-                    </div>
+                        <div id="curveChart"></div>
                     <div id = "sommaProduzione" name = "sommaProduzione">
                         Energia prodotta:
                         <% if (produzioneSorgente != null) {
@@ -90,157 +86,70 @@
                             }
                         %>
                     </div>
-                    <br>
-                    Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                 </div>
                 <div class="expanded-content-energia">
-                    <div class="expandendEnergia">
-                        <div class="containerEnergia">
-                            <div class="chart-container">
-                                <div class="doughnut">
-                                    <canvas id="doughnut1"></canvas>
-                                </div>
-                            </div>
-                            <div class="chart-container">
-                                <div class="doughnut">
-                                    <canvas id="doughnut1"></canvas>
-                                </div>
-                            </div>
-                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                            <script>
-                                var sommaProduzioneDiv = document.getElementById("sommaProduzione");
-                                var dataValues = [];
-                                var backgroundColors = [];
-
-                                // Estrai i valori numerici dall'array all'interno del div
-                                var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
-                                for (var i = 0; i < dataArray.length; i++) {
-                                    // Aggiungi il valore al dataset
-                                    dataValues.push(parseFloat(dataArray[i]));
-                                    // Genera un colore casuale per ogni valore
-                                    var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)';
-                                    backgroundColors.push(randomColor);
-                                }
-
-                                // Costruisci il grafico a doughnut
-                                var ctx = document.getElementById('doughnut').getContext('2d');
-                                var myChart = new Chart(ctx, {
-                                    type: 'doughnut',
-                                    data: {
-                                        labels: dataValues.map(value => value.toString()), // Utilizza i valori come etichette
-                                        datasets: [{
-                                            label: 'Consumo Giornaliero',
-                                            data: dataValues,
-                                            backgroundColor: backgroundColors,
-                                            borderColor: 'rgba(75, 192, 192, 1)',
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        plugins: {
-                                            legend: {
-                                                display: true,
-                                                position: 'right', // Posizione della legenda
-                                            }
-                                        },
-                                        scales: {
-                                            x: {
-                                                display: false // Nascondi l'asse X
-                                            },
-                                            y: {
-                                                display: false // Nascondi l'asse Y
-                                            }
-                                        }
-                                    }
-                                });
-                            </script>
-                            <script>
-                                var sommaProduzioneDiv = document.getElementById("sommaProduzione");
-                                var dataValues = [];
-                                var backgroundColors = [];
-
-                                // Estrai i valori numerici dall'array all'interno del div
-                                var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
-                                for (var i = 0; i < dataArray.length; i++) {
-                                    // Aggiungi il valore al dataset
-                                    dataValues.push(parseFloat(dataArray[i]));
-                                    // Genera un colore casuale per ogni valore
-                                    var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)';
-                                    backgroundColors.push(randomColor);
-                                }
-
-                                // Costruisci il grafico a doughnut
-                                var ctx1 = document.getElementById('doughnut1').getContext('2d');
-                                var myChart = new Chart(ctx1, {
-                                    type: 'doughnut',
-                                    data: {
-                                        labels: dataValues.map(value => value.toString()), // Utilizza i valori come etichette
-                                        datasets: [{
-                                            label: 'Consumo Giornaliero',
-                                            data: dataValues,
-                                            backgroundColor: backgroundColors,
-                                            borderColor: 'rgba(75, 192, 192, 1)',
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        plugins: {
-                                            legend: {
-                                                display: true,
-                                                position: 'right', // Posizione della legenda
-                                            }
-                                        },
-                                        scales: {
-                                            x: {
-                                                display: false // Nascondi l'asse X
-                                            },
-                                            y: {
-                                                display: false // Nascondi l'asse Y
-                                            }
-                                        }
-                                    }
-                                });
-                            </script>
+                        Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
+                            <div class="chart-container-consumi">
+                             <div id="curveChart1"></div>
                         </div>
-                        <div id="curve_chart"></div>
                         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                         <script type="text/javascript">
                             google.charts.load('current', {'packages':['corechart']});
                             google.charts.setOnLoadCallback(drawChart);
 
                             function drawChart() {
-                                // Assicurati che l'elemento con id "sommaProduzione" esista nell'HTML
                                 var sommaProduzioneDiv = document.getElementById('sommaProduzione');
-
-                                // Estrai i dati dall'elemento sommaProduzioneDiv
                                 var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
 
-                                // Crea un nuovo DataTable di Google Charts
                                 var data = new google.visualization.DataTable();
                                 data.addColumn('string', 'Sorg');
                                 data.addColumn('number', 'Prod');
 
-                                // Popola il DataTable con i dati estratti
                                 for (var i = 0; i < dataArray.length; i++) {
-                                    // Supponendo che ci sia una fonte associata a ciascun dato,
-                                    // possiamo utilizzare un'etichetta generica per la fonte
-                                    var sorg = 'Fonte ' + (i + 1);
+                                    var sorg = "Valore " + (i + 1);
                                     var prod = parseFloat(dataArray[i]);
                                     data.addRow([sorg, prod]);
                                 }
 
-                                // Opzioni per il grafico
                                 var options = {
                                     curveType: 'function',
                                     legend: { position: 'bottom' }
                                 };
 
-                                // Disegna il grafico utilizzando il DataTable e le opzioni
-                                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                                var chart = new google.visualization.LineChart(document.getElementById('curveChart'));
+
                                 chart.draw(data, options);
                             }
                         </script>
-                    </div>
+                        <script type="text/javascript">
+                            google.charts.load('current', {'packages':['corechart']});
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            function drawChart() {
+                                var sommaProduzioneDiv = document.getElementById('sommaProduzione');
+                                var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
+
+                                var data = new google.visualization.DataTable();
+                                data.addColumn('string', 'Sorg');
+                                data.addColumn('number', 'Prod');
+
+                                for (var i = 0; i < dataArray.length; i++) {
+                                    var sorg = "Valore " + (i + 1);
+                                    var prod = parseFloat(dataArray[i]);
+                                    data.addRow([sorg, prod]);
+                                }
+
+                                var options = {
+                                    curveType: 'function',
+                                    legend: { position: 'bottom' }
+                                };
+
+                                var chart = new google.visualization.LineChart(document.getElementById('curveChart1'));
+
+                                chart.draw(data, options);
+                            }
+                        </script>
+
                 </div>
             </div>
         </div>
