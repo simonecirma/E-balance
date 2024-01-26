@@ -1,15 +1,42 @@
+
 form {
     width: 400px; /* Imposta la larghezza del form */
     padding: 20px;
+    height: 400px; /* Altezza del form */
     box-sizing: border-box;
-    background-color: white;
-    border: 1px solid #ccc;
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow:
+            2px 4px 8px rgba(0, 0, 0, 0.4),
+            2px 8px 16px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
     display: flex;
     flex-direction: column; /* Allinea gli elementi in colonna */
-    margin: auto; /* Imposta il margine a "auto" per centrare il form */
-    margin-top: 80px;
+    justify-content: flex-end; /* Allinea gli elementi del form verso il basso */
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #ccc;
+    border-radius: 50%; /* Imposta il bordo a un cerchio */
+    overflow: hidden; /* Nasconde le parti dell'immagine al di fuori del bordo del cerchio */
+    position: absolute; /* Imposta il posizionamento assoluto per l'avatar */
+    top: -50px; /* Sposta l'avatar verso l'alto della metà della sua altezza */
+    left: calc(50% - 50px); /* Centra l'avatar orizzontalmente */
+}
+
+.avatar img {
+    width: 100%; /* Fai in modo che l'immagine riempia l'intero cerchio */
+    height: auto;
+    border-radius: 50%; /* Assicurati che l'immagine abbia bordi rotondi */
+    background-color: white;
+}
+
 label {
     margin-bottom: 8px;
     text-align: right;

@@ -70,10 +70,15 @@
         <div class="section" onclick="toggleExpansion(2)">
             <a href="DatiController?action=generaDashboard">
                 <img src="img/indietro.png" id="img"></a>
-            <div class="content">
-                <div class="initial-content">
+            <div class="contentEnergia">
+                <div class="initial-content-energia">
                 <!-- Contenuto della sezione 1 -->
                     <h3>Energia prodotta</h3>
+                    <div class="chart-container1">
+                        <div class="doughnut1">
+                            <canvas id="doughnut"></canvas>
+                        </div>
+                    </div>
                     <div id = "sommaProduzione" name = "sommaProduzione">
                         Energia prodotta:
                         <% if (produzioneSorgente != null) {
@@ -84,13 +89,158 @@
                                 }
                             }
                         %>
-                        <br>
-
-                        Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                     </div>
+                    <br>
+                    Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                 </div>
-                <div class="expanded-content">
+                <div class="expanded-content-energia">
+                    <div class="expandendEnergia">
+                        <div class="containerEnergia">
+                            <div class="chart-container">
+                                <div class="doughnut">
+                                    <canvas id="doughnut1"></canvas>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <div class="doughnut">
+                                    <canvas id="doughnut1"></canvas>
+                                </div>
+                            </div>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <script>
+                                var sommaProduzioneDiv = document.getElementById("sommaProduzione");
+                                var dataValues = [];
+                                var backgroundColors = [];
 
+                                // Estrai i valori numerici dall'array all'interno del div
+                                var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
+                                for (var i = 0; i < dataArray.length; i++) {
+                                    // Aggiungi il valore al dataset
+                                    dataValues.push(parseFloat(dataArray[i]));
+                                    // Genera un colore casuale per ogni valore
+                                    var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)';
+                                    backgroundColors.push(randomColor);
+                                }
+
+                                // Costruisci il grafico a doughnut
+                                var ctx = document.getElementById('doughnut').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: dataValues.map(value => value.toString()), // Utilizza i valori come etichette
+                                        datasets: [{
+                                            label: 'Consumo Giornaliero',
+                                            data: dataValues,
+                                            backgroundColor: backgroundColors,
+                                            borderColor: 'rgba(75, 192, 192, 1)',
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        plugins: {
+                                            legend: {
+                                                display: true,
+                                                position: 'right', // Posizione della legenda
+                                            }
+                                        },
+                                        scales: {
+                                            x: {
+                                                display: false // Nascondi l'asse X
+                                            },
+                                            y: {
+                                                display: false // Nascondi l'asse Y
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                            <script>
+                                var sommaProduzioneDiv = document.getElementById("sommaProduzione");
+                                var dataValues = [];
+                                var backgroundColors = [];
+
+                                // Estrai i valori numerici dall'array all'interno del div
+                                var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
+                                for (var i = 0; i < dataArray.length; i++) {
+                                    // Aggiungi il valore al dataset
+                                    dataValues.push(parseFloat(dataArray[i]));
+                                    // Genera un colore casuale per ogni valore
+                                    var randomColor = 'rgba(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',0.5)';
+                                    backgroundColors.push(randomColor);
+                                }
+
+                                // Costruisci il grafico a doughnut
+                                var ctx1 = document.getElementById('doughnut1').getContext('2d');
+                                var myChart = new Chart(ctx1, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: dataValues.map(value => value.toString()), // Utilizza i valori come etichette
+                                        datasets: [{
+                                            label: 'Consumo Giornaliero',
+                                            data: dataValues,
+                                            backgroundColor: backgroundColors,
+                                            borderColor: 'rgba(75, 192, 192, 1)',
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        plugins: {
+                                            legend: {
+                                                display: true,
+                                                position: 'right', // Posizione della legenda
+                                            }
+                                        },
+                                        scales: {
+                                            x: {
+                                                display: false // Nascondi l'asse X
+                                            },
+                                            y: {
+                                                display: false // Nascondi l'asse Y
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
+                        </div>
+                        <div id="curve_chart"></div>
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                        <script type="text/javascript">
+                            google.charts.load('current', {'packages':['corechart']});
+                            google.charts.setOnLoadCallback(drawChart);
+
+                            function drawChart() {
+                                // Assicurati che l'elemento con id "sommaProduzione" esista nell'HTML
+                                var sommaProduzioneDiv = document.getElementById('sommaProduzione');
+
+                                // Estrai i dati dall'elemento sommaProduzioneDiv
+                                var dataArray = sommaProduzioneDiv.innerText.match(/\d+(\.\d+)?/g);
+
+                                // Crea un nuovo DataTable di Google Charts
+                                var data = new google.visualization.DataTable();
+                                data.addColumn('string', 'Sorg');
+                                data.addColumn('number', 'Prod');
+
+                                // Popola il DataTable con i dati estratti
+                                for (var i = 0; i < dataArray.length; i++) {
+                                    // Supponendo che ci sia una fonte associata a ciascun dato,
+                                    // possiamo utilizzare un'etichetta generica per la fonte
+                                    var sorg = 'Fonte ' + (i + 1);
+                                    var prod = parseFloat(dataArray[i]);
+                                    data.addRow([sorg, prod]);
+                                }
+
+                                // Opzioni per il grafico
+                                var options = {
+                                    curveType: 'function',
+                                    legend: { position: 'bottom' }
+                                };
+
+                                // Disegna il grafico utilizzando il DataTable e le opzioni
+                                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                                chart.draw(data, options);
+                            }
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
@@ -98,8 +248,8 @@
         <div class="section" onclick="toggleExpansion(3)">
             <a href="DatiController?action=generaDashboard">
                 <img src="img/indietro.png" id="img"></a>
-            <div class="content">
-                <div class="initial-content">
+            <div class="contentConsumiAttuali">
+                <div class="initial-content-consumiAttuali">
                 <!-- Contenuto della sezione 3 -->
                     <h3>Consumi attuali</h3>
                     <div id="consumoEdifici" name="consumoEdifici">
@@ -112,8 +262,74 @@
                         }
                         %>
                     </div>
+                        <div id="curve_chart1"></div>
                 </div>
-                <div class="expanded-content">
+                <div class="expanded-content-consumiAttuali">
+                    <div class="chart-container-consumi">
+                      <div id="curve_chart2"></div>
+                    </div>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script>
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawCharts);
+
+                        function drawCharts() {
+                            drawChart();
+                            drawChart1();
+                        }
+
+                        function drawChart() {
+                            var consumoEdificiDiv = document.getElementById('consumoEdifici');
+                            var dataArray = consumoEdificiDiv.innerText.match(/\d+(\.\d+)?/g);
+
+                            // Crea un DataTable con i dati estratti
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Label');
+                            data.addColumn('number', 'Consumo');
+
+                            for (var i = 0; i < dataArray.length; i++) {
+                                var label = "Edificio " + (i + 1);
+                                var consumo = parseFloat(dataArray[i]);
+                                data.addRow([label, consumo]);
+                            }
+
+                            var options = {
+                                curveType: 'function',
+                                legend: { position: 'bottom' },
+                                chartArea: { height: '50px' } // Imposta l'altezza desiderata qui
+                            };
+
+                            var chart = new google.visualization.LineChart(document.getElementById('curve_chart1'));
+
+                            chart.draw(data, options);
+                        }
+
+                        function drawChart1() {
+                            var consumoEdificiDiv = document.getElementById('consumoEdifici');
+                            var dataArray = consumoEdificiDiv.innerText.match(/\d+(\.\d+)?/g);
+
+                            // Crea un DataTable con i dati estratti
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Label');
+                            data.addColumn('number', 'Consumo');
+
+                            for (var i = 0; i < dataArray.length; i++) {
+                                var label = "Edificio " + (i + 1);
+                                var consumo = parseFloat(dataArray[i]);
+                                data.addRow([label, consumo]);
+                            }
+
+                            var options = {
+                                curveType: 'function',
+                                legend: { position: 'bottom' },
+                                chartArea: { height: '50px' } // Imposta l'altezza desiderata qui
+                            };
+
+                            var chart1 = new google.visualization.LineChart(document.getElementById('curve_chart2'));
+
+                            chart1.draw(data, options);
+                        }
+                    </script>
                 </div>
             </div>
         </div>

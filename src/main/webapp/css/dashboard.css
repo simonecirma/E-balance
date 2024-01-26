@@ -1,8 +1,12 @@
+/*body{
+    color: white;
+    background-color:#251c35;
+}*/
+
 .dashboard {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    height: 540px;
     margin-top: 10px;
     width: 100%;
 }
@@ -11,13 +15,15 @@
 }
 .dashboard .section {
     position: relative;
-    border: 2px solid #000;
     border-radius: 5px;
     margin: 10px;
     cursor: pointer;
     transition: transform 0.5s ease-in-out;
     text-align: center;
     overflow: hidden;
+    box-shadow:
+            2px 4px 8px rgba(0, 0, 0, 0.4),
+            2px 8px 16px rgba(0, 0, 0, 0.4);
 }
 .text{
     position: absolute;
@@ -34,7 +40,7 @@
 .dashboard .section.section-expanded {
     margin: 10px;
     width: 100%;
-    height: 95%;
+    height: 38vw;
     transform: scale(1);
     z-index: 2;
     cursor: default;
@@ -61,6 +67,12 @@
 .section-expanded #img{
     display: block;
 }
+.contentEnergia > *:not(.initial-content-energia) {
+    display: none;
+}
+.section-expanded .contentEnergia > *:not(.initial-content-energia) {
+    display: block;
+}
 .content > *:not(.initial-content) {
     display: none;
 }
@@ -70,50 +82,37 @@
 .section-expanded .contentIA > *:not(.initial-content-IA) {
     display: block;
 }
+
 .contentConsumi > *:not(.initial-content-consumi) {
     display: none;
 }
 .section-expanded .contentConsumi > *:not(.initial-content-consumi) {
     display: block;
 }
+.contentConsumiAttuali > *:not(.initial-content-consumiAttuali) {
+    display: none;
+}
+.section-expanded .contentConsumiAttuali > *:not(.initial-content-consumiAttuali) {
+    display: block;
+}
 .section-expanded .chart1{
+    display: none;
+}
+.section-expanded .chart-container1{
     display: none;
 }
 .section-expanded .text{
     display: none;
 }
-.programming-stats {
-    font-family: "Rubik", sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin: 0 auto;
-    width: fit-content;
-    padding: 8px 32px;
-    color: #023047;
-    transition: all 400ms ease;
-    margin-top:-20px;
+#consumoEdifici{
+    display: none;
 }
-
+#sommaProduzione{
+    display: none;
+}
 h3{
     margin-top: 20px;
 }
-.programming-stats:hover {
-    transform: scale(1.02);
-}
-
-.programming-stats .details ul {
-    list-style: none;
-    padding: 0;
-}
-
-.programming-stats .details ul li {
-    font-size: 16px;
-    margin: 12px 0;
-    text-transform: uppercase;
-}
-
-
 table {
     border-collapse: collapse;
     width: 90%;
@@ -128,6 +127,12 @@ table {
     font-size: 13px;
     margin-top: -10px;
 }
+.expanded-content-consumiAttuali{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .expandedConsumi{
     text-align: center;
     display: flex;
@@ -139,6 +144,16 @@ table {
     margin-left: 40px;
     background: #251c35;
     color: white;
+}
+.expandendEnergia{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.expandendEnergia #tabEnergia{
+    margin-top: -100px;
+    width: 70%;
 }
 #consumi th{
     padding: 0;
@@ -377,6 +392,14 @@ input[type="range"] {
     margin-left: 150px;
 
 }
+.containerEnergia {
+    width: 40%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: 400px;
+}
 .chart {
     padding: 2rem;
     border-radius: 1rem;
@@ -391,4 +414,44 @@ input[type="range"] {
     background: #251c35;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
     height: 300px;
+}
+
+.chart-container {
+    width: 410px;
+    height: 180px;
+    margin-left: 50px;
+    margin-top: -250px;
+}
+.chart-container-consumi {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#doughnut {
+    max-height: 180px;
+    max-width: 410px;
+}
+#curve_chart{
+    min-width: 900px;
+    min-height: 450px;
+}
+.dati{
+    display: none;
+}
+.section-expanded #curve_chart1{
+    display: none;
+}
+#curve_chart1{
+    margin-top: -5px;
+    margin-left: 10px;
+    width: 420px;
+    height: 170px;
+    overflow: visible;
+}
+#curve_chart2{
+    width: 900px;
+    height: 450px;
+    margin-left: 50px;
 }
