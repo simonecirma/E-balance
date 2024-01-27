@@ -825,27 +825,31 @@
 
     function Observer() {
         $.get("DatiController?action=dashboardObserver", function (data) {
-            console.log(data.nomeMetodo);
-            if (data.nomeMetodo === "DAAGGIORNAREE" || data.nomeMetodo === "DAAGGIORNAREE") {
+            //console.log(data.nomeMetodo);
+            if (data.percentualeBatteriaUpdate) {
                 $("#percentualeBatterie").load(window.location.href + " #percentualeBatterie");
                 updateBattery();
-            } else if (data.nomeMetodo === "DAAGGIORNAREE" || data.nomeMetodo === "DAAGGIORNAREE") {
+            }
+            if (data.produzioneAttualeUpdate) {
                 $("#sommaProduzione").load(window.location.href + " #sommaProduzione");
                 google.charts.load('current', {'packages': ['corechart']});
                 google.charts.setOnLoadCallback(drawChartProduzione);
-            } else if (data.nomeMetodo === "DAAGGIORNAREE" || data.nomeMetodo === "DAAGGIORNAREE") {
+            }
+            if (data.consumoAttualeUpdate) {
                 $("#consumoEdifici").load(window.location.href + " #consumoEdifici");
                 google.charts.load('current', {'packages': ['corechart']});
                 google.charts.setOnLoadCallback(drawChartsConsumiEdificio);
-            } else if (data.nomeMetodo === "setConsumoGiornaliero" || data.nomeMetodo === "setDataConsumo") {
+            }
+            if (data.archivioConsumiUpdate) {
                 $("#archivioConsumi").load(window.location.href + " #archivioConsumi");
                 AggiornaArchivioConsumi();
-            } else if (data.nomeMetodo === "DAAGGIORNAREE" || data.nomeMetodo === "DAAGGIORNAREE") {
+            }
+            if (data.meteoUpdate) {
                 $("#meteo").load(window.location.href + " #meteo");
-            } else if (data.nomeMetodo === "DAAGGIORNAREE" || data.nomeMetodo === "DAAGGIORNAREE") {
+            }
+            if (data.parametriAttiviUpdate) {
                 $("#parametriIA").load(window.location.href + " #parametriIA");
             }
-
 
 
             setTimeout(Observer, 10000);

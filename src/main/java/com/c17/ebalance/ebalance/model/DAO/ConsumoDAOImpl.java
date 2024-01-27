@@ -1,6 +1,7 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
 import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
+import com.c17.ebalance.ebalance.model.entity.ConsumoAttualeBean;
 import com.c17.ebalance.ebalance.model.entity.ConsumoEdificioBean;
 
 import javax.naming.Context;
@@ -78,7 +79,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        float consumoEdifici = 0.02f;
+        ConsumoAttualeBean consumoEdifici = new ConsumoAttualeBean();
         String selectSQL = "SELECT ROUND(SUM(ConsumoAttuale),2) AS Consumo FROM " + TABLE_NAME_CONSUMO;
         try {
             connection = ds.getConnection();
@@ -87,7 +88,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                consumoEdifici = resultSet.getFloat("Consumo");
+                consumoEdifici.setConsumoAttuale(resultSet.getFloat("Consumo"));
             }
         } finally {
             try {
@@ -100,7 +101,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
                 }
             }
         }
-        return consumoEdifici;
+        return consumoEdifici.getConsumoAttuale();
     }
 
     @Override

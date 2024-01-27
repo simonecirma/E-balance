@@ -2,6 +2,7 @@ package com.c17.ebalance.ebalance.model.DAO;
 
 
 import com.c17.ebalance.ebalance.model.entity.BatteriaBean;
+import com.c17.ebalance.ebalance.model.entity.PercentualeBatteriaBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
 
 import javax.naming.Context;
@@ -80,7 +81,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        float percentuale = 0.02f;
+        PercentualeBatteriaBean percentuale = new PercentualeBatteriaBean();
         String selectSQL = "SELECT  ROUND(SUM(PercentualeCarica)/3,2) AS Percentuale FROM " + TABLE_NAME_BATTERIA
                 + " WHERE FlagStatoBatteria = 1 ";
 
@@ -91,7 +92,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                percentuale = resultSet.getFloat("Percentuale");
+                percentuale.setPercentualeBatteria(resultSet.getFloat("Percentuale"));
             }
         } finally {
             try {
@@ -104,7 +105,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 }
             }
         }
-        return percentuale;
+        return percentuale.getPercentualeBatteria();
     }
 
     public int  ottieniNumBatterieAttive() throws SQLException {

@@ -1,6 +1,7 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
 import com.c17.ebalance.ebalance.model.entity.ArchivioProduzioneBean;
+import com.c17.ebalance.ebalance.model.entity.ProduzioneAttualeBean;
 import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
 import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
 
@@ -117,7 +118,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        float produzioneSorgente=0.00f;
+        ProduzioneAttualeBean produzioneSorgente = new ProduzioneAttualeBean();
         String selectSQL = "SELECT  ROUND(SUM(ProduzioneAttuale),2) AS ProduzioneSorgente FROM " + TABLE_NAME_SORGENTE
                             + " WHERE Tipologia != 'Servizio Elettrico Nazionale'";
         try {
@@ -127,7 +128,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                produzioneSorgente = resultSet.getFloat("ProduzioneSorgente");
+                produzioneSorgente.setProduzioneAttuale(resultSet.getFloat("ProduzioneSorgente"));
             }
         } finally {
             try {
@@ -140,7 +141,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
                 }
             }
         }
-        return produzioneSorgente;
+        return produzioneSorgente.getProduzioneAttuale();
 
     }
 
@@ -148,7 +149,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-        float produzioneSEN=0.00f;
+        ProduzioneAttualeBean produzioneSEN = new ProduzioneAttualeBean();
         String selectSQL = "SELECT  ROUND(ProduzioneAttuale,2) AS ProduzioneSEN FROM " + TABLE_NAME_SORGENTE
                 + " WHERE Tipologia = 'Servizio Elettrico Nazionale'";
         try {
@@ -158,7 +159,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                produzioneSEN = resultSet.getFloat("ProduzioneSEN");
+                produzioneSEN.setProduzioneAttuale(resultSet.getFloat("ProduzioneSEN"));
             }
         } finally {
             try {
@@ -171,7 +172,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
                 }
             }
         }
-        return produzioneSEN;
+        return produzioneSEN.getProduzioneAttuale();
 
     }
 

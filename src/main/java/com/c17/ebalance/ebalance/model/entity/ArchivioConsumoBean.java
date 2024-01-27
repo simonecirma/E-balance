@@ -58,6 +58,7 @@ public class ArchivioConsumoBean implements Observable {
 
     public void setIdEdificio(final int idEdificio) {
         this.idEdificio = idEdificio;
+        notifyObservers("setIdEdificio");
     }
 
     @Override

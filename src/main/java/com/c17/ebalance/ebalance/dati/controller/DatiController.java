@@ -13,11 +13,7 @@ import com.c17.ebalance.ebalance.dati.service.ProduzioneService;
 import com.c17.ebalance.ebalance.dati.service.ProduzioneServiceImpl;
 import com.c17.ebalance.ebalance.dati.service.SimulazioneService;
 import com.c17.ebalance.ebalance.dati.service.SimulazioneServiceImpl;
-import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
-import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
-import com.c17.ebalance.ebalance.model.entity.MeteoBean;
-import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
-import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
+import com.c17.ebalance.ebalance.model.entity.*;
 import com.c17.ebalance.ebalance.utility.Observer;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -48,20 +44,49 @@ public class DatiController extends HttpServlet implements Observer {
     private ProduzioneService produzioneService = new ProduzioneServiceImpl();
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
     private MeteoService meteoService = new MeteoServiceImpl();
+
+    boolean percentualeBatteriaUpdate = false;
+
+    boolean produzioneAttualeUpdate = false;
+
+    boolean consumoAttualeUpdate = false;
+
+    boolean archivioConsumiUpdate = false;
+
+    boolean meteoUpdate = false;
+
+    boolean parametriAttiviUpdate = false;
+
     float[] consumoEdifici = new float[]{633.02f, 633.02f, 633.02f, 633.02f,
             633.02f, 633.02f, 633.02f, 633.02f, 633.02f, 633.02f};
 
     float[] produzioneSorgente = new float[]{324.02f, 324.02f, 324.02f, 324.02f,
             324.02f, 324.02f, 324.02f, 324.02f, 324.02f, 324.02f};
 
-
-    String nomeMetodo = "";
     ArchivioConsumoBean archivioConsumi;
+
+    ConsumoAttualeBean consumoAttuale;
+
+    PercentualeBatteriaBean percentualeBatteria;
+
+    ProduzioneAttualeBean produzioneAttuale;
+
+    MeteoBean meteo;
+
+    InteragisceBean parametriAttivi;
 
     @Override
     public void init() throws ServletException {
         archivioConsumi = new ArchivioConsumoBean();
-        archivioConsumi.addObserver(this);  // Aggiunge la servlet come osservatore
+        consumoAttuale = new ConsumoAttualeBean();
+        percentualeBatteria = new PercentualeBatteriaBean();
+        produzioneAttuale = new ProduzioneAttualeBean();
+        meteo = new MeteoBean();
+        parametriAttivi = new InteragisceBean();
+        archivioConsumi.addObserver(this);
+        consumoAttuale.addObserver(this);
+        percentualeBatteria.addObserver(this);
+        produzioneAttuale.addObserver(this);
         new Thread(this::simulazioneEnergia).start();
     }
 
@@ -73,8 +98,18 @@ public class DatiController extends HttpServlet implements Observer {
                     try {
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");
-                        response.getWriter().write("{\"nomeMetodo\": \"" + nomeMetodo + "\"}");
-                        nomeMetodo = "";
+                        response.getWriter().write("{\"percentualeBatteriaUpdate\": \"" + percentualeBatteriaUpdate + "\", "
+                                + "\"produzioneAttualeUpdate\": \"" + produzioneAttualeUpdate + "\", "
+                                + "\"consumoAttualeUpdate\": \"" + consumoAttualeUpdate + "\", "
+                                + "\"archivioConsumiUpdate\": \"" + archivioConsumiUpdate + "\", "
+                                + "\"meteoUpdate\": \"" + meteoUpdate + "\", "
+                                + "\"parametriAttiviUpdate\": \"" + parametriAttiviUpdate + "\"}");
+                        percentualeBatteriaUpdate = false;
+                        produzioneAttualeUpdate = false;
+                        consumoAttualeUpdate = false;
+                        archivioConsumiUpdate = false;
+                        meteoUpdate = false;
+                        parametriAttiviUpdate = false;
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -156,11 +191,45 @@ public class DatiController extends HttpServlet implements Observer {
 
     public void destroy() {
         archivioConsumi.removeObserver(this);
+        consumoAttuale.removeObserver(this);
+        percentualeBatteria.removeObserver(this);
+        produzioneAttuale.removeObserver(this);
+        parametriAttivi.removeObserver(this);
+        meteo.removeObserver(this);
     }
 
     @Override
     public void update(String nomeMetodo) {
-        this.nomeMetodo = nomeMetodo;
+        if (nomeMetodo.equalsIgnoreCase("setPercentualeBatteria")) {
+            percentualeBatteriaUpdate = true;
+        }
+        if (nomeMetodo.equalsIgnoreCase("setProduzioneAttuale")) {
+            produzioneAttualeUpdate = true;
+        }
+        if (nomeMetodo.equalsIgnoreCase("setConsumoAttuale")) {
+            consumoAttualeUpdate = true;
+        }
+        if (nomeMetodo.equalsIgnoreCase("setIdConsumo")
+                || nomeMetodo.equalsIgnoreCase("setDataConsumo")
+                || nomeMetodo.equalsIgnoreCase("setConsumoGiornaliero")
+                || nomeMetodo.equalsIgnoreCase("setIdEdificio")) {
+            archivioConsumiUpdate = true;
+        }
+        if (nomeMetodo.equalsIgnoreCase("setIdMeteo")
+                || nomeMetodo.equalsIgnoreCase("setDataRilevazione")
+                || nomeMetodo.equalsIgnoreCase("setOraRilevazione")
+                || nomeMetodo.equalsIgnoreCase("setVelocitaVento")
+                || nomeMetodo.equalsIgnoreCase("setProbabilitaPioggia")
+                || nomeMetodo.equalsIgnoreCase("setCondizioniMetereologiche")) {
+            meteoUpdate = true;
+        }
+        if (nomeMetodo.equalsIgnoreCase("setIdParametro")
+                || nomeMetodo.equalsIgnoreCase("setTipoSorgente")
+                || nomeMetodo.equalsIgnoreCase("setFlagPreferenzaSorgente")
+                || nomeMetodo.equalsIgnoreCase("setPercentualeUtilizzoSorgente")
+                || nomeMetodo.equalsIgnoreCase("setPrioritaSorgente")) {
+            parametriAttiviUpdate = true;
+        }
     }
 
 }
