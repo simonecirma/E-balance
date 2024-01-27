@@ -1,6 +1,13 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-public class ConsumoEdificioBean {
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ConsumoEdificioBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idEdificio;
     private String nomeEdificio;
     private float consumoAttuale;
@@ -20,6 +27,7 @@ public class ConsumoEdificioBean {
 
     public void setIdEdificio(final int idEdificio) {
         this.idEdificio = idEdificio;
+        notifyObservers("setIdEdificio");
     }
 
     public String getNomeEdificio() {
@@ -28,6 +36,7 @@ public class ConsumoEdificioBean {
 
     public void setNomeEdificio(final String nomeEdificio) {
         this.nomeEdificio = nomeEdificio;
+        notifyObservers("setNomeEdificio");
     }
 
     public float getConsumoAttuale() {
@@ -36,6 +45,7 @@ public class ConsumoEdificioBean {
 
     public void setConsumoAttuale(final float consumoAttuale) {
         this.consumoAttuale = consumoAttuale;
+        notifyObservers("setConsumoAttuale");
     }
 
     @Override
@@ -45,5 +55,22 @@ public class ConsumoEdificioBean {
                 + ", nomeEdificio='" + nomeEdificio + '\''
                 + ", consumoAttuale=" + consumoAttuale
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

@@ -1,7 +1,14 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.sql.Date;
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
 
-public class AmministratoreBean {
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AmministratoreBean implements Observable {
+
+    private static List<Observer> observers = new ArrayList<>();
 
     private int idAmministratore;
     private String nome;
@@ -11,8 +18,7 @@ public class AmministratoreBean {
     private String password;
     private boolean flagTipo;
 
-    public AmministratoreBean() {
-    }
+    public AmministratoreBean() { }
 
     public AmministratoreBean(final int idAmministratore, final String nome,
                               final String cognome, final Date dataNascita,
@@ -33,6 +39,7 @@ public class AmministratoreBean {
 
     public void setIdAmministratore(int idAmministratore) {
         this.idAmministratore = idAmministratore;
+        notifyObservers("setIdAmministratore");
     }
 
     public String getNome() {
@@ -41,6 +48,7 @@ public class AmministratoreBean {
 
     public void setNome(final String nome) {
         this.nome = nome;
+        notifyObservers("setNome");
     }
 
     public String getCognome() {
@@ -49,6 +57,7 @@ public class AmministratoreBean {
 
     public void setCognome(final String cognome) {
         this.cognome = cognome;
+        notifyObservers("setCognome");
     }
 
     public Date getDataNascita() {
@@ -57,6 +66,7 @@ public class AmministratoreBean {
 
     public void setDataNascita(final Date dataNascita) {
         this.dataNascita = dataNascita;
+        notifyObservers("setDataNascita");
     }
 
     public String getEmail() {
@@ -65,6 +75,7 @@ public class AmministratoreBean {
 
     public void setEmail(final String email) {
         this.email = email;
+        notifyObservers("setEmail");
     }
 
     public String getPassword() {
@@ -73,6 +84,7 @@ public class AmministratoreBean {
 
     public void setPassword(final String password) {
         this.password = password;
+        notifyObservers("setPassword");
     }
 
     public boolean getFlagTipo() {
@@ -80,6 +92,7 @@ public class AmministratoreBean {
     }
     public void setFlagTipo(final boolean flagTipo) {
         this.flagTipo = flagTipo;
+        notifyObservers("setFlagTipo");
     }
 
     @Override
@@ -93,6 +106,23 @@ public class AmministratoreBean {
                 + ", password='" + password + '\''
                 + ", flagTipo=" + flagTipo
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 
 }

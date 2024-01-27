@@ -1,8 +1,14 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.sql.Time;
-import java.util.Date;
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
 
-public class MeteoBean {
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class MeteoBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idMeteo;
     private Date dataRilevazione;
     private Time oraRilevazione;
@@ -30,6 +36,7 @@ public class MeteoBean {
 
     public void setIdMeteo(final int idMeteo) {
         this.idMeteo = idMeteo;
+        notifyObservers("setIdMeteo");
     }
 
     public Date getDataRilevazione() {
@@ -38,6 +45,7 @@ public class MeteoBean {
 
     public void setDataRilevazione(final Date dataRilevazione) {
         this.dataRilevazione = dataRilevazione;
+        notifyObservers("setDataRilevazione");
     }
 
     public Time getOraRilevazione() {
@@ -46,6 +54,7 @@ public class MeteoBean {
 
     public void setOraRilevazione(final Time oraRilevazione) {
         this.oraRilevazione = oraRilevazione;
+        notifyObservers("setOraRilevazione");
     }
 
     public float getVelocitaVento() {
@@ -54,6 +63,7 @@ public class MeteoBean {
 
     public void setVelocitaVento(final float velocitaVento) {
         this.velocitaVento = velocitaVento;
+        notifyObservers("setVelocitaVento");
     }
 
     public int getProbabilitaPioggia() {
@@ -62,6 +72,7 @@ public class MeteoBean {
 
     public void setProbabilitaPioggia(final int probabilitaPioggia) {
         this.probabilitaPioggia = probabilitaPioggia;
+        notifyObservers("setProbabilitaPioggia");
     }
 
     public String getCondizioniMetereologiche() {
@@ -70,6 +81,7 @@ public class MeteoBean {
 
     public void setCondizioniMetereologiche(final String condizioniMetereologiche) {
         this.condizioniMetereologiche = condizioniMetereologiche;
+        notifyObservers("setCondizioniMetereologiche");
     }
 
     @Override
@@ -82,5 +94,22 @@ public class MeteoBean {
                 + ", probabilitaPioggia=" + probabilitaPioggia
                 + ", condizioniMetereologiche='" + condizioniMetereologiche + '\''
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

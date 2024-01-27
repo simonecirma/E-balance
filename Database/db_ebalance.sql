@@ -227,11 +227,11 @@ VALUES(2500, "2023-11-19", 225, 01);
 
 
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
-VALUES(1, 7000, 10);
+VALUES(1, 7000, 33);
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
-VALUES(1, 7000, 20);
+VALUES(1, 7000, 27);
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
-VALUES(1, 7000, 80);
+VALUES(1, 7000, 30);
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
 VALUES(0, 7000, 0);
 
@@ -391,6 +391,84 @@ VALUES(01, 09);
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(01, 10);
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 11);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 12);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 13);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 14);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 15);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 16);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 17);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 18);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 19);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 20);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 21);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 22);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 23);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 24);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 25);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 26);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 27);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 28);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 29);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 30);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 31);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 32);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 33);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 34);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 35);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 36);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 37);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 38);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(01, 39);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 01);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 02);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 03);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 04);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 05);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 06);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 07);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 08);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 09);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 10);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(02, 11);
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(02, 12);
@@ -410,6 +488,84 @@ INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(02, 19);
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(02, 20);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 21);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 22);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 23);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 24);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 25);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 26);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 27);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 28);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 29);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 30);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 31);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 32);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 33);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 34);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 35);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 36);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 37);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 38);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(02, 39);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 01);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 02);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 03);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 04);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 05);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 06);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 07);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 08);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 09);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 10);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 11);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 12);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 13);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 14);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 15);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 16);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 17);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 18);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 19);
+INSERT INTO Utilizza(IdBatteria, IdEdificio)
+VALUES(03, 20);
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(03, 21);
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
@@ -509,21 +665,61 @@ DROP TEMPORARY TABLE IF EXISTS DateSeries;
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(01, 01);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
-VALUES(02, 01);
-INSERT INTO Caricare(IdBatteria, IdSorgente)
-VALUES(03, 01);
-INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(01, 02);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(01, 03);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(01, 04);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 05);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 06);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 07);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 08);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 09);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 10);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(01, 11);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 01);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 02);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 03);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 04);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(02, 05);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(02, 06);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(02, 07);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 08);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 09);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 10);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(02, 11);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 01);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 02);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 03);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 04);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 05);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 06);
+INSERT INTO Caricare(IdBatteria, IdSorgente)
+VALUES(03, 07);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(03, 08);
 INSERT INTO Caricare(IdBatteria, IdSorgente)

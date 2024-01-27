@@ -1,6 +1,13 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-public class ParametriIABean {
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ParametriIABean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idParametro;
     private String piano;
     private boolean flagAttivazioneParametro;
@@ -22,6 +29,7 @@ public class ParametriIABean {
 
     public void setIdParametro(final int idParametro) {
         this.idParametro = idParametro;
+        notifyObservers("setIdParametro");
     }
 
     public String getPiano() {
@@ -30,6 +38,7 @@ public class ParametriIABean {
 
     public void setPiano(final String piano) {
         this.piano = piano;
+        notifyObservers("setPiano");
     }
 
     public boolean getFlagAttivazioneParametro() {
@@ -38,6 +47,7 @@ public class ParametriIABean {
 
     public void setFlagAttivazioneParametro(final boolean flagAttivazioneParametro) {
         this.flagAttivazioneParametro = flagAttivazioneParametro;
+        notifyObservers("setFlagAttivazioneParametro");
     }
 
     public int getIdAmministratore() {
@@ -46,6 +56,7 @@ public class ParametriIABean {
 
     public void setIdAmministratore(final int idAmministratore) {
         this.idAmministratore = idAmministratore;
+        notifyObservers("setIdAmministratore");
     }
 
     @Override
@@ -56,5 +67,22 @@ public class ParametriIABean {
                 + ", flagAttivazioneParametro=" + flagAttivazioneParametro
                 + ", idAmministratore=" + idAmministratore
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

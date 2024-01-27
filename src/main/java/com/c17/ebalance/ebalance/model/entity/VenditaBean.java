@@ -1,7 +1,13 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.Date;
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
 
-public class VenditaBean {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class VenditaBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idVendita;
     private float energiaVenduta;
     private Date dataVendita;
@@ -25,6 +31,7 @@ public class VenditaBean {
 
     public void setIdVendita(final int idVendita) {
         this.idVendita = idVendita;
+        notifyObservers("setIdVendita");
     }
 
     public float getEnergiaVenduta() {
@@ -33,6 +40,7 @@ public class VenditaBean {
 
     public void setEnergiaVenduta(final float energiaVenduta) {
         this.energiaVenduta = energiaVenduta;
+        notifyObservers("setEnergiaVenduta");
     }
 
     public Date getDataVendita() {
@@ -41,6 +49,7 @@ public class VenditaBean {
 
     public void setDataVendita(final Date dataVendita) {
         this.dataVendita = dataVendita;
+        notifyObservers("setDataVendita");
     }
 
     public float getRicavoTotale() {
@@ -49,6 +58,7 @@ public class VenditaBean {
 
     public void setRicavoTotale(final float ricavoTotale) {
         this.ricavoTotale = ricavoTotale;
+        notifyObservers("setRicavoTotale");
     }
 
     public int getIdAmministratore() {
@@ -57,6 +67,7 @@ public class VenditaBean {
 
     public void setIdAmministratore(final int idAmministratore) {
         this.idAmministratore = idAmministratore;
+        notifyObservers("setIdAmministratore");
     }
 
     @Override
@@ -68,5 +79,22 @@ public class VenditaBean {
                 + ", ricavoTotale=" + ricavoTotale
                 + ", idAmministratore=" + idAmministratore
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

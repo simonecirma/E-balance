@@ -1,6 +1,13 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-public class InteragisceBean {
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class InteragisceBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idParametro;
     private String tipoSorgente;
     private boolean flagPreferenzaSorgente;
@@ -25,6 +32,7 @@ public class InteragisceBean {
 
     public void setIdParametro(final int idParametro) {
         this.idParametro = idParametro;
+        notifyObservers("setIdParametro");
     }
 
     public String getTipoSorgente() {
@@ -33,6 +41,7 @@ public class InteragisceBean {
 
     public void setTipoSorgente(final String tipoSorgente) {
         this.tipoSorgente = tipoSorgente;
+        notifyObservers("setTipoSorgente");
     }
 
     public boolean getFlagPreferenzaSorgente() {
@@ -41,6 +50,7 @@ public class InteragisceBean {
 
     public void setFlagPreferenzaSorgente(final boolean flagPreferenzaSorgente) {
         this.flagPreferenzaSorgente = flagPreferenzaSorgente;
+        notifyObservers("setFlagPreferenzaSorgente");
     }
 
     public int getPercentualeUtilizzoSorgente() {
@@ -49,6 +59,7 @@ public class InteragisceBean {
 
     public void setPercentualeUtilizzoSorgente(final int percentualeUtilizzoSorgente) {
         this.percentualeUtilizzoSorgente = percentualeUtilizzoSorgente;
+        notifyObservers("setPercentualeUtilizzoSorgente");
     }
 
     public int getPrioritaSorgente() {
@@ -57,6 +68,7 @@ public class InteragisceBean {
 
     public void setPrioritaSorgente(final int prioritaSorgente) {
         this.prioritaSorgente = prioritaSorgente;
+        notifyObservers("setPrioritaSorgente");
     }
 
     @Override
@@ -68,5 +80,22 @@ public class InteragisceBean {
                 + ", percentualeUtilizzoSorgente=" + percentualeUtilizzoSorgente
                 + ", prioritaSorgente=" + prioritaSorgente
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

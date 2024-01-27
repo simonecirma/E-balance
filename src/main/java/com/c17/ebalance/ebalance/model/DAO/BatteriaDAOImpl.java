@@ -107,6 +107,37 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         return percentuale;
     }
 
+    public int  ottieniNumBatterieAttive() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        int NumBatterie = 0;
+        String selectSQL = "SELECT COUNT(IdBatteria) AS NumBatterie FROM " + TABLE_NAME_BATTERIA + " WHERE FlagStatoBatteria = true";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                NumBatterie = resultSet.getInt("NumBatterie");
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return NumBatterie;
+    }
+
     @Override
     public void aggiornaConsumiBatteria(float consumoOrario, int idEdificio) throws SQLException {
         Connection connection = null;

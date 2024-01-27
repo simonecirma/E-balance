@@ -1,7 +1,13 @@
 package com.c17.ebalance.ebalance.model.entity;
-import java.util.Date;
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
 
-public class SorgenteBean {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class SorgenteBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idSorgente;
     private String tipologia;
     private Date dataInstallazione;
@@ -28,6 +34,7 @@ public class SorgenteBean {
 
     public void setIdSorgente(final int idSorgente) {
         this.idSorgente = idSorgente;
+        notifyObservers("setIdSorgente");
     }
 
     public String getTipologia() {
@@ -36,6 +43,7 @@ public class SorgenteBean {
 
     public void setTipologia(final String tipologia) {
         this.tipologia = tipologia;
+        notifyObservers("setTipologia");
     }
 
     public Date getDataInstallazione() {
@@ -44,6 +52,7 @@ public class SorgenteBean {
 
     public void setDataInstallazione(final Date dataInstallazione) {
         this.dataInstallazione = dataInstallazione;
+        notifyObservers("setDataInstallazione");
     }
 
     public float getProduzioneAttuale() {
@@ -52,6 +61,7 @@ public class SorgenteBean {
 
     public void setProduzioneAttuale(final float produzioneAttuale) {
         this.produzioneAttuale = produzioneAttuale;
+        notifyObservers("setProduzioneAttuale");
     }
 
     public boolean getFlagStatoSorgente() {
@@ -60,6 +70,7 @@ public class SorgenteBean {
 
     public void setFlagStatoSorgente(final boolean flagStatoSorgente) {
         this.flagStatoSorgente = flagStatoSorgente;
+        notifyObservers("setFlagStatoSorgente");
     }
 
     public boolean getFlagAttivazioneSorgente() {
@@ -68,6 +79,7 @@ public class SorgenteBean {
 
     public void setFlagAttivazioneSorgente(final boolean flagAttivazioneSorgente) {
         this.flagAttivazioneSorgente = flagAttivazioneSorgente;
+        notifyObservers("setFlagAttivazioneSorgente");
     }
 
     @Override
@@ -80,5 +92,22 @@ public class SorgenteBean {
                 + ", flagStatoSorgente=" + flagStatoSorgente
                 + ", flagAttivazioneSorgente=" + flagAttivazioneSorgente
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

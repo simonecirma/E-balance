@@ -1,6 +1,13 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-public class BatteriaBean {
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class BatteriaBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
     private int idBatteria;
     private boolean flagStatoBatteria;
     private float capacitaMax;
@@ -22,6 +29,7 @@ public class BatteriaBean {
 
     public void setIdBatteria(final int idBatteria) {
         this.idBatteria = idBatteria;
+        notifyObservers("setIdBatteria");
     }
 
     public boolean getFlagStatoBatteria() {
@@ -30,6 +38,7 @@ public class BatteriaBean {
 
     public void setFlagStatoBatteria(final boolean flagStatoBatteria) {
         this.flagStatoBatteria = flagStatoBatteria;
+        notifyObservers("setFlagStatoBatteria");
     }
 
     public float getCapacitaMax() {
@@ -38,6 +47,7 @@ public class BatteriaBean {
 
     public void setCapacitaMax(final float capacitaMax) {
         this.capacitaMax = capacitaMax;
+        notifyObservers("setCapacitaMax");
     }
 
     public float getPercentualeCarica() {
@@ -46,6 +56,7 @@ public class BatteriaBean {
 
     public void setPercentualeCarica(final float percentualeCarica) {
         this.percentualeCarica = percentualeCarica;
+        notifyObservers("setPercentualeCarica");
     }
 
     @Override
@@ -56,5 +67,22 @@ public class BatteriaBean {
                 + ", capacitaMax=" + capacitaMax
                 + ", percentualeCarica=" + percentualeCarica
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 }

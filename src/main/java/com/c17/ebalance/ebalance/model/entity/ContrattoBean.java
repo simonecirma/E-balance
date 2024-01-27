@@ -1,8 +1,14 @@
 package com.c17.ebalance.ebalance.model.entity;
 
-import java.util.Date;
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
 
-public class ContrattoBean {
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class ContrattoBean implements Observable {
+    private static List<Observer> observers = new ArrayList<>();
 
     private int idContratto;
     private String nomeEnte;
@@ -34,6 +40,7 @@ public class ContrattoBean {
 
     public void setIdContratto(final int idContratto) {
         this.idContratto = idContratto;
+        notifyObservers("setIdContratto");
     }
 
     public String getNomeEnte() {
@@ -42,6 +49,7 @@ public class ContrattoBean {
 
     public void setNomeEnte(final String nomeEnte) {
         this.nomeEnte = nomeEnte;
+        notifyObservers("setNomeEnte");
     }
 
     public float getConsumoMedioAnnuale() {
@@ -50,6 +58,7 @@ public class ContrattoBean {
 
     public void setConsumoMedioAnnuale(final float consumoMedioAnnuale) {
         this.consumoMedioAnnuale = consumoMedioAnnuale;
+        notifyObservers("setConsumoMedioAnnuale");
     }
 
     public float getCostoMedioUnitario() {
@@ -58,6 +67,7 @@ public class ContrattoBean {
 
     public void setCostoMedioUnitario(final float costoMedioUnitario) {
         this.costoMedioUnitario = costoMedioUnitario;
+        notifyObservers("setCostoMedioUnitario");
     }
 
     public Date getDataSottoscrizione() {
@@ -66,6 +76,7 @@ public class ContrattoBean {
 
     public void setDataSottoscrizione(final Date dataSottoscrizione) {
         this.dataSottoscrizione = dataSottoscrizione;
+        notifyObservers("setDataSottoscrizione");
     }
 
     public int getDurata() {
@@ -74,6 +85,7 @@ public class ContrattoBean {
 
     public void setDurata(final int durata) {
         this.durata = durata;
+        notifyObservers("setDurata");
     }
 
     public float getPrezzoVendita() {
@@ -82,6 +94,7 @@ public class ContrattoBean {
 
     public void setPrezzoVendita(final float prezzoVendita) {
         this.prezzoVendita = prezzoVendita;
+        notifyObservers("setPrezzoVendita");
     }
 
     public int getIdAmministatore() {
@@ -90,6 +103,7 @@ public class ContrattoBean {
 
     public void setIdAmministatore(final int idAmministatore) {
         this.idAmministatore = idAmministatore;
+        notifyObservers("setIdAmministatore");
     }
 
     @Override
@@ -104,6 +118,23 @@ public class ContrattoBean {
                 + ", prezzoVendita=" + prezzoVendita
                 + ", idAmministatore=" + idAmministatore
                 + '}';
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+        for (Observer observer : observers) {
+            observer.update(nomeMetodo);
+        }
     }
 
 }

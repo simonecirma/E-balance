@@ -80,7 +80,6 @@ public class DatiController extends HttpServlet implements Observer {
                     }
                 }
                 if (action.equalsIgnoreCase("generaDashboard")) {
-                    System.out.println("AOOOOOOOOOOO");
                     consumoEdifici = consumoService.ottieniConsumiEdifici(consumoEdifici);
                     request.setAttribute("consumoEdifici", consumoEdifici);
                     //List<BatteriaBean> batteria = batteriaService.visualizzaBatteria();

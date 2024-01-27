@@ -10,8 +10,6 @@ import java.util.List;
 
 public class ArchivioConsumoBean implements Observable {
     private static List<Observer> observers = new ArrayList<>();
-
-
     private int idConsumo;
     private Date dataConsumo;
     private float consumoGiornaliero;
