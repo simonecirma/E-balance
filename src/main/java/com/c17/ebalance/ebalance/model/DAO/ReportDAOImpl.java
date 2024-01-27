@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
-public class ReportDAOImpl implements ReportDAO{
+public class ReportDAOImpl implements ReportDAO {
 
     private static final Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());
     private static DataSource ds;
@@ -82,26 +82,12 @@ public class ReportDAOImpl implements ReportDAO{
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
-        }
-        finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (rs != null) {
-                    rs.close();
-                }
-            } catch (SQLException e) {
-                logger.log(Level.WARNING, "Errore durante la chiusura di PreparedStatement o ResultSet", e);
-            } finally {
-                if (con != null) {
-                    try {
-                        con.close();
-                        System.out.println("connessione chiusa");
-                    } catch (SQLException e) {
-                        logger.log(Level.WARNING, "Errore durante la chiusura della connessione", e);
-                    }
-                }
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
         return n;
@@ -113,8 +99,8 @@ public class ReportDAOImpl implements ReportDAO{
         PreparedStatement ps = null;
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_REPORT + "(DataEmissione, IdAmministratore, NomeReport)" +
-                    "VALUES(?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_REPORT + "(DataEmissione, IdAmministratore, NomeReport)"
+                    + " VALUES(?, ?, ?)";
             ps = con.prepareStatement(query);
 
             java.util.Date utilDate;

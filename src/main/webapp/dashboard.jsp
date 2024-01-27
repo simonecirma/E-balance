@@ -468,6 +468,7 @@
             <div class="initial-content">
                 <!-- Contenuto della sezione 6 -->
                 <h3>Previsioni meteo</h3>
+                <!--<ul id="listaCondizioni"></ul>-->
                 <div id="meteo" name="meteo">
                     <%
                         if (condizioni != null && !condizioni.isEmpty()) {
@@ -825,7 +826,6 @@
 
     function Observer() {
         $.get("DatiController?action=dashboardObserver", function (data) {
-            //console.log(data.nomeMetodo);
             if (data.percentualeBatteriaUpdate) {
                 $("#percentualeBatterie").load(window.location.href + " #percentualeBatterie");
                 updateBattery();
@@ -850,7 +850,6 @@
             if (data.parametriAttiviUpdate) {
                 $("#parametriIA").load(window.location.href + " #parametriIA");
             }
-
 
             setTimeout(Observer, 10000);
         });

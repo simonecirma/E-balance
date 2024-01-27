@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MeteoDAOImpl implements MeteoDAO{
+public class MeteoDAOImpl implements MeteoDAO {
     private static Logger logger = Logger.getLogger(ContrattoDAOImpl.class.getName());
     private static final String TABLE_NAME_CONTRATTO = "Meteo";
 
@@ -34,15 +34,15 @@ public class MeteoDAOImpl implements MeteoDAO{
     }
 
     public List<MeteoBean> getCondizioniMeteo() throws SQLException {
-        Connection con;
-        PreparedStatement ps;
+        Connection con = null;
+        PreparedStatement ps = null;
         List<MeteoBean> condizioni = new ArrayList<>();
-        try{
+        try {
             con = ds.getConnection();
             String query = "SELECT * FROM " + TABLE_NAME_CONTRATTO + " ORDER BY DataRilevazione DESC, OraRilevazione DESC";
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 MeteoBean bean = new MeteoBean();
                 bean.setIdMeteo(rs.getInt("IdMeteo"));
                 bean.setDataRilevazione(rs.getDate("DataRilevazione"));
@@ -52,8 +52,15 @@ public class MeteoDAOImpl implements MeteoDAO{
                 bean.setCondizioniMetereologiche(rs.getString("CondizioniMetereologiche"));
                 condizioni.add(bean);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return condizioni;
     }

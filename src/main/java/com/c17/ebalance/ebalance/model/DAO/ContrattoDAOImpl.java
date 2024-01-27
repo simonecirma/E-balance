@@ -57,6 +57,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return bean;
     }
@@ -86,6 +93,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return contratti;
     }
@@ -116,6 +130,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return bean;
     }
@@ -144,6 +165,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return bean;
     }
@@ -183,13 +211,15 @@ public class ContrattoDAOImpl implements ContrattoDAO {
 
         return result;
     }
-    public ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException{
+    public ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException {
+        Connection con = null;
         PreparedStatement ps = null;
         ContrattoBean bean = new ContrattoBean();
 
-        String sql = "SELECT * FROM " + TABLE_NAME_CONTRATTO + " WHERE DataSottoscrizione <= ? " +
-                "AND DATE_ADD(DataSottoscrizione, INTERVAL Durata MONTH) >= ? ";
-        try (Connection con = ds.getConnection()) {
+        String sql = "SELECT * FROM " + TABLE_NAME_CONTRATTO + " WHERE DataSottoscrizione <= ? "
+                + "AND DATE_ADD(DataSottoscrizione, INTERVAL Durata MONTH) >= ? ";
+        try {
+            con = ds.getConnection();
             ps = con.prepareStatement(sql);
             ps.setDate(1, dataFine);
             ps.setDate(2, dataInizio);
@@ -209,6 +239,9 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         } finally {
             if (ps != null) {
                 ps.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
         return bean;

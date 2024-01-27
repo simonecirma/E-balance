@@ -74,6 +74,7 @@ public class DatiController extends HttpServlet implements Observer {
     MeteoBean meteo;
 
     InteragisceBean parametriAttivi;
+    List<MeteoBean> condizioni;
 
     @Override
     public void init() throws ServletException {
@@ -125,7 +126,7 @@ public class DatiController extends HttpServlet implements Observer {
                     //request.setAttribute("consumoEdificio", consumoEdificio);
                     List<ArchivioConsumoBean> archivioConsumo = consumoService.visualizzaStoricoConsumi();
                     request.setAttribute("archivioConsumo", archivioConsumo);
-                    List<MeteoBean> condizioni = meteoService.getCondizioniMeteo();
+                    condizioni = meteoService.getCondizioniMeteo();
                     request.setAttribute("condizioniMeteo", condizioni);
                     //List<SorgenteBean> sorgente = produzioneService.visualizzaProduzioneSorgente();
                     //request.setAttribute("sorgente", sorgente);
@@ -222,6 +223,7 @@ public class DatiController extends HttpServlet implements Observer {
                 || nomeMetodo.equalsIgnoreCase("setProbabilitaPioggia")
                 || nomeMetodo.equalsIgnoreCase("setCondizioniMetereologiche")) {
             meteoUpdate = true;
+
         }
         if (nomeMetodo.equalsIgnoreCase("setIdParametro")
                 || nomeMetodo.equalsIgnoreCase("setTipoSorgente")

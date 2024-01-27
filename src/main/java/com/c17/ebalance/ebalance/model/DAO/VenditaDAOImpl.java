@@ -1,6 +1,5 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
-import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import com.c17.ebalance.ebalance.model.entity.VenditaBean;
 
 import javax.naming.Context;
@@ -36,8 +35,8 @@ public class VenditaDAOImpl implements VenditaDAO {
         List<VenditaBean> vendite = new ArrayList<>();
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM " + TABLE_NAME_VENDITA +
-                    " WHERE DataVendita BETWEEN ? AND ? ";
+            String query = "SELECT * FROM " + TABLE_NAME_VENDITA
+                    + " WHERE DataVendita BETWEEN ? AND ? ";
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);
@@ -53,6 +52,13 @@ public class VenditaDAOImpl implements VenditaDAO {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return vendite;
     }
@@ -64,8 +70,8 @@ public class VenditaDAOImpl implements VenditaDAO {
         try {
             con = ds.getConnection();
             String query = "SELECT SUM(RicavoTotale) "
-                    + "AS RicavoTOT FROM " + TABLE_NAME_VENDITA +
-                    " WHERE DataVendita BETWEEN ? AND ?";
+                    + "AS RicavoTOT FROM " + TABLE_NAME_VENDITA
+                    + " WHERE DataVendita BETWEEN ? AND ?";
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);
@@ -75,6 +81,13 @@ public class VenditaDAOImpl implements VenditaDAO {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return ricavo;
     }

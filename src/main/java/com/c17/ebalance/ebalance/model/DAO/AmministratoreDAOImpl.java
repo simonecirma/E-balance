@@ -49,14 +49,11 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
                 result = false;
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
 
@@ -65,10 +62,12 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
     private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
 
     public AmministratoreBean login(final String email, final String password) throws SQLException {
+        Connection con = null;
         PreparedStatement ps = null;
         AmministratoreBean bean = new AmministratoreBean();
         String sql = "SELECT * FROM " + AmministratoreDAOImpl.TABLE_NAME_AMMINISTRATORE + " WHERE Email = ? AND Password = ?";
-        try (Connection con = ds.getConnection()) {
+        try {
+            con = ds.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
@@ -87,6 +86,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
         } finally {
             if (ps != null) {
                 ps.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
 
@@ -123,14 +125,11 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
             }
 
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
 
@@ -234,6 +233,10 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
             if (ps != null) {
                 ps.close();
             }
+            if (con != null) {
+                con.close();
+            }
+
         }
         return amministratore;
     }

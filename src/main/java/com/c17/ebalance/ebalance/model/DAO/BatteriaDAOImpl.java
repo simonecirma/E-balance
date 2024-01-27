@@ -62,14 +62,11 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 batteria.add(bean);
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return batteria;
@@ -95,14 +92,11 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 percentuale.setPercentualeBatteria(resultSet.getFloat("Percentuale"));
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return percentuale.getPercentualeBatteria();
@@ -126,14 +120,11 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 NumBatterie = resultSet.getInt("NumBatterie");
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return NumBatterie;
@@ -158,14 +149,11 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -189,14 +177,11 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
     }

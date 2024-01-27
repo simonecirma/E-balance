@@ -60,14 +60,11 @@ public class ConsumoDAOImpl implements ConsumoDAO{
                 consumo.add(bean);
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return consumo;
@@ -91,14 +88,11 @@ public class ConsumoDAOImpl implements ConsumoDAO{
                 consumoEdifici.setConsumoAttuale(resultSet.getFloat("Consumo"));
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return consumoEdifici.getConsumoAttuale();
@@ -128,14 +122,11 @@ public class ConsumoDAOImpl implements ConsumoDAO{
                 archivioConsumi.add(bean);
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
 
@@ -183,13 +174,20 @@ public class ConsumoDAOImpl implements ConsumoDAO{
             preparedStatement4.setDate(3, data);
             preparedStatement4.executeUpdate();
         } finally {
-            try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (preparedStatement2 != null) preparedStatement2.close();
-                if (preparedStatement3 != null) preparedStatement3.close();
-                if (preparedStatement4 != null) preparedStatement4.close();
-            } finally {
-                if (connection != null) connection.close();
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (preparedStatement2 != null) {
+                preparedStatement2.close();
+            }
+            if (preparedStatement3 != null) {
+                preparedStatement3.close();
+            }
+            if (preparedStatement4 != null) {
+                preparedStatement4.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -213,14 +211,11 @@ public class ConsumoDAOImpl implements ConsumoDAO{
                 numEdificio = resultSet.getInt("IdEdificio");
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return numEdificio;
@@ -246,14 +241,11 @@ public class ConsumoDAOImpl implements ConsumoDAO{
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-            } finally {
-                if (con != null) {
-                    con.close();
-                }
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
             }
         }
         return energia;
