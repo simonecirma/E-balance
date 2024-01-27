@@ -103,8 +103,8 @@ public class ReportServiceImpl implements ReportService {
             String filePath = servletPath + "report" + File.separator + "Report" + n + ".pdf";
 
             // Carica il template PDF esistente
-            File templateFile = new File(servletPath + File.separator + "TemplateReport.pdf");
-            File templateFile2 = new File(servletPath + File.separator + "TemplateReport2.pdf");
+            File templateFile = new File(servletPath + "report" + File.separator + "TemplateReport.pdf");
+            File templateFile2 = new File(servletPath + "report" + File.separator + "TemplateReport2.pdf");
 
             // Posizione delle celle nel template da riempire
 
