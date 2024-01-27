@@ -18,7 +18,8 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -256,15 +257,15 @@ public class ReportServiceImpl implements ReportService {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
                 contentStream.newLineAtOffset(xCoordinate14, yCoordinate14);
-                if(resocontoFinale > 0){
+                if (resocontoFinale > 0) {
                     contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde
                     contentStream.showText(String.valueOf("+" +resocontoFinale));
                     contentStream.endText();
-                }else if (resocontoFinale < 0){
+                } else if (resocontoFinale < 0) {
                     contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
                     contentStream.showText(String.valueOf(resocontoFinale));
                     contentStream.endText();
-                }else{
+                } else {
                     contentStream.showText(String.valueOf(resocontoFinale));
                     contentStream.endText();
                 }
@@ -311,13 +312,13 @@ public class ReportServiceImpl implements ReportService {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 contentStream.newLineAtOffset(xCoordinate16, yCoordinate16);
-                contentStream.showText("Costo Medio Unitario: " +bean.getCostoMedioUnitario());
+                contentStream.showText("Costo Medio Unitario: " + bean.getCostoMedioUnitario());
                 contentStream.endText();
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 contentStream.newLineAtOffset(xCoordinate17, yCoordinate17);
-                contentStream.showText("Prezzo Vendita Al kWH: " +bean.getPrezzoVendita());
+                contentStream.showText("Prezzo Vendita Al kWH: " + bean.getPrezzoVendita());
                 contentStream.endText();
 
                 contentStream.close();
@@ -435,13 +436,13 @@ public class ReportServiceImpl implements ReportService {
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 contentStream.newLineAtOffset(xCoordinate16, yCoordinate16);
-                contentStream.showText("Costo Medio Unitario: " +bean.getCostoMedioUnitario());
+                contentStream.showText("Costo Medio Unitario: " + bean.getCostoMedioUnitario());
                 contentStream.endText();
 
                 contentStream.beginText();
                 contentStream.setFont(PDType1Font.HELVETICA, 12);
                 contentStream.newLineAtOffset(xCoordinate17, yCoordinate17);
-                contentStream.showText("Prezzo Vendita Al kWH: " +bean.getPrezzoVendita());
+                contentStream.showText("Prezzo Vendita Al kWH: " + bean.getPrezzoVendita());
                 contentStream.endText();
 
                 contentStream.close();
@@ -528,13 +529,13 @@ public class ReportServiceImpl implements ReportService {
                     contentStream2.beginText();
                     contentStream2.setFont(PDType1Font.HELVETICA, 12);
                     contentStream2.newLineAtOffset(xCoordinate16, yCoordinate16);
-                    contentStream2.showText("Costo Medio Unitario: " +bean.getCostoMedioUnitario());
+                    contentStream2.showText("Costo Medio Unitario: " + bean.getCostoMedioUnitario());
                     contentStream2.endText();
 
                     contentStream2.beginText();
                     contentStream2.setFont(PDType1Font.HELVETICA, 12);
                     contentStream2.newLineAtOffset(xCoordinate17, yCoordinate17);
-                    contentStream2.showText("Prezzo Vendita Al kWH: " +bean.getPrezzoVendita());
+                    contentStream2.showText("Prezzo Vendita Al kWH: " + bean.getPrezzoVendita());
                     contentStream2.endText();
 
                     contentStream2.close();
@@ -596,13 +597,13 @@ public class ReportServiceImpl implements ReportService {
                     contentStream2.newLineAtOffset(xCoordinate14, yCoordinate14);
                     if(resocontoFinale > 0){
                         contentStream2.setNonStrokingColor(new Color(0, 128, 0)); // Verde
-                        contentStream2.showText(String.valueOf("+" +resocontoFinale));
+                        contentStream2.showText(String.valueOf("+" + resocontoFinale ));
                         contentStream2.endText();
-                    }else if (resocontoFinale < 0){
+                    } else if (resocontoFinale < 0){
                         contentStream2.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
                         contentStream2.showText(String.valueOf(resocontoFinale));
                         contentStream2.endText();
-                    }else{
+                    } else {
                         contentStream2.showText(String.valueOf(resocontoFinale));
                         contentStream2.endText();
                     }
@@ -649,13 +650,13 @@ public class ReportServiceImpl implements ReportService {
                     contentStream2.beginText();
                     contentStream2.setFont(PDType1Font.HELVETICA, 12);
                     contentStream2.newLineAtOffset(xCoordinate16, yCoordinate16);
-                    contentStream2.showText("Costo Medio Unitario: " +bean.getCostoMedioUnitario());
+                    contentStream2.showText("Costo Medio Unitario: " + bean.getCostoMedioUnitario());
                     contentStream2.endText();
 
                     contentStream2.beginText();
                     contentStream2.setFont(PDType1Font.HELVETICA, 12);
                     contentStream2.newLineAtOffset(xCoordinate17, yCoordinate17);
-                    contentStream2.showText("Prezzo Vendita Al kWH: " +bean.getPrezzoVendita());
+                    contentStream2.showText("Prezzo Vendita Al kWH: " + bean.getPrezzoVendita());
                     contentStream2.endText();
 
                     contentStream2.close();
