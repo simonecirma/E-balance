@@ -449,34 +449,37 @@ input[type="range"] {
 .section-expanded #curveChart{
     display: none;
 }
-#curve_chart1{
+#curveChart_sommaProduzione1{
     margin-top: -5px;
     margin-left: 10px;
     width: 420px;
     height: 170px;
     overflow: visible;
 }
-#curve_chart4{
+#curve_chart_ConsumiEdificio1{
     margin-top: -5px;
     margin-left: 10px;
     width: 420px;
     height: 170px;
     overflow: visible;
 }
-#curve_chart2{
+#curveChart_sommaProduzione2{
     width: 900px;
     height: 450px;
     margin-left: 50px;
 }
-#curveChart {
-    margin-top: -5px;
-    margin-left: 10px;
-    width: 420px;
-    height: 170px;
-    overflow: visible;
-}
-#curveChart1{
+#curve_chart_ConsumiEdificio2{
     width: 900px;
     height: 450px;
     margin-left: 50px;
 }
+.section-expanded #curveChart_sommaProduzione1{
+    display: none;
+}
+.section-expanded #curve_chart_ConsumiEdificio1{
+    display: none;
+}
+/*
+.section-expanded #tabIA, .section-expanded #tab1IA{
+    display: none;
+}*/

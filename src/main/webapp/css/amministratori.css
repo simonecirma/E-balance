@@ -1,17 +1,14 @@
+body{
+    overflow: hidden;
+}
 table {
-    width: auto;
+    width: 550px;
     margin: auto;
     border-collapse: collapse;
 }
-
-.tabArrotondata{
-    border-radius: 8px;
-    overflow: hidden;
-}
-
 th, td {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid black;
     text-align: left;
 }
 thead {
@@ -38,17 +35,18 @@ input[type="button"]:hover {
 }
 
 form {
-    width: 520px;
+    width: 550px;
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
-    border: 1px solid #ccc;
+    box-shadow:
+            2px 4px 8px rgba(0, 0, 0, 0.4),
+            2px 8px 16px rgba(0, 0, 0, 0.4);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     margin: auto;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: 50px;
 }
 
 label {
@@ -78,26 +76,21 @@ form div {
 }
 
 form .btn1 {
-    background-color: #4caf50;
-    color: white;
+    background-color: white;
+    border: 2px solid black;
     padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
+    border-radius: 40px;
+    font-weight: bold;
     cursor: pointer;
     font-size: 16px;
     align-self: center; /* Centra il bottone orizzontalmente */
-    margin-top: 10px; /* Aggiunto spazio sopra il bottone */
-    margin-left:25%;
-}
-
-
-form .btn1{
-    background-color: #45a049;
+    margin-top: 20px; /* Aggiunto spazio sopra il bottone */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-container {
     text-align: center;
-    margin-top: 20px; /* Aggiunto spazio sopra il bottone */
+    margin-top: 30px; /* Aggiunto spazio sopra il bottone */
 }
 
 .btn {
@@ -108,11 +101,66 @@ form .btn1{
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    margin-top: 50px;
 }
 
 .btn:hover {
     background-color: #45a049;
 }
+.btn1:hover {
+    background-color: #013a63;
+    color: white;
+    font-weight: bold;
+}
+
+.container{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+.card-container {
+    width: 550px; /* Larghezza della carta */
+    height: 350px; /* Altezza della carta */
+    perspective: 1000px; /* Profondità della prospettiva */
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s, opacity 0.5s; /* Animazione di transizione */
+    backface-visibility: hidden; /* Nasconde il retro della carta */
+}
 
 
+#table-card {
+    transform-origin: right center; /* Origine della trasformazione */
+    z-index: 2; /* Assicura che la tabella sia sopra il form */
+}
 
+#form-card {
+    transform-origin: left center; /* Origine della trasformazione */
+    transform: rotateY(-180deg); /* Inizialmente ruota il form */
+    z-index: 1; /* Assicura che il form sia dietro la tabella */
+}
+
+.button{
+    width: 80px;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: transparent;
+    height: 25px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.button:hover{
+    color: white;
+    font-weight: bold;
+    background-color: red;
+}

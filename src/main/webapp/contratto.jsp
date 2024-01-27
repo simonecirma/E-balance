@@ -21,8 +21,6 @@
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         }
     </script>
-
-
 </head>
 <body>
 <%@include file="navBar.jsp" %>
@@ -30,6 +28,8 @@
 <%
     if(contratto!=null){
 %>
+    <div class="principale">
+        <div class="container">
 <h1> Contratto attuale</h1>
 <table>
     <thead>
@@ -69,20 +69,10 @@
     }
     %>
     </tbody>
-
-
-
-
 </table>
-
-
 <div class="btn-container">
 <button class="btn" onclick="toggleFormVisibility2 ()">Modifica contratto attuale</button><br>
 </div>
-
-
-
-
 
 <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post" style="display: none;">
     <div>
@@ -115,6 +105,8 @@
         <input type="submit" class="btn1" value="Conferma modifica">
     </div>
 </form>
+</div>
+</div>
 <br>
 <div class="btn-container">
     <button class="btn" onclick="toggleFormVisibility ()">Aggiungi un nuovo contratto</button>

@@ -189,7 +189,7 @@
                     <%
                         if (parametriIA != null && !parametriAttivi.isEmpty()) {
                     %>
-                    <table id="tabIA">
+                  <!--  <table id="tabIA">
                         <tbody>
                         <%
                             for (InteragisceBean par : parametriAttivi) {
@@ -233,7 +233,7 @@
                             }
                         %>
                         </tbody>
-                    </table>
+                    </table>-->
                     <%
                         }
                     %>

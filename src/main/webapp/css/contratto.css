@@ -1,3 +1,23 @@
+.principale{
+    width: 100%;
+    border: 2px solid black;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.container{
+    padding: 20px;
+    width: 40%;
+    border: 2px solid blue;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
 table {
     width: auto;
     margin: auto;

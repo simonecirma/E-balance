@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Report</title>
+    <link href="css/report.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <%@include file="navBar.jsp" %>
@@ -16,39 +17,51 @@
     <%
         if(email!=null){
     %>
-    <table>
-        <thead>
-        <tr>
-            <th>Data Emissione</th>
-            <th>Amministratore</th>
-            <th>Visualizza</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% if (listReport != null && !listReport.isEmpty()) {
-            for (int i = 0; i < listReport.size(); i++) { %>
-                <% AmministratoreBean bean = new AmministratoreBean();
-                   ReportBean rep = new ReportBean();
-                   rep = listReport.get(i);
-                   bean = amministratori.get(i);%>
-        <tr>
-            <td><%= rep.getDataEmissione() %></td>
-            <td><%= bean.getNome() %> <%=bean.getCognome()%></td>
-            <td><a href="report\<%=rep.getNomeReport()%>" target="_blank">Apri</a></td>
-        </tr>
-        <%   }
+    <div class="principale">
+        <div class="container">
+            <div class="icon-container">
+                <div class="icon">
+                    <img src="img/report.png">
+                </div>
+            </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Data Emissione</th>
+                <th>Amministratore</th>
+                <th>Visualizza</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (listReport != null && !listReport.isEmpty()) {
+                for (int i = 0; i < listReport.size(); i++) { %>
+                    <% AmministratoreBean bean = new AmministratoreBean();
+                       ReportBean rep = new ReportBean();
+                       rep = listReport.get(i);
+                       bean = amministratori.get(i);%>
+            <tr>
+                <td><%= rep.getDataEmissione() %></td>
+                <td><%= bean.getNome() %> <%=bean.getCognome()%></td>
+                <td><a href="report\<%=rep.getNomeReport()%>" target="_blank"><button class="button">Apri</button></a></td>
+            </tr>
+            <%   }
+                }
             }
-        }
-        %>
-        </tbody>
-    </table>
+            %>
+            </tbody>
+        </table>
 
-    <form id="generaPdf" action="AmministratoreController?action=generaReport" method="post">
-        Data inizio: <input type="date" id="dataInizio" name="dataInizio" onchange="minDataSelection()"><br>
-        Data fine: <input type="date" id="dataFine" name="dataFine" onchange="maxDataSelection()"><br>
-        <input type="submit" value="Genera Pdf">
-    </form>
-
+        <form id="generaPdf" action="AmministratoreController?action=generaReport" method="post">
+            <div>
+                <label for="dataInizio">Data inizio:</label> <input type="date" id="dataInizio" name="dataInizio" onchange="minDataSelection()">
+            </div>
+            <div>
+                <label for="dataFine">Data fine:</label> <input type="date" id="dataFine" name="dataFine" onchange="maxDataSelection()">
+            </div>
+            <input type="submit" class="btn" value="Genera Pdf">
+        </form>
+        </div>
+        </div>
     <script>
         function minDataSelection() {
             // Imposta la data minima consentita
