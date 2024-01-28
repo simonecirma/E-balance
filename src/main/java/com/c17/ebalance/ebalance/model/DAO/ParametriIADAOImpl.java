@@ -244,4 +244,60 @@ public class ParametriIADAOImpl implements ParametriIADAO {
             }
         }
     }
+
+    @Override
+    public void aggiornaPercentualeSEN(int percentualeAggiunta) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+        int idParametro = 0;
+        float percentualeUtilizzo = 0.00f;
+        float percentualeNuova = 0.00f;
+
+        String selectSQL = "SELECT IdParametro FROM " + TABLE_NAME_PARAMETRI + " WHERE FlagAttivazioneParametro = 1";
+
+        String selectSQL2 = "SELECT PercentualeUtilizzoSorgente FROM " + TABLE_NAME_INTERAGISCE
+                + " WHERE IdParametro = ? AND TipoSorgente = 'Servizio Elettrico Nazionale'";
+
+        String upadteSQL = "UPDATE " + TABLE_NAME_INTERAGISCE
+                + " SET PercentualeUtilizzoSorgente =  ? "
+                + " WHERE IdParametro = ? AND TipoSorgente = 'Servizio Elettrico Nazionale'";
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                idParametro = resultSet.getInt("IdParametro");
+            }
+
+            preparedStatement2 = connection.prepareStatement(selectSQL2);
+            preparedStatement2.setInt(1, idParametro);
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            while (resultSet2.next()) {
+                percentualeUtilizzo = resultSet2.getFloat("PercentualeUtilizzoSorgente");
+            }
+
+            if (percentualeAggiunta > 0) {
+                percentualeNuova = Math.min(100, percentualeUtilizzo + percentualeAggiunta);
+            } else {
+                percentualeNuova = Math.max(0, percentualeUtilizzo + percentualeAggiunta);
+            }
+
+            preparedStatement3 = connection.prepareStatement(upadteSQL);
+            preparedStatement3.setFloat(1, percentualeNuova);
+            preparedStatement3.setInt(2, idParametro);
+            preparedStatement3.executeUpdate();
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+    }
 }

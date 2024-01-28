@@ -52,8 +52,6 @@ public class AmministratoreController extends HttpServlet {
                     PrintWriter out = response.getWriter();
                     out.print("{\"flagPresenza\": " + flagPresenza + "}");
                     out.flush();
-                    System.out.println("in SERVLET  " +flagPresenza);
-                    System.out.println("in SERVLET  " +email);
                 }
                 if (action.equalsIgnoreCase("aggiornaAmministratore")) {
                     aggiornaAmministratore(request, response);

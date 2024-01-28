@@ -131,7 +131,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
     }
 
     @Override
-    public void aggiornaBatteria(float energia, int numBatterie) throws SQLException {
+    public float aggiornaBatteria(float energia, int numBatterie) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         PreparedStatement preparedStatement2 = null;
@@ -173,10 +173,10 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 preparedStatement2.setInt(2, i);
                 preparedStatement2.executeUpdate();
 
+
                 if (percentualeEccesso != 0.00f) {
                     for (int j = 1; j <= numBatterie; j++) {
                         if (j != i) {
-                            // Verifica se la batteria successiva non è piena
                             preparedStatement3 = connection.prepareStatement(selectSQL);
                             preparedStatement3.setFloat(1, j);
                             resultSet = preparedStatement3.executeQuery();
@@ -185,18 +185,24 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                                 capacitaMax = resultSet.getFloat("CapacitaMax");
                             }
 
-                            if (percentualeCaricaAttuale < 100) {
-                                // Aggiorna la batteria successiva con l'eccesso di percentuale
-                                float nuovaPercentuale = Math.min(100, percentualeCaricaAttuale + percentualeEccesso);
+                            float nuovaPercentuale = 0.00f;
+
+                            if (percentualeCaricaAttuale < 99 && percentualeCaricaAttuale > 1) {
+                                if (percentualeEccesso > 0) {
+                                   nuovaPercentuale = Math.min(100, percentualeCaricaAttuale + percentualeEccesso);
+                                   percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso - 100;
+                                } else if (percentualeEccesso < 0) {
+                                    nuovaPercentuale = Math.max(0, percentualeCaricaAttuale + percentualeEccesso);
+                                    percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso;
+                                }
                                 preparedStatement4 = connection.prepareStatement(updateSQL);
                                 preparedStatement4.setFloat(1, nuovaPercentuale);
                                 preparedStatement4.setInt(2, j);
                                 preparedStatement4.executeUpdate();
 
-
-                                percentualeEccesso = Math.max(0, percentualeEccesso - (100 - percentualeCaricaAttuale));
-
-                                break;
+                                if (percentualeEccesso == 0.00f) {
+                                    break;
+                                }
                             }
                         }
                     }
@@ -221,5 +227,6 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 connection.close();
             }
         }
+        return percentualeEccesso;
     }
 }

@@ -160,7 +160,6 @@ public class DatiController extends HttpServlet implements Observer {
                         int percentualeUtilizzoSEN = Integer.parseInt(request.getParameter("Servizio Elettrico Nazionale"));
                         String sortableListData = request.getParameter("sortableListData");
                         iaService.aggiornaPianoPersonalizzato(preferenzaSorgente, percentualeUtilizzoPannelli, percentualeUtilizzoSEN, sortableListData);
-                        System.out.println(session.getAttribute("idAmministratore"));
                         if (!iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute("idAmministratore"))) {
                             request.setAttribute("result", "errore aggiornamento piano");
                         }

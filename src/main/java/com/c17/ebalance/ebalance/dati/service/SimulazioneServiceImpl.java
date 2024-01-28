@@ -27,6 +27,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private Random random = new Random();
     private Calendar calendario = Calendar.getInstance();
     private Date data;
+    float percentualeEccesso = 0.00f;
     private boolean simulazioneVenditaFlag = false;
     @Override
     public void simulazioneEnergia() throws SQLException {
@@ -49,7 +50,10 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                     }
                     consumoOrario = (float) (Math.round(consumoOrario * 100.0) / 100.0);
                     consumoDAO.simulaConsumo(consumoOrario, y+1, sqlDate);
-                    batteriaDAO.aggiornaBatteria((-consumoOrario) / numBatterie, numBatterie);
+                    percentualeEccesso = batteriaDAO.aggiornaBatteria((-consumoOrario) / numBatterie, numBatterie);
+                    if (percentualeEccesso < 0) {
+                        parametriIADAO.aggiornaPercentualeSEN(10);
+                    }
                     consumoOrarioAttualeTot = consumoOrarioAttualeTot + consumoOrario;
                 }
 
@@ -71,7 +75,10 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                         }
                     }
                     produzioneDAO.simulaProduzione(y+1, produzioneOraria,  sqlDate);
-                    batteriaDAO.aggiornaBatteria((produzioneOraria) / numBatterie, numBatterie);
+                    percentualeEccesso = batteriaDAO.aggiornaBatteria((produzioneOraria) / numBatterie, numBatterie);
+                    if (percentualeEccesso > 0) {
+                        parametriIADAO.aggiornaPercentualeSEN(-10);
+                    }
                     produzioneOrariaAttualeTot = produzioneOrariaAttualeTot + produzioneOraria;
                 }
 
@@ -84,7 +91,10 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                         }
                     }
                     produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
-                    batteriaDAO.aggiornaBatteria((produzioneNecessaria) / numBatterie, numBatterie);
+                    percentualeEccesso = batteriaDAO.aggiornaBatteria((produzioneNecessaria) / numBatterie, numBatterie);
+                    if (percentualeEccesso > 0) {
+                        parametriIADAO.aggiornaPercentualeSEN(-10);
+                    }
                 }
 
 
@@ -125,7 +135,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     @Override
     public void modificaPrevisioni() throws SQLException {
         List<String> condizioni=meteoDAO.getCondizione();
-        try{
+        try {
             data = calendario.getTime();
             java.sql.Date sqlDate = new java.sql.Date(data.getTime());
             java.sql.Time sqlTime = new java.sql.Time(data.getTime());
@@ -136,7 +146,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
             meteoDAO.insertPrevisioni(sqlDate, sqlTime, vel, prob, condizioneCasuale);
             calendario.add(Calendar.HOUR_OF_DAY, 6);
             Thread.sleep(10000); // Ritardo di 10 secondi
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

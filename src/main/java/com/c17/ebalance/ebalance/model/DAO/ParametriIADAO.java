@@ -13,4 +13,6 @@ public interface ParametriIADAO {
     void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String[] prioritaSorgenti) throws SQLException;
 
     boolean aggiornaPianoAttivo(String piano, int idAmministratore) throws SQLException;
+
+    void aggiornaPercentualeSEN(int percentualeAggiunta) throws SQLException;
 }

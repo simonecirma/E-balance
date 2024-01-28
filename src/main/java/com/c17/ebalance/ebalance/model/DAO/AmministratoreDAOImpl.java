@@ -284,7 +284,6 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
             } else {
                 flagPresenza = false;
             }
-            System.out.println("in DAO" + flagPresenza);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

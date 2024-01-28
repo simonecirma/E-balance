@@ -11,5 +11,5 @@ public interface BatteriaDAO {
 
     float ottieniPercentualeBatterie() throws SQLException;
 
-    void aggiornaBatteria(float energia, int numBatterie) throws SQLException;
+    float aggiornaBatteria(float energia, int numBatterie) throws SQLException;
 }

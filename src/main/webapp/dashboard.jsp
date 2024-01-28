@@ -76,6 +76,11 @@
                     <h5>C'è una nuova possibilità di vendita</h5>
                     <%
                         }
+                        if (percentualeBatterie <= 5) {
+                    %>
+                    <h5>Batteria scarica, protocollo emergenza attivo!</h5>
+                    <%
+                        }
                     %>
                     <%
                         if (percentualeBatterie >= 80) {

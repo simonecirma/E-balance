@@ -116,8 +116,7 @@
 
         isTableVisible = !isTableVisible; // Inverti lo stato della variabile
     }
-</script>
-<script>
+
     function validateForm() {
         var nome = document.getElementById("nome").value;
         var cognome = document.getElementById("cognome").value;
@@ -149,9 +148,9 @@
             url: "AmministratoreController?action=verificaPresenzaEmail",
             method: "POST",
             data: { email: email },
+            async: false,
             dataType: 'json',
             success: function(response) {
-                console.log("in SUCCESSO");
                 if (response.flagPresenza) {
                     alert("Questa email è già registrata. Scegli un'altra email.");
                 } else {
@@ -173,7 +172,6 @@
             alert("La password deve essere di almeno 8 caratteri e contenere almeno una minuscola, una maiuscola, un numero e un carattere speciale.");
             return false;
         }
-
 
         return true;
 
