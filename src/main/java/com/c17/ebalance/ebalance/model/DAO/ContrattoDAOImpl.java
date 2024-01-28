@@ -246,4 +246,35 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         }
         return bean;
     }
+
+    @Override
+    public float ottieniPrezzoVendita() throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        float prezzoVendita = 0.00f;
+
+        String selectSQL = "SELECT PrezzoVendita FROM " + TABLE_NAME_CONTRATTO
+                + " ORDER BY DataSottoscrizione DESC LIMIT 1 ";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                prezzoVendita = resultSet.getFloat("PrezzoVendita");
+            }
+        } finally {
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } finally {
+                if (connection != null) {
+                    connection.close();
+                }
+            }
+        }
+        return prezzoVendita;
+    }
 }

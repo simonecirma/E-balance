@@ -10,4 +10,6 @@ public interface VenditaService {
     List<VenditaBean> getVendite(Date dataInizio, Date dataFine) throws SQLException;
 
     float getRicavoTotalePerData(Date dataInizio, Date dataFine) throws SQLException;
+
+    void effettuaVendita(int idAmministratore) throws SQLException;
 }

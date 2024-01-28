@@ -1,10 +1,7 @@
 package com.c17.ebalance.ebalance.amministratore.controller;
 
 import com.c17.ebalance.ebalance.accesso.controller.AccessoController;
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
-import com.c17.ebalance.ebalance.amministratore.service.AmministratoreServiceImpl;
-import com.c17.ebalance.ebalance.amministratore.service.ReportService;
-import com.c17.ebalance.ebalance.amministratore.service.ReportServiceImpl;
+import com.c17.ebalance.ebalance.amministratore.service.*;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import jakarta.servlet.RequestDispatcher;
@@ -27,6 +24,8 @@ public class AmministratoreController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
     private ReportService reportService = new ReportServiceImpl();
+
+    private VenditaService venditaService = new VenditaServiceImpl();
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
         String action = request.getParameter("action");
@@ -64,6 +63,10 @@ public class AmministratoreController extends HttpServlet {
                     visualizzazioneReport(request, response);
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
+                }
+                if (action.equalsIgnoreCase("vendita")) {
+                    int idAmministratore = (int) request.getAttribute("idAmministratore");
+                    venditaService.effettuaVendita(idAmministratore);
                 }
                 if (action.equalsIgnoreCase("generaReport")) {
                     ReportBean report = reportService.generaReport(request, response);

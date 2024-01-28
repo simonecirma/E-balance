@@ -24,6 +24,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private BatteriaDAO batteriaDAO = new BatteriaDAOImpl();
     private MeteoDAO meteoDAO = new MeteoDAOImpl();
     private ParametriIADAO parametriIADAO = new ParametriIADAOImpl();
+    boolean simulazioneVenditaFlag = true;
     Calendar calendario = Calendar.getInstance();
     Date data;
     int cont=0;
@@ -41,7 +42,12 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 int numEdifici = consumoDAO.ottieniNumEdifici();
                 float consumoOrarioAttualeTot = 0.02f;
                 for (int y = 0; y < numEdifici; y++) {
-                    float consumoOrario = random.nextFloat() * 15 + 15;
+                    float consumoOrario = 0.00f;
+                    if (simulazioneVenditaFlag) {
+                        consumoOrario = random.nextFloat() * 9 + 3;
+                    } else {
+                        consumoOrario = random.nextFloat() * 15 + 15;
+                    }
                     consumoOrario = (float) (Math.round(consumoOrario * 100.0) / 100.0);
                     consumoDAO.simulaConsumo(consumoOrario, y+1, sqlDate);
                     batteriaDAO.aggiornaBatteria((-consumoOrario) / numBatterie, numBatterie);
