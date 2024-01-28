@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class IAServiceImpl implements IAService{
+public class IAServiceImpl implements IAService {
     private ParametriIADAO parametriIA = new ParametriIADAOImpl();
     @Override
     public List<ParametriIABean> visualizzaParametri() throws SQLException {
