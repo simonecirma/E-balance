@@ -6,7 +6,7 @@
     synchronized(session)
     {
         session = request.getSession();
-        email = (String)session.getAttribute("email");
+        email = (String) session.getAttribute("email");
     }
 %>
 <html>
@@ -82,7 +82,7 @@
     </div>
     <div>
         <label for="dataNascita">Data Nascita:</label>
-        <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita" required><br>
+        <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita" onchange="maxDataSelection()" required ><br>
     </div>
     <input type="submit" class="btn1" value="Conferma">
 </form>
@@ -122,7 +122,6 @@
         var cognome = document.getElementById("cognome").value;
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
-        var dataNascita = document.getElementById("dataNascita").value;
 
         // Validazione del nome e cognome (solo caratteri alfabetici)
         var nameRegex = /^[a-zA-Z\s]+$/;
@@ -174,16 +173,30 @@
             return false;
         }
 
-        // Validazione della data di nascita
-        var currentDate = new Date();
-        var selectedDate = new Date(dataNascita);
-
-        if (selectedDate >= currentDate) {
-            alert("La data di nascita deve essere antecedente alla data odierna.");
-            return false;
-        }
 
         return true;
+
+    }
+    function maxDataSelection() {
+        // Ottieni la data corrente
+        var today = new Date();
+
+        // Estrai l'anno, il mese e il giorno
+        var year = today.getFullYear();
+        // Aggiunge uno zero se il mese è inferiore a 10
+        var month = String(today.getMonth() + 1).padStart(2, '0');
+        // Aggiunge uno zero se il giorno è inferiore a 10
+        var day = String(today.getDate()).padStart(2, '0');
+
+        // Crea la stringa della data nel formato "YYYY-MM-DD"
+        var maxDate = year + '-' + month + '-' + day;
+
+        // Ottieni l'elemento input di tipo data
+        var datePicker = document.getElementById("dataNascita");
+
+        // Imposta la data massima consentita per la selezione
+        datePicker.max = maxDate;
+
     }
 </script>
 
