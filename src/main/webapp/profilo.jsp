@@ -6,7 +6,7 @@
     <title>Profilo</title>
     <link href="css/profilo.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body style="background-image: url('img/wp1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #f6f6f6;">
 <%@include file="navBar.jsp" %>
 <form action="AmministratoreController?action=aggiornaAmministratore" method="post">
     <div class="avatar">

@@ -18,7 +18,7 @@
         }
     </script>
 </head>
-<body>
+<body style="background-image: url('img/wp1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #f6f6f6;">
 <%@include file="navBar.jsp" %>
 <br>
 
@@ -78,37 +78,37 @@
         </div>
 
 
-            <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post" style="display: none;">
-                <div>
-                    <label>Ente:</label>
-                    <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
-                </div>
-                <div>
-                    <label>Consumo Annuale:</label>
-                    <input type="text" name="consumoMedioAnnuale" value="<%=contratto != null ? contratto.getConsumoMedioAnnuale() : 0%>"><br>
-                </div>
-                <div>
-                    <label>Costo Unitario:</label>
-                    <input type="text" name="costoMedioUnitario" value="<%=contratto != null ? contratto.getCostoMedioUnitario() : 0%>"><br>
-                </div>
-                <div>
-                    <label>Data Sottoscrizione:</label>
-                    <input type="date" name="dataSottoscrizione" value="<%=contratto != null ? contratto.getDataSottoscrizione() : null%>"><br>
-                </div>
-                <div>
-                    <label>Durata:</label>
-                    <input type="text" name="durata" value="<%=contratto != null ? contratto.getDurata() : 0%>"><br>
-                </div>
-                <div>
-                    <label>Prezzo:</label>
-                    <input type="text" name="prezzoVendita" value="<%=contratto != null ? contratto.getPrezzoVendita() : 0%>"><br>
-                </div>
-                <input type="hidden" name="idContratto" value="<%=contratto != null ? contratto.getIdContratto() : 0%>">
-                <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
-                <div class="btnCont">
-                    <input type="submit" class="btn1" value="Conferma modifica">
-                </div>
-             </form>
+        <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post" style="display: none;">
+            <div>
+                <label>Ente:</label>
+                <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"><br>
+            </div>
+            <div>
+                <label>Consumo Annuale:</label>
+                <input type="text" name="consumoMedioAnnuale" value="<%=contratto != null ? contratto.getConsumoMedioAnnuale() : 0%>"><br>
+            </div>
+            <div>
+                <label>Costo Unitario:</label>
+                <input type="text" name="costoMedioUnitario" value="<%=contratto != null ? contratto.getCostoMedioUnitario() : 0%>"><br>
+            </div>
+            <div>
+                <label>Data Sottoscrizione:</label>
+                <input type="date" name="dataSottoscrizione" value="<%=contratto != null ? contratto.getDataSottoscrizione() : null%>"><br>
+            </div>
+            <div>
+                <label>Durata:</label>
+                <input type="text" name="durata" value="<%=contratto != null ? contratto.getDurata() : 0%>"><br>
+            </div>
+            <div>
+                <label>Prezzo:</label>
+                <input type="text" name="prezzoVendita" value="<%=contratto != null ? contratto.getPrezzoVendita() : 0%>"><br>
+            </div>
+            <input type="hidden" name="idContratto" value="<%=contratto != null ? contratto.getIdContratto() : 0%>">
+            <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
+            <div class="btnCont">
+                <input type="submit" class="btn1" value="Conferma modifica">
+            </div>
+        </form>
 
         <form id="aggiungiContrattoForm" action="ContrattoController?action=aggiungiContratto" method="post" style="display: none;">
             <div>

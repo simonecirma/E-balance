@@ -11,7 +11,7 @@
     <title>Report</title>
     <link href="css/report.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body style="background-image: url('img/wp1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #f6f6f6;">
     <%@include file="navBar.jsp" %>
     <br>
     <%
