@@ -6,7 +6,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface BatteriaService {
-    public List<BatteriaBean> visualizzaBatteria() throws SQLException;
+    List<BatteriaBean> visualizzaBatteria() throws SQLException;
 
     float ottieniPercetualeBatteria() throws SQLException;
+    int ottieniNumBatterieAttive() throws SQLException;
+
+    void aggiornaBatteria(float energia, int numBatteria) throws SQLException;
 }

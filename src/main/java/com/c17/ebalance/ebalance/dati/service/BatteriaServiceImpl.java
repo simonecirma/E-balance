@@ -19,4 +19,14 @@ public class BatteriaServiceImpl implements BatteriaService {
     public float ottieniPercetualeBatteria() throws SQLException {
         return batteriaDAO.ottieniPercentualeBatterie();
     }
+
+    @Override
+    public int ottieniNumBatterieAttive() throws SQLException {
+        return batteriaDAO.ottieniNumBatterieAttive();
+    }
+
+    @Override
+    public void aggiornaBatteria(float energia, int numBatteria) throws SQLException {
+        batteriaDAO.aggiornaBatteria(energia, numBatteria);
+    }
 }

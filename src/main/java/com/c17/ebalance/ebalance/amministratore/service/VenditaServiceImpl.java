@@ -2,6 +2,8 @@ package com.c17.ebalance.ebalance.amministratore.service;
 
 import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.BatteriaService;
+import com.c17.ebalance.ebalance.dati.service.BatteriaServiceImpl;
 import com.c17.ebalance.ebalance.model.DAO.VenditaDAO;
 import com.c17.ebalance.ebalance.model.DAO.VenditaDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.VenditaBean;
@@ -15,6 +17,7 @@ import java.util.Random;
 public class VenditaServiceImpl implements VenditaService {
     private VenditaDAO venditaDAO = new VenditaDAOImpl();
     private ContrattoService contrattoService = new ContrattoServiceImpl();
+    private BatteriaService batteriaService = new BatteriaServiceImpl();
 
     @Override
     public List<VenditaBean> getVendite(Date dataInizio, Date dataFine) throws SQLException {
@@ -38,5 +41,7 @@ public class VenditaServiceImpl implements VenditaService {
         bean.setDataVendita(data);
         bean.setIdAmministratore(idAmministratore);
         venditaDAO.effetuaVendita(bean);
+        int numBatterie = batteriaService.ottieniNumBatterieAttive();
+        batteriaService.aggiornaBatteria((-energiaVenduta)/numBatterie, numBatterie);
     }
 }

@@ -59,7 +59,12 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 Random random2 = new Random();
                 int sorgentiAttive = produzioneDAO.ottieniSorgenti();
                 for (int y = 1; y < sorgentiAttive; y++) {
-                    float produzioneOraria = random2.nextFloat() * 100 + 0;
+                    float produzioneOraria = 0.00f;
+                    if (simulazioneVenditaFlag) {
+                        produzioneOraria = random2.nextFloat() * 200 + 100;
+                    } else {
+                        produzioneOraria = random2.nextFloat() * 100 + 0;
+                    }
                     produzioneOraria = (float) (Math.round(produzioneOraria * 100.0) / 100.0);
                     for (InteragisceBean bean: parametriAttivi) {
                         if (bean.getTipoSorgente().equalsIgnoreCase("Pannello Fotovoltaico")) {
@@ -72,15 +77,18 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                     produzioneOrariaAttualeTot = produzioneOrariaAttualeTot + produzioneOraria;
                 }
 
-                float produzioneNecessaria = (float) (Math.round((consumoOrarioAttualeTot - produzioneOrariaAttualeTot) * 100.0) / 100.0);
-                for (InteragisceBean bean: parametriAttivi) {
-                    if (bean.getTipoSorgente().equalsIgnoreCase("Pannello Fotovoltaico")) {
-                        produzioneNecessaria = produzioneNecessaria * ((float) bean.getPercentualeUtilizzoSorgente() /100);
-                        break;
+                if (consumoOrarioAttualeTot > produzioneOrariaAttualeTot) {
+                    float produzioneNecessaria = (float) (Math.round((consumoOrarioAttualeTot - produzioneOrariaAttualeTot) * 100.0) / 100.0);
+                    for (InteragisceBean bean: parametriAttivi) {
+                        if (bean.getTipoSorgente().equalsIgnoreCase("Servizio Elettrico Nazionale")) {
+                            produzioneNecessaria = produzioneNecessaria * ((float) bean.getPercentualeUtilizzoSorgente() /100);
+                            break;
+                        }
                     }
+                    produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
+                    batteriaDAO.aggiornaBatteria((produzioneNecessaria) / numBatterie, numBatterie);
                 }
-                produzioneDAO.simulaProduzioneSEN(produzioneNecessaria, sqlDate);
-                batteriaDAO.aggiornaBatteria((produzioneNecessaria) / numBatterie, numBatterie);
+
                 System.out.println("simulazione num:" + cont);
 
                 Thread.sleep(10000); // Ritardo di 10 secondi
