@@ -37,7 +37,7 @@ public class ReportDAOImpl implements ReportDAO {
         ResultSet resultSet = null;
 
         List<ReportBean> report = new ArrayList<>();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME_REPORT;
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_REPORT+ " ORDER BY DataEmissione DESC";
 
         try {
             connection = ds.getConnection();

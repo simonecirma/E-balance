@@ -61,7 +61,7 @@ class ContrattoControllerTest {
 
     @Test
     void testAggiornaContratto() throws ServletException, IOException, SQLException {
-        try{
+        try {
             when(request.getParameter("idContratto")).thenReturn("TestId");
             when(request.getParameter("nomeEnte")).thenReturn("TestEnte");
             when(request.getParameter("consumoMedioAnnuale")).thenReturn("TestConsumoMedioAnnuale");
