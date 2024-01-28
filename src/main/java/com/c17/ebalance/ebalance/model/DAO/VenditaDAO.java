@@ -9,4 +9,6 @@ import java.util.List;
 public interface VenditaDAO {
     List<VenditaBean> getVendite(final Date dataInizio, final Date dataFine) throws SQLException;
     float getRicavoTotalePerData(final Date dataInizio, final Date dataFine) throws SQLException;
+
+    void effetuaVendita(VenditaBean bean) throws SQLException;
 }

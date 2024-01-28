@@ -13,5 +13,5 @@ public interface ContrattoDAO {
     ContrattoBean aggiungiContratto(final ContrattoBean contratto) throws SQLException;
     boolean verificaPrimoContratto() throws SQLException;
     ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException;
-
+    float ottieniPrezzoVendita() throws SQLException;
 }

@@ -91,4 +91,31 @@ public class VenditaDAOImpl implements VenditaDAO {
         }
         return ricavo;
     }
+
+    @Override
+    public void effetuaVendita(VenditaBean bean) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        String insertSQL = " INSERT INTO " + TABLE_NAME_VENDITA
+                + " (EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)\n"
+                + " VALUES(?, ?, ?, ?) ";
+        try {
+            con = ds.getConnection();
+            ps = con.prepareStatement(insertSQL);
+            ps.setFloat(1, bean.getEnergiaVenduta());
+            ps.setDate(2, bean.getDataVendita());
+            ps.setFloat(3, bean.getRicavoTotale());
+            ps.setFloat(4, bean.getIdAmministratore());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
 }

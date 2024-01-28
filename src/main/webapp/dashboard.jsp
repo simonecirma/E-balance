@@ -65,6 +65,16 @@
                 <div id="batteryText">0%</div>
             </div>
             <div class="expanded-content">
+                <%
+                    if (percentualeBatterie >= 80) {
+                %>
+                <h1> Hai la possibilità di vendere. Vuoi vendere? </h1>
+                <form id="vendita" action="AmministratoreController?action=vendita" method="POST">
+                    <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
+                    <input type="submit" value="Vendi">
+                <%
+                    }
+                %>
             </div>
         </div>
     </div>

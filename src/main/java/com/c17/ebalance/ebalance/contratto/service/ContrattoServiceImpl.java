@@ -62,4 +62,9 @@ public class ContrattoServiceImpl implements ContrattoService {
         return contrattoDao.getContrattoAttivo(dataInizio, dataFine);
     }
 
+    @Override
+    public float ottieniPrezzoVendita() throws SQLException {
+        return contrattoDao.ottieniPrezzoVendita();
+    }
+
 }

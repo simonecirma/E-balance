@@ -3,7 +3,7 @@ import com.c17.ebalance.ebalance.utility.Observable;
 import com.c17.ebalance.ebalance.utility.Observer;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class VenditaBean implements Observable {
