@@ -11,6 +11,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private ConsumoDAO consumoDAO = new ConsumoDAOImpl();
     private ProduzioneDAO produzioneDAO = new ProduzioneDAOImpl();
     private BatteriaDAO batteriaDAO = new BatteriaDAOImpl();
+    private MeteoDAO meteoDAO = new MeteoDAOImpl();
     Calendar calendario = Calendar.getInstance();
     Date data;
     int cont=0;
@@ -57,5 +58,10 @@ public class SimulazioneServiceImpl implements SimulazioneService {
         }
 
         calendario.add(Calendar.DAY_OF_YEAR, 1);
+    }
+
+    @Override
+    public void insertPrevisioni() throws SQLException {
+        meteoDAO.insertPrevisioni();
     }
 }

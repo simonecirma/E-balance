@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MeteoDAO {
     List<MeteoBean> getCondizioniMeteo() throws SQLException;
+    void insertPrevisioni() throws SQLException;
 }

@@ -89,6 +89,7 @@ public class DatiController extends HttpServlet implements Observer {
         percentualeBatteria.addObserver(this);
         produzioneAttuale.addObserver(this);
         new Thread(this::simulazioneEnergia).start();
+        new Thread(this::simulazionePrevisioni).start();
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -189,6 +190,15 @@ public class DatiController extends HttpServlet implements Observer {
         }
     }
 
+    private void simulazionePrevisioni() {
+        while (true) {
+            try {
+                simulazioneService.insertPrevisioni();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
     public void destroy() {
         archivioConsumi.removeObserver(this);
