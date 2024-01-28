@@ -5,6 +5,11 @@
 <%
     ContrattoBean contratto = (ContrattoBean) request.getAttribute("contratto");
     List<ContrattoBean> contratti = (List<ContrattoBean>) request.getAttribute("contratti");
+    synchronized(session)
+    {
+        session = request.getSession();
+        idAmministratore =  (int) session.getAttribute("idAmministratore");
+    }
 %>
 
 <html>

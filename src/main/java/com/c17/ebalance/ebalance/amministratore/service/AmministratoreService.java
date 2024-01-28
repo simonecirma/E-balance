@@ -12,4 +12,6 @@ public interface AmministratoreService {
     void aggiungiAmministratore(AmministratoreBean amministratore) throws SQLException;
     AmministratoreBean getById(int id) throws SQLException;
     void rimuoviAmministratore(int idAmministratore) throws SQLException;
-    }
+
+    boolean verificaPresenzaEmail(String email) throws SQLException;
+}

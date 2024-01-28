@@ -14,4 +14,5 @@ public interface AmministratoreDAO {
     AmministratoreBean getById(final int id) throws SQLException;
     void rimuoviAmministratore(final int idAmministratore) throws SQLException;
 
+    boolean verificaPresenzaEmail(String email) throws SQLException;
 }

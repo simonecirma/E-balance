@@ -34,4 +34,9 @@ public class AmministratoreServiceImpl implements AmministratoreService {
         amministratoreDAO.rimuoviAmministratore(idAmministratore);
     }
 
+    @Override
+    public boolean verificaPresenzaEmail(String email) throws SQLException {
+        return amministratoreDAO.verificaPresenzaEmail(email);
+    }
+
 }

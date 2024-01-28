@@ -265,4 +265,38 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
 
     }
 
+    @Override
+    public boolean verificaPresenzaEmail(String email) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        boolean flagPresenza;
+
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE Email = ?";
+
+        try {
+            connection = ds.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                flagPresenza = true;
+            } else {
+                flagPresenza = false;
+            }
+            System.out.println("in DAO" + flagPresenza);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return flagPresenza;
+    }
+
 }

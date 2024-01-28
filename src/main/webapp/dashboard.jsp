@@ -18,6 +18,12 @@
     List<InteragisceBean> parametriAttivi = (List<InteragisceBean>) request.getAttribute("parametriAttivi");
     List<TipoSorgenteBean> tipoSorgente = (List<TipoSorgenteBean>) request.getAttribute("tipoSorgente");
     String result = (String) request.getAttribute("result");
+
+    synchronized(session)
+    {
+        session = request.getSession();
+        idAmministratore = (int) session.getAttribute("idAmministratore");
+    }
 %>
 <!DOCTYPE html>
 <html>

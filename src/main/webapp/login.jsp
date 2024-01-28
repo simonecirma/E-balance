@@ -8,7 +8,7 @@
     synchronized(session)
     {
         session = request.getSession();
-        email=(String)session.getAttribute("email");
+        email = (String)session.getAttribute("email");
     }
 
     result = (String) request.getAttribute("result");
@@ -23,7 +23,6 @@
 </head>
 <body>
 <script src="js/Login.js"></script>
-<%//@include file="navBar.jsp" %>
 <%
     if(email != null)
     {

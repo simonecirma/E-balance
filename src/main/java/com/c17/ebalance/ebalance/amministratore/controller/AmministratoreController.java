@@ -4,6 +4,7 @@ import com.c17.ebalance.ebalance.accesso.controller.AccessoController;
 import com.c17.ebalance.ebalance.amministratore.service.*;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
+import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -41,6 +43,17 @@ public class AmministratoreController extends HttpServlet {
                         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
                         dispatcher.forward(request, response);
                     }
+                }
+                if (action.equalsIgnoreCase("verificaPresenzaEmail")) {
+                    String email = request.getParameter("email");
+                    boolean flagPresenza = amministratoreService.verificaPresenzaEmail(email);
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    PrintWriter out = response.getWriter();
+                    out.print("{\"flagPresenza\": " + flagPresenza + "}");
+                    out.flush();
+                    System.out.println("in SERVLET  " +flagPresenza);
+                    System.out.println("in SERVLET  " +email);
                 }
                 if (action.equalsIgnoreCase("aggiornaAmministratore")) {
                     aggiornaAmministratore(request, response);
