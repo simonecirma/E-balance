@@ -65,8 +65,9 @@ public class AmministratoreController extends HttpServlet {
                     dispatcher.forward(request, response);
                 }
                 if (action.equalsIgnoreCase("vendita")) {
-                    int idAmministratore = (int) request.getAttribute("idAmministratore");
+                    int idAmministratore = Integer.parseInt(request.getParameter("idAmministratore"));
                     venditaService.effettuaVendita(idAmministratore);
+                    response.sendRedirect("DatiController?action=generaDashboard");
                 }
                 if (action.equalsIgnoreCase("generaReport")) {
                     ReportBean report = reportService.generaReport(request, response);

@@ -10,6 +10,7 @@ import com.c17.ebalance.ebalance.model.entity.VenditaBean;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -33,15 +34,15 @@ public class VenditaServiceImpl implements VenditaService {
     public void effettuaVendita(int idAmministratore) throws SQLException {
         VenditaBean bean = new VenditaBean();
         Random random = new Random();
-        Date data = (Date) Calendar.getInstance().getTime();
+        LocalDate data = LocalDate.now();
         float energiaVenduta = random.nextFloat() * 1000 + 1000;
         float prezzoVendita = contrattoService.ottieniPrezzoVendita();
         bean.setEnergiaVenduta(energiaVenduta);
         bean.setRicavoTotale(energiaVenduta*prezzoVendita);
-        bean.setDataVendita(data);
+        bean.setDataVendita(Date.valueOf(data));
         bean.setIdAmministratore(idAmministratore);
         venditaDAO.effetuaVendita(bean);
         int numBatterie = batteriaService.ottieniNumBatterieAttive();
-        batteriaService.aggiornaBatteria((-energiaVenduta)/numBatterie, numBatterie);
+        batteriaService.aggiornaBatteria(-energiaVenduta, numBatterie);
     }
 }

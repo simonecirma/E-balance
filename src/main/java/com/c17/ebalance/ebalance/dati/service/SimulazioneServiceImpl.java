@@ -24,11 +24,10 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private BatteriaDAO batteriaDAO = new BatteriaDAOImpl();
     private MeteoDAO meteoDAO = new MeteoDAOImpl();
     private ParametriIADAO parametriIADAO = new ParametriIADAOImpl();
-    boolean simulazioneVenditaFlag = true;
     private Random random = new Random();
-    Calendar calendario = Calendar.getInstance();
-    Date data;
-    int cont=0;
+    private Calendar calendario = Calendar.getInstance();
+    private Date data;
+    private boolean simulazioneVenditaFlag = false;
     @Override
     public void simulazioneEnergia() throws SQLException {
         int numBatterie = batteriaDAO.ottieniNumBatterieAttive();
@@ -36,7 +35,6 @@ public class SimulazioneServiceImpl implements SimulazioneService {
         java.sql.Date sqlDate = new java.sql.Date(data.getTime());
         try {
             for (int i = 0; i < 24; i++) {
-                cont++;
                 List<InteragisceBean> parametriAttivi = parametriIADAO.ottieniParametriAttivi();
 
                 Random random = new Random();
@@ -89,7 +87,6 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                     batteriaDAO.aggiornaBatteria((produzioneNecessaria) / numBatterie, numBatterie);
                 }
 
-                System.out.println("simulazione num:" + cont);
 
                 Thread.sleep(10000); // Ritardo di 10 secondi
             }
@@ -103,7 +100,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     @Override
     public void insertPrevisioni() throws SQLException {
 
-        List<String> condizioni=meteoDAO.getCondizione();
+        List<String> condizioni = meteoDAO.getCondizione();
         try {
             data = calendario.getTime();
             java.sql.Date sqlDate = new java.sql.Date(data.getTime());
@@ -120,7 +117,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 sqlTime = new java.sql.Time(data.getTime());
             }
             Thread.sleep(10000); // Ritardo di 10 secondi
-        }catch(InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

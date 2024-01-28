@@ -153,6 +153,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
                 preparedStatement = connection.prepareStatement(selectSQL);
                 preparedStatement.setFloat(1, i);
                 ResultSet resultSet = preparedStatement.executeQuery();
+
                 while (resultSet.next()) {
                     percentualeCaricaAttuale = resultSet.getFloat("PercentualeCarica");
                     capacitaMax = resultSet.getFloat("CapacitaMax");
@@ -160,24 +161,45 @@ public class BatteriaDAOImpl implements BatteriaDAO {
 
                 percentualeNuova = (((percentualeCaricaAttuale * (capacitaMax / 100)) + (energia)) / (capacitaMax / 100));
                 if (percentualeNuova < 0) {
-                    percentualeEccesso = -percentualeNuova;
+                    percentualeEccesso = percentualeNuova;
                     percentualeNuova = 0;
-                    preparedStatement2 = connection.prepareStatement(updateSQL);
-                    preparedStatement2.setFloat(1, percentualeNuova);
-                    preparedStatement2.setInt(2, i);
-                    preparedStatement2.executeUpdate();
                 } else if (percentualeNuova > 100) {
                     percentualeEccesso = percentualeNuova - 100;
                     percentualeNuova = 100;
-                    preparedStatement3 = connection.prepareStatement(updateSQL);
-                    preparedStatement3.setFloat(1, percentualeNuova);
-                    preparedStatement3.setInt(2, i);
-                    preparedStatement3.executeUpdate();
-                } else {
-                    preparedStatement4 = connection.prepareStatement(updateSQL);
-                    preparedStatement4.setFloat(1, percentualeNuova);
-                    preparedStatement4.setInt(2, i);
-                    preparedStatement4.executeUpdate();
+                }
+
+                preparedStatement2 = connection.prepareStatement(updateSQL);
+                preparedStatement2.setFloat(1, percentualeNuova);
+                preparedStatement2.setInt(2, i);
+                preparedStatement2.executeUpdate();
+
+                if (percentualeEccesso != 0.00f) {
+                    for (int j = 1; j <= numBatterie; j++) {
+                        if (j != i) {
+                            // Verifica se la batteria successiva non è piena
+                            preparedStatement3 = connection.prepareStatement(selectSQL);
+                            preparedStatement3.setFloat(1, j);
+                            resultSet = preparedStatement3.executeQuery();
+                            while (resultSet.next()) {
+                                percentualeCaricaAttuale = resultSet.getFloat("PercentualeCarica");
+                                capacitaMax = resultSet.getFloat("CapacitaMax");
+                            }
+
+                            if (percentualeCaricaAttuale < 100) {
+                                // Aggiorna la batteria successiva con l'eccesso di percentuale
+                                float nuovaPercentuale = Math.min(100, percentualeCaricaAttuale + percentualeEccesso);
+                                preparedStatement4 = connection.prepareStatement(updateSQL);
+                                preparedStatement4.setFloat(1, nuovaPercentuale);
+                                preparedStatement4.setInt(2, j);
+                                preparedStatement4.executeUpdate();
+
+
+                                percentualeEccesso = Math.max(0, percentualeEccesso - (100 - percentualeCaricaAttuale));
+
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         } catch (SQLException e) {

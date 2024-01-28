@@ -63,18 +63,30 @@
                     <input type="hidden" id="batteryInput" value="<%= percentualeBatterie %>">
                 </div>
                 <div id="batteryText">0%</div>
+                <div id = "venditaDiv" name = "venditaDiv">
+                    <%
+                        if (percentualeBatterie >= 80) {
+                    %>
+                    <h5>C'è una nuova possibilità di vendita</h5>
+                    <%
+                        }
+                    %>
+                    <%
+                        if (percentualeBatterie >= 80) {
+                    %>
+                    <h1> Hai la possibilità di vendere. Vuoi vendere? </h1>
+                    <form id="vendita" action="AmministratoreController?action=vendita" method="POST">
+                        <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
+                        <input type="submit" value="Vendi">
+                    </form>
+                    <%
+                        }
+                    %>
+                </div>
+
             </div>
             <div class="expanded-content">
-                <%
-                    if (percentualeBatterie >= 80) {
-                %>
-                <h1> Hai la possibilità di vendere. Vuoi vendere? </h1>
-                <form id="vendita" action="AmministratoreController?action=vendita" method="POST">
-                    <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
-                    <input type="submit" value="Vendi">
-                <%
-                    }
-                %>
+
             </div>
         </div>
     </div>
@@ -839,6 +851,7 @@
             if (data.percentualeBatteriaUpdate) {
                 $("#percentualeBatterie").load(window.location.href + " #percentualeBatterie");
                 updateBattery();
+                $("#venditaDiv").load(window.location.href + " #venditaDiv");
             }
             if (data.produzioneAttualeUpdate) {
                 $("#sommaProduzione").load(window.location.href + " #sommaProduzione");
