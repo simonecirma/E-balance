@@ -130,7 +130,7 @@ public class ReportServiceImpl implements ReportService {
 
             // Posizione descrizione
             float xCoordinate10 = 50;
-            float yCoordinate10 = 422.5F;
+            float yCoordinate10 = 422.5F ;
 
             // Posizione descrizione1
             float xCoordinate6 = 50;
