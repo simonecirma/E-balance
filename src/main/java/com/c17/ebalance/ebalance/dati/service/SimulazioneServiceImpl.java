@@ -124,4 +124,23 @@ public class SimulazioneServiceImpl implements SimulazioneService {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void modificaPrevisioni() throws SQLException {
+        List<String> condizioni=meteoDAO.getCondizione();
+        try{
+            data = calendario.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(data.getTime());
+            java.sql.Time sqlTime = new java.sql.Time(data.getTime());
+            float vel = random.nextFloat();
+            int prob = random.nextInt(101);
+            int indiceCasuale = random.nextInt(condizioni.size());
+            String condizioneCasuale = condizioni.get(indiceCasuale);
+            meteoDAO.insertPrevisioni(sqlDate, sqlTime, vel, prob, condizioneCasuale);
+            calendario.add(Calendar.HOUR_OF_DAY, 6);
+            Thread.sleep(10000); // Ritardo di 10 secondi
+        }catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
 }
