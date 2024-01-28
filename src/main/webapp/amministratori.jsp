@@ -22,7 +22,7 @@
     if(email!=null){
 %>
 <div class="container" id="container">
-<div class="card-container">
+<div class="card-container" id="cont">
     <div id="table-card" class="card">
 <table id="tab">
     <thead>
@@ -88,10 +88,11 @@
 </form>
     </div>
 </div>
+    <div class="btn-container">
+        <button class="btn" onclick="toggleCard()">Aggiungi un nuovo amministratore</button>
+    </div>
 </div>
-<div class="btn-container">
-    <button class="btn" onclick="toggleCard()">Aggiungi un nuovo amministratore</button>
-</div>
+
 <script>
     var isTableVisible = true; // Stato iniziale della tabella
 
@@ -198,6 +199,36 @@
         datePicker.max = maxDate;
 
     }
+
+    function aggiornaAltezzaContainer() {
+        var tabella = document.getElementById('table-card');
+        var container = document.getElementById('cont');
+
+        if (tabella && container) {
+            var altezzaTabella = tabella.clientHeight;
+            container.style.height = altezzaTabella + 'px';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        aggiornaAltezzaContainer();
+    });
+
+
+    window.addEventListener('resize', function() {
+        aggiornaAltezzaContainer();
+    });
+    var maxMarginTop = 50;
+
+
+    var container = document.getElementById('container');
+
+
+    var windowHeight = window.innerHeight;
+    var containerHeight = container.clientHeight;
+    var marginTop = Math.min((windowHeight - containerHeight) / 2, maxMarginTop);
+
+    container.style.marginTop = marginTop + 'px';
 </script>
 
 </body>
