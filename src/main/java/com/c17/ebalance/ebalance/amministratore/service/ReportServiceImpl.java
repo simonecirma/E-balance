@@ -110,7 +110,7 @@ public class ReportServiceImpl implements ReportService {
 
             // Posizione Corrente Elettrica Consumata
             float xCoordinate1 = 255;
-            float yCoordinate1 = 422;
+            float yCoordinate1 = 446.5F;
 
             //Posizione Ricavo Totale
             float xCoordinate2 = 370;
@@ -130,11 +130,11 @@ public class ReportServiceImpl implements ReportService {
 
             // Posizione descrizione
             float xCoordinate10 = 50;
-            float yCoordinate10 = 398;
+            float yCoordinate10 = 422.5F;
 
             // Posizione descrizione1
             float xCoordinate6 = 50;
-            float yCoordinate6 = 422;
+            float yCoordinate6 = 446.5F;
 
 
             // Posizione data inizio
@@ -147,15 +147,15 @@ public class ReportServiceImpl implements ReportService {
 
             // Posizione Energia Venduta
             float xCoordinate9 = 255;
-            float yCoordinate9 = 398;
+            float yCoordinate9 = 422.5F;
 
             // Posizione Ricavo per ogni vendita
             float xCoordinate12 = 370;
-            float yCoordinate12 = 398;
+            float yCoordinate12 = 422.5F;
 
             //Posizione Soldi Spesi Corrente
             float xCoordinate11 = 475;
-            float yCoordinate11 = 422;
+            float yCoordinate11 = 446.5F;
             float xCoordinate13 = 475;
             float yCoordinate13 = 192;
 
