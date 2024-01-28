@@ -131,59 +131,73 @@ public class BatteriaDAOImpl implements BatteriaDAO {
     }
 
     @Override
-    public void aggiornaConsumiBatteria(float consumoOrario, int idEdificio) throws SQLException {
+    public void aggiornaBatteria(float energia, int numBatterie) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        PreparedStatement preparedStatement3 = null;
+        PreparedStatement preparedStatement4 = null;
 
-        String updateSQL = "UPDATE " + TABLE_NAME_BATTERIA + " SET PercentualeCarica  = (((PercentualeCarica*(CapacitaMax/100)) "
-                + "+ (?))/(CapacitaMax/100)) WHERE IdBatteria IN (SELECT IdBatteria FROM " + TABLE_NAME_UTILIZZA + " WHERE IdEdificio = ?)";
+        float percentualeCaricaAttuale = 0.00f;
+        float capacitaMax = 0.00f;
+        float percentualeNuova = 0.00f;
+        float percentualeEccesso = 0.00f;
+
+        String selectSQL = "SELECT PercentualeCarica, CapacitaMax FROM " + TABLE_NAME_BATTERIA + " WHERE IdBatteria = ? AND FlagStatoBatteria = 1";
+        String updateSQL = "UPDATE " + TABLE_NAME_BATTERIA + " SET PercentualeCarica  = ? WHERE IdBatteria = ?";
 
 
         try {
             connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(updateSQL);
-            preparedStatement.setFloat(1, consumoOrario);
-            preparedStatement.setInt(2, idEdificio);
-            preparedStatement.executeUpdate();
+            for (int i = 1; i <= numBatterie; i++) {
+                preparedStatement = connection.prepareStatement(selectSQL);
+                preparedStatement.setFloat(1, i);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    percentualeCaricaAttuale = resultSet.getFloat("PercentualeCarica");
+                    capacitaMax = resultSet.getFloat("CapacitaMax");
+                }
 
+                percentualeNuova = (((percentualeCaricaAttuale * (capacitaMax / 100)) + (energia)) / (capacitaMax / 100));
+                if (percentualeNuova < 0) {
+                    percentualeEccesso = -percentualeNuova;
+                    percentualeNuova = 0;
+                    preparedStatement2 = connection.prepareStatement(updateSQL);
+                    preparedStatement2.setFloat(1, percentualeNuova);
+                    preparedStatement2.setInt(2, i);
+                    preparedStatement2.executeUpdate();
+                } else if (percentualeNuova > 100) {
+                    percentualeEccesso = percentualeNuova - 100;
+                    percentualeNuova = 100;
+                    preparedStatement3 = connection.prepareStatement(updateSQL);
+                    preparedStatement3.setFloat(1, percentualeNuova);
+                    preparedStatement3.setInt(2, i);
+                    preparedStatement3.executeUpdate();
+                } else {
+                    preparedStatement4 = connection.prepareStatement(updateSQL);
+                    preparedStatement4.setFloat(1, percentualeNuova);
+                    preparedStatement4.setInt(2, i);
+                    preparedStatement4.executeUpdate();
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
-            if (connection != null) {
-                connection.close();
+            if (preparedStatement2 != null) {
+                preparedStatement2.close();
             }
-        }
-    }
-
-    @Override
-    public void aggiornaProduzioneBatteria(float produzioneOraria, int idSorgente) throws SQLException {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-
-        String updateSQL = "UPDATE " + TABLE_NAME_BATTERIA + " SET PercentualeCarica  = (((PercentualeCarica*(CapacitaMax/100)) "
-                + "+ (?))/(CapacitaMax/100)) WHERE IdBatteria IN (SELECT IdBatteria FROM " + TABLE_NAME_CARICARE + " WHERE IdSorgente = ?)";
-
-
-        try {
-            connection = ds.getConnection();
-            preparedStatement = connection.prepareStatement(updateSQL);
-            preparedStatement.setFloat(1, produzioneOraria);
-            preparedStatement.setInt(2, idSorgente);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (preparedStatement != null) {
-                preparedStatement.close();
+            if (preparedStatement3 != null) {
+                preparedStatement3.close();
+            }
+            if (preparedStatement4 != null) {
+                preparedStatement4.close();
             }
             if (connection != null) {
                 connection.close();
             }
         }
     }
-
 }
