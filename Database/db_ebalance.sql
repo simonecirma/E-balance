@@ -206,24 +206,7 @@ VALUES ("2022-12-31", 04, "Report2.pdf");
 INSERT INTO Report(DataEmissione, IdAmministratore, NomeReport)
 VALUES ("2023-12-31", 05, "Report3.pdf");
 
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
-INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
-VALUES(5000, "2021-04-21", 540, 01);
+
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(5000, "2021-04-21", 540, 01);
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
