@@ -209,6 +209,24 @@ VALUES ("2023-12-31", 05, "Report3.pdf");
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(5000, "2021-04-21", 540, 01);
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
+VALUES(5000, "2021-04-21", 540, 01);
+INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(3500, "2021-06-23", 315, 01);
 INSERT INTO Vendita(EnergiaVenduta, DataVendita, RicavoTotale, IdAmministratore)
 VALUES(1000, "2021-10-10", 90, 01);
@@ -814,14 +832,14 @@ INSERT INTO Influenzare(IdMeteo, IdSorgente)
 VALUES (10, 11);
 
 INSERT INTO ParametriIA(Piano, FlagAttivazioneParametro, IdAmministratore)
-VALUES ("Salvaguardia Ambientale", 1, 01);
+VALUES ("Salvaguardia Ambientale", 0, 01);
 INSERT INTO ParametriIA(Piano, FlagAttivazioneParametro, IdAmministratore)
 VALUES ("Efficienza Economica", 0, 01);
 INSERT INTO ParametriIA(Piano, FlagAttivazioneParametro, IdAmministratore)
-VALUES ("Personalizzato", 0, 02);
+VALUES ("Personalizzato", 1, 02);
 
 INSERT INTO Interagisce(IdParametro, TipoSorgente, FlagPreferenzaSorgente, PercentualeUtilizzoSorgente, PrioritaSorgente)
-VALUES (01, "Servizio Elettrico Nazionale", 0, 0, 2);
+VALUES (01, "Servizio Elettrico Nazionale", 0, 30, 2);
 INSERT INTO Interagisce(IdParametro, TipoSorgente, FlagPreferenzaSorgente, PercentualeUtilizzoSorgente, PrioritaSorgente)
 VALUES (01, "Pannello fotovoltaico", 1, 100, 1);
 INSERT INTO Interagisce(IdParametro, TipoSorgente, FlagPreferenzaSorgente, PercentualeUtilizzoSorgente, PrioritaSorgente)
@@ -831,4 +849,4 @@ VALUES (02, "Pannello fotovoltaico", 1, 50, 1);
 INSERT INTO Interagisce(IdParametro, TipoSorgente, FlagPreferenzaSorgente, PercentualeUtilizzoSorgente, PrioritaSorgente)
 VALUES (03, "Servizio Elettrico Nazionale", 1, 80, 1);
 INSERT INTO Interagisce(IdParametro, TipoSorgente, FlagPreferenzaSorgente, PercentualeUtilizzoSorgente, PrioritaSorgente)
-VALUES (03, "Pannello fotovoltaico", 0, 100, 2);
+VALUES (03, "Pannello fotovoltaico", 0, 90, 2);
