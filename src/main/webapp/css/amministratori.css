@@ -1,5 +1,8 @@
 body{
     overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 150px;
 }
 table {
     width: 550px;
@@ -17,6 +20,9 @@ thead {
 
 tbody tr:nth-child(even) {
     background-color: #e6f7e6;
+}
+tbody tr:nth-child(odd) {
+    background-color: white;
 }
 
 table tr td:last-child {
@@ -94,7 +100,7 @@ form .btn1 {
 }
 
 .btn {
-    background-color: #4caf50;
+    background-color: #013a63;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -105,10 +111,10 @@ form .btn1 {
 }
 
 .btn:hover {
-    background-color: #45a049;
+    background-color: #013152;
 }
 .btn1:hover {
-    background-color: #013a63;
+    background-color: #0aa811;
     color: white;
     font-weight: bold;
 }
@@ -135,7 +141,7 @@ form .btn1 {
     position: absolute;
     width: 100%;
     height: 100%;
-    transition: transform 0.5s, opacity 0.5s; /* Animazione di transizione */
+    transition: transform 1s, opacity 0.5s; /* Animazione di transizione */
     backface-visibility: hidden; /* Nasconde il retro della carta */
 }
 
