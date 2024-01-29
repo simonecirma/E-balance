@@ -4,6 +4,7 @@ import com.c17.ebalance.ebalance.accesso.service.AccessoService;
 import com.c17.ebalance.ebalance.accesso.service.AccessoServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,7 +18,14 @@ import java.sql.SQLException;
 public class AccessoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static AccessoService accessoService = new AccessoServiceImpl();
+    private AccessoService accessoService = new AccessoServiceImpl();
+    private ServletContext servletContext;
+
+    public AccessoController () { }
+    public AccessoController(AccessoService accessoService, ServletContext servletContext) {
+        this.accessoService = accessoService;
+        this.servletContext = servletContext;
+    }
 
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -35,9 +43,7 @@ public class AccessoController extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ServletException e) {
+        } catch (SQLException | ServletException e) {
             throw new RuntimeException(e);
         }
 
@@ -48,7 +54,7 @@ public class AccessoController extends HttpServlet {
         doGet(request, response);
     }
 
-    public static AmministratoreBean login(final String email, final String pass, final HttpSession session) throws SQLException {
+    public AmministratoreBean login(final String email, final String pass, final HttpSession session) throws SQLException {
         AmministratoreBean admin = new AmministratoreBean();
         admin = accessoService.login(email, pass);
         if (admin != null) {

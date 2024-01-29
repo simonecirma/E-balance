@@ -4,7 +4,6 @@ import com.c17.ebalance.ebalance.accesso.controller.AccessoController;
 import com.c17.ebalance.ebalance.amministratore.service.*;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
-import com.google.gson.Gson;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,6 +27,8 @@ public class AmministratoreController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
     private ReportService reportService = new ReportServiceImpl();
+
+    private AccessoController accessoController = new AccessoController();
 
     private VenditaService venditaService = new VenditaServiceImpl();
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -176,7 +177,7 @@ public class AmministratoreController extends HttpServlet {
         if (session.getAttribute("email") != null) {
             response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
         } else {
-            AmministratoreBean admin = AccessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);
+            AmministratoreBean admin = accessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);
             if (admin != null) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);

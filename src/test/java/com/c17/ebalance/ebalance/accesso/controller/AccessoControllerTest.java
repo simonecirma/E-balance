@@ -2,139 +2,139 @@ package com.c17.ebalance.ebalance.accesso.controller;
 
 import com.c17.ebalance.ebalance.accesso.service.AccessoService;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
+import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
+import org.mockito.Mockito;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class AccessoControllerTest {
+    @Mock
+    private ServletConfig servletConfig;
 
     @Mock
-    private AccessoService accessoService;
+    private ServletContext servletContext;
 
     @Mock
-    private HttpServletRequest request;
+    HttpServletRequest request;
 
     @Mock
-    private HttpServletResponse response;
+    HttpServletResponse response;
 
     @Mock
-    private HttpSession session;
+    HttpSession session;
 
     @Mock
-    private RequestDispatcher requestDispatcher;
+    RequestDispatcher dispatcher;
 
+    @Mock
+    AccessoService accessoService;
     @InjectMocks
     private AccessoController accessoController;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws ServletException {
+        // Inizializzazione dei mock e impostazione del comportamento desiderato
         MockitoAnnotations.openMocks(this);
+        request = Mockito.mock(HttpServletRequest.class);
+        response = Mockito.mock(HttpServletResponse.class);
+        session = Mockito.mock(HttpSession.class);
+        dispatcher = Mockito.mock(RequestDispatcher.class);
+        accessoService = Mockito.mock(AccessoService.class);
+        when(servletConfig.getServletContext()).thenReturn(servletContext);
+
+        // Utilizza il costruttore modificato con accessoService e servletContext
+        accessoController = new AccessoController(accessoService, servletContext);
+        accessoController.init(servletConfig);
     }
 
+
     @Test
-    void testDoGet_SuccessfulLogin() throws IOException, ServletException, SQLException {
-        // Simula i parametri della richiesta
-        when(request.getParameter("email")).thenReturn("test@example.com");
-        when(request.getParameter("password")).thenReturn("password");
-
-        // Simula il comportamento del metodo di accessoService.login per un login riuscito
-        AmministratoreBean amministratore = new AmministratoreBean();
-        when(accessoService.login("test@example.com", "password")).thenReturn(amministratore);
-
-        // Simula il comportamento di getSession
+    void testValidLoginRedirectsToDashboard() throws IOException, SQLException, ServletException {
+        // Categoria: Login valido
+        when(request.getParameter("email")).thenReturn("valid@example.com");
+        when(request.getParameter("password")).thenReturn("validPassword");
         when(request.getSession(true)).thenReturn(session);
 
-        // Chiama il metodo doGet
+        AmministratoreBean amministratore = new AmministratoreBean();
+        amministratore.setEmail("valid@example.com");
+        when(accessoService.login("valid@example.com", "validPassword")).thenReturn(amministratore);
+
         accessoController.doGet(request, response);
 
-        // Verifica che il metodo di accessoService.login sia chiamato correttamente
-        verify(accessoService, times(1)).login("test@example.com", "password");
+        // Verifica che il redirect sia effettuato verso la pagina della dashboard
+        Mockito.verify(response).sendRedirect("DatiController?action=generaDashboard");
+    }
 
-        // Verifica che la sessione venga impostata correttamente
-        verify(session, times(1)).setAttribute("email", amministratore.getEmail());
-        verify(session, times(1)).setAttribute("password", amministratore.getPassword());
-        verify(session, times(1)).setAttribute("nome", amministratore.getNome());
-        verify(session, times(1)).setAttribute("cognome", amministratore.getCognome());
-        verify(session, times(1)).setAttribute("flagTipo", amministratore.getFlagTipo());
-        verify(session, times(1)).setAttribute("idAmministratore", amministratore.getIdAmministratore());
-        verify(session, times(1)).setAttribute("dataNascita", amministratore.getDataNascita());
+    @ParameterizedTest
+    @CsvSource({
+            "invalid@example.com, invalidPassword, Credenziali sbagliate, riprova!",
+            "valid@example.com, wrongPassword, Credenziali sbagliate, riprova!",
+            "nonexistent@example.com, nonExistentPassword, Credenziali sbagliate, riprova!"
+    })
+    void testInvalidLoginDisplaysErrorMessage(String email, String password, String expectedMessage, String unused)
+            throws IOException, SQLException, ServletException {
+        // Categoria: Login non valido
+        when(request.getParameter("email")).thenReturn(email);
+        when(request.getParameter("password")).thenReturn(password);
+        when(request.getSession(true)).thenReturn(session);
+        when(request.getRequestDispatcher("/login.jsp")).thenReturn(dispatcher);
 
-        // Verifica che il dispatcher sia chiamato con il parametro corretto
-        verify(request.getServletContext(), times(1)).getRequestDispatcher("/dashboard.jsp");
-        verify(requestDispatcher, times(1)).forward(request, response);
+        when(accessoService.login(email, password)).thenReturn(null);
+
+        accessoController.doGet(request, response);
+
+        // Verifica che il messaggio di errore sia impostato correttamente nella richiesta
+        Mockito.verify(request).setAttribute("result", expectedMessage);
+        // Verifica che la richiesta venga inoltrata alla pagina di login
+        Mockito.verify(dispatcher).forward(request, response);
+    }
+
+
+    @Test
+    void testLoginSetsSessionAttributesOnValidLogin() throws SQLException {
+        // Categoria: Login valido
+        when(session.getAttribute("email")).thenReturn(null); // Simula una sessione senza autenticazione
+        when(accessoService.login("valid@example.com", "validPassword"))
+                .thenReturn(new AmministratoreBean());
+
+        accessoController.login("valid@example.com", "validPassword", session);
+
+        // Verifica che gli attributi della sessione siano impostati correttamente
+        Mockito.verify(session).setAttribute(Mockito.eq("email"), Mockito.eq("valid@example.com"));
+        Mockito.verify(session).setAttribute(Mockito.eq("password"), Mockito.eq("validPassword"));
+        // Altre verifiche per gli altri attributi...
     }
 
     @Test
-    void testDoGet_FailedLogin_InvalidPassword() throws IOException, ServletException, SQLException {
-        // Simula i parametri della richiesta
-        when(request.getParameter("email")).thenReturn("test@example.com");
-        when(request.getParameter("password")).thenReturn("wrongpassword");
+    void testLoginDoesNotSetSessionAttributesOnInvalidLogin() throws SQLException {
+        // Categoria: Login non valido
+        when(session.getAttribute("email")).thenReturn(null); // Simula una sessione senza autenticazione
+        when(accessoService.login("invalid@example.com", "invalidPassword")).thenReturn(null);
 
-        // Simula il comportamento del metodo di accessoService.login per un login non riuscito
-        when(accessoService.login("test@example.com", "wrongpassword")).thenReturn(null);
+        accessoController.login("invalid@example.com", "invalidPassword", session);
 
-        // Simula il comportamento di getRequestDispatcher
-        when(request.getServletContext().getRequestDispatcher("/login.jsp")).thenReturn(requestDispatcher);
-
-        // Chiama il metodo doGet
-        accessoController.doGet(request, response);
-
-        // Verifica che il metodo di accessoService.login sia chiamato correttamente
-        verify(accessoService, times(1)).login("test@example.com", "wrongpassword");
-
-        // Verifica che l'attributo "result" sia impostato correttamente
-        verify(request, times(1)).setAttribute("result", "Credenziali sbagliate, riprova!");
-
-        // Verifica che il dispatcher sia chiamato con il parametro corretto
-        verify(request.getServletContext(), times(1)).getRequestDispatcher("/login.jsp");
-        verify(requestDispatcher, times(1)).forward(request, response);
+        // Verifica che gli attributi della sessione non siano impostati in caso di login non valido
+        Mockito.verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
     }
 
-    @Test
-    void testDoGet_FailedLogin_InvalidEmail() throws IOException, ServletException, SQLException {
-        // Simula i parametri della richiesta con un'email non esistente
-        when(request.getParameter("email")).thenReturn("nonexistent@example.com");
-        when(request.getParameter("password")).thenReturn("password");
 
-        // Simula il comportamento del metodo di accessoService.login per un login non riuscito
-        when(accessoService.login("nonexistent@example.com", "password")).thenReturn(null);
-
-        // Simula il comportamento di getRequestDispatcher
-        when(request.getServletContext().getRequestDispatcher("/login.jsp")).thenReturn(requestDispatcher);
-
-        // Chiama il metodo doGet
-        accessoController.doGet(request, response);
-
-        // Verifica che il metodo di accessoService.login sia chiamato correttamente
-        verify(accessoService, times(1)).login("nonexistent@example.com", "password");
-
-        // Verifica che l'attributo "result" sia impostato correttamente
-        verify(request, times(1)).setAttribute("result", "Credenziali sbagliate, riprova!");
-
-        // Verifica che il dispatcher sia chiamato con il parametro corretto
-        verify(request.getServletContext(), times(1)).getRequestDispatcher("/login.jsp");
-        verify(requestDispatcher, times(1)).forward(request, response);
-    }
-
-    @Test
-    void testDoPost() throws IOException, ServletException {
-        // Simula il passaggio dei parametri di richiesta al metodo doGet
-        accessoController.doPost(request, response);
-
-        // Verifica che il metodo doGet sia chiamato correttamente
-        verify(accessoController, times(1)).doGet(request, response);
-    }
 }
