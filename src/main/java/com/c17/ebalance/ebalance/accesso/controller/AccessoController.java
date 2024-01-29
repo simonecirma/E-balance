@@ -39,8 +39,8 @@ public class AccessoController extends HttpServlet {
             if (amministratore != null) {
                 response.sendRedirect("DatiController?action=generaDashboard");
             } else {
-                request.setAttribute("result", "Credenziali sbagliate, riprova!");
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+                request.setAttribute("result", "Credenziali sbagliate riprova!");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException | ServletException e) {
