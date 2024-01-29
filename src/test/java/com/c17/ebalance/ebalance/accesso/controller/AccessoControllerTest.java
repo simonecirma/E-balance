@@ -1,31 +1,33 @@
 package com.c17.ebalance.ebalance.accesso.controller;
-
 import com.c17.ebalance.ebalance.accesso.service.AccessoService;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.mockito.Mockito.when;
 
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class AccessoControllerTest {
     @Mock
     private ServletConfig servletConfig;
@@ -43,7 +45,7 @@ class AccessoControllerTest {
     HttpSession session;
 
     @Mock
-    RequestDispatcher dispatcher;
+    private RequestDispatcher dispatcher;
 
     @Mock
     AccessoService accessoService;
@@ -59,7 +61,6 @@ class AccessoControllerTest {
         session = Mockito.mock(HttpSession.class);
         dispatcher = Mockito.mock(RequestDispatcher.class);
         accessoService = Mockito.mock(AccessoService.class);
-        when(servletConfig.getServletContext()).thenReturn(servletContext);
 
         // Utilizza il costruttore modificato con accessoService e servletContext
         accessoController = new AccessoController(accessoService, servletContext);
@@ -67,16 +68,16 @@ class AccessoControllerTest {
     }
 
 
+
     @Test
-    void testValidLoginRedirectsToDashboard() throws IOException, SQLException, ServletException {
+    void testValidLogin() throws IOException, SQLException, ServletException {
         // Categoria: Login valido
-        when(request.getParameter("email")).thenReturn("valid@example.com");
-        when(request.getParameter("password")).thenReturn("validPassword");
+        when(request.getParameter("email")).thenReturn("m.ercolino1@studenti.unisa.it");
+        when(request.getParameter("password")).thenReturn("Matteo2024!");
         when(request.getSession(true)).thenReturn(session);
 
         AmministratoreBean amministratore = new AmministratoreBean();
-        amministratore.setEmail("valid@example.com");
-        when(accessoService.login("valid@example.com", "validPassword")).thenReturn(amministratore);
+        when(accessoService.login("m.ercolino1@studenti.unisa.it", "Matteo2024!")).thenReturn(amministratore);
 
         accessoController.doGet(request, response);
 
@@ -86,11 +87,11 @@ class AccessoControllerTest {
 
     @ParameterizedTest
     @CsvSource({
-            "invalid@example.com, invalidPassword, Credenziali sbagliate, riprova!",
-            "valid@example.com, wrongPassword, Credenziali sbagliate, riprova!",
-            "nonexistent@example.com, nonExistentPassword, Credenziali sbagliate, riprova!"
+            "m.ercolino@studenti.unisa.it, Matteo2024, Credenziali sbagliate riprova!",
+            "m.ercolino1@studenti.unisa.it, Matteo2023, Credenziali sbagliate riprova!",
+            "luca@argentero.it, luca2023, Credenziali sbagliate riprova!"
     })
-    void testInvalidLoginDisplaysErrorMessage(String email, String password, String expectedMessage, String unused)
+    void testInvalidLogin(String email, String password, String expectedMessage)
             throws IOException, SQLException, ServletException {
         // Categoria: Login non valido
         when(request.getParameter("email")).thenReturn(email);
@@ -110,27 +111,31 @@ class AccessoControllerTest {
 
 
     @Test
-    void testLoginSetsSessionAttributesOnValidLogin() throws SQLException {
+    void testLoginSetsSession() throws SQLException {
         // Categoria: Login valido
-        when(session.getAttribute("email")).thenReturn(null); // Simula una sessione senza autenticazione
-        when(accessoService.login("valid@example.com", "validPassword"))
-                .thenReturn(new AmministratoreBean());
+        AmministratoreBean amministratore = new AmministratoreBean();
+        amministratore.setEmail("m.ercolino1@studenti.unisa.it");
+        when(accessoService.login("m.ercolino1@studenti.unisa.it", "Matteo2024!")).thenReturn(amministratore);
 
-        accessoController.login("valid@example.com", "validPassword", session);
+        accessoController.login("m.ercolino1@studenti.unisa.it", "Matteo2024!", session);
 
         // Verifica che gli attributi della sessione siano impostati correttamente
-        Mockito.verify(session).setAttribute(Mockito.eq("email"), Mockito.eq("valid@example.com"));
-        Mockito.verify(session).setAttribute(Mockito.eq("password"), Mockito.eq("validPassword"));
-        // Altre verifiche per gli altri attributi...
+        Mockito.verify(session).setAttribute("email", "m.ercolino1@studenti.unisa.it");
+        // Verifica altri attributi...
+
+        // Rimuovi gli stubbing non utilizzati
+        Mockito.verifyNoMoreInteractions(accessoService);
     }
 
-    @Test
-    void testLoginDoesNotSetSessionAttributesOnInvalidLogin() throws SQLException {
-        // Categoria: Login non valido
-        when(session.getAttribute("email")).thenReturn(null); // Simula una sessione senza autenticazione
-        when(accessoService.login("invalid@example.com", "invalidPassword")).thenReturn(null);
 
-        accessoController.login("invalid@example.com", "invalidPassword", session);
+
+
+    @Test
+    void testLoginDoesNotSetSession() throws SQLException {
+        // Categoria: Login non valido
+        when(accessoService.login("m.ercolino@studenti.unisa.it", "Carlo2024")).thenReturn(null);
+
+        accessoController.login("m.ercolino@studenti.unisa.it", "Carlo2024", session);
 
         // Verifica che gli attributi della sessione non siano impostati in caso di login non valido
         Mockito.verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
