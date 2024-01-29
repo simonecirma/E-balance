@@ -38,6 +38,7 @@
             </div>
         </div>
         <h1> Contratto attuale</h1>
+        <br>
         <table>
             <thead>
             <tr>
@@ -54,8 +55,9 @@
             </tr>
             </tbody>
         </table>
-
+        <br>
         <h1> Storico contratti passati</h1>
+        <br>
         <table>
             <thead>
             <tr>

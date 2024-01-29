@@ -46,9 +46,15 @@
     margin-left: 10px;
 }
 table {
-    width: auto;
-    margin: auto;
+
     border-collapse: collapse;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
 }
 
 .tabArrotondata{
@@ -88,6 +94,9 @@ input[type="button"]{
     border-radius: 5px;
     min-height: 1.5vw;
     background-color: #4caf50;
+}
+h1, h2{
+    color: #013a63;
 }
 
 input[type="button"]:hover {
