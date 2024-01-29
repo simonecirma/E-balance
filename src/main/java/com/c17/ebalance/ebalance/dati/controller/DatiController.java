@@ -97,7 +97,7 @@ public class DatiController extends HttpServlet implements Observer {
 
         new Thread(this::simulazioneEnergia).start();
         new Thread(this::simulazionePrevisioni).start();
-        new Thread(this::simulazioneModificaPrevisioni).start();
+
     }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
@@ -200,20 +200,19 @@ public class DatiController extends HttpServlet implements Observer {
     private void simulazionePrevisioni() {
         try {
             simulazioneService.insertPrevisioni();
+            while (true) {
+                try {
+                    simulazioneService.modificaPrevisioni();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void simulazioneModificaPrevisioni() {
-        while (true) {
-            try {
-                simulazioneService.modificaPrevisioni();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+
 
     public void destroy() {
         archivioConsumi.removeObserver(this);
