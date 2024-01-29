@@ -27,6 +27,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private Random random = new Random();
     private Calendar calendario = Calendar.getInstance();
     private Date data;
+    private int y=0;
     float percentualeEccesso = 0.00f;
     private boolean simulazioneVenditaFlag = false; //setta a true se vuoi far simulare la generazione di una vendita
     @Override
@@ -111,11 +112,50 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     public void insertPrevisioni() throws SQLException {
 
         List<String> condizioni = meteoDAO.getCondizione();
+        for(int y = 0; y < 6; y++) {
+            data = calendario.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(data.getTime());
+            for (int i = 0; i < 24; i=i+6) {
+                if(!meteoDAO.verificaPresenza(sqlDate, i)){
+                    float vel = random.nextFloat() * 10;
+                    vel = (float) (Math.round(vel * 100.0) / 100.0);
+                    int indiceCasuale = random.nextInt(condizioni.size());
+                    String condizioneCasuale = condizioni.get(indiceCasuale);
+                    int prob = 0;
+                    if (condizioneCasuale.equalsIgnoreCase("nevoso")) {
+                        prob = random.nextInt(10) + 30;
+                    }
+                    if (condizioneCasuale.equalsIgnoreCase("nuvoloso")) {
+                        prob = random.nextInt(10) + 30;
+                    }
+                    if (condizioneCasuale.equalsIgnoreCase("piovoso")) {
+                        prob = random.nextInt(20) + 40;
+                    }
+                    if (condizioneCasuale.equalsIgnoreCase("sereno")) {
+                        prob = random.nextInt(20);
+                    }
+                    if (condizioneCasuale.equalsIgnoreCase("soleggiato")) {
+                        prob = random.nextInt(10);
+                    }
+                    if (condizioneCasuale.equalsIgnoreCase("ventilato")) {
+                        prob = random.nextInt(10) + 20;
+                    }
+
+                    meteoDAO.insertPrevisioni(sqlDate, i, vel, prob, condizioneCasuale);
+                }
+            }
+            calendario.add(Calendar.DAY_OF_YEAR, 1);
+        }
+    }
+
+    @Override
+    public void modificaPrevisioni() throws SQLException {
+        List<String> condizioni=meteoDAO.getCondizione();
         try {
             data = calendario.getTime();
             java.sql.Date sqlDate = new java.sql.Date(data.getTime());
-            java.sql.Time sqlTime = new java.sql.Time(data.getTime());
-            for (int i = 0; i < 12; i++) {
+            if(!meteoDAO.verificaPresenza(sqlDate, y)) {
+                Thread.sleep(60000); // Ritardo di 1 minuto
                 float vel = random.nextFloat() * 10;
                 vel = (float) (Math.round(vel * 100.0) / 100.0);
                 int indiceCasuale = random.nextInt(condizioni.size());
@@ -139,51 +179,14 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 if (condizioneCasuale.equalsIgnoreCase("ventilato")) {
                     prob = random.nextInt(10) + 20;
                 }
-                meteoDAO.insertPrevisioni(sqlDate, sqlTime, vel, prob, condizioneCasuale);
-                calendario.add(Calendar.HOUR_OF_DAY, 6);
-                data = calendario.getTime();
-                sqlDate = new java.sql.Date(data.getTime());
-                sqlTime = new java.sql.Time(data.getTime());
+                meteoDAO.insertPrevisioni(sqlDate, y, vel, prob, condizioneCasuale);
             }
-            Thread.sleep(10000); // Ritardo di 10 secondi
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
-    @Override
-    public void modificaPrevisioni() throws SQLException {
-        List<String> condizioni=meteoDAO.getCondizione();
-        try {
-            data = calendario.getTime();
-            java.sql.Date sqlDate = new java.sql.Date(data.getTime());
-            java.sql.Time sqlTime = new java.sql.Time(data.getTime());
-            float vel = random.nextFloat() * 10;
-            vel = (float) (Math.round(vel * 100.0) / 100.0);
-            int indiceCasuale = random.nextInt(condizioni.size());
-            String condizioneCasuale = condizioni.get(indiceCasuale);
-            int prob = 0;
-            if (condizioneCasuale.equalsIgnoreCase("nevoso")) {
-                prob = random.nextInt(10) + 30;
+            y=y+6;
+            if(y==24) {
+                y=0;
+                calendario.add(Calendar.DAY_OF_YEAR, 1);
             }
-            if (condizioneCasuale.equalsIgnoreCase("nuvoloso")) {
-                prob = random.nextInt(10) + 30;
-            }
-            if (condizioneCasuale.equalsIgnoreCase("piovoso")) {
-                prob = random.nextInt(20) + 40;
-            }
-            if (condizioneCasuale.equalsIgnoreCase("sereno")) {
-                prob = random.nextInt(20);
-            }
-            if (condizioneCasuale.equalsIgnoreCase("soleggiato")) {
-                prob = random.nextInt(10);
-            }
-            if (condizioneCasuale.equalsIgnoreCase("ventilato")) {
-                prob = random.nextInt(10) + 20;
-            }
-            meteoDAO.insertPrevisioni(sqlDate, sqlTime, vel, prob, condizioneCasuale);
-            calendario.add(Calendar.HOUR_OF_DAY, 6);
-            Thread.sleep(10000); // Ritardo di 10 secondi
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

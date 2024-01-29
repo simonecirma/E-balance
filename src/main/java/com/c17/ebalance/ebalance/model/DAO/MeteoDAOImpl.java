@@ -70,12 +70,21 @@ public class MeteoDAOImpl implements MeteoDAO {
     }
 
     @Override
-    public void insertPrevisioni(java.sql.Date sqlDate, Time sqlTime, float vel, int prob, String condizioneCasuale) throws SQLException {
+    public void insertPrevisioni(java.sql.Date sqlDate, int orario, float vel, int prob, String condizioneCasuale) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
+        Time sqlTime = null;
+        if(orario==0) {
+            sqlTime = Time.valueOf("00:00:00");
+        }else if (orario==6) {
+            sqlTime = Time.valueOf("06:00:00");
+        }else if (orario==12) {
+            sqlTime = Time.valueOf("12:00:00");
+        }else if(orario==18) {
+            sqlTime = Time.valueOf("18:00:00");
+        }
         try{
             con = ds.getConnection();
-
             String query = "INSERT INTO " + TABLE_NAME_METEO + "(DataRilevazione, OraRilevazione, VelocitaVento, ProbabilitaPioggia, CondizioniMetereologiche)" +
                         "VALUES(?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
@@ -85,7 +94,6 @@ public class MeteoDAOImpl implements MeteoDAO {
             ps.setInt(4, prob);
             ps.setString(5, condizioneCasuale);
             ps.executeUpdate();
-
         }catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
@@ -122,5 +130,43 @@ public class MeteoDAOImpl implements MeteoDAO {
             }
         }
         return condizioni;
+    }
+
+    @Override
+    public boolean verificaPresenza(java.sql.Date sqlDate, int orario) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        Time sqlTime = null;
+        boolean res = false;
+        if(orario==0) {
+            sqlTime = Time.valueOf("00:00:00");
+        }else if (orario==6) {
+            sqlTime = Time.valueOf("06:00:00");
+        }else if (orario==12) {
+            sqlTime = Time.valueOf("12:00:00");
+        }else if(orario==18) {
+            sqlTime = Time.valueOf("18:00:00");
+        }
+        try {
+            con = ds.getConnection();
+            String query = "SELECT * FROM " + TABLE_NAME_METEO + " WHERE DataRilevazione = ? AND OraRilevazione = ?";
+            ps = con.prepareStatement(query);
+            ps.setDate(1, sqlDate);
+            ps.setTime(2, sqlTime);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                res=true;
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return res;
     }
 }
