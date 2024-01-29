@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +93,7 @@ public class AmministratoreController extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);
             }
-        } catch (SQLException | ServletException e) {
+        } catch (SQLException | ServletException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -100,12 +102,15 @@ public class AmministratoreController extends HttpServlet {
         doGet(request, response);
     }
 
-    public void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+    public void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, ParseException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Date dataNascita = Date.valueOf(request.getParameter("dataNascita"));
+        String dataNascitaString = request.getParameter("dataNascita");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dataNascita = new Date(dateFormat.parse(dataNascitaString).getTime());
+
         int idAmministratore = Integer.parseInt(request.getParameter("idAmministratore"));
         boolean flagTipo = Boolean.parseBoolean(request.getParameter("flagTipo"));
 
@@ -147,7 +152,14 @@ public class AmministratoreController extends HttpServlet {
         amministratore.setCognome(request.getParameter("cognome"));
         amministratore.setEmail(request.getParameter("email"));
         amministratore.setPassword(request.getParameter("password"));
-        amministratore.setDataNascita(Date.valueOf(request.getParameter("dataNascita")));
+        String dataNascitaString = request.getParameter("dataNascita");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date dataNascita = new Date(dateFormat.parse(dataNascitaString).getTime());
+            amministratore.setDataNascita(dataNascita);
+        } catch (ParseException e) {
+            return;
+        }
         HttpSession session = request.getSession(true);
         if (session.getAttribute("email") != null) {
             amministratore.setFlagTipo(false);

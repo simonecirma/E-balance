@@ -3,14 +3,4 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
-
-    <servlet>
-        <servlet-name>amministratoreController</servlet-name>
-        <servlet-class>com.c17.ebalance.ebalance.amministratore.controller.amministratoreController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>amministratoreController</servlet-name>
-        <url-pattern>/amministratoreController</url-pattern>
-    </servlet-mapping>
-
 </web-app>
