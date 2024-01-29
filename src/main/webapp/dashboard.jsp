@@ -4,13 +4,10 @@
 <%@ page import="java.util.Objects" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    //List<BatteriaBean> batterie = (List<BatteriaBean>) request.getAttribute("batteria");
     float percentualeBatterie = (float) request.getAttribute("percentualeBatterie");
-    //List<ConsumoEdificioBean> consumi = (List<ConsumoEdificioBean>) request.getAttribute("consumoEdificio");
     float consumoEdifici[] = (float[]) request.getAttribute("consumoEdifici");
     List<ArchivioConsumoBean> archivioConsumo = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumo");
     List<MeteoBean> condizioni = (List<MeteoBean>) request.getAttribute("condizioniMeteo");
-    //List<SorgenteBean> sorgente = (List<SorgenteBean>) request.getAttribute("sorgente");
     float produzioneSorgente[] = (float[]) request.getAttribute("produzioneSorgente");
     float produzioneSEN = (float) request.getAttribute("produzioneSEN");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");

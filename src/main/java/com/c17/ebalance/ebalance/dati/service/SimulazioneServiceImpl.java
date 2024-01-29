@@ -28,7 +28,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private Calendar calendario = Calendar.getInstance();
     private Date data;
     float percentualeEccesso = 0.00f;
-    private boolean simulazioneVenditaFlag = false;
+    private boolean simulazioneVenditaFlag = false; //setta a true se vuoi far simulare la generazione di una vendita
     @Override
     public void simulazioneEnergia() throws SQLException {
         int numBatterie = batteriaDAO.ottieniNumBatterieAttive();
