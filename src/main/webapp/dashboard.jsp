@@ -219,7 +219,8 @@
                     <%
                         if (parametriIA != null && !parametriAttivi.isEmpty()) {
                     %>
-                  <!--  <table id="tabIA">
+                    <div class="visTab">
+                  <table id="vistabIA">
                         <tbody>
                         <%
                             for (InteragisceBean par : parametriAttivi) {
@@ -233,7 +234,7 @@
                         %>
                         </tbody>
                     </table>
-                    <table id="tab1IA">
+                    <table id="vistab1IA">
                         <tbody>
                         <%
                             for (InteragisceBean par : parametriAttivi) {
@@ -247,7 +248,7 @@
                         %>
                         </tbody>
                     </table>
-                    <table id="tab1IA">
+                    <table id="vistab1IA">
                         <tbody>
                         <tr>
                             <td rowspan="<%= parametriAttivi.size() + 1 %>">Priorità Sorgenti</td>
@@ -263,17 +264,20 @@
                             }
                         %>
                         </tbody>
-                    </table>-->
+                    </table>
                     <%
                         }
                     %>
-                </div>    
+                </div>
+                </div>
             </div>
             <div class="expanded-content">
                 <div class="expandendIA">
                     <div class="tabelle">
-                        <h1>Piano per la salvaguardia ambientale</h1>
-                        <%
+                        <div class="tipo">
+                            <div class="title">Piano per la salvaguardia ambientale</div>
+                        </div>
+                            <%
                             if (parametriIA != null && !parametriIA.isEmpty()) {
                                 for (ParametriIABean parametri : parametriIA) {
                                     if(parametri.getPiano().equalsIgnoreCase("Salvaguardia Ambientale"))
@@ -336,10 +340,12 @@
                                 }
                             }
                         %>
-                        <a href="DatiController?action=selezionaPiano&piano=SalvaguardiaAmbientale"><input type="submit" value="Seleziona piano di salvaguardia ambientale"></a>
+                        <a href="DatiController?action=selezionaPiano&piano=SalvaguardiaAmbientale"><input type="submit" class="btnIA" value="Seleziona"></a>
                     </div>
                     <div class="tabelle2">
-                        <h1>Piano per l'efficienza economica</h1>
+                        <div class="tipo">
+                            <div class="title">Piano per l'efficienza economica</div>
+                        </div>
                         <%
                             if (parametriIA != null && !parametriIA.isEmpty()) {
                                 for (ParametriIABean parametri : parametriIA) {
@@ -403,12 +409,13 @@
                                 }
                             }
                         %>
-                        <a href="DatiController?action=selezionaPiano&piano=EfficienzaEconomica"><input type="submit" value="Seleziona piano per l'efficienza economica"></a>
+                        <a href="DatiController?action=selezionaPiano&piano=EfficienzaEconomica"><input type="submit" class="btnIA" value="Seleziona"></a>
                     </div>
                     <div class="tabelle3">
-
-                        <h1>Piano personalizzato</h1>
-                        <%
+                        <div class="tipo">
+                            <div class="title">Piano personalizzato</div>
+                        </div>
+                            <%
                             if (parametriIA != null && !parametriIA.isEmpty()) {
                                 for (ParametriIABean parametri : parametriIA) {
                                     if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
@@ -422,6 +429,7 @@
                                 if (tipoSorgente != null && !tipoSorgente.isEmpty()) {
                                     Iterator<?> it = tipoSorgente.iterator();
                             %>
+                            <div class="contIA">
                             <table class="IATab">
                                 <tr>
                                     <td>
@@ -481,8 +489,9 @@
                                     </td>
                                 </tr>
                             </table>
+                        </div>
                             <input type="hidden" name="sortableListData" id="sortableListData">
-                            <input type="submit" value="Invia">
+                            <input type="submit" class="btnIA" value="Invia">
 
                         </form>
                     </div>
@@ -885,6 +894,23 @@
             setTimeout(Observer, 10000);
         });
     }
+
+
+
+        // Ottieni il pulsante
+        var button = document.querySelector('.btnIA');
+
+        // Aggiungi un listener al click
+        button.addEventListener('click', function() {
+        // Rimuovi la classe 'selected' da tutti i bottoni
+        document.querySelectorAll('.btnIA').forEach(function(btn) {
+            btn.classList.remove('selected');
+            btn.value = 'Seleziona';
+        });
+        // Aggiungi la classe 'selected' solo al bottone cliccato
+        this.classList.add('selected');
+        this.value = 'Selezionato';
+    });
 
 
     google.charts.load('current', {'packages':['corechart']});

@@ -104,6 +104,10 @@
 .section-expanded .text{
     display: none;
 }
+
+.section-expanded .visTab{
+    display: none;
+}
 #consumoEdifici{
     display: none;
 }
@@ -168,21 +172,80 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
-.expandendIA div{
-    height: 420px;
-    width: 33%;
-    margin: 10px;
+.btnIA:hover{
+    background-color: green;
+    font-weight: bold;
+    color: white;
+}
+.btnIA{
+    width: 110px;
+    height: 40px;
+    border-radius: 50px;
     border: 2px solid black;
+    background-color: white;
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute; /* Posiziona il bottone in base al suo contenitore .sec */
+    bottom: 10px; /* Spazio dal margine inferiore */
+    left: 50%; /* Posiziona il bottone a metà dell'elemento padre */
+    transform: translateX(-50%); /* Centra il bottone orizzontalmente */
+    transition: .5s;
+}
+.selected{
+    background-color: green;
+    font-weight: bold;
+    color: white;
+}
+.tipo{
+    width: 100%;
+    font-weight: bold;
+    border-radius: 13px 13px 0px 0px;
+    background: linear-gradient(to bottom right, #98ff98, #006400);
+    height: 60px;
+}
+.tipo .title{
+    font-weight: 800;
+    font-size: 18px;
+    padding-top: 15px;
+    font-family: arial black;;
+}
+.expandendIA .tabelle,
+.expandendIA .tabelle2,
+.expandendIA .tabelle3 {
+    position: relative;
+    height: 420px;
+    width: 400px;
+    margin: 15px;
+    border: 2px solid black;
+    text-align: center;
+    /*background: linear-gradient(to bottom right, #bcee68, #556b2f);*/
+    border-radius: 15px;
+    -webkit-transition: .5s;
+    transition: .5s;
+    background-color: #f6f6f6;
+}
+.tabelle:hover{
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+.tabelle2:hover{
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+}
+.tabelle3:hover{
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
 }
 .dashboard .section.section-expanded #tab1IA{
     width: 90%;
-    font-size: 16px;
+    font-size: 13px;
 }
 .dashboard .section.section-expanded #tabIA{
     width: 90%;
-    font-size: 16px;
+    font-size: 13px;
 }
 #tabIA{
     width: 90%;
@@ -192,6 +255,13 @@ table {
     width: 90%;
     font-size: 13px;
     margin-top: -10px;
+}
+
+.IATab{
+    font-size: 13px;
+}
+.contIA{
+    height: 80%;
 }
 .section-expanded .content table{
     width: 90%;
@@ -210,6 +280,24 @@ table {
 }
 .section-expanded .content #consumi{
     width: 25%;
+}
+.visTab{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.visTab table {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#vistabIA th, td{
+    font-size: 13px;
+    height: 5px !important;
+}
+#vistab1IA th, td{
+    font-size: 13px;
+    height: 5px !important;
 }
 th, td {
     border: 1px solid #dddddd;
@@ -355,13 +443,12 @@ th {
 }
 select {
     width: 70%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     text-align:center;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 input[type="range"] {
     width: 70%;
-    margin-top: 10px;
 }
 .sortable-list-container {
     margin-top: 10px;
