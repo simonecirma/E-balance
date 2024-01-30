@@ -503,8 +503,8 @@
     <div class="section" onclick="toggleExpansion(6)">
         <a href="DatiController?action=generaDashboard">
             <img src="img/indietro.png" id="img"></a>
-        <div class="content">
-            <div class="initial-content">
+        <div class="contentMeteo">
+            <div class="initial-content-meteo">
                 <!-- Contenuto della sezione 6 -->
                 <h3>Previsioni meteo</h3>
                 <!--<ul id="listaCondizioni"></ul>-->
@@ -512,13 +512,14 @@
                     <%
                         if (condizioni != null && !condizioni.isEmpty()) {
                     %>
-                    <table>
+                    <div class="contentMeteoTab">
+                    <table id="meteoTable">
                         <thead>
-                        <div class="text">Condizioni Metereologiche</div>
+
                         <tr>
                             <th>Data</th>
                             <th>Ora</th>
-                            <th>Previsione</th>
+                            <th colspan="2">Previsione</th>
                             <th>Pioggia</th>
                             <th>Vento</th>
                         </tr>
@@ -530,7 +531,8 @@
                         <tr>
                             <td> <%= bean.getDataRilevazione() %></td>
                             <td> <%= bean.getOraRilevazione() %></td>
-                            <td> <%= bean.getCondizioniMetereologiche()%></td>
+                            <td></td>
+                            <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
                             <td> <%= bean.getProbabilitaPioggia()%>%</td>
                             <td> <%= bean.getVelocitaVento()%>km/h</td>
                         </tr>
@@ -543,8 +545,10 @@
                         }
                     %>
                 </div>
+                </div>
             </div>
-            <div class="expanded-content">
+            <div class="expanded-content-meteo">
+
             </div>
         </div>
     </div>
@@ -862,7 +866,15 @@
 
         chart.draw(data, options);
     }
+    function aggiungiIconaPrevisioneIniziale() {
+        aggiungiIconaPrevisione(); // Chiamata alla funzione per aggiungere le icone previsione
+    }
 
+    // Chiamata alla funzione per aggiungere le icone previsione quando il documento è completamente caricato
+    $(document).ready(function() {
+        aggiungiIconaPrevisioneIniziale(); // Chiamata alla funzione per aggiungere le icone previsione inizialmente
+        Observer(); // Avvio dell'observer
+    });
     function Observer() {
         $.get("DatiController?action=dashboardObserver", function (data) {
             if (data.percentualeBatteriaUpdate) {
@@ -885,7 +897,9 @@
                 AggiornaArchivioConsumi();
             }
             if (data.meteoUpdate) {
-                $("#meteo").load(window.location.href + " #meteo");
+                $("#meteo").load(window.location.href + " #meteo", function() {
+                    aggiungiIconaPrevisione();
+                });
             }
             if (data.parametriAttiviUpdate) {
                 $("#parametriIA").load(window.location.href + " #parametriIA");
@@ -920,6 +934,83 @@
     AggiornaArchivioConsumi();
     updateBattery();
     Observer();
+
+    // Funzione per aggiungere le icone previsione
+    function aggiungiIconaPrevisione() {
+        var tabella = document.getElementById("meteoTable");
+        var righe = tabella.getElementsByTagName("tr");
+
+        // Per ogni riga della tabella, tranne l'intestazione
+        for (var i = 1; i < righe.length; i++) {
+            var cellaIcona = righe[i].getElementsByTagName("td")[2]; // Cell contenente l'icona previsione
+            var cellaPrevisione = righe[i].getElementsByTagName("td")[3]; // Cell contenente la previsione
+            var previsione = cellaPrevisione.textContent.trim().toLowerCase(); // Testo della previsione
+
+            // Rimuove eventuali icone già presenti nella cella dell'icona previsione
+            while (cellaIcona.firstChild) {
+                cellaIcona.removeChild(cellaIcona.firstChild);
+            }
+
+            // Determina l'icona corrispondente alla previsione
+            var icona = determinaIconaPrevisione(previsione);
+
+            // Aggiunge l'immagine dell'icona alla cella dell'icona previsione
+            if (icona !== "") {
+                var img = document.createElement("img");
+                img.src = icona;
+                img.alt = previsione;
+                cellaIcona.appendChild(img);
+            }
+        }
+    }
+
+
+    // Funzione per determinare l'icona corrispondente alla previsione
+    function determinaIconaPrevisione(previsione) {
+        // In questo esempio, vengono forniti solo alcuni tipi di previsione con le relative immagini
+        // Aggiungi più casi se necessario
+        switch (previsione) {
+            case "sereno":
+                return "img/sole.png";
+            case "ventilato":
+                return "img/vento.png";
+            case "nuvoloso":
+                return "img/nuvole.png";
+            case "nevoso":
+                return "img/neve.png";
+            case "soleggiato":
+                return "img/sole.png";
+            case "piovoso":
+                return "img/pioggia.png";
+            default:
+                return "";
+        }
+    }
+
+    // Chiamata alla funzione per aggiungere le icone previsione quando il documento è completamente caricato
+    window.onload = aggiungiIconaPrevisione;
+
+    function aggiornaTabella() {
+        // Codice per aggiornare la tabella con i nuovi dati (utilizzando l'observer)
+
+        // Dopo aver aggiornato i dati, riaggiungi le icone delle previsioni
+        aggiungiIconaPrevisione();
+    }
+
+    // Definisci l'observer per rilevare le modifiche alla tabella
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            // Controlla se ci sono cambiamenti nella tabella
+            if (mutation.type === 'childList' && mutation.target.id === 'meteoTable') {
+                // Se ci sono cambiamenti nella tabella, aggiorna la tabella
+                aggiornaTabella();
+            }
+        });
+    });
+
+    // Configura e avvia l'observer per la tabella
+    var config = { childList: true };
+    observer.observe(document.getElementById("meteo"), config);
 </script>
 
 </body>

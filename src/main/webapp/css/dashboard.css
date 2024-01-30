@@ -24,13 +24,14 @@
     box-shadow:
             2px 4px 8px rgba(0, 0, 0, 0.4),
             2px 8px 16px rgba(0, 0, 0, 0.4);
+
 }
 .text{
     position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    color: white;
+
     font-size: 16px;
     font-weight: bold;
 }
@@ -40,10 +41,14 @@
 .dashboard .section.section-expanded {
     margin: 10px;
     width: 100%;
-    height: 38vw;
+    height: 80vh;
     transform: scale(1);
     z-index: 2;
     cursor: default;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .dashboard .section:not(.section-expanded) {
@@ -293,11 +298,11 @@ table {
 
 #vistabIA th, td{
     font-size: 13px;
-    height: 5px !important;
+    border: 1px solid #ddd;
 }
 #vistab1IA th, td{
     font-size: 13px;
-    height: 5px !important;
+    border: 1px solid #ddd;
 }
 th, td {
     border: 1px solid #dddddd;
@@ -490,7 +495,6 @@ input[type="range"] {
 .chart {
     padding: 2rem;
     border-radius: 1rem;
-    background: #251c35;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
     height: 300px;
     width: 600px;
@@ -498,7 +502,6 @@ input[type="range"] {
 
 .chart1 {
     padding: 30px;
-    background: #251c35;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
     height: 300px;
 }
@@ -570,3 +573,80 @@ input[type="range"] {
 .section-expanded #tabIA, .section-expanded #tab1IA{
     display: none;
 }*/
+
+.contentMeteoTab{
+    overflow-y: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 11px;
+}
+
+#meteoTable {
+    overflow-y: auto;
+    border-collapse: collapse;
+    width: 80%;
+    overflow-y: auto;
+    margin: 15px auto;
+    border: 1px solid #dddddd;
+    font-size: 11px;
+
+}
+#meteoTable th, #meteoTable td {
+    text-align: center;
+    padding: 8px;
+    width: auto;
+    border: none;
+    height: 10px;
+    font-size: 11px;
+}
+
+.contentMeteoTab table th {
+    background-color: #f2f2f2;
+}
+.contentMeteoTab table th:nth-child(1), td:nth-child(1) {
+    min-width: 70px;
+}
+.contentMeteoTab table img{
+    width: 30px;
+}
+.contentMeteo > *:not(.initial-content-meteo) {
+    display: none;
+}
+.section-expanded .contentMeteo> *:not(.initial-content-meteo) {
+    display: block;
+    overflow-y: auto;
+}
+.expanded-content-meteo {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/*SECTION EXPANDEND METEO*/
+.section-expanded #meteoTable {
+    border-collapse: collapse;
+    width: 80%;
+    overflow-y: auto;
+    margin: 15px auto;
+    border: 1px solid #dddddd;
+    font-size: 16px;
+
+}
+.section-expanded #meteoTable th, .section-expanded #meteoTable td {
+    text-align: center;
+    padding: 8px;
+    width: auto;
+    border: none;
+    height: 10px;
+    font-size: 16px;
+}
+
+.section-expanded .contentMeteoTab table th:nth-child(1), .section-expanded td:nth-child(1) {
+    min-width: 100px;
+}
+.section-expanded .contentMeteoTab table img{
+    width: 50px;
+}
