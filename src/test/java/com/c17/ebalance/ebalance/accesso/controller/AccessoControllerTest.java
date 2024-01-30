@@ -54,7 +54,6 @@ class AccessoControllerTest {
 
     @BeforeEach
     void setUp() throws ServletException {
-        // Inizializzazione dei mock e impostazione del comportamento desiderato
         MockitoAnnotations.openMocks(this);
         request = Mockito.mock(HttpServletRequest.class);
         response = Mockito.mock(HttpServletResponse.class);
@@ -62,7 +61,6 @@ class AccessoControllerTest {
         dispatcher = Mockito.mock(RequestDispatcher.class);
         accessoService = Mockito.mock(AccessoService.class);
 
-        // Utilizza il costruttore modificato con accessoService e servletContext
         accessoController = new AccessoController(accessoService, servletContext);
         accessoController.init(servletConfig);
     }
@@ -70,8 +68,7 @@ class AccessoControllerTest {
 
 
     @Test
-    void testValidLogin() throws IOException, SQLException, ServletException {
-        // Categoria: Login valido
+    void testValidLogin() throws IOException, SQLException {
         when(request.getParameter("email")).thenReturn("m.ercolino1@studenti.unisa.it");
         when(request.getParameter("password")).thenReturn("Matteo2024!");
         when(request.getSession(true)).thenReturn(session);
@@ -81,7 +78,6 @@ class AccessoControllerTest {
 
         accessoController.doGet(request, response);
 
-        // Verifica che il redirect sia effettuato verso la pagina della dashboard
         Mockito.verify(response).sendRedirect("DatiController?action=generaDashboard");
     }
 
@@ -93,7 +89,6 @@ class AccessoControllerTest {
     })
     void testInvalidLogin(String email, String password, String expectedMessage)
             throws IOException, SQLException, ServletException {
-        // Categoria: Login non valido
         when(request.getParameter("email")).thenReturn(email);
         when(request.getParameter("password")).thenReturn(password);
         when(request.getSession(true)).thenReturn(session);
@@ -103,9 +98,7 @@ class AccessoControllerTest {
 
         accessoController.doGet(request, response);
 
-        // Verifica che il messaggio di errore sia impostato correttamente nella richiesta
         Mockito.verify(request).setAttribute("result", expectedMessage);
-        // Verifica che la richiesta venga inoltrata alla pagina di login
         Mockito.verify(dispatcher).forward(request, response);
     }
 
@@ -119,11 +112,17 @@ class AccessoControllerTest {
 
         accessoController.login("m.ercolino1@studenti.unisa.it", "Matteo2024!", session);
 
-        // Verifica che gli attributi della sessione siano impostati correttamente
-        Mockito.verify(session).setAttribute("email", "m.ercolino1@studenti.unisa.it");
-        // Verifica altri attributi...
 
-        // Rimuovi gli stubbing non utilizzati
+        Mockito.verify(session).setAttribute("email", amministratore.getEmail());
+        Mockito.verify(session).setAttribute("password", amministratore.getPassword());
+        Mockito.verify(session).setAttribute("nome", amministratore.getNome());
+        Mockito.verify(session).setAttribute("cognome", amministratore.getCognome());
+        Mockito.verify(session).setAttribute("flagTipo", amministratore.getFlagTipo());
+        Mockito.verify(session).setAttribute("idAmministratore", amministratore.getIdAmministratore());
+        Mockito.verify(session).setAttribute("dataNascita", amministratore.getDataNascita());
+
+
+
         Mockito.verifyNoMoreInteractions(accessoService);
     }
 
@@ -132,12 +131,10 @@ class AccessoControllerTest {
 
     @Test
     void testLoginDoesNotSetSession() throws SQLException {
-        // Categoria: Login non valido
         when(accessoService.login("m.ercolino@studenti.unisa.it", "Carlo2024")).thenReturn(null);
 
         accessoController.login("m.ercolino@studenti.unisa.it", "Carlo2024", session);
 
-        // Verifica che gli attributi della sessione non siano impostati in caso di login non valido
         Mockito.verify(session, Mockito.never()).setAttribute(Mockito.anyString(), Mockito.any());
     }
 
