@@ -161,7 +161,7 @@
             <img src="img/indietro.png" id="img"></a>
         <div class="contentConsumi">
             <div class="initial-content-consumi">
-                <div class="text">Archivio Consumi</div>
+                <h3>Archivio Consumi</h3>
                 <!-- Contenuto della sezione 2 -->
                 <div class="chart1">
                     <canvas id="istogramma"></canvas>

@@ -24,8 +24,12 @@
     box-shadow:
             2px 4px 8px rgba(0, 0, 0, 0.4),
             2px 8px 16px rgba(0, 0, 0, 0.4);
-
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
 }
+
 .text{
     position: absolute;
     top: 10px;
@@ -119,8 +123,30 @@
 #sommaProduzione{
     display: none;
 }
-h3{
-    margin-top: 20px;
+.section h3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #fff;
+}
+
+.section::after {
+    content: '';
+    position: absolute;
+    width: 90%;
+    height: 2px;
+    background-color: #000;
+    left: 0;
+    top: 15%;
+}
+.section-expanded::after {
+    display: none;
+}
+.section-expanded h3{
+    left: 50%;
+    transform: translateX(-50%);
 }
 table {
     border-collapse: collapse;
@@ -177,7 +203,7 @@ table {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 50px;
 }
 .btnIA:hover{
     background-color: green;
@@ -287,13 +313,16 @@ table {
     width: 25%;
 }
 .visTab{
-    width: 100%;
+    width: 120%;
     align-items: center;
     justify-content: center;
+    margin-top: 40px;
+    margin-left: -30px;
 }
 .visTab table {
     margin-bottom: 0;
     margin-top: 0;
+    width: 100%;
 }
 
 #vistabIA th, td{
@@ -326,6 +355,7 @@ th {
     width: 70px;
     border: 2px solid black;;
     border-radius: 10px;
+    margin-top: 20px;
 }
 .section-expanded .battery{
     display: flex;
@@ -501,9 +531,9 @@ input[type="range"] {
 }
 
 .chart1 {
-    padding: 30px;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
-    height: 300px;
+    width: 110%;
+    margin-top: 40px;
+    margin-right: 10px;
 }
 
 .chart-container {
@@ -576,27 +606,29 @@ input[type="range"] {
 
 .contentMeteoTab{
     overflow-y: auto;
-    width: 100%;
+    width: 110%;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
-    font-size: 11px;
+    font-size: 15px;
+    margin-left: -20px;
 }
 
 #meteoTable {
     overflow-y: auto;
     border-collapse: collapse;
-    width: 80%;
+    width: 100%;
     overflow-y: auto;
     margin: 15px auto;
     border: 1px solid #dddddd;
-    font-size: 11px;
+    font-size: 15px;
+    margin-top: 45px;
 
 }
 #meteoTable th, #meteoTable td {
     text-align: center;
-    padding: 8px;
+    padding: 9px;
     width: auto;
     border: none;
     height: 10px;
@@ -628,11 +660,12 @@ input[type="range"] {
 /*SECTION EXPANDEND METEO*/
 .section-expanded #meteoTable {
     border-collapse: collapse;
-    width: 80%;
+    width: 900px;
     overflow-y: auto;
     margin: 15px auto;
     border: 1px solid #dddddd;
     font-size: 16px;
+    margin-top: 60px;
 
 }
 .section-expanded #meteoTable th, .section-expanded #meteoTable td {
@@ -650,3 +683,8 @@ input[type="range"] {
 .section-expanded .contentMeteoTab table img{
     width: 50px;
 }
+/*
+#sommaProduzione{
+    margin-top: 100px;
+    border: 2px solid black;
+}*/

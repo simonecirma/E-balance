@@ -26,14 +26,14 @@
     <div id="table-card" class="card">
 <table id="tab">
     <thead>
-    <tr>
+    <tr id="header">
         <th>Email</th>
         <th>Nome</th>
         <th>Cognome</th>
         <th>Elimina Admin</th>
     </tr>
-    </thead>
-    <tbody>
+
+
     <% if (amministratori != null && !amministratori.isEmpty()) {
         for (AmministratoreBean admin : amministratori) { %>
         <tr>
@@ -51,7 +51,7 @@
     <% }
     }
     %>
-    </tbody>
+
 </table>
     </div>
     <%
@@ -99,7 +99,12 @@
     function toggleCard() {
         var tableCard = document.getElementById('table-card');
         var formCard = document.getElementById('form-card');
-
+        var button = document.querySelector('.btn');
+        if (button.textContent === "Aggiungi un nuovo amministratore") {
+            button.textContent = "Indietro";
+        } else {
+            button.textContent = "Aggiungi un nuovo amministratore";
+        }
         if (isTableVisible) {
             // Ruota la tabella fuori dalla vista e mostra il form
             tableCard.style.transform = 'rotateY(180deg)';
