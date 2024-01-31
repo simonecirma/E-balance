@@ -33,6 +33,7 @@ public class VenditaDAOImpl implements VenditaDAO {
     public List<VenditaBean> getVendite(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
         List<VenditaBean> vendite = new ArrayList<>();
         try {
             con = ds.getConnection();
@@ -41,7 +42,7 @@ public class VenditaDAOImpl implements VenditaDAO {
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 VenditaBean bean = new VenditaBean();
                 bean.setIdVendita(rs.getInt("IdAmministratore"));
@@ -54,6 +55,9 @@ public class VenditaDAOImpl implements VenditaDAO {
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
+            if (rs != null) {
+                rs.close();
+            }
             if (ps != null) {
                 ps.close();
             }
@@ -68,6 +72,7 @@ public class VenditaDAOImpl implements VenditaDAO {
         float ricavo = 0;
         Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
         try {
             con = ds.getConnection();
             String query = "SELECT SUM(RicavoTotale) "
@@ -76,13 +81,16 @@ public class VenditaDAOImpl implements VenditaDAO {
             ps = con.prepareStatement(query);
             ps.setDate(1, dataInizio);
             ps.setDate(2, dataFine);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 ricavo = rs.getFloat("RicavoTOT");
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
+            if (rs != null) {
+                rs.close();
+            }
             if (ps != null) {
                 ps.close();
             }

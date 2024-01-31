@@ -5,6 +5,7 @@ import com.c17.ebalance.ebalance.amministratore.service.*;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,7 +24,6 @@ import java.util.List;
 
 @WebServlet(name = "AmministratoreController", value = "/AmministratoreController")
 public class AmministratoreController extends HttpServlet {
-
     private static final long serialVersionUID = 1L;
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
     private ReportService reportService = new ReportServiceImpl();
@@ -41,10 +41,10 @@ public class AmministratoreController extends HttpServlet {
                 if (action.equalsIgnoreCase("verificaSuperAdmin")) {
                     if (amministratoreService.verificaSuperAdmin()) {
                         request.setAttribute("result", "Risulta già un sistema configurato, accedi!");
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.jsp");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
                         dispatcher.forward(request, response);
                     } else {
-                        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/amministratori.jsp");
                         dispatcher.forward(request, response);
                     }
                 }
@@ -66,7 +66,7 @@ public class AmministratoreController extends HttpServlet {
                 if (action.equalsIgnoreCase("gestisciAmministratori")) {
                     List<AmministratoreBean> amministratori = amministratoreService.visualizzaAmministratori();
                     request.setAttribute("amministratori", amministratori);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/amministratori.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/amministratori.jsp");
                     dispatcher.forward(request, response);
                 }
                 if (action.equalsIgnoreCase("rimuoviAmministratore")) {
@@ -76,11 +76,12 @@ public class AmministratoreController extends HttpServlet {
                 }
                 if (action.equalsIgnoreCase("vediReport")) {
                     visualizzazioneReport(request, response);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
                 }
                 if (action.equalsIgnoreCase("vendita")) {
-                    int idAmministratore = Integer.parseInt(request.getParameter("idAmministratore"));
+                    String idAmministratoreParam = request.getParameter("idAmministratore");
+                    int idAmministratore = idAmministratoreParam != null ? Integer.parseInt(idAmministratoreParam) : 0;
                     venditaService.effettuaVendita(idAmministratore);
                     response.sendRedirect("DatiController?action=generaDashboard");
                 }
@@ -88,11 +89,11 @@ public class AmministratoreController extends HttpServlet {
                     ReportBean report = reportService.generaReport(request, response);
                     reportService.aggiungiReport(report);
                     visualizzazioneReport(request, response);
-                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/report.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/report.jsp");
                     dispatcher.forward(request, response);
                 }
             } else {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/profilo.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException | ServletException | ParseException e) {
@@ -142,7 +143,7 @@ public class AmministratoreController extends HttpServlet {
         session.setAttribute("idAmministratore", idAmministratore);
         session.setAttribute("flagTipo", flagTipo);
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/profilo.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profilo.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -163,7 +164,7 @@ public class AmministratoreController extends HttpServlet {
             return;
         }
         HttpSession session = request.getSession(true);
-        if (session.getAttribute("email") != null) {
+        if (session != null) {
             amministratore.setFlagTipo(false);
         } else {
             amministratore.setFlagTipo(true);
@@ -180,7 +181,7 @@ public class AmministratoreController extends HttpServlet {
         } else {
             AmministratoreBean admin = accessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);
             if (admin != null) {
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);
             } else {
                 response.sendRedirect("AmministratoreController?action=verificaSuperAdmin");

@@ -49,6 +49,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
                 result = false;
             }
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -65,6 +68,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
     public AmministratoreBean login(final String email, final String password) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
         AmministratoreBean bean = new AmministratoreBean();
         String sql = "SELECT * FROM " + AmministratoreDAOImpl.TABLE_NAME_AMMINISTRATORE + " WHERE Email = ? AND Password = ?";
         try {
@@ -72,7 +76,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
             ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 bean.setIdAmministratore(rs.getInt("IdAmministratore"));
                 bean.setNome(rs.getString("Nome"));
@@ -85,6 +89,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
+            if (rs != null) {
+                rs.close();
+            }
             if (ps != null) {
                 ps.close();
             }
@@ -126,6 +133,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
             }
 
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }
@@ -211,6 +221,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
     public AmministratoreBean getById(final int id) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
         AmministratoreBean amministratore = new AmministratoreBean();
 
         try {
@@ -219,7 +230,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
             String query = "SELECT * FROM " + TABLE_NAME_AMMINISTRATORE + " WHERE IdAmministratore = ?";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
+            rs = ps.executeQuery();
             while (rs.next()) {
                 amministratore.setNome(rs.getString("Nome"));
                 amministratore.setCognome(rs.getString("Cognome"));
@@ -231,6 +242,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
+            if (rs != null) {
+                rs.close();
+            }
             if (ps != null) {
                 ps.close();
             }
@@ -288,6 +302,9 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
             if (preparedStatement != null) {
                 preparedStatement.close();
             }

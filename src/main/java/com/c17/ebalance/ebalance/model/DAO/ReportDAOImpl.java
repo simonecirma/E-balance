@@ -54,14 +54,14 @@ public class ReportDAOImpl implements ReportDAO {
                 report.add(bean);
             }
         } finally {
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                }
-            } finally {
-                if (connection != null) {
-                    connection.close();
-                }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
         return report;
@@ -84,6 +84,9 @@ public class ReportDAOImpl implements ReportDAO {
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
+            if (rs != null) {
+                rs.close();
+            }
             if (ps != null) {
                 ps.close();
             }
