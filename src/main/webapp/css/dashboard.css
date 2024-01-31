@@ -702,6 +702,10 @@ input[type="range"] {
 .section-expanded .contentMeteoTab table img{
     width: 50px;
 }
+
+.section-expanded #meteoTable{
+    display: none;
+}
 /*
 #sommaProduzione{
     margin-top: 100px;
