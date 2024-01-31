@@ -8,6 +8,7 @@
     float consumoEdifici[] = (float[]) request.getAttribute("consumoEdifici");
     List<ArchivioConsumoBean> archivioConsumo = (List<ArchivioConsumoBean>) request.getAttribute("archivioConsumo");
     List<MeteoBean> condizioni = (List<MeteoBean>) request.getAttribute("condizioniMeteo");
+    List<MeteoBean> settimana = (List<MeteoBean>) request.getAttribute("condizioniSettimanali");
     float produzioneSorgente[] = (float[]) request.getAttribute("produzioneSorgente");
     float produzioneSEN = (float) request.getAttribute("produzioneSEN");
     List<ParametriIABean> parametriIA = (List<ParametriIABean>) request.getAttribute("parametriIA");
@@ -509,6 +510,46 @@
                 <!--<ul id="listaCondizioni"></ul>-->
                 <div id="meteo" name="meteo">
                     <%
+                        if (settimana != null && !settimana.isEmpty()) {
+                    %>
+                    <div class="contentMeteoTab">
+                        <table id="meteoTable">
+                            <thead>
+
+                            <tr>
+                                <th>Data</th>
+                                <th>Ora</th>
+                                <th colspan="2">Previsione</th>
+                                <th>Pioggia</th>
+                                <th>Vento</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                for (MeteoBean bean : settimana) {
+                            %>
+                            <tr>
+                                <td> <%= bean.getDataRilevazione() %></td>
+                                <td> <%= bean.getOraRilevazione() %></td>
+                                <td></td>
+                                <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
+                                <td> <%= bean.getProbabilitaPioggia()%>%</td>
+                                <td> <%= bean.getVelocitaVento()%>km/h</td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                        <%
+                            }
+                        %>
+                    </div>
+                </div>
+            </div>
+            <div class="expanded-content-meteo">
+                <div id="meteo" name="meteo">
+                    <%
                         if (condizioni != null && !condizioni.isEmpty()) {
                     %>
                     <div class="contentMeteoTab">
@@ -545,9 +586,6 @@
                         %>
                     </div>
                 </div>
-            </div>
-            <div class="expanded-content-meteo">
-
             </div>
         </div>
     </div>
