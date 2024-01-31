@@ -668,6 +668,16 @@ input[type="range"] {
     margin-top: 60px;
 
 }
+.section-expanded #meteoTable1 {
+    border-collapse: collapse;
+    width: 900px;
+    overflow-y: auto;
+    margin: 15px auto;
+    border: 1px solid #dddddd;
+    font-size: 16px;
+    margin-top: 60px;
+
+}
 .section-expanded #meteoTable th, .section-expanded #meteoTable td {
     text-align: center;
     padding: 8px;
@@ -676,6 +686,15 @@ input[type="range"] {
     height: 10px;
     font-size: 16px;
 }
+.section-expanded #meteoTable1 th, .section-expanded #meteoTable1 td {
+    text-align: center;
+    padding: 8px;
+    width: auto;
+    border: none;
+    height: 10px;
+    font-size: 16px;
+}
+
 
 .section-expanded .contentMeteoTab table th:nth-child(1), .section-expanded td:nth-child(1) {
     min-width: 100px;

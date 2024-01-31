@@ -548,14 +548,13 @@
                 </div>
             </div>
             <div class="expanded-content-meteo">
-                <div id="meteo" name="meteo">
+                <div id="meteo1" name="meteo1">
                     <%
                         if (condizioni != null && !condizioni.isEmpty()) {
                     %>
                     <div class="contentMeteoTab">
-                        <table id="meteoTable">
+                        <table id="meteoTable1">
                             <thead>
-
                             <tr>
                                 <th>Data</th>
                                 <th>Ora</th>
@@ -903,15 +902,17 @@
 
         chart.draw(data, options);
     }
-    function aggiungiIconaPrevisioneIniziale() {
-        aggiungiIconaPrevisione(); // Chiamata alla funzione per aggiungere le icone previsione
+    function aggiungiIconaPrevisioneIniziale(tableId) {
+        aggiungiIconaPrevisione(tableId); // Chiamata alla funzione per aggiungere le icone previsione
     }
 
     // Chiamata alla funzione per aggiungere le icone previsione quando il documento è completamente caricato
     $(document).ready(function() {
-        aggiungiIconaPrevisioneIniziale(); // Chiamata alla funzione per aggiungere le icone previsione inizialmente
+        aggiungiIconaPrevisioneIniziale("meteoTable"); // Chiamata alla funzione per aggiungere le icone previsione inizialmente per la tabella meteoTable
+        aggiungiIconaPrevisioneIniziale("meteoTable1"); // Chiamata alla funzione per aggiungere le icone previsione inizialmente per la tabella meteoTable1
         Observer(); // Avvio dell'observer
     });
+
     function Observer() {
         $.get("DatiController?action=dashboardObserver", function (data) {
             if (data.percentualeBatteriaUpdate) {
@@ -935,9 +936,14 @@
             }
             if (data.meteoUpdate) {
                 $("#meteo").load(window.location.href + " #meteo", function() {
-                    aggiungiIconaPrevisione();
+                    aggiungiIconaPrevisione("meteoTable");
+                });
+
+                $("#meteo1").load(window.location.href + " #meteo1", function() {
+                    aggiungiIconaPrevisione("meteoTable1");
                 });
             }
+
             if (data.parametriAttiviUpdate) {
                 $("#parametriIA").load(window.location.href + " #parametriIA");
             }
@@ -973,8 +979,8 @@
     Observer();
 
     // Funzione per aggiungere le icone previsione
-    function aggiungiIconaPrevisione() {
-        var tabella = document.getElementById("meteoTable");
+    function aggiungiIconaPrevisione(tableId) {
+        var tabella = document.getElementById(tableId);
         var righe = tabella.getElementsByTagName("tr");
 
         // Per ogni riga della tabella, tranne l'intestazione
@@ -1025,7 +1031,10 @@
     }
 
     // Chiamata alla funzione per aggiungere le icone previsione quando il documento è completamente caricato
-    window.onload = aggiungiIconaPrevisione;
+    window.onload = function() {
+        aggiungiIconaPrevisione("meteoTable");
+        aggiungiIconaPrevisione("meteoTable1");
+    };
 
     function aggiornaTabella() {
         // Codice per aggiornare la tabella con i nuovi dati (utilizzando l'observer)
@@ -1037,17 +1046,29 @@
     // Definisci l'observer per rilevare le modifiche alla tabella
     var observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
-            // Controlla se ci sono cambiamenti nella tabella
+            // Controlla se ci sono cambiamenti nella tabella meteoTable
             if (mutation.type === 'childList' && mutation.target.id === 'meteoTable') {
-                // Se ci sono cambiamenti nella tabella, aggiorna la tabella
-                aggiornaTabella();
+                // Se ci sono cambiamenti nella tabella, aggiorna la tabella meteoTable
+                aggiornaTabella("meteoTable");
+            }
+            // Controlla se ci sono cambiamenti nella tabella meteoTable1
+            if (mutation.type === 'childList' && mutation.target.id === 'meteoTable1') {
+                // Se ci sono cambiamenti nella tabella, aggiorna la tabella meteoTable1
+                aggiornaTabella("meteoTable1");
             }
         });
     });
 
-    // Configura e avvia l'observer per la tabella
+    // Configura e avvia l'observer per entrambe le tabelle
     var config = { childList: true };
+
+    // Aggiunge l'observer per la tabella meteoTable
     observer.observe(document.getElementById("meteo"), config);
+
+    // Aggiunge l'observer per la tabella meteoTable1
+    observer.observe(document.getElementById("meteo1"), config);
+
+
 </script>
 
 </body>
