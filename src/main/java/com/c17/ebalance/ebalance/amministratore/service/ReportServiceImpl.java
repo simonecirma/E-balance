@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.amministratore.service;
+
 import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
 import com.c17.ebalance.ebalance.dati.service.ProduzioneService;
@@ -130,7 +131,7 @@ public class ReportServiceImpl implements ReportService {
 
             // Posizione descrizione
             float xCoordinate10 = 50;
-            float yCoordinate10 = 422.5F ;
+            float yCoordinate10 = 422.5F;
 
             // Posizione descrizione1
             float xCoordinate6 = 50;
@@ -259,7 +260,7 @@ public class ReportServiceImpl implements ReportService {
                 contentStream.newLineAtOffset(xCoordinate14, yCoordinate14);
                 if (resocontoFinale > 0) {
                     contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde
-                    contentStream.showText(String.valueOf("+" +resocontoFinale));
+                    contentStream.showText(String.valueOf("+" + resocontoFinale));
                     contentStream.endText();
                 } else if (resocontoFinale < 0) {
                     contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
@@ -393,7 +394,7 @@ public class ReportServiceImpl implements ReportService {
                     i++;
                     numVendite--;
                 }
-                yCoordinate12 += 24.5*9;
+                yCoordinate12 += 24.5 * 9;
                 i = 0;
                 contentStream.setNonStrokingColor(Color.BLACK);
                 contentStream.beginText();
@@ -483,9 +484,9 @@ public class ReportServiceImpl implements ReportService {
                         i++;
                         numVendite--;
                     }
-                    yCoordinate1 += 24.5*9;
-                    yCoordinate6 += 24.5*9;
-                    yCoordinate12 += 24.5*9;
+                    yCoordinate1 += 24.5 * 9;
+                    yCoordinate6 += 24.5 * 9;
+                    yCoordinate12 += 24.5 * 9;
 
                     i = 0;
                     contentStream2.setNonStrokingColor(Color.BLACK);
@@ -595,11 +596,11 @@ public class ReportServiceImpl implements ReportService {
                     contentStream2.beginText();
                     contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);
                     contentStream2.newLineAtOffset(xCoordinate14, yCoordinate14);
-                    if(resocontoFinale > 0){
+                    if (resocontoFinale > 0) {
                         contentStream2.setNonStrokingColor(new Color(0, 128, 0)); // Verde
-                        contentStream2.showText(String.valueOf("+" + resocontoFinale ));
+                        contentStream2.showText(String.valueOf("+" + resocontoFinale));
                         contentStream2.endText();
-                    } else if (resocontoFinale < 0){
+                    } else if (resocontoFinale < 0) {
                         contentStream2.setNonStrokingColor(new Color(241, 5, 5)); // Rosso
                         contentStream2.showText(String.valueOf(resocontoFinale));
                         contentStream2.endText();

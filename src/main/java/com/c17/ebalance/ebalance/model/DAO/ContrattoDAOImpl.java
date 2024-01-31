@@ -42,7 +42,7 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         ContrattoBean bean = new ContrattoBean();
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM "  + TABLE_NAME_CONTRATTO + " ORDER BY DataSottoscrizione DESC LIMIT 1";
+            String query = "SELECT * FROM " + TABLE_NAME_CONTRATTO + " ORDER BY DataSottoscrizione DESC LIMIT 1";
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -75,7 +75,7 @@ public class ContrattoDAOImpl implements ContrattoDAO {
 
         try {
             con = ds.getConnection();
-            String query = "SELECT * FROM "  + TABLE_NAME_CONTRATTO + " WHERE IdContratto < (SELECT MAX(IdContratto) "
+            String query = "SELECT * FROM " + TABLE_NAME_CONTRATTO + " WHERE IdContratto < (SELECT MAX(IdContratto) "
                     + "FROM " + TABLE_NAME_CONTRATTO + ") ORDER BY IdContratto DESC";
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -211,6 +211,7 @@ public class ContrattoDAOImpl implements ContrattoDAO {
 
         return result;
     }
+
     public ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -234,7 +235,7 @@ public class ContrattoDAOImpl implements ContrattoDAO {
                 bean.setPrezzoVendita(rs.getFloat("PrezzoVendita"));
                 bean.setIdAmministatore(rs.getInt("IdAmministratore"));
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             if (ps != null) {

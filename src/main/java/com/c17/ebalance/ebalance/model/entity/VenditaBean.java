@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.model.entity;
+
 import com.c17.ebalance.ebalance.utility.Observable;
 import com.c17.ebalance.ebalance.utility.Observer;
 
@@ -14,7 +15,8 @@ public class VenditaBean implements Observable {
     private float ricavoTotale;
     private int idAmministratore;
 
-    public VenditaBean() { }
+    public VenditaBean() {
+    }
 
     public VenditaBean(final int idVendita, final float energiaVenduta,
                        final Date dataVendita, final float ricavoTotale, final int idAmministratore) {

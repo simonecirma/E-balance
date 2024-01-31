@@ -27,9 +27,10 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private Random random = new Random();
     private Calendar calendario = Calendar.getInstance();
     private Date data;
-    private int y=0;
+    private int y = 0;
     float percentualeEccesso = 0.00f;
     private boolean simulazioneVenditaFlag = false; //setta a true se vuoi far simulare la generazione di una vendita
+
     @Override
     public void simulazioneEnergia() throws SQLException {
         int numBatterie = batteriaDAO.ottieniNumBatterieAttive();
@@ -50,7 +51,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                         consumoOrario = random.nextFloat() * 15 + 15;
                     }
                     consumoOrario = (float) (Math.round(consumoOrario * 100.0) / 100.0);
-                    consumoDAO.simulaConsumo(consumoOrario, y+1, sqlDate);
+                    consumoDAO.simulaConsumo(consumoOrario, y + 1, sqlDate);
                     percentualeEccesso = batteriaDAO.aggiornaBatteria((-consumoOrario) / numBatterie, numBatterie);
                     if (percentualeEccesso < 0) {
                         parametriIADAO.aggiornaPercentualeSEN(10);
@@ -69,13 +70,13 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                         produzioneOraria = random2.nextFloat() * 100 + 0;
                     }
                     produzioneOraria = (float) (Math.round(produzioneOraria * 100.0) / 100.0);
-                    for (InteragisceBean bean: parametriAttivi) {
+                    for (InteragisceBean bean : parametriAttivi) {
                         if (bean.getTipoSorgente().equalsIgnoreCase("Pannello Fotovoltaico")) {
                             produzioneOraria = produzioneOraria * ((float) bean.getPercentualeUtilizzoSorgente() / 100);
                             break;
                         }
                     }
-                    produzioneDAO.simulaProduzione(y+1, produzioneOraria,  sqlDate);
+                    produzioneDAO.simulaProduzione(y + 1, produzioneOraria, sqlDate);
                     percentualeEccesso = batteriaDAO.aggiornaBatteria((produzioneOraria) / numBatterie, numBatterie);
                     if (percentualeEccesso > 0) {
                         parametriIADAO.aggiornaPercentualeSEN(-10);
@@ -85,9 +86,9 @@ public class SimulazioneServiceImpl implements SimulazioneService {
 
                 if (consumoOrarioAttualeTot > produzioneOrariaAttualeTot) {
                     float produzioneNecessaria = (float) (Math.round((consumoOrarioAttualeTot - produzioneOrariaAttualeTot) * 100.0) / 100.0);
-                    for (InteragisceBean bean: parametriAttivi) {
+                    for (InteragisceBean bean : parametriAttivi) {
                         if (bean.getTipoSorgente().equalsIgnoreCase("Servizio Elettrico Nazionale")) {
-                            produzioneNecessaria = produzioneNecessaria * ((float) bean.getPercentualeUtilizzoSorgente() /100);
+                            produzioneNecessaria = produzioneNecessaria * ((float) bean.getPercentualeUtilizzoSorgente() / 100);
                             break;
                         }
                     }
@@ -112,11 +113,11 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     public void insertPrevisioni() throws SQLException {
 
         List<String> condizioni = meteoDAO.getCondizione();
-        for(int y = 0; y < 6; y++) {
+        for (int y = 0; y < 6; y++) {
             data = calendario.getTime();
             java.sql.Date sqlDate = new java.sql.Date(data.getTime());
-            for (int i = 0; i < 24; i=i+6) {
-                if(!meteoDAO.verificaPresenza(sqlDate, i)){
+            for (int i = 0; i < 24; i = i + 6) {
+                if (!meteoDAO.verificaPresenza(sqlDate, i)) {
                     float vel = random.nextFloat() * 10;
                     vel = (float) (Math.round(vel * 100.0) / 100.0);
                     int indiceCasuale = random.nextInt(condizioni.size());
@@ -150,11 +151,11 @@ public class SimulazioneServiceImpl implements SimulazioneService {
 
     @Override
     public void modificaPrevisioni() throws SQLException {
-        List<String> condizioni=meteoDAO.getCondizione();
+        List<String> condizioni = meteoDAO.getCondizione();
         try {
             data = calendario.getTime();
             java.sql.Date sqlDate = new java.sql.Date(data.getTime());
-            if(!meteoDAO.verificaPresenza(sqlDate, y)) {
+            if (!meteoDAO.verificaPresenza(sqlDate, y)) {
                 Thread.sleep(60000); // Ritardo di 1 minuto
                 float vel = random.nextFloat() * 10;
                 vel = (float) (Math.round(vel * 100.0) / 100.0);
@@ -182,9 +183,9 @@ public class SimulazioneServiceImpl implements SimulazioneService {
                 meteoDAO.insertPrevisioni(sqlDate, y, vel, prob, condizioneCasuale);
             }
 
-            y=y+6;
-            if(y==24) {
-                y=0;
+            y = y + 6;
+            if (y == 24) {
+                y = 0;
                 calendario.add(Calendar.DAY_OF_YEAR, 1);
             }
         } catch (InterruptedException e) {

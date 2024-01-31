@@ -12,7 +12,8 @@ public class ConsumoEdificioBean implements Observable {
     private String nomeEdificio;
     private float consumoAttuale;
 
-    public ConsumoEdificioBean() { }
+    public ConsumoEdificioBean() {
+    }
 
     public ConsumoEdificioBean(final int idEdificio, final String nomeEdificio,
                                final float consumoAttuale) {

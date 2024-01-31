@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.dati.service;
+
 import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
 import com.c17.ebalance.ebalance.model.entity.ConsumoEdificioBean;
 

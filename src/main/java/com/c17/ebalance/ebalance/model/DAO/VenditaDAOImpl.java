@@ -27,6 +27,7 @@ public class VenditaDAOImpl implements VenditaDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+
     private static final String TABLE_NAME_VENDITA = "Vendita";
 
     public List<VenditaBean> getVendite(final Date dataInizio, final Date dataFine) throws SQLException {

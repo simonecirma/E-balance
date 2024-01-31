@@ -13,7 +13,8 @@ public class ParametriIABean implements Observable {
     private boolean flagAttivazioneParametro;
     private int idAmministratore;
 
-    public ParametriIABean() { }
+    public ParametriIABean() {
+    }
 
     public ParametriIABean(final int idParametro, final String piano,
                            final boolean flagAttivazioneParametro, final int idAmministratore) {

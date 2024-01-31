@@ -2,11 +2,10 @@
 <%@ page import="com.c17.ebalance.ebalance.model.entity.AmministratoreBean" %>
 <%@ page import="java.util.List" %>
 <%
-    synchronized(session)
-    {
+    synchronized (session) {
         session = request.getSession();
         nome = (String) session.getAttribute("nome");
-        cognome = (String)session.getAttribute("cognome");
+        cognome = (String) session.getAttribute("cognome");
         email = (String) session.getAttribute("email");
         password = (String) session.getAttribute("password");
         dataNascita = (Date) session.getAttribute("dataNascita");
@@ -43,7 +42,8 @@
     </div>
     <div>
         <label for="dataNascita">Data Nascita:</label>
-        <input type="date" id="dataNascita" name="dataNascita" value="<%=dataNascita%>" onchange="maxDataSelection()" required><br>
+        <input type="date" id="dataNascita" name="dataNascita" value="<%=dataNascita%>" onchange="maxDataSelection()"
+               required><br>
     </div>
     <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>" required><br>
     <input type="hidden" name="flagTipo" value="<%=tipo%>"><br>
@@ -86,6 +86,7 @@
         return true;
 
     }
+
     function maxDataSelection() {
         // Ottieni la data corrente
         var today = new Date();

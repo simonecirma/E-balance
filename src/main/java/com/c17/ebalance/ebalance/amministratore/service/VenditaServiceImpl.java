@@ -38,7 +38,7 @@ public class VenditaServiceImpl implements VenditaService {
         float energiaVenduta = random.nextFloat() * 1000 + 1000;
         float prezzoVendita = contrattoService.ottieniPrezzoVendita();
         bean.setEnergiaVenduta(energiaVenduta);
-        bean.setRicavoTotale(energiaVenduta*prezzoVendita);
+        bean.setRicavoTotale(energiaVenduta * prezzoVendita);
         bean.setDataVendita(Date.valueOf(data));
         bean.setIdAmministratore(idAmministratore);
         venditaDAO.effetuaVendita(bean);

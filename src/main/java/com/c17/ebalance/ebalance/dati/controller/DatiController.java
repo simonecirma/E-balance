@@ -213,7 +213,6 @@ public class DatiController extends HttpServlet implements Observer {
     }
 
 
-
     public void destroy() {
         archivioConsumi.removeObserver(this);
         consumoAttuale.removeObserver(this);

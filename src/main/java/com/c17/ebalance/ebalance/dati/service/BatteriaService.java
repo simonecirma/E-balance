@@ -9,6 +9,7 @@ public interface BatteriaService {
     List<BatteriaBean> visualizzaBatteria() throws SQLException;
 
     float ottieniPercetualeBatteria() throws SQLException;
+
     int ottieniNumBatterieAttive() throws SQLException;
 
     void aggiornaBatteria(float energia, int numBatteria) throws SQLException;

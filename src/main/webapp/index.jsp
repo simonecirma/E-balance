@@ -13,7 +13,8 @@
         <img src="img/Logo.png" class="background-image">
         <div class="buttons">
             <button class="btn"><a href="login.jsp">Effettua Login</a></button>
-            <button class="btn"><a href="AmministratoreController?action=verificaSuperAdmin">Configura il tuo sistema</a></button>
+            <button class="btn"><a href="AmministratoreController?action=verificaSuperAdmin">Configura il tuo
+                sistema</a></button>
         </div>
     </div>
 </div>

@@ -1,10 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.c17.ebalance.ebalance.model.entity.AmministratoreBean" %>
 <%@ page import="java.util.List" %>
 <%
     List<AmministratoreBean> amministratori = (List<AmministratoreBean>) request.getAttribute("amministratori");
-    synchronized(session)
-    {
+    synchronized (session) {
         session = request.getSession();
         email = (String) session.getAttribute("email");
     }
@@ -19,75 +18,80 @@
 <%@include file="navBar.jsp" %>
 <br>
 <%
-    if(email!=null){
+    if (email != null) {
 %>
 <div class="container" id="container">
-<div class="card-container" id="cont">
-    <div id="table-card" class="card">
-<table id="tab">
-    <thead>
-    <tr id="header">
-        <th>Email</th>
-        <th>Nome</th>
-        <th>Cognome</th>
-        <th>Elimina Admin</th>
-    </tr>
+    <div class="card-container" id="cont">
+        <div id="table-card" class="card">
+            <table id="tab">
+                <thead>
+                <tr id="header">
+                    <th>Email</th>
+                    <th>Nome</th>
+                    <th>Cognome</th>
+                    <th>Elimina Admin</th>
+                </tr>
 
 
-    <% if (amministratori != null && !amministratori.isEmpty()) {
+                    <% if (amministratori != null && !amministratori.isEmpty()) {
         for (AmministratoreBean admin : amministratori) { %>
-        <tr>
-            <td><%= admin.getEmail() %></td>
-            <td><%= admin.getNome() %></td>
-            <td><%= admin.getCognome() %></td>
-            <%if (admin.getFlagTipo())
-            {%>
-            <td></td>
-            <%}
-            else{%>
-            <td><a href="AmministratoreController?action=rimuoviAmministratore&idAmministratore=<%= admin.getIdAmministratore() %>"><button class="button">Elimina</button></a></td>
-            <%}%>
-        </tr>
-    <% }
+                <tr>
+                    <td><%= admin.getEmail() %>
+                    </td>
+                    <td><%= admin.getNome() %>
+                    </td>
+                    <td><%= admin.getCognome() %>
+                    </td>
+                    <%if (admin.getFlagTipo()) {%>
+                    <td></td>
+                    <%} else {%>
+                    <td>
+                        <a href="AmministratoreController?action=rimuoviAmministratore&idAmministratore=<%= admin.getIdAmministratore() %>">
+                            <button class="button">Elimina</button>
+                        </a></td>
+                    <%}%>
+                </tr>
+                    <% }
     }
     %>
 
-</table>
+            </table>
+        </div>
+        <%
+        } else {
+        %>
+        <h1 align="center">Aggiungi i tuoi dati personali</h1>
+        <%
+            }
+        %>
+        <div id="form-card" class="card">
+            <form id="aggiungiAmministratoreForm" action="AmministratoreController?action=aggiungiAmministratore"
+                  method="post" onsubmit="return validateForm()">
+                <div>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Dammi il nome" required><br>
+                </div>
+                <div>
+                    <label for="cognome">Cognome:</label>
+                    <input type="text" id="cognome" name="cognome" placeholder="Dammi il cognome" required><br>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="text" id="email" name="email" placeholder="Dammi l'email" required><br>
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Dammi la password" required><br>
+                </div>
+                <div>
+                    <label for="dataNascita">Data Nascita:</label>
+                    <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita"
+                           onchange="maxDataSelection()" required><br>
+                </div>
+                <input type="submit" class="btn1" value="Conferma">
+            </form>
+        </div>
     </div>
-    <%
-    }
-    else {
-    %>
-    <h1 align="center">Aggiungi i tuoi dati personali</h1>
-    <%
-        }
-    %>
-    <div id="form-card" class="card">
-<form id="aggiungiAmministratoreForm" action="AmministratoreController?action=aggiungiAmministratore" method="post" onsubmit="return validateForm()">
-    <div>
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" placeholder="Dammi il nome" required><br>
-    </div>
-    <div>
-        <label for="cognome">Cognome:</label>
-        <input type="text" id="cognome" name="cognome" placeholder="Dammi il cognome" required><br>
-    </div>
-    <div>
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" placeholder="Dammi l'email" required><br>
-    </div>
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Dammi la password" required><br>
-    </div>
-    <div>
-        <label for="dataNascita">Data Nascita:</label>
-        <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita" onchange="maxDataSelection()" required ><br>
-    </div>
-    <input type="submit" class="btn1" value="Conferma">
-</form>
-    </div>
-</div>
     <div class="btn-container">
         <button class="btn" onclick="toggleCard()">Aggiungi un nuovo amministratore</button>
     </div>
@@ -152,17 +156,17 @@
         $.ajax({
             url: "AmministratoreController?action=verificaPresenzaEmail",
             method: "POST",
-            data: { email: email },
+            data: {email: email},
             async: false,
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.flagPresenza) {
                     alert("Questa email è già registrata. Scegli un'altra email.");
                 } else {
                     isEmailValid = true;
                 }
             },
-            error: function() {
+            error: function () {
                 alert("Si è verificato un errore nella verifica dell'email.");
             }
         });
@@ -181,6 +185,7 @@
         return true;
 
     }
+
     function maxDataSelection() {
         // Ottieni la data corrente
         var today = new Date();
@@ -213,12 +218,12 @@
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         aggiornaAltezzaContainer();
     });
 
 
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         aggiornaAltezzaContainer();
     });
     var maxMarginTop = 50;

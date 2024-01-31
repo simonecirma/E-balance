@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.model.entity;
+
 import com.c17.ebalance.ebalance.utility.Observable;
 import com.c17.ebalance.ebalance.utility.Observer;
 
@@ -18,7 +19,8 @@ public class AmministratoreBean implements Observable {
     private String password;
     private boolean flagTipo;
 
-    public AmministratoreBean() { }
+    public AmministratoreBean() {
+    }
 
     public AmministratoreBean(final int idAmministratore, final String nome,
                               final String cognome, final Date dataNascita,
@@ -90,6 +92,7 @@ public class AmministratoreBean implements Observable {
     public boolean getFlagTipo() {
         return flagTipo;
     }
+
     public void setFlagTipo(final boolean flagTipo) {
         this.flagTipo = flagTipo;
         notifyObservers("setFlagTipo");

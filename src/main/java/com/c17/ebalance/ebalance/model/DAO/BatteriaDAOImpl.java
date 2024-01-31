@@ -34,9 +34,10 @@ public class BatteriaDAOImpl implements BatteriaDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+
     private static final String TABLE_NAME_BATTERIA = "Batteria";
-    private static final String TABLE_NAME_UTILIZZA= "Utilizza";
-    private static final String TABLE_NAME_CARICARE= "Caricare";
+    private static final String TABLE_NAME_UTILIZZA = "Utilizza";
+    private static final String TABLE_NAME_CARICARE = "Caricare";
 
 
     public List<BatteriaBean> visualizzaBatteria() throws SQLException {
@@ -102,7 +103,7 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         return percentuale.getPercentualeBatteria();
     }
 
-    public int  ottieniNumBatterieAttive() throws SQLException {
+    public int ottieniNumBatterieAttive() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -189,8 +190,8 @@ public class BatteriaDAOImpl implements BatteriaDAO {
 
                             if (percentualeCaricaAttuale < 99 && percentualeCaricaAttuale > 1) {
                                 if (percentualeEccesso > 0) {
-                                   nuovaPercentuale = Math.min(100, percentualeCaricaAttuale + percentualeEccesso);
-                                   percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso - 100;
+                                    nuovaPercentuale = Math.min(100, percentualeCaricaAttuale + percentualeEccesso);
+                                    percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso - 100;
                                 } else if (percentualeEccesso < 0) {
                                     nuovaPercentuale = Math.max(0, percentualeCaricaAttuale + percentualeEccesso);
                                     percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso;

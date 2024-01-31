@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.model.entity;
+
 import com.c17.ebalance.ebalance.utility.Observable;
 import com.c17.ebalance.ebalance.utility.Observer;
 
@@ -13,7 +14,8 @@ public class ArchivioProduzioneBean implements Observable {
     private float produzioneGiornaliera;
     private int idSorgente;
 
-    public ArchivioProduzioneBean() { }
+    public ArchivioProduzioneBean() {
+    }
 
     public ArchivioProduzioneBean(final int idProduzione, final Date dataProduzione,
                                   final float produzioneGiornaliera, final int idSorgente) {

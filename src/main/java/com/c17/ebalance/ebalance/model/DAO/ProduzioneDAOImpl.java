@@ -32,6 +32,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+
     private static final String TABLE_NAME_ARCHIVIO = "ArchivioProduzione";
     private static final String TABLE_NAME_SORGENTE = "Sorgente";
     private static final String TABLE_NAME_TIPO_SORGENTE = "TipoSorgente";
@@ -120,7 +121,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         ResultSet resultSet = null;
         ProduzioneAttualeBean produzioneSorgente = new ProduzioneAttualeBean();
         String selectSQL = "SELECT  ROUND(SUM(ProduzioneAttuale),2) AS ProduzioneSorgente FROM " + TABLE_NAME_SORGENTE
-                            + " WHERE Tipologia != 'Servizio Elettrico Nazionale'";
+                + " WHERE Tipologia != 'Servizio Elettrico Nazionale'";
         try {
             connection = ds.getConnection();
             preparedStatement = connection.prepareStatement(selectSQL);
@@ -220,7 +221,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         PreparedStatement preparedStatement5 = null;
 
         String selectSQL = "SELECT FlagAttivazioneSorgente, FlagStatoSorgente FROM " + TABLE_NAME_SORGENTE
-                        + " WHERE IdSorgente = ?";
+                + " WHERE IdSorgente = ?";
         String updateSQL = "UPDATE " + TABLE_NAME_SORGENTE + " SET ProduzioneAttuale = ? WHERE IdSorgente = ?";
         String selectSQL2 = "SELECT * FROM " + TABLE_NAME_ARCHIVIO + " WHERE IdSorgente = ? AND DataProduzione = ?";
         String insertSQL = "INSERT INTO " + TABLE_NAME_ARCHIVIO + " (DataProduzione, ProduzioneGiornaliera, IdSorgente) VALUES (?, 0, ?)";
@@ -361,13 +362,14 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         }
 
     }
+
     @Override
-    public float energiaRinnovabileProdottaPerData(final Date dataInizio, final Date dataFine) throws SQLException{
+    public float energiaRinnovabileProdottaPerData(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
 
-        float energiaTotale=0;
+        float energiaTotale = 0;
         String selectSQL = "SELECT SUM(ProduzioneGiornaliera) AS Produzione FROM "
                 + TABLE_NAME_ARCHIVIO + " WHERE IdSorgente != 1 AND DataProduzione BETWEEN ? AND ? ";
         try {
@@ -378,7 +380,7 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                energiaTotale=resultSet.getFloat("Produzione");
+                energiaTotale = resultSet.getFloat("Produzione");
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());

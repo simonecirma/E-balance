@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.model.entity;
+
 import com.c17.ebalance.ebalance.utility.Observable;
 import com.c17.ebalance.ebalance.utility.Observer;
 
@@ -16,7 +17,8 @@ public class MeteoBean implements Observable {
     private int probabilitaPioggia;
     private String condizioniMetereologiche;
 
-    public MeteoBean() { }
+    public MeteoBean() {
+    }
 
     public MeteoBean(final int idMeteo, final Date dataRilevazione,
                      final Time oraRilevazione, final float velocitaVento,

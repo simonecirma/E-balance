@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -21,7 +22,9 @@ public class AccessoController extends HttpServlet {
     private AccessoService accessoService = new AccessoServiceImpl();
     private ServletContext servletContext;
 
-    public AccessoController () { }
+    public AccessoController() {
+    }
+
     public AccessoController(AccessoService accessoService, ServletContext servletContext) {
         this.accessoService = accessoService;
         this.servletContext = servletContext;

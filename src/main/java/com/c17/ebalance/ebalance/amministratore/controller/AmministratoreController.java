@@ -31,6 +31,7 @@ public class AmministratoreController extends HttpServlet {
     private AccessoController accessoController = new AccessoController();
 
     private VenditaService venditaService = new VenditaServiceImpl();
+
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
         String action = request.getParameter("action");

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class ContrattoServiceImpl implements ContrattoService {
     private ContrattoDAO contrattoDao = new ContrattoDAOImpl();
+
     @Override
     public ContrattoBean visualizzaContratto() throws SQLException {
         return contrattoDao.visualizzaContratto();
@@ -32,18 +33,15 @@ public class ContrattoServiceImpl implements ContrattoService {
 
         if (contrattoAttuale.getIdContratto() > 0) {
 
-            // Converte le date in oggetti Calendar
             Calendar calDataDiRiferimento = Calendar.getInstance();
             calDataDiRiferimento.setTime(contrattoAttuale.getDataSottoscrizione());
 
             Calendar calDataAttuale = Calendar.getInstance();
             calDataAttuale.setTime(contrattoNuovo.getDataSottoscrizione());
 
-            // Calcola il periodo tra le due date
             int anniDifferenza = calDataAttuale.get(Calendar.YEAR) - calDataDiRiferimento.get(Calendar.YEAR);
             int mesiDifferenza = calDataAttuale.get(Calendar.MONTH) - calDataDiRiferimento.get(Calendar.MONTH);
 
-            // Calcola il numero totale di mesi passati
             int mesiPassati = anniDifferenza * 12 + mesiDifferenza;
 
             contrattoAttuale.setDurata(mesiPassati);

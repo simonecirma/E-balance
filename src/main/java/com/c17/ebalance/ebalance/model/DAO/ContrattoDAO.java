@@ -8,10 +8,16 @@ import java.util.List;
 
 public interface ContrattoDAO {
     ContrattoBean visualizzaContratto() throws SQLException;
+
     List<ContrattoBean> visualizzaStoricoContratti() throws SQLException;
+
     ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException;
+
     ContrattoBean aggiungiContratto(final ContrattoBean contratto) throws SQLException;
+
     boolean verificaPrimoContratto() throws SQLException;
+
     ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException;
+
     float ottieniPrezzoVendita() throws SQLException;
 }

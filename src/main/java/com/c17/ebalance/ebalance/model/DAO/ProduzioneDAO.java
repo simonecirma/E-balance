@@ -10,8 +10,11 @@ import java.util.List;
 
 public interface ProduzioneDAO {
     List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException;
+
     List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException;
+
     float ottieniProduzioneSEN() throws SQLException;
+
     float ottieniProduzioneProdotta() throws SQLException;
 
     List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException;

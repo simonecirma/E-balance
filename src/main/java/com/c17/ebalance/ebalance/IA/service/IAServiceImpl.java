@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class IAServiceImpl implements IAService {
     private ParametriIADAO parametriIA = new ParametriIADAOImpl();
+
     @Override
     public List<ParametriIABean> visualizzaParametri() throws SQLException {
         return parametriIA.visualizzaParametri();
@@ -32,7 +33,8 @@ public class IAServiceImpl implements IAService {
     @Override
     public void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String sortableListData) throws SQLException {
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Map<String, String>>>(){}.getType();
+        Type type = new TypeToken<List<Map<String, String>>>() {
+        }.getType();
         List<Map<String, String>> priorities = gson.fromJson(sortableListData, type);
         String prioritaSorgenti[] = new String[10];
         int i = 0;

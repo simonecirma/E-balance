@@ -74,19 +74,19 @@ public class MeteoDAOImpl implements MeteoDAO {
         Connection con = null;
         PreparedStatement ps = null;
         Time sqlTime = null;
-        if(orario==0) {
+        if (orario == 0) {
             sqlTime = Time.valueOf("00:00:00");
-        }else if (orario==6) {
+        } else if (orario == 6) {
             sqlTime = Time.valueOf("06:00:00");
-        }else if (orario==12) {
+        } else if (orario == 12) {
             sqlTime = Time.valueOf("12:00:00");
-        }else if(orario==18) {
+        } else if (orario == 18) {
             sqlTime = Time.valueOf("18:00:00");
         }
-        try{
+        try {
             con = ds.getConnection();
             String query = "INSERT INTO " + TABLE_NAME_METEO + "(DataRilevazione, OraRilevazione, VelocitaVento, ProbabilitaPioggia, CondizioniMetereologiche)" +
-                        "VALUES(?, ?, ?, ?, ?)";
+                    "VALUES(?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setDate(1, sqlDate);
             ps.setTime(2, sqlTime);
@@ -94,7 +94,7 @@ public class MeteoDAOImpl implements MeteoDAO {
             ps.setInt(4, prob);
             ps.setString(5, condizioneCasuale);
             ps.executeUpdate();
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             if (ps != null) {
@@ -110,16 +110,16 @@ public class MeteoDAOImpl implements MeteoDAO {
     public List<String> getCondizione() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
-        List<String> condizioni=new ArrayList<>();
-        try{
+        List<String> condizioni = new ArrayList<>();
+        try {
             con = ds.getConnection();
-            String query ="SELECT * FROM " + TABLE_NAME_CONDIZIONI;
+            String query = "SELECT * FROM " + TABLE_NAME_CONDIZIONI;
             ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 condizioni.add(rs.getString("Condizione"));
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             if (ps != null) {
@@ -138,13 +138,13 @@ public class MeteoDAOImpl implements MeteoDAO {
         PreparedStatement ps = null;
         Time sqlTime = null;
         boolean res = false;
-        if(orario==0) {
+        if (orario == 0) {
             sqlTime = Time.valueOf("00:00:00");
-        }else if (orario==6) {
+        } else if (orario == 6) {
             sqlTime = Time.valueOf("06:00:00");
-        }else if (orario==12) {
+        } else if (orario == 12) {
             sqlTime = Time.valueOf("12:00:00");
-        }else if(orario==18) {
+        } else if (orario == 18) {
             sqlTime = Time.valueOf("18:00:00");
         }
         try {
@@ -155,7 +155,7 @@ public class MeteoDAOImpl implements MeteoDAO {
             ps.setTime(2, sqlTime);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                res=true;
+                res = true;
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());

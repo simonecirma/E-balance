@@ -29,6 +29,7 @@ public class ReportDAOImpl implements ReportDAO {
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+
     private static final String TABLE_NAME_REPORT = "Report";
 
     public List<ReportBean> visualizzaReport() throws SQLException {
@@ -37,7 +38,7 @@ public class ReportDAOImpl implements ReportDAO {
         ResultSet resultSet = null;
 
         List<ReportBean> report = new ArrayList<>();
-        String selectSQL = "SELECT * FROM " + TABLE_NAME_REPORT+ " ORDER BY DataEmissione DESC";
+        String selectSQL = "SELECT * FROM " + TABLE_NAME_REPORT + " ORDER BY DataEmissione DESC";
 
         try {
             connection = ds.getConnection();

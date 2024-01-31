@@ -15,9 +15,7 @@
     List<InteragisceBean> parametriAttivi = (List<InteragisceBean>) request.getAttribute("parametriAttivi");
     List<TipoSorgenteBean> tipoSorgente = (List<TipoSorgenteBean>) request.getAttribute("tipoSorgente");
     String result = (String) request.getAttribute("result");
-
-    synchronized(session)
-    {
+    synchronized(session) {
         session = request.getSession();
         idAmministratore = (int) session.getAttribute("idAmministratore");
     }
@@ -76,6 +74,7 @@
                         if (percentualeBatterie <= 5) {
                     %>
                     <h5>Batteria scarica, protocollo emergenza attivo!</h5>
+                    <br><br>
                     <%
                         }
                     %>

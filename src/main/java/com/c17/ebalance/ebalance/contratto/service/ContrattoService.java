@@ -9,11 +9,17 @@ import java.util.List;
 
 public interface ContrattoService {
     ContrattoBean visualizzaContratto() throws SQLException;
+
     List<ContrattoBean> visualizzaStoricoContratti() throws SQLException;
+
     void aggiornaContratto(ContrattoBean contratto) throws SQLException;
+
     void aggiungiContratto(ContrattoBean contrattoNuovo) throws SQLException;
+
     boolean verificaPrimoContratto() throws SQLException;
+
     ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException;
+
     float ottieniPrezzoVendita() throws SQLException;
 }
 

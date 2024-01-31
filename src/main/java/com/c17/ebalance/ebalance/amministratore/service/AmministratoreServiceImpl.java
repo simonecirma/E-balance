@@ -14,6 +14,7 @@ public class AmministratoreServiceImpl implements AmministratoreService {
     public Boolean verificaSuperAdmin() throws SQLException {
         return amministratoreDAO.verificaSuperAdmin();
     }
+
     @Override
     public List<AmministratoreBean> visualizzaAmministratori() throws SQLException {
         return amministratoreDAO.visualizzaAmministratori();
@@ -23,9 +24,11 @@ public class AmministratoreServiceImpl implements AmministratoreService {
     public AmministratoreBean aggiornaAmministratore(final AmministratoreBean amministratore) throws SQLException {
         return amministratoreDAO.aggiornaAmministratore(amministratore);
     }
+
     public void aggiungiAmministratore(final AmministratoreBean amministratore) throws SQLException {
-         amministratoreDAO.aggiungiAmministratore(amministratore);
+        amministratoreDAO.aggiungiAmministratore(amministratore);
     }
+
     public AmministratoreBean getById(final int id) throws SQLException {
         return amministratoreDAO.getById(id);
     }

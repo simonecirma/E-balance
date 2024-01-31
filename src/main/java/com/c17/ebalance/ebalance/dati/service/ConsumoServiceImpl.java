@@ -25,7 +25,7 @@ public class ConsumoServiceImpl implements ConsumoService {
         for (int i = 1; i < numElementi; i++) {
             consumoEdifici[i - 1] = consumoEdifici[i];
         }
-        consumoEdifici[numElementi-1] = consumoDAO.ottieniConsumiEdifici();
+        consumoEdifici[numElementi - 1] = consumoDAO.ottieniConsumiEdifici();
         return consumoEdifici;
     }
 
@@ -35,7 +35,7 @@ public class ConsumoServiceImpl implements ConsumoService {
     }
 
 
-    public float getConsumoPerData(java.sql.Date dataInizio, java.sql.Date dataFine) throws SQLException{
+    public float getConsumoPerData(java.sql.Date dataInizio, java.sql.Date dataFine) throws SQLException {
         return consumoDAO.getConsumoPerData(dataInizio, dataFine);
     }
 }

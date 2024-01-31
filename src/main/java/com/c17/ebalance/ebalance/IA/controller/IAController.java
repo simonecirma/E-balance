@@ -35,6 +35,7 @@ public class IAController extends HttpServlet {
     public List<ParametriIABean> ottieniParametri() throws SQLException {
         return IAService.visualizzaParametri();
     }
+
     public List<InteragisceBean> ottieniInterazioneParametri() throws SQLException {
         return IAService.visualizzaInterazioneParametri();
     }
@@ -42,6 +43,7 @@ public class IAController extends HttpServlet {
     public List<InteragisceBean> ottieniParametriAttivi() throws SQLException {
         return IAService.ottieniParametriAttivi();
     }
+
     public void destroy() {
     }
 }

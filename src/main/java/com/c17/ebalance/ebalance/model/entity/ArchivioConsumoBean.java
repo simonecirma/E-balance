@@ -15,7 +15,8 @@ public class ArchivioConsumoBean implements Observable {
     private float consumoGiornaliero;
     private int idEdificio;
 
-    public ArchivioConsumoBean() { }
+    public ArchivioConsumoBean() {
+    }
 
     public ArchivioConsumoBean(final int idConsumo, final Date dataConsumo,
                                final float consumoGiornaliero, final int idEdificio) {
@@ -84,7 +85,7 @@ public class ArchivioConsumoBean implements Observable {
     @Override
     public void notifyObservers(String nomeMetodo) {
         for (Observer observer : observers) {
-                observer.update(nomeMetodo);
+            observer.update(nomeMetodo);
         }
     }
 }

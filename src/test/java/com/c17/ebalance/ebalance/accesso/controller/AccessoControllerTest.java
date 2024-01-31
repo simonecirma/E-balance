@@ -105,7 +105,6 @@ class AccessoControllerTest {
 
     @Test
     void testLoginSetsSession() throws SQLException {
-        // Categoria: Login valido
         AmministratoreBean amministratore = new AmministratoreBean();
         amministratore.setEmail("m.ercolino1@studenti.unisa.it");
         when(accessoService.login("m.ercolino1@studenti.unisa.it", "Matteo2024!")).thenReturn(amministratore);

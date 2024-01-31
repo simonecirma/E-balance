@@ -19,7 +19,8 @@ public class ContrattoBean implements Observable {
     private float prezzoVendita;
     private int idAmministatore;
 
-    public ContrattoBean() { }
+    public ContrattoBean() {
+    }
 
     public ContrattoBean(final int idContratto, final String nomeEnte, final float consumoMedioAnnuale,
                          final float costoMedioUnitario, final Date dataSottoscrizione, final int durata,

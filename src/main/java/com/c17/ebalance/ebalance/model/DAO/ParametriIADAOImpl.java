@@ -2,6 +2,7 @@ package com.c17.ebalance.ebalance.model.DAO;
 
 import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
 import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -34,6 +35,7 @@ public class ParametriIADAOImpl implements ParametriIADAO {
 
     private static final String TABLE_NAME_PARAMETRI = "ParametriIA";
     private static final String TABLE_NAME_INTERAGISCE = "Interagisce";
+
     @Override
     public List<ParametriIABean> visualizzaParametri() throws SQLException {
         Connection connection = null;
@@ -116,7 +118,7 @@ public class ParametriIADAOImpl implements ParametriIADAO {
 
         List<InteragisceBean> parametriAttivi = new ArrayList<>();
         String selectSQL = "SELECT * FROM " + TABLE_NAME_INTERAGISCE + " WHERE idParametro IN (SELECT idparametro FROM "
-                + TABLE_NAME_PARAMETRI +" WHERE FlagAttivazioneParametro = TRUE) ORDER BY PrioritaSorgente";
+                + TABLE_NAME_PARAMETRI + " WHERE FlagAttivazioneParametro = TRUE) ORDER BY PrioritaSorgente";
 
         try {
             connection = ds.getConnection();

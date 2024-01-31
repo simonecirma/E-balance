@@ -10,7 +10,8 @@ public class CondizioneMeteoBean implements Observable {
     private static List<Observer> observers = new ArrayList<>();
     private String condizione;
 
-    public CondizioneMeteoBean() { }
+    public CondizioneMeteoBean() {
+    }
 
     public CondizioneMeteoBean(final String condizione) {
         this.condizione = condizione;

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ConsumoDAOImpl implements ConsumoDAO{
+public class ConsumoDAOImpl implements ConsumoDAO {
 
     private static Logger logger = Logger.getLogger(ConsumoDAOImpl.class.getName());
     private static DataSource ds;
@@ -35,6 +35,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
             logger.log(Level.WARNING, e.getMessage());
         }
     }
+
     private static final String TABLE_NAME_CONSUMO = "ConsumoEdificio";
     private static final String TABLE_NAME_ARCHIVIO = "ArchivioConsumo";
 
@@ -106,7 +107,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
 
         List<ArchivioConsumoBean> archivioConsumi = new ArrayList<>();
         String selectSQL = " SELECT Consumo, DataConsumo "
-                + " FROM ( SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM "  + TABLE_NAME_ARCHIVIO
+                + " FROM ( SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM " + TABLE_NAME_ARCHIVIO
                 + " GROUP BY DataConsumo ORDER BY Consumo DESC limit 10 ) AS Subquery"
                 + " ORDER BY DataConsumo";
         try {
@@ -228,7 +229,7 @@ public class ConsumoDAOImpl implements ConsumoDAO{
         try {
             con = ds.getConnection();
             String query = "SELECT SUM(ConsumoGiornaliero) AS "
-                    + "ConsumoTotale FROM "+ TABLE_NAME_ARCHIVIO + " WHERE "
+                    + "ConsumoTotale FROM " + TABLE_NAME_ARCHIVIO + " WHERE "
                     + "DataConsumo BETWEEN ? AND ?";
 
             ps = con.prepareStatement(query);

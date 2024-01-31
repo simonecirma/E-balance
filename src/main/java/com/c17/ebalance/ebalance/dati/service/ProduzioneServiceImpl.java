@@ -30,9 +30,10 @@ public class ProduzioneServiceImpl implements ProduzioneService {
         for (int i = 1; i < numElementi; i++) {
             produzioneSorgente[i - 1] = produzioneSorgente[i];
         }
-        produzioneSorgente[numElementi-1] = produzioneDAO.ottieniProduzioneProdotta();
+        produzioneSorgente[numElementi - 1] = produzioneDAO.ottieniProduzioneProdotta();
         return produzioneSorgente;
     }
+
     @Override
     public float ottieniProduzioneSEN() throws SQLException {
         return produzioneDAO.ottieniProduzioneSEN();

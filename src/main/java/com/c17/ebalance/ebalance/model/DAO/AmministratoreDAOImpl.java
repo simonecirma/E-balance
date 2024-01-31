@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AmministratoreDAOImpl implements AmministratoreDAO{
+public class AmministratoreDAOImpl implements AmministratoreDAO {
 
     private static Logger logger = Logger.getLogger(AmministratoreDAOImpl.class.getName());
     private static DataSource ds;
@@ -59,6 +59,7 @@ public class AmministratoreDAOImpl implements AmministratoreDAO{
 
         return result;
     }
+
     private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
 
     public AmministratoreBean login(final String email, final String password) throws SQLException {

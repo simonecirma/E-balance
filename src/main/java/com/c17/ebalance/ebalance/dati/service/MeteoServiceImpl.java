@@ -7,7 +7,7 @@ import com.c17.ebalance.ebalance.model.entity.MeteoBean;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MeteoServiceImpl implements MeteoService{
+public class MeteoServiceImpl implements MeteoService {
     private MeteoDAO meteoDAO = new MeteoDAOImpl();
 
     @Override

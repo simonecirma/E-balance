@@ -1,4 +1,5 @@
 package com.c17.ebalance.ebalance.model.entity;
+
 import com.c17.ebalance.ebalance.utility.Observable;
 import com.c17.ebalance.ebalance.utility.Observer;
 
@@ -15,7 +16,8 @@ public class SorgenteBean implements Observable {
     private boolean flagStatoSorgente;
     private boolean flagAttivazioneSorgente;
 
-    public SorgenteBean() { }
+    public SorgenteBean() {
+    }
 
     public SorgenteBean(final int idSorgente, final String tipologia, final Date dataInstallazione,
                         final float produzioneAttuale, final boolean flagStatoSorgente,

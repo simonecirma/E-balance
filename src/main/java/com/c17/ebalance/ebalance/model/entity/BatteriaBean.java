@@ -13,7 +13,8 @@ public class BatteriaBean implements Observable {
     private float capacitaMax;
     private float percentualeCarica;
 
-    public BatteriaBean() { }
+    public BatteriaBean() {
+    }
 
     public BatteriaBean(final int idBatteria, final boolean flagStatoBatteria,
                         final float capacitaMax, final float percentualeCarica) {

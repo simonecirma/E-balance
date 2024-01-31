@@ -10,7 +10,8 @@ public class TipoSorgenteBean implements Observable {
     private static List<Observer> observers = new ArrayList<>();
     private String tipo;
 
-    public TipoSorgenteBean() { }
+    public TipoSorgenteBean() {
+    }
 
     public TipoSorgenteBean(final String tipo) {
         this.tipo = tipo;
