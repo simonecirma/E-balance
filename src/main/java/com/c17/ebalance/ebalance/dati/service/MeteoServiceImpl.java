@@ -14,4 +14,9 @@ public class MeteoServiceImpl implements MeteoService {
     public List<MeteoBean> getCondizioniMeteo() throws SQLException {
         return meteoDAO.getCondizioniMeteo();
     }
+
+    @Override
+    public List<MeteoBean> getCondizioniSettimanali() throws SQLException {
+        return meteoDAO.mediaGiornaliera();
+    }
 }

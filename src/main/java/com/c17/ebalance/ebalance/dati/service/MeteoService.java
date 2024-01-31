@@ -7,5 +7,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface MeteoService {
-    List<MeteoBean> getCondizioniMeteo() throws SQLException;
+    List<MeteoBean> getCondizioniMeteo()throws SQLException;
+    List<MeteoBean> getCondizioniSettimanali()throws SQLException;
 }

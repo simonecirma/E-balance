@@ -512,42 +512,79 @@
                         if (condizioni != null && !condizioni.isEmpty()) {
                     %>
                     <div class="contentMeteoTab">
-                    <table id="meteoTable">
-                        <thead>
+                        <table id="meteoTable">
+                            <thead>
 
-                        <tr>
-                            <th>Data</th>
-                            <th>Ora</th>
-                            <th colspan="2">Previsione</th>
-                            <th>Pioggia</th>
-                            <th>Vento</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <%
-                            for (MeteoBean bean : condizioni) {
-                        %>
-                        <tr>
-                            <td> <%= bean.getDataRilevazione() %></td>
-                            <td> <%= bean.getOraRilevazione() %></td>
-                            <td></td>
-                            <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
-                            <td> <%= bean.getProbabilitaPioggia()%>%</td>
-                            <td> <%= bean.getVelocitaVento()%>km/h</td>
-                        </tr>
+                            <tr>
+                                <th>Data</th>
+                                <th>Ora</th>
+                                <th colspan="2">Previsione</th>
+                                <th>Pioggia</th>
+                                <th>Vento</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                for (MeteoBean bean : condizioni) {
+                            %>
+                            <tr>
+                                <td> <%= bean.getDataRilevazione() %></td>
+                                <td> <%= bean.getOraRilevazione() %></td>
+                                <td></td>
+                                <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
+                                <td> <%= bean.getProbabilitaPioggia()%>%</td>
+                                <td> <%= bean.getVelocitaVento()%>km/h</td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                            </tbody>
+                        </table>
                         <%
                             }
                         %>
-                        </tbody>
-                    </table>
-                    <%
-                        }
-                    %>
-                </div>
+                    </div>
                 </div>
             </div>
             <div class="expanded-content-meteo">
+                <div id="mete" name="meteo">
+                    <%
+                        if (condizioni != null && !condizioni.isEmpty()) {
+                    %>
+                    <div class="contentMeteoTab">
+                        <table id="meteoTable">
+                            <thead>
 
+                            <tr>
+                                <th>Data</th>
+                                <th>Ora</th>
+                                <th colspan="2">Previsione</th>
+                                <th>Pioggia</th>
+                                <th>Vento</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                for (MeteoBean bean : condizioni) {
+                            %>
+                            <tr>
+                                <td> <%= bean.getDataRilevazione() %></td>
+                                <td> <%= bean.getOraRilevazione() %></td>
+                                <td></td>
+                                <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
+                                <td> <%= bean.getProbabilitaPioggia()%>%</td>
+                                <td> <%= bean.getVelocitaVento()%>km/h</td>
+                            </tr>
+                            <%
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                        <%
+                            }
+                        %>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

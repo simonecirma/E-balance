@@ -169,4 +169,59 @@ public class MeteoDAOImpl implements MeteoDAO {
         }
         return res;
     }
+
+    @Override
+    public List<MeteoBean> mediaGiornaliera() throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        List<MeteoBean> condizioni = new ArrayList<>();
+
+        data = calendario.getTime();
+        java.sql.Date sqlDate = new java.sql.Date(data.getTime());
+        try{
+            con = ds.getConnection();
+            String query = "SELECT AVG(VelocitaVento) AS mediaVel, AVG(ProbabilitaPioggia) AS mediaPioggia, DataRilevazione FROM " + TABLE_NAME_METEO
+                + " WHERE DataRilevazione >= ? GROUP BY DataRilevazione"
+                + " ORDER BY DataRilevazione ASC LIMIT 7";
+            ps = con.prepareStatement(query);
+            ps.setDate(1, sqlDate);
+            ResultSet rs = ps.executeQuery();
+            System.out.println(rs);
+            while (rs.next()) {
+                System.out.println("entriamo nel while");
+                MeteoBean bean = new MeteoBean();
+                bean.setDataRilevazione(rs.getDate("DataRilevazione"));
+                bean.setVelocitaVento(rs.getFloat("mediaVel"));
+                bean.setProbabilitaPioggia(rs.getInt("mediaPioggia"));
+
+                System.out.println("settiamo le medie");
+
+                if(rs.getInt("mediaPioggia") <= 10) {
+                    bean.setCondizioniMetereologiche("Soleggiato");
+                } else if (rs.getInt("mediaPioggia") > 10 && rs.getInt("mediaPioggia") <= 20) {
+                    bean.setCondizioniMetereologiche("Sereno");
+                } else if (rs.getInt("mediaPioggia") > 20 && rs.getInt("mediaPioggia") <= 30) {
+                    bean.setCondizioniMetereologiche("Ventilato");
+                } else if (rs.getInt("mediaPioggia") > 30 && rs.getInt("mediaPioggia") <= 40) {
+                    bean.setCondizioniMetereologiche("Nuvoloso");
+                } else if (rs.getInt("mediaPioggia") > 40 && rs.getInt("mediaPioggia") <= 50) {
+                    bean.setCondizioniMetereologiche("Nevoso");
+                }else if (rs.getInt("mediaPioggia") > 50) {
+                    bean.setCondizioniMetereologiche("Piovoso");
+                }
+                System.out.println("settiamo la descrizione" + bean.getCondizioniMetereologiche());
+                condizioni.add(bean);
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return condizioni;
+    }
 }

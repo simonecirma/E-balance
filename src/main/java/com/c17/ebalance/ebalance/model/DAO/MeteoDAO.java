@@ -15,4 +15,5 @@ public interface MeteoDAO {
     List<String> getCondizione() throws SQLException;
 
     boolean verificaPresenza(Date sqlDate, int orario) throws SQLException;
+    List<MeteoBean> mediaGiornaliera() throws SQLException;
 }

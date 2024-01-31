@@ -134,8 +134,10 @@ public class DatiController extends HttpServlet implements Observer {
                     List<ArchivioConsumoBean> archivioConsumo = consumoService.visualizzaStoricoConsumi();
                     request.setAttribute("archivioConsumo", archivioConsumo);
 
-                    List<MeteoBean> condizioni = meteoService.getCondizioniMeteo();
-                    request.setAttribute("condizioniMeteo", condizioni);
+                    List<MeteoBean> condizioniGiornaliere = meteoService.getCondizioniMeteo();
+                    request.setAttribute("condizioniMeteo", condizioniGiornaliere);
+                    List<MeteoBean> condizioniSettimanali = meteoService.getCondizioniSettimanali();
+                    request.setAttribute("condizioniSettimanali", condizioniSettimanali);
 
                     produzioneSorgente = produzioneService.ottieniProduzioneProdotta(produzioneSorgente);
                     request.setAttribute("produzioneSorgente", produzioneSorgente);
