@@ -1,21 +1,19 @@
 package com.c17.ebalance.ebalance.model.DAO;
 
-import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAO;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class AmministratoreDAOImplTest {
 
-
-
     @Test
     void verificaSuperAdmin() throws SQLException {
-        Boolean result = AmministratoreDAO.verificaSuperAdmin();
+        AmministratoreDAOImpl amministratoreDAO = mock(AmministratoreDAOImpl.class);
+        Boolean result = amministratoreDAO.verificaSuperAdmin();
         assertNotNull(result);
     }
 
