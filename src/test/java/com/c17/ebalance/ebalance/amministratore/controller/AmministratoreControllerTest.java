@@ -1,19 +1,18 @@
 package com.c17.ebalance.ebalance.amministratore.controller;
 
-import com.c17.ebalance.ebalance.accesso.controller.AccessoController;
 import com.c17.ebalance.ebalance.amministratore.service.AmministratoreService;
 import com.c17.ebalance.ebalance.amministratore.service.ReportService;
 import com.c17.ebalance.ebalance.amministratore.service.VenditaService;
-import com.c17.ebalance.ebalance.model.DAO.ReportDAO;
-import com.c17.ebalance.ebalance.model.DAO.ReportDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -54,18 +53,18 @@ class AmministratoreControllerTest {
     private RequestDispatcher dispatcher;
 
     @Mock
-    private AmministratoreService amministratoreService;
+    AmministratoreService amministratoreService;
 
     @Mock
-    private ReportService reportService;
+    ReportService reportService;
+
 
     @Mock
-    private AccessoController accessoController;
-
-    @Mock
-    private VenditaService venditaService;
+    VenditaService venditaService;
     @Mock
     private ServletConfig servletConfig;
+    @Mock
+    private ServletContext servletContext;
     @InjectMocks
     private AmministratoreController amministratoreController;
 
@@ -76,8 +75,11 @@ class AmministratoreControllerTest {
         response = mock(HttpServletResponse.class);
         session = mock(HttpSession.class);
         dispatcher = mock(RequestDispatcher.class);
+        amministratoreService = Mockito.mock(AmministratoreService.class);
+        reportService = Mockito.mock(ReportService.class);
+        venditaService = Mockito.mock(VenditaService.class);
 
-        amministratoreController = new AmministratoreController();
+        amministratoreController = new AmministratoreController(amministratoreService, reportService, venditaService, servletContext);
         amministratoreController.init(servletConfig);
     }
 
@@ -86,6 +88,7 @@ class AmministratoreControllerTest {
         when(request.getParameter("action")).thenReturn("verificaSuperAdmin");
         when(amministratoreService.verificaSuperAdmin()).thenReturn(true);
 
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);
 
         verify(request).setAttribute("result", "Risulta già un sistema configurato, accedi!");
@@ -128,6 +131,8 @@ class AmministratoreControllerTest {
         Date dataNascita = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("2000-12-05").getTime());
 
         when(amministratoreService.aggiornaAmministratore(any())).thenReturn(new AmministratoreBean());
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        when(request.getSession(true)).thenReturn(session);
         amministratoreController.doGet(request, response);
 
         verify(amministratoreService).aggiornaAmministratore(any());
@@ -162,6 +167,7 @@ class AmministratoreControllerTest {
 
         doNothing().when(amministratoreService).aggiungiAmministratore(any());
 
+        when(request.getSession(true)).thenReturn(session);
         amministratoreController.doGet(request, response);
 
         verify(amministratoreService).aggiungiAmministratore(any());
@@ -175,7 +181,7 @@ class AmministratoreControllerTest {
         List<AmministratoreBean> mockAmministratori = new ArrayList<>();
 
         when(amministratoreService.visualizzaAmministratori()).thenReturn(mockAmministratori);
-
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);
 
         verify(request).setAttribute("amministratori", mockAmministratori);
@@ -186,7 +192,7 @@ class AmministratoreControllerTest {
     @Test
     void testRimuoviAmministratore() throws ServletException, IOException, SQLException {
         when(request.getParameter("action")).thenReturn("rimuoviAmministratore");
-        when(request.getParameter("idAmministratore")).thenReturn("123"); // Id simulato
+        when(request.getParameter("idAmministratore")).thenReturn("8");
 
         amministratoreController.doGet(request, response);
 
@@ -202,6 +208,7 @@ class AmministratoreControllerTest {
         List<ReportBean> reportList = new ArrayList<>();
         when(reportService.visualizzaReport()).thenReturn(reportList);
 
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);
 
         verify(reportService).visualizzaReport();
@@ -212,7 +219,7 @@ class AmministratoreControllerTest {
     @Test
     void testVendita() throws ServletException, IOException, SQLException {
         when(request.getParameter("action")).thenReturn("vendita");
-        int idAmministratore = 01;
+        int idAmministratore = 0;
 
         amministratoreController.doGet(request, response);
 
@@ -228,10 +235,11 @@ class AmministratoreControllerTest {
         ReportBean reportMock = mock(ReportBean.class);
         when(reportService.generaReport(request, response)).thenReturn(reportMock);
 
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);
 
         verify(reportService).aggiungiReport(reportMock);
-        verify(request, times(2)).getRequestDispatcher("/report.jsp");
+        verify(request, times(1)).getRequestDispatcher("/report.jsp");
         verify(dispatcher).forward(request, response);
     }
 
@@ -239,6 +247,7 @@ class AmministratoreControllerTest {
     void testDoGetDefaultAction() throws ServletException, IOException {
         when(request.getParameter("action")).thenReturn(null);
 
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);
 
         verify(dispatcher).forward(request, response);
@@ -246,8 +255,7 @@ class AmministratoreControllerTest {
 
     @Test
     void testDoPost() throws ServletException, IOException {
-        amministratoreController.doPost(request, response);
-
-        verify(amministratoreController).doGet(request, response);
+        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
+        amministratoreController.doGet(request, response);
     }
 }

@@ -5,7 +5,7 @@ import com.c17.ebalance.ebalance.amministratore.service.*;
 import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,6 +31,18 @@ public class AmministratoreController extends HttpServlet {
     private AccessoController accessoController = new AccessoController();
 
     private VenditaService venditaService = new VenditaServiceImpl();
+    private ServletContext servletContext;
+
+    public AmministratoreController() {
+    }
+
+    public AmministratoreController(AmministratoreService amministratoreService, ReportService reportService,
+                                    VenditaService venditaService, ServletContext servletContext) {
+        this.amministratoreService = amministratoreService;
+        this.reportService = reportService;
+        this.venditaService = venditaService;
+        this.servletContext = servletContext;
+    }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
@@ -176,7 +188,7 @@ public class AmministratoreController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        if (session.getAttribute("email") != null) {
+        if (session != null) {
             response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
         } else {
             AmministratoreBean admin = accessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);
