@@ -95,8 +95,7 @@ public class DatiController extends HttpServlet implements Observer {
         meteo.addObserver(this);
         parametriAttivi.addObserver(this);
 
-        new Thread(this::simulazioneEnergia).start();
-        new Thread(this::simulazionePrevisioni).start();
+        new Thread(this::simulazione).start();
 
     }
 
@@ -189,22 +188,13 @@ public class DatiController extends HttpServlet implements Observer {
         doGet(request, response);
     }
 
-    protected void simulazioneEnergia() {
-        while (true) {
-            try {
-                simulazioneService.simulazioneEnergia();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
-    private void simulazionePrevisioni() {
+    private void simulazione() {
         try {
-            simulazioneService.insertPrevisioni();
+            simulazioneService.insertPrevisioniIniziali();
             while (true) {
                 try {
-                    simulazioneService.modificaPrevisioni();
+                    simulazioneService.simulazione();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }

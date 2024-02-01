@@ -186,15 +186,11 @@ public class MeteoDAOImpl implements MeteoDAO {
             ps = con.prepareStatement(query);
             ps.setDate(1, sqlDate);
             ResultSet rs = ps.executeQuery();
-            System.out.println(rs);
             while (rs.next()) {
-                System.out.println("entriamo nel while");
                 MeteoBean bean = new MeteoBean();
                 bean.setDataRilevazione(rs.getDate("DataRilevazione"));
                 bean.setVelocitaVento(rs.getFloat("mediaVel"));
                 bean.setProbabilitaPioggia(rs.getInt("mediaPioggia"));
-
-                System.out.println("settiamo le medie");
 
                 if(rs.getInt("mediaPioggia") <= 10) {
                     bean.setCondizioniMetereologiche("Soleggiato");
@@ -209,7 +205,6 @@ public class MeteoDAOImpl implements MeteoDAO {
                 }else if (rs.getInt("mediaPioggia") > 50) {
                     bean.setCondizioniMetereologiche("Piovoso");
                 }
-                System.out.println("settiamo la descrizione" + bean.getCondizioniMetereologiche());
                 condizioni.add(bean);
             }
         } catch (Exception e) {

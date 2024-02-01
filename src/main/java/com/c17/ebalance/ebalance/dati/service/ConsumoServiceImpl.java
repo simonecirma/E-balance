@@ -22,10 +22,13 @@ public class ConsumoServiceImpl implements ConsumoService {
     @Override
     public float[] ottieniConsumiEdifici(float consumoEdifici[]) throws SQLException {
         int numElementi = consumoEdifici.length;
-        for (int i = 1; i < numElementi; i++) {
-            consumoEdifici[i - 1] = consumoEdifici[i];
+        float consumoAttuale = consumoDAO.ottieniConsumiEdifici();
+        if (consumoAttuale != consumoEdifici[numElementi - 1]) {
+            for (int i = 1; i < numElementi; i++) {
+                consumoEdifici[i - 1] = consumoEdifici[i];
+            }
+            consumoEdifici[numElementi - 1] = consumoAttuale;
         }
-        consumoEdifici[numElementi - 1] = consumoDAO.ottieniConsumiEdifici();
         return consumoEdifici;
     }
 
