@@ -45,7 +45,7 @@
 .dashboard .section.section-expanded {
     margin: 10px;
     width: 100%;
-    height: 80vh;
+    height: 81vh;
     transform: scale(1);
     z-index: 2;
     cursor: default;
@@ -56,8 +56,10 @@
 }
 
 .dashboard .section:not(.section-expanded) {
-    width: 420px;
-    height: 240px;
+    width: 31vw;
+    height: 38vh;
+    min-width: 420px;
+    min-height: 240px;
 }
 #img{
     position: absolute;
@@ -89,6 +91,12 @@
     display: none;
 }
 .section-expanded .contentIA > *:not(.initial-content-IA) {
+    display: block;
+}
+.contentBatt > *:not(.initial-content-bat) {
+    display: none;
+}
+.section-expanded .contentBatt > *:not(.initial-content-bat) {
     display: block;
 }
 
@@ -169,17 +177,9 @@ table {
     justify-content: center;
 }
 .expandedConsumi{
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
 }
-.expandedConsumi #consumi{
-    width: 25%;
-    margin-left: 40px;
-    background: #251c35;
-    color: white;
-}
+
 .expandendEnergia{
     text-align: center;
     display: flex;
@@ -190,15 +190,7 @@ table {
     margin-top: -100px;
     width: 70%;
 }
-#consumi th{
-    padding: 0;
-    height: 35px;
-    color: black;
-}
-#consumi td{
-    padding: 0;
-    height: 32px;
-}
+
 .expandendIA{
     display: flex;
     align-items: center;
@@ -345,6 +337,7 @@ th {
 .single-column {
     width: 30%;
 }
+
 .battery {
     display: flex;
     flex-direction: column-reverse;
@@ -488,7 +481,7 @@ input[type="range"] {
 .sortable-list-container {
     margin-top: 10px;
 }
-
+/*
 @keyframes anime {
     0% {
         background-color: red;
@@ -502,7 +495,7 @@ input[type="range"] {
     100% {
         background-color: limegreen;
     }
-}
+}*/
 
 .containerChart {
     width: 100%;
@@ -510,8 +503,7 @@ input[type="range"] {
     align-items: center;
     justify-content: center;
     margin-top: 30px;
-    gap: 5px;
-    margin-left: 150px;
+    margin-left: 50px;
 
 }
 .containerEnergia {
@@ -525,14 +517,27 @@ input[type="range"] {
 .chart {
     padding: 2rem;
     border-radius: 1rem;
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
-    height: 300px;
-    width: 600px;
+    height: 50vh;
+    width: 73vw;
 }
+.expandedConsumi #consumi{
+    width: 20vw;
+    height: 50vh;
+    margin-left: -23vw;
+}
+    #consumi th{
+        padding: 0;
+        height: 35px;
+        color: black;
+    }
+    #consumi td{
+        padding: 0;
+        height: 32px;
+    }
 
 .chart1 {
-    width: 110%;
-    margin-top: 40px;
+    width: 27vw;
+    margin-top: 50px;
     margin-right: 10px;
 }
 
@@ -570,18 +575,22 @@ input[type="range"] {
     display: none;
 }
 #curveChart_sommaProduzione1{
-    margin-top: -5px;
+    margin-top: 15px;
     margin-left: 10px;
-    width: 420px;
-    height: 170px;
+    width: 35vw;
+    height: 30vh;
     overflow: visible;
+    min-width: 420px;
+    min-height: 170px;
 }
 #curve_chart_ConsumiEdificio1{
-    margin-top: -5px;
+    margin-top: 15px;
     margin-left: 10px;
-    width: 420px;
-    height: 170px;
+    width: 35vw;
+    height: 30vh;
     overflow: visible;
+    min-width: 420px;
+    min-height: 170px;
 }
 #curveChart_sommaProduzione2{
     width: 900px;
@@ -599,10 +608,19 @@ input[type="range"] {
 .section-expanded #curve_chart_ConsumiEdificio1{
     display: none;
 }
-/*
-.section-expanded #tabIA, .section-expanded #tab1IA{
-    display: none;
-}*/
+/* Nascondi il testo sull'asse x */
+#curveChart_sommaProduzione1 text[text-anchor="middle"] {
+    fill: transparent !important;
+}
+#curveChart_sommaProduzione2 text[text-anchor="middle"] {
+    fill: transparent !important;
+}
+#curve_chart_ConsumiEdificio1 text[text-anchor="middle"] {
+    fill: transparent !important;
+}
+#curve_chart_ConsumiEdificio2 text[text-anchor="middle"] {
+    fill: transparent !important;
+}
 
 .contentMeteoTab{
     overflow-y: auto;
@@ -711,3 +729,41 @@ input[type="range"] {
     margin-top: 100px;
     border: 2px solid black;
 }*/
+.containerBattery {
+    height: 200px;
+    width: 200px;
+    background-color: #ffffff;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 8px;
+    box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
+    display: grid;
+    place-items: center;
+}
+
+.circular-progress {
+    position: relative;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+
+.circular-progress:before {
+    content: "";
+    position: absolute;
+    height: 20%;
+    width: 20%;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+.value-container {
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    color: #231c3d;
+}

@@ -672,7 +672,7 @@
             date.push(tabella.rows[i].cells[0].innerText);
             consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
 
-            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.5)';
+            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.7)';
             colors.push(randomColor);
         }
 
@@ -717,7 +717,7 @@
             date.push(tabella.rows[i].cells[0].innerText);
             consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
 
-            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.5)';
+            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.7)';
             colors.push(randomColor);
         }
 
@@ -860,7 +860,7 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Sorg');
-        data.addColumn('number', 'Prod');
+        data.addColumn('number', 'Produzione');
 
         for (var i = 0; i < dataArray.length; i++) {
             var sorg = "Valore " + (i + 1);
@@ -885,7 +885,7 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Sorg');
-        data.addColumn('number', 'Prod');
+        data.addColumn('number', 'Produzione');
 
         for (var i = 0; i < dataArray.length; i++) {
             var sorg = "Valore " + (i + 1);

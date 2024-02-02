@@ -18,7 +18,26 @@
     <script>
         function toggleFormVisibility(formId) {
             var form = document.getElementById(formId);
+            var otherFormId = formId === 'aggiornaContrattoForm' ? 'aggiungiContrattoForm' : 'aggiornaContrattoForm';
+            var otherForm = document.getElementById(otherFormId);
+
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+            otherForm.style.display = 'none'; // Nasconde l'altro form
+
+            var container = document.querySelector('.container');
+            var tables = document.querySelector('.tables');
+            var btn = document.querySelector('.btn-container')
+            if (form.style.display === 'block') {
+                container.style.width = '1000px';
+                tables.style.width = '50%';
+                tables.style.marginTop = '-70px';
+                btn.style.marginTop ='-30px';
+            } else {
+                container.style.width = '600px';
+                tables.style.width = '100%';
+                tables.style.marginTop = '';
+                btn.style.marginTop ='';
+            }
         }
     </script>
 </head>
@@ -36,6 +55,7 @@
                 <img src="img/contratto.png">
             </div>
         </div>
+        <div class="tables">
         <h1> Contratto attuale</h1>
         <br>
         <table>
@@ -83,14 +103,7 @@
             } %>
             </tbody>
         </table>
-
-        <div class="btn-container">
-            <button class="btn" onclick="toggleFormVisibility('aggiornaContrattoForm')">Modifica contratto attuale
-            </button>
-            <button class="btn" onclick="toggleFormVisibility('aggiungiContrattoForm')">Aggiungi un nuovo contratto
-            </button>
         </div>
-
 
         <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post"
               style="display: none;">
@@ -167,6 +180,12 @@
                 <input type="submit" class="btn1" value="Registra nuovo contratto">
             </div>
         </form>
+        <div class="btn-container">
+            <button class="btn" onclick="toggleFormVisibility('aggiornaContrattoForm')">Modifica contratto attuale
+            </button>
+            <button class="btn" onclick="toggleFormVisibility('aggiungiContrattoForm')">Aggiungi un nuovo contratto
+            </button>
+        </div>
     </div>
 </div>
 <br>

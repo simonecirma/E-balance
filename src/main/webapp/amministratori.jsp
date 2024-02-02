@@ -7,6 +7,7 @@
         session = request.getSession();
         email = (String) session.getAttribute("email");
     }
+    boolean isTableVisible = (amministratori != null && !amministratori.isEmpty());
 %>
 <html>
 <head>
@@ -31,8 +32,6 @@
                     <th>Cognome</th>
                     <th>Elimina Admin</th>
                 </tr>
-
-
                     <% if (amministratori != null && !amministratori.isEmpty()) {
         for (AmministratoreBean admin : amministratori) { %>
                 <tr>
@@ -96,14 +95,14 @@
         <button class="btn" onclick="toggleCard()">Aggiungi un nuovo amministratore</button>
     </div>
 </div>
-
 <script>
-    var isTableVisible = true; // Stato iniziale della tabella
+    let tableCard = document.getElementById('table-card');
+    let formCard = document.getElementById('form-card');
+    let button = document.querySelector('.btn');
 
+    var isTableVisible = <%= isTableVisible %>;
+if(isTableVisible) {
     function toggleCard() {
-        var tableCard = document.getElementById('table-card');
-        var formCard = document.getElementById('form-card');
-        var button = document.querySelector('.btn');
         if (button.textContent === "Aggiungi un nuovo amministratore") {
             button.textContent = "Indietro";
         } else {
@@ -125,6 +124,22 @@
 
         isTableVisible = !isTableVisible; // Inverti lo stato della variabile
     }
+     // Richiama la funzione toggleCard() all'apertura della pagina
+}else {
+            // Ruota la tabella fuori dalla vista e mostra il form
+            tableCard.style.transform = 'rotateY(180deg)';
+            tableCard.style.opacity = '0'; // Rendi la tabella trasparente
+            formCard.style.transform = 'rotateY(0deg)';
+            formCard.style.opacity = '1'; // Rendi il form opaco
+
+            isTableVisible = !isTableVisible; // Inverti lo stato della variabile
+
+            toggleCard();
+        }
+
+
+
+
 
     function validateForm() {
         var nome = document.getElementById("nome").value;
@@ -241,4 +256,3 @@
 
 </body>
 </html>
-
