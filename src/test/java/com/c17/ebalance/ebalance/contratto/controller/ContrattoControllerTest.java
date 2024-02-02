@@ -68,31 +68,36 @@ class ContrattoControllerTest {/*
 
     @Test
     void testDoGetActionAggiornaContratto() throws ServletException, IOException, SQLException, ParseException {
-        when(request.getParameter("action")).thenReturn("aggiornaContratto");
+        // Setup mock data for request parameters
         when(request.getParameter("idContratto")).thenReturn("1");
-        when(request.getParameter("nomeEnte")).thenReturn("Enel Energiaa");
-        when(request.getParameter("consumoMedioAnnuale")).thenReturn("1000000");
-        when(request.getParameter("costoMedioUnitario")).thenReturn("0.05");
-        when(request.getParameter("dataSottoscrizione")).thenReturn("2000-01-01");
-        when(request.getParameter("durata")).thenReturn("120");
-        when(request.getParameter("prezzoVendita")).thenReturn("0.03");
-        when(request.getParameter("idAmministratore")).thenReturn("3");
+        when(request.getParameter("nomeEnte")).thenReturn("EnteTest");
+        when(request.getParameter("consumoMedioAnnuale")).thenReturn("100.0");
+        when(request.getParameter("costoMedioUnitario")).thenReturn("50.0");
+        when(request.getParameter("dataSottoscrizione")).thenReturn("2024-02-02");
+        when(request.getParameter("durata")).thenReturn("3");
+        when(request.getParameter("prezzoVendita")).thenReturn("200.0");
+        when(request.getParameter("idAmministratore")).thenReturn("5");
 
-        Date dataSottoscrizione = new Date(new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01").getTime());
+        // Create a mock ContrattoBean
+        ContrattoBean expectedContrattoBean = new ContrattoBean();
+        expectedContrattoBean.setIdContratto(1);
+        expectedContrattoBean.setNomeEnte("EnteTest");
+        expectedContrattoBean.setConsumoMedioAnnuale(100.0F);
+        expectedContrattoBean.setCostoMedioUnitario(50.0F);
+        expectedContrattoBean.setDataSottoscrizione(Date.valueOf("2024-02-02"));
+        expectedContrattoBean.setDurata(3);
+        expectedContrattoBean.setPrezzoVendita(200.0F);
+        expectedContrattoBean.setIdAmministatore(5);
 
-        when(contrattoService.aggiornaContratto(any())).thenReturn(new ContrattoBean());
-        when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
-        when(request.getSession(true)).thenReturn(session);
-        contrattoController.doGet(request, response);
+        // Setup mock behavior for contrattoService
+        when(contrattoService.aggiornaContratto(any(ContrattoBean.class))).thenReturn(expectedContrattoBean);
 
-        verify(contrattoService).aggiornaContratto(any());
-        verify(request).setAttribute(eq("idContratto"), eq("1"));
-        verify(request).setAttribute(eq("nomeEnte"), eq("Enel Energiaa"));
-        verify(request).setAttribute(eq("consumoMedioAnnuale"), eq("1000000"));
-        verify(request).setAttribute(eq("costoMedioUnitario"), eq("0.05"));
-        verify(request).setAttribute(eq("dataSottoscrizione"), eq(dataSottoscrizione));
-        verify(request).setAttribute(eq("durata"), eq(120));
-        verify(request).setAttribute(eq("prezzoVendita"), eq(0.03));
-        verify(request).setAttribute(eq("idAmministratore"), eq(3));
+        // Call the method
+        contrattoController.aggiornaContratto(request, response);
+
+        // Verify interactions
+        verify(contrattoService).aggiornaContratto(expectedContrattoBean);
+        verify(request).getRequestDispatcher("/contratto.jsp");
+        verify(dispatcher).forward(request, response);
     }*/
 }

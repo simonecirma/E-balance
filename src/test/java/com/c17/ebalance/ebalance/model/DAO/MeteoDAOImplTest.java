@@ -205,4 +205,35 @@ class MeteoDAOImplTest {
         verify(preparedStatement).close();
         verify(connection).close();
     }
+
+    @Test
+    void testGetParametro() throws SQLException {
+        // Configura il comportamento del ResultSet simulato per il metodo executeQuery
+        when(resultSet.next()).thenReturn(true).thenReturn(false); // Simula un solo risultato
+        when(resultSet.getInt("IdMeteo")).thenReturn(1);
+
+        java.sql.Date sqlData = java.sql.Date.valueOf("2022-01-01");
+        int result = meteoDAO.getParametro(sqlData, 6);
+
+        // Verifica che il PreparedStatement sia stato creato correttamente
+        verify(connection).prepareStatement(any(String.class));
+        verify(preparedStatement).setDate(1, sqlData);
+        verify(preparedStatement).setTime(2, Time.valueOf("06:00:00"));
+        verify(preparedStatement).executeQuery();
+
+        // Verifica che il risultato sia corretto
+        assertEquals(1, result);
+    }
+
+    @Test
+    void testAggiornaInfluenzare() throws SQLException {
+        // Esegui il metodo aggiornaInfluenzare
+        meteoDAO.aggiornaInfluenzare(1, 2);
+
+        // Verifica che il PreparedStatement sia stato creato correttamente
+        verify(connection).prepareStatement(any(String.class));
+        verify(preparedStatement).setInt(1, 1);
+        verify(preparedStatement).setInt(2, 2);
+        verify(preparedStatement).executeUpdate();
+    }
 }
