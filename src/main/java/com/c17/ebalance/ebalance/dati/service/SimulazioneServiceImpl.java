@@ -157,6 +157,12 @@ public class SimulazioneServiceImpl implements SimulazioneService {
             prob = random.nextInt(10) + 20;
         }
         meteoDAO.insertPrevisioni(sqlDate, i, vel, prob, condizioneCasuale);
+
+        int sorgentiAttive = produzioneDAO.ottieniSorgenti();
+        int id = meteoDAO.getParametro(sqlDate, i);
+        for(int indice = 1; indice < sorgentiAttive + 1 ; indice++) {
+            meteoDAO.aggiornaInfluenzare(id, indice);
+        }
     }
 
     @Override

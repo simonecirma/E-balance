@@ -8,17 +8,15 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import javax.sql.DataSource;
-
 import java.lang.reflect.Field;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class ContrattoDAOImplTest {
     @Mock

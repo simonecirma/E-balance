@@ -19,6 +19,7 @@ public class MeteoDAOImpl implements MeteoDAO {
     private static Logger logger = Logger.getLogger(ContrattoDAOImpl.class.getName());
     private static final String TABLE_NAME_METEO = "Meteo";
     private static final String TABLE_NAME_CONDIZIONI = "CondizioneMeteo";
+    private static final String TABLE_NAME_INFLUENZARE = "Influenzare";
 
     private static DataSource ds;
 
@@ -218,5 +219,67 @@ public class MeteoDAOImpl implements MeteoDAO {
             }
         }
         return condizioni;
+    }
+
+    @Override
+    public int getParametro(java.sql.Date sqlData, int i) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        int id = 0;
+        Time sqlTime = null;
+        if (i == 0) {
+            sqlTime = Time.valueOf("00:00:00");
+        } else if (i == 6) {
+            sqlTime = Time.valueOf("06:00:00");
+        } else if (i == 12) {
+            sqlTime = Time.valueOf("12:00:00");
+        } else if (i == 18) {
+            sqlTime = Time.valueOf("18:00:00");
+        }
+        try{
+            con = ds.getConnection();
+            String query = "SELECT IdMeteo FROM " + TABLE_NAME_METEO + " WHERE DataRilevazione = ? AND OraRilevazione = ?";
+            ps = con.prepareStatement(query);
+            ps.setDate(1, sqlData);
+            ps.setTime(2, sqlTime);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                id = rs.getInt("IdMeteo");
+            }
+        }catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return id;
+    }
+
+    @Override
+    public void aggiornaInfluenzare(int id, int sorgente) throws SQLException {
+        Connection con = null;
+        PreparedStatement ps = null;
+        try{
+            con = ds.getConnection();
+            String query = "INSERT INTO "+ TABLE_NAME_INFLUENZARE + "(IdMeteo, IdSorgente)" +
+                    "VALUES(?, ?)";
+            ps = con.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.setInt(2, sorgente);
+            ps.executeUpdate();
+        }catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage());
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }
