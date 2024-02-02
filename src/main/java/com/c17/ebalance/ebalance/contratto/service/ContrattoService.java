@@ -12,7 +12,7 @@ public interface ContrattoService {
 
     List<ContrattoBean> visualizzaStoricoContratti() throws SQLException;
 
-    void aggiornaContratto(ContrattoBean contratto) throws SQLException;
+    ContrattoBean aggiornaContratto(ContrattoBean contratto) throws SQLException;
 
     void aggiungiContratto(ContrattoBean contrattoNuovo) throws SQLException;
 

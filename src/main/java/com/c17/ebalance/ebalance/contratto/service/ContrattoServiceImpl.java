@@ -23,8 +23,8 @@ public class ContrattoServiceImpl implements ContrattoService {
     }
 
     @Override
-    public void aggiornaContratto(final ContrattoBean contratto) throws SQLException {
-        contrattoDao.aggiornaContratto(contratto);
+    public ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException {
+        return contrattoDao.aggiornaContratto(contratto);
     }
 
     @Override

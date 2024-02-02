@@ -1,9 +1,11 @@
 package com.c17.ebalance.ebalance.contratto.controller;
 
+
 import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
 import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +20,16 @@ import java.util.List;
 @WebServlet(name = "ContrattoController", value = "/ContrattoController")
 public class ContrattoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private ContrattoService contrattoService = new ContrattoServiceImpl();
+    private ServletContext servletContext;
+    public ContrattoService contrattoService = new ContrattoServiceImpl();
+
+    public ContrattoController() {
+    }
+
+    public ContrattoController(ContrattoService contrattoService, ServletContext servletContext) {
+        this.contrattoService = contrattoService;
+        this.servletContext = servletContext;
+    }
 
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
@@ -37,14 +48,14 @@ public class ContrattoController extends HttpServlet {
                 request.setAttribute("contratti", contratti);
                 ContrattoBean contratto = contrattoService.visualizzaContratto();
                 request.setAttribute("contratto", contratto);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);
             } else {
                 List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
                 request.setAttribute("contratti", contratti);
                 ContrattoBean contratto = contrattoService.visualizzaContratto();
                 request.setAttribute("contratto", contratto);
-                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/contratto.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
                 dispatcher.forward(request, response);
             }
         } catch (SQLException | ServletException e) {
@@ -56,7 +67,7 @@ public class ContrattoController extends HttpServlet {
         doGet(request, response);
     }
 
-    public void aggiornaContratto(final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
+    public void aggiornaContratto(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("idContratto"));
         String ente = request.getParameter("nomeEnte");
         float consumo = Float.parseFloat(request.getParameter("consumoMedioAnnuale"));
@@ -65,6 +76,7 @@ public class ContrattoController extends HttpServlet {
         int durata = Integer.parseInt(request.getParameter("durata"));
         float prezzo = Float.parseFloat(request.getParameter("prezzoVendita"));
         int admin = Integer.parseInt(request.getParameter("idAmministratore"));
+
 
         ContrattoBean bean = new ContrattoBean();
 
@@ -82,7 +94,8 @@ public class ContrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
+        dispatcher.forward(request, response);
     }
 
     public void aggiungiContratto(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
@@ -103,7 +116,8 @@ public class ContrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
+        dispatcher.forward(request, response);
     }
 
     public void destroy() {
