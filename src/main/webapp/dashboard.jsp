@@ -26,6 +26,7 @@
 <head>
     <title>Dashboard</title>
     <link href="css/dashboard.css" rel="stylesheet" type="text/css">
+
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -44,13 +45,67 @@
     }
 %>
 <div class="dashboard">
-    <div class="section" onclick="toggleExpansion(1)">
+    <div class="section" id="section1" onclick="toggleExpansion(1)">
+        <a href="DatiController?action=generaDashboard">
+            <img src="img/indietro.png" id="img"></a>
+        <div class="contentEnergia">
+            <div class="initial-content-energia">
+                <!-- Contenuto della sezione 1 -->
+                <h3>Energia prodotta</h3>
+                <div id="curveChart_sommaProduzione1"></div>
+                <div id = "sommaProduzione" name = "sommaProduzione">
+                    Energia prodotta:
+                    <% if (produzioneSorgente != null) {
+                        for(int i=0;i<produzioneSorgente.length;i++) {
+                    %>
+                    <%= produzioneSorgente[i] %>
+                    <%
+                            }
+                        }
+                    %>
+                </div>
+            </div>
+            <div class="expanded-content-energia">
+                Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
+                <div class="chart-container-consumi">
+                    <div id="curveChart_sommaProduzione2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section2" onclick="toggleExpansion(2)">
+        <a href="DatiController?action=generaDashboard">
+            <img src="img/indietro.png" id="img"></a>
+        <div class="contentConsumiAttuali">
+            <div class="initial-content-consumiAttuali">
+                <!-- Contenuto della sezione 3 -->
+                <h3>Consumi attuali</h3>
+                <div id="consumoEdifici" name="consumoEdifici">
+                    <% if (consumoEdifici != null) {
+                        for(int i=0;i<consumoEdifici.length;i++) {
+                    %>
+                    <%= consumoEdifici[i] %>
+                    <%
+                            }
+                        }
+                    %>
+                </div>
+                <div id="curve_chart_ConsumiEdificio1"></div>
+            </div>
+            <div class="expanded-content-consumiAttuali">
+                <div class="chart-container-consumi">
+                    <div id="curve_chart_ConsumiEdificio2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section" id="section3" onclick="toggleExpansion(3)">
         <a href="DatiController?action=generaDashboard">
             <img src="img/indietro.png" id="img"></a>
         <div class="content">
             <div class="initial-content">
                 <!-- Contenuto della sezione 4 -->
-                <h3>Stato attuale batteria</h3>
+                <h3>Batteria</h3>
                 <div class="batt">
                     <div class="battery" id="battery">
                         <div class="box"></div>
@@ -98,64 +153,6 @@
             </div>
         </div>
     </div>
-
-    <div class="section" onclick="toggleExpansion(2)">
-        <a href="DatiController?action=generaDashboard">
-            <img src="img/indietro.png" id="img"></a>
-        <div class="contentEnergia">
-            <div class="initial-content-energia">
-                <!-- Contenuto della sezione 1 -->
-                <h3>Energia prodotta</h3>
-                <div id="curveChart_sommaProduzione1"></div>
-                <div id = "sommaProduzione" name = "sommaProduzione">
-                    Energia prodotta:
-                    <% if (produzioneSorgente != null) {
-                        for(int i=0;i<produzioneSorgente.length;i++) {
-                    %>
-                    <%= produzioneSorgente[i] %>
-                    <%
-                            }
-                        }
-                    %>
-                </div>
-            </div>
-            <div class="expanded-content-energia">
-                Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
-                <div class="chart-container-consumi">
-                    <div id="curveChart_sommaProduzione2"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="section" onclick="toggleExpansion(3)">
-        <a href="DatiController?action=generaDashboard">
-            <img src="img/indietro.png" id="img"></a>
-        <div class="contentConsumiAttuali">
-            <div class="initial-content-consumiAttuali">
-                <!-- Contenuto della sezione 3 -->
-                <h3>Consumi attuali</h3>
-                <div id="consumoEdifici" name="consumoEdifici">
-                    <% if (consumoEdifici != null) {
-                        for(int i=0;i<consumoEdifici.length;i++) {
-                    %>
-                    <%= consumoEdifici[i] %>
-                    <%
-                            }
-                        }
-                    %>
-                </div>
-                <div id="curve_chart_ConsumiEdificio1"></div>
-            </div>
-            <div class="expanded-content-consumiAttuali">
-                <div class="chart-container-consumi">
-                    <div id="curve_chart_ConsumiEdificio2"></div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
     <div class="section" onclick="toggleExpansion(4)">
         <a href="DatiController?action=generaDashboard">
             <img src="img/indietro.png" id="img"></a>
@@ -174,7 +171,6 @@
                     <div class="chart">
                         <canvas id="istogramma2"></canvas>
                     </div>
-
                         <%
                             if (archivioConsumo != null && !archivioConsumo.isEmpty()) {
                         %>
@@ -518,7 +514,7 @@
 
                             <tr>
                                 <th>Data</th>
-                                <th>Ora</th>
+                                <th style="display: none">Ora</th>
                                 <th colspan="2">Previsione</th>
                                 <th>Pioggia</th>
                                 <th>Vento</th>
@@ -530,7 +526,7 @@
                             %>
                             <tr>
                                 <td> <%= bean.getDataRilevazione() %></td>
-                                <td> <%= bean.getOraRilevazione() %></td>
+                                <td style="display: none"> <%= bean.getOraRilevazione() %></td>
                                 <td></td>
                                 <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
                                 <td> <%= bean.getProbabilitaPioggia()%>%</td>
@@ -672,7 +668,7 @@
             date.push(tabella.rows[i].cells[0].innerText);
             consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
 
-            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.7)';
+            var randomColor = '#5b8ff8';
             colors.push(randomColor);
         }
 
@@ -717,7 +713,7 @@
             date.push(tabella.rows[i].cells[0].innerText);
             consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
 
-            var randomColor = 'rgba(' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',' + Math.floor(Math.random()*256) + ',0.7)';
+            var randomColor = '#5b8ff8';
             colors.push(randomColor);
         }
 
@@ -770,7 +766,7 @@
         const numberOfColoredSpans = Math.max(1, Math.floor((value / 100) * spans.length));
 
         spans.forEach((span) => {
-            span.style.backgroundColor = 'white';
+            span.style.backgroundColor = '#28293f';
         });
 
         for (let i = 0; i < numberOfColoredSpans; i++) {
@@ -814,8 +810,22 @@
 
         var options = {
             curveType: 'function',
-            legend: {position: 'bottom'},
-            chartArea: {height: '50px'} // Imposta l'altezza desiderata qui
+            legend: {
+                position: 'bottom',
+
+                textStyle: {
+                    color: '#fff' // Cambia il colore del testo della legenda
+                }
+            },
+            chartArea: {height: '50px'},
+            backgroundColor: 'transparent', // Imposta il colore dello sfondo del grafico
+            colors: ['#f84444'], // Imposta il colore della linea del grafico
+            hAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse x
+            },
+            vAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse y
+            } // Imposta l'altezza desiderata qui
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart_ConsumiEdificio1'));
@@ -840,8 +850,22 @@
 
         var options = {
             curveType: 'function',
-            legend: {position: 'bottom'},
-            chartArea: {height: '50px'} // Imposta l'altezza desiderata qui
+            legend: {
+                position: 'bottom',
+
+                textStyle: {
+                    color: '#fff' // Cambia il colore del testo della legenda
+                }
+            },
+            chartArea: {height: '50px'},
+            backgroundColor: 'transparent', // Imposta il colore dello sfondo del grafico
+            colors: ['#f84444'], // Imposta il colore della linea del grafico
+            hAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse x
+            },
+            vAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse y
+            }// Imposta l'altezza desiderata qui
         };
 
         var chart1 = new google.visualization.LineChart(document.getElementById('curve_chart_ConsumiEdificio2'));
@@ -870,7 +894,22 @@
 
         var options = {
             curveType: 'function',
-            legend: {position: 'bottom'}
+            legend: {
+                position: 'bottom',
+
+                textStyle: {
+                    color: '#fff' // Cambia il colore del testo della legenda
+                }
+            },
+
+        backgroundColor: 'transparent', // Imposta il colore dello sfondo del grafico
+            colors: ['#00fa9a'], // Imposta il colore della linea del grafico
+            hAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse x
+            },
+            vAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse y
+            }
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curveChart_sommaProduzione1'));
@@ -895,7 +934,22 @@
 
         var options = {
             curveType: 'function',
-            legend: {position: 'bottom'}
+            legend: {
+                position: 'bottom',
+
+                textStyle: {
+                    color: '#fff' // Cambia il colore del testo della legenda
+                }
+            },
+            backgroundColor: 'transparent', // Imposta il colore dello sfondo del grafico
+            colors: ['#00fa9a'], // Imposta il colore della linea del grafico
+            hAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse x
+            },
+            vAxis: {
+                textStyle: {color: '#fff'} // Cambia il colore delle etichette dell'asse y
+            }
+
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curveChart_sommaProduzione2'));
@@ -1042,6 +1096,8 @@
         // Dopo aver aggiornato i dati, riaggiungi le icone delle previsioni
         aggiungiIconaPrevisione();
     }
+
+
 
     // Definisci l'observer per rilevare le modifiche alla tabella
     var observer = new MutationObserver(function(mutations) {

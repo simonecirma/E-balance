@@ -1,7 +1,8 @@
-/*body{
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+body{
     color: white;
-    background-color:#251c35;
-}*/
+    background-color:#1d1f2f;
+}
 
 .dashboard {
     display: flex;
@@ -28,8 +29,46 @@
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: #28293f;
 }
-
+.dashboard #section1{
+    position: relative;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+    text-align: center;
+    overflow: hidden;
+    box-shadow:
+            2px 4px 8px rgba(0, 0, 0, 0.4),
+            2px 8px 16px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #28293f;
+    width: 47vw;
+    height: 55vh;
+}
+.dashboard #section2{
+    position: relative;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    transition: transform 0.5s ease-in-out;
+    text-align: center;
+    overflow: hidden;
+    box-shadow:
+            2px 4px 8px rgba(0, 0, 0, 0.4),
+            2px 8px 16px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #28293f;
+    width: 47vw;
+    height: 55vh;
+}
 .text{
     position: absolute;
     top: 10px;
@@ -45,7 +84,43 @@
 .dashboard .section.section-expanded {
     margin: 10px;
     width: 100%;
-    height: 81vh;
+    min-height: 81vh;
+    transform: scale(1);
+    z-index: 2;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.dashboard #section1.section-expanded {
+    margin: 10px;
+    width: 100%;
+    min-height: 81vh;
+    transform: scale(1);
+    z-index: 2;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.dashboard #section2.section-expanded {
+    margin: 10px;
+    width: 100%;
+    min-height: 81vh;
+    transform: scale(1);
+    z-index: 2;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.dashboard #section3.section-expanded {
+    margin: 10px;
+    width: 100%;
+    min-height: 81vh;
     transform: scale(1);
     z-index: 2;
     cursor: default;
@@ -56,9 +131,16 @@
 }
 
 .dashboard .section:not(.section-expanded) {
-    width: 31vw;
-    height: 38vh;
-    min-width: 420px;
+    width: 25.4vw;
+    height: 31vh;
+    min-width: 240px;
+    min-height: 240px;
+}
+
+.dashboard #section3{
+    width: 15vw;
+    height: 31vh;
+    min-width: 200px;
     min-height: 240px;
 }
 #img{
@@ -133,22 +215,14 @@
 }
 .section h3 {
     position: absolute;
-    top: 0;
+    top: 5px;
     left: 0;
     margin: 0;
     padding: 10px 20px;
-    background-color: #fff;
+    font-family: "Montserrat";
+    font-size: 20px;
 }
 
-.section::after {
-    content: '';
-    position: absolute;
-    width: 90%;
-    height: 2px;
-    background-color: #000;
-    left: 0;
-    top: 15%;
-}
 .section-expanded::after {
     display: none;
 }
@@ -305,11 +379,10 @@ table {
     width: 25%;
 }
 .visTab{
-    width: 120%;
+    width: 100%;
     align-items: center;
     justify-content: center;
     margin-top: 40px;
-    margin-left: -30px;
 }
 .visTab table {
     margin-bottom: 0;
@@ -344,11 +417,11 @@ th {
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 120px;
-    width: 70px;
+    height: 100px;
+    width: 60px;
     border: 2px solid black;;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .section-expanded .battery{
     display: flex;
@@ -373,12 +446,12 @@ th {
     align-items: center;
     margin-top: 100px;
 }
-.box {
+.batt .box {
     position: absolute;
     height: 10px;
     width: 300px;
     bottom: 100%;
-    background-color: white;
+    background-color: #28293f !important;
     border: 2px solid black;
 }
 .battery span {
@@ -500,10 +573,10 @@ input[type="range"] {
 .containerChart {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin-top: 30px;
-    margin-left: 50px;
 
 }
 .containerEnergia {
@@ -519,12 +592,22 @@ input[type="range"] {
     border-radius: 1rem;
     height: 50vh;
     width: 73vw;
+    min-height: 200px;
+    min-width: 400px;
 }
 .expandedConsumi #consumi{
     width: 20vw;
     height: 50vh;
     margin-left: -23vw;
+    min-width: 300px;
 }
+
+@media screen and (max-width: 1000px) {
+   .expandedConsumi #consumi {
+        margin-left: -18vw;
+    }
+}
+
     #consumi th{
         padding: 0;
         height: 35px;
@@ -536,8 +619,8 @@ input[type="range"] {
     }
 
 .chart1 {
-    width: 27vw;
-    margin-top: 50px;
+    min-width: 23vw;
+    margin-top: 46px;
     margin-right: 10px;
 }
 
@@ -577,8 +660,8 @@ input[type="range"] {
 #curveChart_sommaProduzione1{
     margin-top: 15px;
     margin-left: 10px;
-    width: 35vw;
-    height: 30vh;
+    width: 55vw;
+    height: 50vh;
     overflow: visible;
     min-width: 420px;
     min-height: 170px;
@@ -586,20 +669,20 @@ input[type="range"] {
 #curve_chart_ConsumiEdificio1{
     margin-top: 15px;
     margin-left: 10px;
-    width: 35vw;
-    height: 30vh;
+    width: 55vw;
+    height: 50vh;
     overflow: visible;
     min-width: 420px;
     min-height: 170px;
 }
 #curveChart_sommaProduzione2{
-    width: 900px;
-    height: 450px;
+    width: 70vw;
+    height: 70vh;
     margin-left: 50px;
 }
 #curve_chart_ConsumiEdificio2{
-    width: 900px;
-    height: 450px;
+    width: 70vw;
+    height: 70vh;
     margin-left: 50px;
 }
 .section-expanded #curveChart_sommaProduzione1{
@@ -623,26 +706,32 @@ input[type="range"] {
 }
 
 .contentMeteoTab{
-    overflow-y: auto;
-    width: 110%;
+    width: 113%;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: center;
     font-size: 15px;
     margin-left: -20px;
+    overflow-x: hidden;
 }
-
+.section-expanded .contentMeteoTab{
+    max-height: 60vh;
+    overflow-y: auto;
+}
 #meteoTable {
     overflow-y: auto;
+    overflow-x: hidden;
     border-collapse: collapse;
     width: 100%;
-    overflow-y: auto;
     margin: 15px auto;
-    border: 1px solid #dddddd;
     font-size: 15px;
     margin-top: 45px;
 
+}
+#meteoTable th{
+    background-color: transparent;
+    color: white;
 }
 #meteoTable th, #meteoTable td {
     text-align: center;
@@ -669,6 +758,12 @@ input[type="range"] {
     display: block;
     overflow-y: auto;
 }
+.expanded-content-energia{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .expanded-content-meteo {
     text-align: center;
     display: flex;
@@ -678,22 +773,26 @@ input[type="range"] {
 /*SECTION EXPANDEND METEO*/
 .section-expanded #meteoTable {
     border-collapse: collapse;
-    width: 900px;
-    overflow-y: auto;
-    margin: 15px auto;
+    width: 90%;
     border: 1px solid #dddddd;
     font-size: 16px;
     margin-top: 60px;
 
 }
+.section-expanded  #meteoTable1 thead {
+    position: sticky;
+    top: 0;
+    height: 60px;
+    z-index: 1;
+    background-color: white;
+}
 .section-expanded #meteoTable1 {
     border-collapse: collapse;
-    width: 900px;
+    width: 60vw;
     overflow-y: auto;
-    margin: 15px auto;
+    margin: 0;
     border: 1px solid #dddddd;
     font-size: 16px;
-    margin-top: 60px;
 
 }
 .section-expanded #meteoTable th, .section-expanded #meteoTable td {
@@ -712,7 +811,6 @@ input[type="range"] {
     height: 10px;
     font-size: 16px;
 }
-
 
 .section-expanded .contentMeteoTab table th:nth-child(1), .section-expanded td:nth-child(1) {
     min-width: 100px;
@@ -767,3 +865,4 @@ input[type="range"] {
     font-size: 20px;
     color: #231c3d;
 }
+
