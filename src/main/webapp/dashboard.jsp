@@ -668,7 +668,7 @@
             date.push(tabella.rows[i].cells[0].innerText);
             consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
 
-            var randomColor = '#5b8ff8';
+            var randomColor = 'rgba(91, 143, 248, 0.4)';
             colors.push(randomColor);
         }
 
@@ -713,7 +713,7 @@
             date.push(tabella.rows[i].cells[0].innerText);
             consumi.push(parseInt(tabella.rows[i].cells[1].innerText));
 
-            var randomColor = '#5b8ff8';
+            var randomColor = 'rgba(91, 143, 248, 0.4)';
             colors.push(randomColor);
         }
 
