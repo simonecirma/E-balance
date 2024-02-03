@@ -1,65 +1,64 @@
-body {
-    height: 100vh;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+*{
     margin: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
+    font-family: "Montserrat" ;
 }
 
-.container {
-    position: relative;
-    text-align: center;
-    width: 70vw;
-}
-
-h1 {
-    position: absolute;
-    top: 30px; /* Posizionato sopra l'immagine */
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 4vw;
+.hero{
     width: 100%;
-    opacity: 100;
-    color: black;
-    font-family: "Lucida Handwriting";
-    z-index: 2; /* Assicura che l'elemento h1 sia sopra l'immagine */
-
+    height: 100vh;
+    background-image: url('https://ibsintiglietta.com/wp-content/uploads/2023/07/energia-rinnovabile.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
 }
 
-.background-image {
-    opacity: 0.5;
-    width: 48vw;
-    height: 48vw;
-    display: block;
+.navbar{
+    width: 85%;
+    height: 15%;
     margin: auto;
-    margin-left: 9.3vw;
-    z-index: 1; /* Assicura che l'elemento h1 sia sopra l'immagine */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
 }
 
-.buttons {
+button{
+    color: #fbfcfd;
+    padding: 10px 25px;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+}
+
+button a {
+    color:#fbfcfd;
+    text-decoration: none;
+    font-family: "Montserrat";
+    font-size: 1vw;
+}
+
+.content{
+    color: #fbfcfd;
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    right: 8%;
+    transform: translateY(-50%);
+    z-index: 2;
 }
 
-.btn {
-    background-color: rgba(76, 175, 80, 0.7);
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 30px;
-    width: 19vw;
+h1{
+    font-size: 80px;
+    margin: 10px 0 30px;
+    line-height: 80px;
 }
-.btn a {
-    color: black;
-    text-decoration: none;
-    font-family: "Lucida Handwriting";
-    font-size: 1vw;
+
+small{
+    font-size: 20px;
+    font-family: "Montserrat";
+    margin: 10px 0 30px;
 }

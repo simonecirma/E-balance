@@ -6,17 +6,15 @@
     <link href="css/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-
-<div class="container">
-    <h1>Benvenuto in E-Balance</h1>
-    <div class="overlay">
-        <img src="img/Logo.png" class="background-image">
-        <div class="buttons">
-            <button class="btn"><a href="login.jsp">Effettua Login</a></button>
-            <button class="btn"><a href="AmministratoreController?action=verificaSuperAdmin">Configura il tuo
-                sistema</a></button>
+    <div class="hero">
+        <div class="navbar">
+            <button type="button"><a href="AmministratoreController?action=verificaSuperAdmin">Configura Sistema</a></button>
+        </div>
+        <div class="content">
+            <small>Benvenuti in </small>
+            <h1>E-Balance</h1>
+            <button type="button"><a href="login.jsp">Login</a></button>
         </div>
     </div>
-</div>
 </body>
 </html>
