@@ -38,22 +38,22 @@
     <div class="navdiv">
         <% if (email != null) { %>
         <a href="DatiController?action=generaDashboard">
-            <img src="img/Logo.png" alt="Home" width="90" height="90">
+            <img src="img/Logo.png" alt="Home" width="110" height="110" style="margin-left: 20px;">
         </a>
             <div class="nav-buttons">
         <ul>
             <li><a href="profilo.jsp">
-                <button class="btn1"><p>Profilo</p></button>
+                <button class="btn17"><p>Profilo</p></button>
             </a></li>
             <li><a href="ContrattoController">
-                <button class="btn1"><p>Contratto</p></button>
+                <button class="btn17"><p>Contratto</p></button>
             </a></li>
             <li><a href="AmministratoreController?action=vediReport">
-                <button class="btn1"><p>Report</p></button>
+                <button class="btn17"><p>Report</p></button>
             </a></li>
             <% if (tipo) { %>
             <li><a href="AmministratoreController?action=gestisciAmministratori">
-                <button class="btn1"><p>Gestisci</p></button>
+                <button class="btn17"><p>Gestisci</p></button>
             </a></li>
             <% } %>
             <li>
@@ -76,7 +76,7 @@
 
     <% } else { %>
     <a href="amministratori.jsp">
-        <img src="img/Logo.png" alt="Home" width="90" height="80">
+        <img src="img/Logo.png" alt="Home" width="110" height="110">
     </a>
     <% } %>
 </nav>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
 	text-decoration: none;
 	margin: 0;
@@ -7,7 +9,7 @@ body {
 	margin: 0;
 }
 .navbar {
-	font-family: calibri;
+	font-family: "Montserrat";
 	padding-right: 15px;
 	padding-left: 15px;
 }
@@ -36,7 +38,7 @@ body {
 }
 
 .nav-buttons ul li {
-	margin-right: 25px;
+	margin-right: 100px;
 }
 
 .logout-button {
@@ -107,6 +109,7 @@ body {
 }
 /*LOGOUT*/
 .btnLogout {
+	margin-right: 20px;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
@@ -168,4 +171,54 @@ body {
 }
 .btnLogout:active {
 	transform: translate(2px ,4px);
+}
+
+.btn17 {
+	font-size: 17px;
+	background: transparent;
+	border: none;
+	padding: 1em 1.5em;
+	color: #ffedd3;
+	text-transform: uppercase;
+	position: relative;
+	transition: 0.5s ease;
+	cursor: pointer;
+}
+
+.btn17::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 2px;
+	width: 0;
+	background-color: #97ff06;
+	transition: 0.5s ease;
+}
+
+.btn17:hover {
+	color: #1e1e2b;
+	transition-delay: 0.5s;
+}
+
+.btn17:hover::before {
+	width: 100%;
+}
+
+.btn17::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 0;
+	width: 100%;
+	background-color: #97ff06;
+	transition: 0.4s ease;
+	z-index: -1;
+}
+
+.btn17:hover::after {
+	height: 100%;
+	transition-delay: 0.4s;
+	color: aliceblue;
 }

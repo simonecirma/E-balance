@@ -7,13 +7,11 @@
 </head>
 <body>
     <div class="hero">
-        <div class="navbar">
-            <button type="button"><a href="AmministratoreController?action=verificaSuperAdmin">Configura Sistema</a></button>
-        </div>
         <div class="content">
             <small>Benvenuti in </small>
             <h1>E-Balance</h1>
             <button type="button"><a href="login.jsp">Login</a></button>
+            <button type="button"><a href="AmministratoreController?action=verificaSuperAdmin">Configura Sistema</a></button>
         </div>
     </div>
 </body>
