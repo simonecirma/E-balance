@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 body {
     display: flex;
     align-items: center;
@@ -41,7 +43,9 @@ body {
 }
 
 h1 {
-    font-size: 50px;
+    color: #2b6e2d;
+    font-size: 40px;
+    font-family: "Montserrat";
     margin-top: 10px;
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
@@ -109,7 +113,7 @@ input[type="password"]::placeholder {
     font-family: Comic Sans MS;
     box-sizing: border-box;
 }
-input[type="submit"] {
+ /*input[type="submit"] {
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -121,4 +125,58 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #45a049;
+}*/
+
+.cssbuttons-io-button {
+    background: #2b6e2d;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #2b6e2d;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    cursor: pointer;
+}
+
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #2b6e2d;
+    right: 0.3em;
+    transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #2b6e2d;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
 }
