@@ -15,7 +15,7 @@
     <link href="css/amministratori.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
-<body style="background-image: url('img/wp1.jpg'); background-color: #f6f6f6;">
+<body style="background-image: url('img/wp1.png'); background-color: #1d1f2f;">
 <%@include file="navBar.jsp" %>
 <br>
 <%

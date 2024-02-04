@@ -38,11 +38,28 @@
                 tables.style.marginTop = '';
                 btn.style.marginTop ='';
             }
+            var notification = document.getElementById('notification');
+            if (notification) {
+                notification.style.display = 'none'; // Nasconde la notifica quando si cambia il form
+            }
+        }
+
+        function showNotification(message) {
+            var notification = document.getElementById('notification');
+            notification.innerHTML = message;
+            notification.style.display = 'block';
+
+            // Nasconde la notifica dopo 3 secondi
+            setTimeout(function () {
+                notification.style.display = 'none';
+            }, 3000);
         }
     </script>
 </head>
-<body style="background-image: url('img/wp1.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #f6f6f6; background-attachment: fixed;">
+<body style="background-image: url('img/wp1.png'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #1d1f2f; background-attachment: fixed;">
 <%@include file="navBar.jsp" %>
+<div id="notification" class="notification"></div>
+
 <br>
 
 <%
@@ -140,7 +157,7 @@
             <input type="hidden" name="idContratto" value="<%=contratto != null ? contratto.getIdContratto() : 0%>">
             <input type="hidden" name="idAmministratore" value="<%=idAmministratore%>">
             <div class="btnCont">
-                <input type="submit" class="btn1" value="Conferma modifica">
+                <input type="submit" class="btn1" value="Conferma modifica" onsubmit="showNotification('Dati aggiornati correttamente!')">
             </div>
         </form>
 
@@ -153,7 +170,7 @@
             <div>
                 <label for="consumo">Consumo Annuale:</label>
                 <input type="number" name="consumoMedioAnnuale" min=0 step="any" id="consumo"
-                       placeholder="Dammi il consumo medio annuale" required><br>
+                       placeholder="Dammi il consumo annuale" required><br>
             </div>
             <div>
                 <label for="costo">Costo Unitario:</label>
@@ -202,6 +219,5 @@
 <%
     }
 %>
-
 </body>
 </html>

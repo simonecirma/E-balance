@@ -45,7 +45,8 @@ table {
     height: 150px;
     border: 1px solid #bdc3c7;
     box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
-    font-family: "Poppins";
+    font-family: "Montserrat";
+    font-weight: 600;
 }
 
 tr {
@@ -54,7 +55,7 @@ tr {
 }
 td{
     backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.5);
     font-size: 15px;
 }
 th,

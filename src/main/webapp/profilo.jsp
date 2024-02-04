@@ -18,7 +18,7 @@
     <title>Profilo</title>
     <link href="css/profilo.css" rel="stylesheet" type="text/css">
 </head>
-<body style="background-image: url('img/wp1.jpg'); background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #f6f6f6;">
+<body style="background-image: url('img/wp1.png'); background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #1d1f2f;">
 <%@include file="navBar.jsp" %>
 <form action="AmministratoreController?action=aggiornaAmministratore" method="post" onsubmit="return validateForm()">
     <div class="avatar">

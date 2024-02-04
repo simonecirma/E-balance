@@ -68,7 +68,7 @@ public class ContrattoController extends HttpServlet {
         doGet(request, response);
     }
 
-    public void aggiornaContratto(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+    public void aggiornaContratto(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException, SQLException {
         int id = Integer.parseInt(request.getParameter("idContratto"));
         String ente = request.getParameter("nomeEnte");
         float consumo = Float.parseFloat(request.getParameter("consumoMedioAnnuale"));
@@ -95,6 +95,12 @@ public class ContrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
+
+        List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
+        request.setAttribute("contratti", contratti);
+        ContrattoBean contratto = contrattoService.visualizzaContratto();
+        request.setAttribute("contratto", contratto);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
         dispatcher.forward(request, response);
     }

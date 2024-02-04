@@ -53,6 +53,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px; /* Spazio sopra la tabella */
+    font-family: "Montserrat";
 }
 
 th, td {
@@ -86,6 +87,7 @@ form {
     border: 1px solid #ccc;
     border-radius: 8px;
     margin-top: 20px;
+    font-family: "Montserrat";
 }
 
 label {
@@ -103,6 +105,7 @@ input[type="date"] {
     border-radius: 4px;
     width: 80%; /* Larghezza del 100% meno il padding */
     margin-right: 8px; /* Distanza tra l'input e il lato destro del container */
+    font-family: "Montserrat";
 }
 
 /* Aggiunto stile per allineare label e input in riga */
