@@ -38,11 +38,12 @@ public class ContrattoController extends HttpServlet {
             if (action != null) {
                 if (action.equalsIgnoreCase("aggiornaContratto")) {
                     aggiornaContratto(request, response);
+                    return;
 
                 }
                 if (action.equalsIgnoreCase("aggiungiContratto")) {
                     aggiungiContratto(request, response);
-
+                    return;
                 }
                 List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
                 request.setAttribute("contratti", contratti);
