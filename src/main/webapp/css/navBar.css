@@ -185,6 +185,54 @@ body {
 	cursor: pointer;
 }
 
+.amministratori .btn17 {
+	font-size: 17px;
+	background: transparent;
+	border: none;
+	padding: 1em 1.5em;
+	color: black;
+	text-transform: uppercase;
+	position: relative;
+	transition: 0.5s ease;
+	cursor: pointer;
+}
+
+.report .btn17 {
+	font-size: 17px;
+	background: transparent ;
+	border: none;
+	padding: 1em 1.5em;
+	color: black;
+	text-transform: uppercase;
+	position: relative;
+	transition: 0.5s ease;
+	cursor: pointer;
+}
+
+.contratto .btn17 {
+	font-size: 17px;
+	background: transparent;
+	border: none;
+	padding: 1em 1.5em;
+	color: black;
+	text-transform: uppercase;
+	position: relative;
+	transition: 0.5s ease;
+	cursor: pointer;
+}
+
+.profilo .btn17 {
+	font-size: 17px;
+	background: transparent;
+	border: none;
+	padding: 1em 1.5em;
+	color: black;
+	text-transform: uppercase;
+	position: relative;
+	transition: 0.5s ease;
+	cursor: pointer;
+}
+
 .btn17::before {
 	content: "";
 	position: absolute;

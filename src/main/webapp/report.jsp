@@ -6,7 +6,7 @@
     List<ReportBean> listReport = (List<ReportBean>) request.getAttribute("listReport");
     List<AmministratoreBean> amministratori = (List<AmministratoreBean>) request.getAttribute("amministratori");
 %>
-<html>
+<html class="report">
 <head>
     <title>Report</title>
     <link href="css/report.css" rel="stylesheet" type="text/css">

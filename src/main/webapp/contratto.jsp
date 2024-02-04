@@ -11,7 +11,7 @@
     }
 %>
 
-<html>
+<html class="contratto">
 <head>
     <title>Contratto</title>
     <link href="css/contratto.css" rel="stylesheet" type="text/css">

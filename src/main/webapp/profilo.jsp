@@ -13,7 +13,7 @@
         tipo = (boolean) session.getAttribute("flagTipo");
     }
 %>
-<html>
+<html class="profilo">
 <head>
     <title>Profilo</title>
     <link href="css/profilo.css" rel="stylesheet" type="text/css">

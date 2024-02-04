@@ -9,7 +9,7 @@
     }
     boolean isTableVisible = (amministratori != null && !amministratori.isEmpty());
 %>
-<html>
+<html class="amministratori">
 <head>
     <title>Gestione amministratori</title>
     <link href="css/amministratori.css" rel="stylesheet" type="text/css">
