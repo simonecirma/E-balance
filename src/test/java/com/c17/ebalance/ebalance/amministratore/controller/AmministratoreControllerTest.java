@@ -233,7 +233,8 @@ class AmministratoreControllerTest {
         when(request.getParameter("action")).thenReturn("generaReport");
 
         ReportBean reportMock = mock(ReportBean.class);
-        when(reportService.generaReport(request, response)).thenReturn(reportMock);
+        //HO CAMBIATO LA RIGA SOTTO VA MODIFICATA
+        //when(reportService.generaReport(request, response)).thenReturn(reportMock);
 
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);

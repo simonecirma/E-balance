@@ -11,8 +11,6 @@ import com.c17.ebalance.ebalance.model.DAO.ReportDAOImpl;
 import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
 import com.c17.ebalance.ebalance.model.entity.ReportBean;
 import com.c17.ebalance.ebalance.model.entity.VenditaBean;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -32,6 +30,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * La classe {@code ReportServiceImpl} implementa l'interfaccia {@code ReportService} e fornisce
+ * l'implementazione concreta per la gestione dei report nel sistema eBalance.
+ * Utilizza istanze di servizi correlati, come {@code VenditaService}, {@code ConsumoService},
+ * {@code ProduzioneService}, e {@code ContrattoService}, per recuperare le informazioni necessarie.
+ * Utilizza anche un'istanza di {@code ReportDAO} per l'accesso al database per le operazioni specifiche.
+ * Questa implementazione si occupa principalmente di aggregare i dati dai vari servizi e di generare i report.
+ */
 public class ReportServiceImpl implements ReportService {
     public VenditaService venditaService = new VenditaServiceImpl();
     public ConsumoService consumoService = new ConsumoServiceImpl();
@@ -39,27 +45,46 @@ public class ReportServiceImpl implements ReportService {
     public ContrattoService contrattoService = new ContrattoServiceImpl();
     private ReportDAO reportDAO = new ReportDAOImpl();
 
+
+    /**
+     * Restituisce una lista di tutti i report presenti nel sistema.
+     *
+     * @return Una lista di oggetti {@code ReportBean}.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
     @Override
     public List<ReportBean> visualizzaReport() throws SQLException {
         return reportDAO.visualizzaReport();
     }
 
-    @Override
-    public int ultimoReport() throws SQLException {
-        return reportDAO.ultimoReport();
-    }
-
+    /**
+     * Aggiunge un nuovo report al sistema.
+     *
+     * @param report L'oggetto {@code ReportBean} rappresentante il nuovo report.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
     @Override
     public void aggiungiReport(ReportBean report) throws SQLException {
         reportDAO.aggiungiReport(report);
     }
 
+    /**
+     * Genera un nuovo report in formato PDF basato sulla data di inizio e fine, il percorso della servlet,
+     * la sessione corrente.
+     *
+     * @param dataInizio     Data di inizio del periodo del report.
+     * @param dataFine       Data di fine del periodo del report.
+     * @param servletPath    Percorso del servlet utilizzato per generare il report.
+     * @param session        Sessione HTTP corrente contenente le informazioni sull'utente.
+     * @return Oggetto {@code ReportBean} rappresentante il nuovo report generato.
+     * @throws IOException  Se si verifica un errore di I/O durante la generazione del report PDF.
+     * @throws SQLException Se si verifica un'eccezione SQL durante l'accesso al database.
+     */
     @Override
-    public ReportBean generaReport(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+    public ReportBean generaReport(Date dataInizio, Date dataFine, String servletPath, HttpSession session) throws IOException, SQLException {
         ReportBean report = new ReportBean();
 
-        Date dataInizio = Date.valueOf(request.getParameter("dataInizio"));
-        Date dataFine = Date.valueOf(request.getParameter("dataFine"));
+
         List<VenditaBean> vendite = new ArrayList<>();
         vendite = venditaService.getVendite(dataInizio, dataFine);
         float ricavo = venditaService.getRicavoTotalePerData(dataInizio, dataFine);
@@ -71,7 +96,7 @@ public class ReportServiceImpl implements ReportService {
         float speseCorrente = (energiaConsumo - energiaRinnovabileProdotta) * costoMedioUnitario;
         float resocontoFinale = ricavo - speseCorrente;
 
-        HttpSession session = request.getSession(false);
+
         String nome = "";
         String cognome = "";
         int id = 0;
@@ -100,7 +125,7 @@ public class ReportServiceImpl implements ReportService {
         String file = "Report" + n + ".pdf";
 
         try {
-            String servletPath = request.getServletContext().getRealPath("");
+
             String filePath = servletPath + "report" + File.separator + "Report" + n + ".pdf";
 
             // Carica il template PDF esistente
@@ -678,7 +703,6 @@ public class ReportServiceImpl implements ReportService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
         // Inserisci il nuovo report nel database
         report.setDataEmissione(date);

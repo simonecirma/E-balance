@@ -22,6 +22,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * La classe {@code AmministratoreController} è una servlet che gestisce le operazioni
+ * legate agli amministratori nel sistema eBalance, come l'aggiornamento, l'aggiunta e la visualizzazione dei report.
+ * Interagisce con i servizi di amministrazione e di report per fornire funzionalità avanzate agli amministratori.
+ */
 @WebServlet(name = "AmministratoreController", value = "/AmministratoreController")
 public class AmministratoreController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -33,9 +39,20 @@ public class AmministratoreController extends HttpServlet {
     private VenditaService venditaService = new VenditaServiceImpl();
     private ServletContext servletContext;
 
+    /**
+     * Costruttore predefinito per AmministratoreController.
+     */
     public AmministratoreController() {
     }
 
+    /**
+     * Costruttore parametrizzato per AmministratoreController.
+     *
+     * @param amministratoreService Il servizio per le operazioni sugli amministratori.
+     * @param reportService        Il servizio per le operazioni sui report.
+     * @param venditaService       Il servizio per le operazioni di vendita.
+     * @param servletContext       Il contesto della servlet associato a questo controller.
+     */
     public AmministratoreController(AmministratoreService amministratoreService, ReportService reportService,
                                     VenditaService venditaService, ServletContext servletContext) {
         this.amministratoreService = amministratoreService;
@@ -44,6 +61,14 @@ public class AmministratoreController extends HttpServlet {
         this.servletContext = servletContext;
     }
 
+    /**
+     * Gestisce le richieste HTTP di tipo GET relative alle operazioni degli amministratori e dei report.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     */
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
         String action = request.getParameter("action");
@@ -98,7 +123,11 @@ public class AmministratoreController extends HttpServlet {
                     response.sendRedirect("DatiController?action=generaDashboard");
                 }
                 if (action.equalsIgnoreCase("generaReport")) {
-                    ReportBean report = reportService.generaReport(request, response);
+                    HttpSession session = request.getSession(false);
+                    String servletPath = request.getServletContext().getRealPath("");
+                    Date dataInizio = Date.valueOf(request.getParameter("dataInizio"));
+                    Date dataFine = Date.valueOf(request.getParameter("dataFine"));
+                    ReportBean report = reportService.generaReport(dataInizio, dataFine, servletPath, session);
                     reportService.aggiungiReport(report);
                     visualizzazioneReport(request, response);
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/report.jsp");
@@ -113,10 +142,28 @@ public class AmministratoreController extends HttpServlet {
         }
     }
 
+    /**
+     * Gestisce le richieste HTTP di tipo POST relative alle operazioni degli amministratori e dei report.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     */
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
 
+
+    /**
+     * Gestisce l'aggiornamento dei dati di un amministratore e reindirizza alla pagina del profilo.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws ParseException  in caso di errori durante il parsing della data di nascita.
+     */
     public void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, ParseException {
         String nome = request.getParameter("nome");
         String cognome = request.getParameter("cognome");
@@ -159,6 +206,15 @@ public class AmministratoreController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Gestisce l'aggiunta di un nuovo amministratore e reindirizza alla pagina del profilo o della gestione amministratori.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws SQLException     in caso di errori durante le operazioni di accesso al database.
+     */
     public void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
 
         AmministratoreBean amministratore = new AmministratoreBean();
@@ -202,6 +258,12 @@ public class AmministratoreController extends HttpServlet {
 
     }
 
+    /**
+     * Gestisce la visualizzazione dei report e imposta gli attributi necessari per la visualizzazione nella pagina JSP.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     */
     private void visualizzazioneReport(final HttpServletRequest request, final HttpServletResponse response) {
         try {
             List<ReportBean> listReport = reportService.visualizzaReport();
@@ -220,7 +282,9 @@ public class AmministratoreController extends HttpServlet {
 
     }
 
-
+    /**
+     * Distrugge la servlet quando viene chiamato.
+     */
     public void destroy() {
     }
 }
