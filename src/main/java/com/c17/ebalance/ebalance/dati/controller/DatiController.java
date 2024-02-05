@@ -31,13 +31,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import java.util.List;
 
 import java.io.IOException;
 
 
+/**
+ * La classe {@code DatiController} gestisce le richieste relative ai dati energetici nel sistema eBalance.
+ * Interagisce con i servizi e il motore di Intelligenza Artificiale (IA) per fornire informazioni sulla dashboard
+ * e gestire le simulazioni energetiche.
+ * Implementa l'interfaccia {@code Observer} per ricevere aggiornamenti da oggetti osservabili.
+ */
 @WebServlet(name = "DatiController", value = "/DatiController")
 public class DatiController extends HttpServlet implements Observer {
     private static final long serialVersionUID = 1L;
@@ -79,6 +84,12 @@ public class DatiController extends HttpServlet implements Observer {
 
     InteragisceBean parametriAttivi;
 
+    /**
+     * Inizializza l'oggetto {@code DatiController} durante la creazione della servlet.
+     * Inizializza gli oggetti necessari e avvia un thread per la simulazione energetica.
+     *
+     * @throws ServletException in caso di errori durante l'inizializzazione.
+     */
     @Override
     public void init() throws ServletException {
         archivioConsumi = new ArchivioConsumoBean();
@@ -99,6 +110,15 @@ public class DatiController extends HttpServlet implements Observer {
 
     }
 
+    /**
+     * Gestisce le richieste GET inviate alla servlet, analizzando il parametro "action" per determinare l'azione da eseguire.
+     * Le azioni supportate includono la visualizzazione della dashboard e l'aggiornamento degli stati osservati.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} che rappresenta la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     */
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
         try {
@@ -184,11 +204,23 @@ public class DatiController extends HttpServlet implements Observer {
         }
     }
 
+
+    /**
+     * Gestisce le richieste POST inviate alla servlet, inoltrando semplicemente alla gestione delle richieste GET.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} che rappresenta la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     */
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
 
-
+    /**
+     * Esegue la simulazione energetica all'interno di un thread separato durante l'inizializzazione della servlet.
+     * Gestisce l'inserimento delle previsioni iniziali e avvia la simulazione continua.
+     */
     private void simulazione() {
         try {
             simulazioneService.insertPrevisioniIniziali();
@@ -205,6 +237,10 @@ public class DatiController extends HttpServlet implements Observer {
     }
 
 
+    /**
+     * Esegue l'operazione di pulizia prima della distruzione della servlet, rimuovendo questa servlet come osservatore
+     * dagli oggetti osservati.
+     */
     public void destroy() {
         archivioConsumi.removeObserver(this);
         consumoAttuale.removeObserver(this);
@@ -214,6 +250,12 @@ public class DatiController extends HttpServlet implements Observer {
         meteo.removeObserver(this);
     }
 
+    /**
+     * Metodo di callback richiamato quando uno degli oggetti osservati notifica un aggiornamento.
+     * Imposta i flag di aggiornamento corrispondenti agli stati osservati.
+     *
+     * @param nomeMetodo Il nome del metodo che ha notificato l'aggiornamento.
+     */
     @Override
     public void update(String nomeMetodo) {
         if (nomeMetodo.equalsIgnoreCase("setPercentualeBatteria")) {

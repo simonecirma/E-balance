@@ -17,20 +17,43 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * La classe {@code ContrattoController} è un servlet che gestisce le richieste relative ai contratti nel sistema eBalance.
+ * Utilizza un'istanza di {@code ContrattoService} per eseguire operazioni di visualizzazione, aggiornamento e aggiunta di contratti.
+ * Risponde alle richieste HTTP GET e POST provenienti dalla view e interagisce con la logica di business del sistema.
+ * Inoltre, fornisce metodi per aggiornare e aggiungere contratti, oltre a visualizzare l'elenco degli storici contratti e il contratto attuale.
+ */
 @WebServlet(name = "ContrattoController", value = "/ContrattoController")
 public class ContrattoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ServletContext servletContext;
     public ContrattoService contrattoService = new ContrattoServiceImpl();
 
+    /**
+     * Costruttore vuoto della classe.
+     */
     public ContrattoController() {
     }
 
+    /**
+     * Costruttore della classe che accetta un'istanza di {@code ContrattoService} e un oggetto {@code ServletContext}.
+     *
+     * @param contrattoService L'istanza di {@code ContrattoService} da utilizzare.
+     * @param servletContext   L'oggetto {@code ServletContext} da utilizzare.
+     */
     public ContrattoController(ContrattoService contrattoService, ServletContext servletContext) {
         this.contrattoService = contrattoService;
         this.servletContext = servletContext;
     }
 
+    /**
+     * Gestisce le richieste HTTP GET relative ai contratti.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     */
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
 
@@ -64,10 +87,27 @@ public class ContrattoController extends HttpServlet {
         }
     }
 
+    /**
+     * Gestisce le richieste HTTP POST relative ai contratti.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     */
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
     }
 
+    /**
+     * Aggiorna un contratto nel sistema sulla base dei parametri ricevuti dalla richiesta HTTP.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws SQLException     in caso di errori di accesso al database.
+     */
     public void aggiornaContratto(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException, SQLException {
         int id = Integer.parseInt(request.getParameter("idContratto"));
         String ente = request.getParameter("nomeEnte");
@@ -104,6 +144,15 @@ public class ContrattoController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Aggiunge un nuovo contratto al sistema sulla base dei parametri ricevuti dalla richiesta HTTP.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws SQLException     in caso di errori di accesso al database.
+     */
     public void aggiungiContratto(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
         ContrattoBean bean = new ContrattoBean();
         bean.setNomeEnte(request.getParameter("nomeEnte"));
@@ -130,6 +179,9 @@ public class ContrattoController extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    /**
+     * Distrugge l'oggetto servlet.
+     */
     public void destroy() {
     }
 }

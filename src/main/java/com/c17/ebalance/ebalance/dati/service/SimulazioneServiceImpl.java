@@ -18,6 +18,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Implementazione dell'interfaccia {@link SimulazioneService} che fornisce metodi per simulare dati nel sistema eBalance.
+ * Questa classe si occupa di simulare il consumo, la produzione e altri parametri in modo da mantenere il sistema attivo.
+ * La simulazione viene eseguita a intervalli orari durante il giorno.
+ */
 public class SimulazioneServiceImpl implements SimulazioneService {
     private ConsumoDAO consumoDAO = new ConsumoDAOImpl();
     private ProduzioneDAO produzioneDAO = new ProduzioneDAOImpl();
@@ -31,6 +36,11 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     float percentualeEccesso = 0.00f;
     private boolean simulazioneVenditaFlag = false; //setta a true se vuoi far simulare la generazione di una vendita
 
+    /**
+     * Esegue la simulazione dei dati nel sistema eBalance.
+     *
+     * @throws SQLException Se si verifica un errore durante l'esecuzione della simulazione o l'accesso al database.
+     */
     @Override
     public void simulazione() throws SQLException {
         int numBatterie = batteriaDAO.ottieniNumBatterieAttive();
@@ -68,6 +78,15 @@ public class SimulazioneServiceImpl implements SimulazioneService {
 
     }
 
+    /**
+     * Simula il consumo degli edifici e aggiorna i dati nel database.
+     *
+     * @param numBatterie Numero di batterie attive nel sistema.
+     * @param sqlDate     Data per la quale simulare il consumo.
+     * @param parametriAttivi Lista dei parametri attivi per la simulazione.
+     * @return Il consumo totale orario simulato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     private float simulaConsumi(int numBatterie, java.sql.Date sqlDate, List<InteragisceBean> parametriAttivi) throws SQLException {
         Random random = new Random();
         int numEdifici = consumoDAO.ottieniNumEdifici();
@@ -90,6 +109,15 @@ public class SimulazioneServiceImpl implements SimulazioneService {
         return consumoOrarioAttualeTot;
     }
 
+    /**
+     * Simula la produzione delle sorgenti e aggiorna i dati nel database.
+     *
+     * @param numBatterie Numero di batterie attive nel sistema.
+     * @param sqlDate     Data per la quale simulare la produzione.
+     * @param parametriAttivi Lista dei parametri attivi per la simulazione.
+     * @return La produzione totale oraria simulata.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     private float simulaProduzioneSorgenti(int numBatterie, java.sql.Date sqlDate, List<InteragisceBean> parametriAttivi) throws SQLException {
         float produzioneOrariaAttualeTot = 0.02f;
         Random random2 = new Random();
@@ -118,6 +146,15 @@ public class SimulazioneServiceImpl implements SimulazioneService {
         return produzioneOrariaAttualeTot;
     }
 
+    /**
+     * Simula la produzione del Servizio Elettrico Nazionale (SEN) per coprire il consumo e aggiorna i dati nel database.
+     *
+     * @param produzioneNecessaria Produzione necessaria dal SEN.
+     * @param numBatterie Numero di batterie attive nel sistema.
+     * @param sqlDate     Data per la quale simulare la produzione del SEN.
+     * @param parametriAttivi Lista dei parametri attivi per la simulazione.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     private void simulaSEN(float produzioneNecessaria, int numBatterie, java.sql.Date sqlDate, List<InteragisceBean> parametriAttivi) throws SQLException {
         for (InteragisceBean bean : parametriAttivi) {
             if (bean.getTipoSorgente().equalsIgnoreCase("Servizio Elettrico Nazionale")) {
@@ -132,6 +169,14 @@ public class SimulazioneServiceImpl implements SimulazioneService {
         }
     }
 
+    /**
+     * Simula le previsioni meteo per una specifica data e ora e aggiorna i dati nel database.
+     *
+     * @param condizioni Lista delle condizioni meteo possibili.
+     * @param sqlDate     Data per la quale simulare le previsioni meteo.
+     * @param i           Ora del giorno per la quale simulare le previsioni meteo.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     private void simulaPrevisioniMeteo(List<String> condizioni, java.sql.Date sqlDate, int i) throws SQLException {
         float vel = random.nextFloat() * 10;
         vel = (float) (Math.round(vel * 100.0) / 100.0);
@@ -165,6 +210,11 @@ public class SimulazioneServiceImpl implements SimulazioneService {
         }
     }
 
+    /**
+     * Inserisce le previsioni iniziali nel sistema eBalance.
+     *
+     * @throws SQLException Se si verifica un errore durante l'inserimento delle previsioni iniziali o l'accesso al database.
+     */
     @Override
     public void insertPrevisioniIniziali() throws SQLException {
 
