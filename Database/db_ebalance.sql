@@ -23,19 +23,19 @@ CREATE TABLE Contratto
     DataSottoscrizione date NOT NULL,
     Durata int NOT NULL,
     PrezzoVendita float NOT NULL,
-    IdAmministratore int NOT NULL,
+    IdAmministratore int,
     PRIMARY KEY(IdContratto),
-    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE cascade
+    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE SET NULL
 );
 
 CREATE TABLE Report
 (
     IdReport int NOT NULL AUTO_INCREMENT,
     DataEmissione date NOT NULL,
-    IdAmministratore int NOT NULL,
+    IdAmministratore int,
     NomeReport varchar(20) NOT NULL,
     PRIMARY KEY(IdReport),
-    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE cascade
+    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE SET NULL
 );
 
 CREATE TABLE Vendita
@@ -44,9 +44,9 @@ CREATE TABLE Vendita
     EnergiaVenduta float NOT NULL,
     DataVendita date NOT NULL,
     RicavoTotale float NOT NULL,
-    IdAmministratore int NOT NULL,
+    IdAmministratore int,
     PRIMARY KEY(IdVendita),
-    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE cascade
+    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE SET NULL
 );
 
 CREATE TABLE Batteria
@@ -159,9 +159,9 @@ CREATE TABLE ParametriIA
     IdParametro int NOT NULL AUTO_INCREMENT,
     Piano varchar(50) NOT NULL,
     FlagAttivazioneParametro bit NOT NULL, --  0 = "ParametroIA disattivato" 1 = "ParametroIA attivo"
-    IdAmministratore int NOT NULL,
+    IdAmministratore int,
     PRIMARY KEY(IdParametro),
-    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE cascade
+    FOREIGN KEY(IdAmministratore) REFERENCES Amministratore(IdAmministratore) ON UPDATE cascade ON DELETE SET NULL
 );
 
 CREATE TABLE Interagisce

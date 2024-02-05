@@ -42,8 +42,18 @@
             <tr>
                 <td><%= rep.getDataEmissione() %>
                 </td>
-                <td><%= bean.getNome() %> <%=bean.getCognome()%>
-                </td>
+                <%
+                    if (bean.getNome() == null) {
+                %>
+                <td>Amministratore licenziato</td>
+                <%
+                    } else {
+                %>
+
+                <td><%= bean.getNome() %> <%=bean.getCognome()%> </td>
+                <%
+                }
+                %>
                 <td><a href="report\<%=rep.getNomeReport()%>" target="_blank">
                     <button class="button">Apri</button>
                 </a></td>
