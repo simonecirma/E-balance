@@ -56,7 +56,7 @@
                 <div id = "sommaProduzione" name = "sommaProduzione">
                     Energia prodotta:
                     <% if (produzioneSorgente != null) {
-                        for(int i=0;i<produzioneSorgente.length;i++) {
+                        for (int i=0;i<produzioneSorgente.length;i++) {
                     %>
                     <%= produzioneSorgente[i] %>
                     <%
@@ -69,7 +69,7 @@
                 <div class="chart-container-consumi">
                     <div id="curveChart_sommaProduzione2"></div>
                 </div>
-                <div class="elettrico-nazionale">
+                <div class="elettrico-nazionale" id="elettrico-nazionale">
                     Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                 </div>
             </div>
@@ -126,11 +126,14 @@
                     <%
                         if (percentualeBatterie >= 80) {
                     %>
+                    <br>
                     <h5>C'è una nuova possibilità di vendita</h5>
+                    <br><br>
                     <%
                         }
                         if (percentualeBatterie <= 5) {
                     %>
+                    <br>
                     <h5>Batteria scarica, protocollo emergenza attivo!</h5>
                     <br><br>
                     <%
@@ -895,7 +898,7 @@
         data.addColumn('number', 'Produzione');
 
         for (var i = 0; i < dataArray.length; i++) {
-            var sorg = "Valore " + (i + 1);
+            var sorg = "Valore " + (i + 1) + " kWh";
             var prod = parseFloat(dataArray[i]);
             data.addRow([sorg, prod]);
         }
@@ -935,7 +938,7 @@
         data.addColumn('number', 'Produzione');
 
         for (var i = 0; i < dataArray.length; i++) {
-            var sorg = "Valore " + (i + 1);
+            var sorg = "Valore " + (i + 1) + " kWh";
             var prod = parseFloat(dataArray[i]);
             data.addRow([sorg, prod]);
         }
@@ -984,6 +987,7 @@
             }
             if (data.produzioneAttualeUpdate) {
                 $("#sommaProduzione").load(window.location.href + " #sommaProduzione");
+                $("#elettrico-nazionale").load(window.location.href + " #elettrico-nazionale");
                 google.charts.load('current', {'packages': ['corechart']});
                 google.charts.setOnLoadCallback(drawChartProduzione);
             }
