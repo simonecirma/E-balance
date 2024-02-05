@@ -3,7 +3,6 @@ package com.c17.ebalance.ebalance.model.DAO;
 
 import com.c17.ebalance.ebalance.model.entity.BatteriaBean;
 import com.c17.ebalance.ebalance.model.entity.PercentualeBatteriaBean;
-import com.c17.ebalance.ebalance.model.entity.ReportBean;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -18,6 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
+/**
+ * Implementazione dell'interfaccia BatteriaDAO che gestisce l'accesso ai dati delle batterie nel sistema eBalance.
+ * Utilizza il database specificato nel contesto JNDI con il nome "jdbc/ebalance".
+ */
 public class BatteriaDAOImpl implements BatteriaDAO {
 
     private static Logger logger = Logger.getLogger(BatteriaDAOImpl.class.getName());
@@ -36,10 +39,14 @@ public class BatteriaDAOImpl implements BatteriaDAO {
     }
 
     private static final String TABLE_NAME_BATTERIA = "Batteria";
-    private static final String TABLE_NAME_UTILIZZA = "Utilizza";
-    private static final String TABLE_NAME_CARICARE = "Caricare";
 
 
+    /**
+     * Restituisce una lista di tutte le batterie presenti nel sistema.
+     *
+     * @return Una lista di oggetti BatteriaBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public List<BatteriaBean> visualizzaBatteria() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -73,6 +80,12 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         return batteria;
     }
 
+    /**
+     * Restituisce la percentuale complessiva di batterie nel sistema.
+     *
+     * @return La percentuale complessiva di batterie.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public float ottieniPercentualeBatterie() throws SQLException {
         Connection connection = null;
@@ -103,6 +116,12 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         return percentuale.getPercentualeBatteria();
     }
 
+    /**
+     * Restituisce il numero di batterie attive nel sistema.
+     *
+     * @return Il numero di batterie attive.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public int ottieniNumBatterieAttive() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -131,6 +150,15 @@ public class BatteriaDAOImpl implements BatteriaDAO {
         return NumBatterie;
     }
 
+
+    /**
+     * Aggiorna lo stato delle batterie nel sistema sulla base dell'energia fornita e del numero di batterie.
+     *
+     * @param energia      L'energia da aggiungere o sottrarre alle batterie (positiva per aggiungere, negativa per sottrarre).
+     * @param numBatterie  Il numero di batterie su cui applicare l'aggiornamento.
+     * @return La percentuale di energia in eccesso o in deficit rispetto alle batterie nel sistema.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public float aggiornaBatteria(float energia, int numBatterie) throws SQLException {
         Connection connection = null;

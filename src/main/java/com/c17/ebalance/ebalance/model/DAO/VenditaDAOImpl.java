@@ -6,12 +6,19 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
+/**
+ * Implementazione dell'interfaccia {@link VenditaDAO} per l'accesso ai dati delle vendite.
+ */
 public class VenditaDAOImpl implements VenditaDAO {
     private static final Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());
     private static DataSource ds;
@@ -30,6 +37,15 @@ public class VenditaDAOImpl implements VenditaDAO {
 
     private static final String TABLE_NAME_VENDITA = "Vendita";
 
+
+    /**
+     * Restituisce la lista delle vendite comprese tra le date specificate.
+     *
+     * @param dataInizio Data di inizio per la ricerca delle vendite.
+     * @param dataFine   Data di fine per la ricerca delle vendite.
+     * @return Lista di oggetti {@link VenditaBean} rappresentanti le vendite nel periodo specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati del database.
+     */
     public List<VenditaBean> getVendite(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -68,6 +84,15 @@ public class VenditaDAOImpl implements VenditaDAO {
         return vendite;
     }
 
+
+    /**
+     * Restituisce il ricavo totale delle vendite nel periodo specificato.
+     *
+     * @param dataInizio Data di inizio per il calcolo del ricavo totale.
+     * @param dataFine   Data di fine per il calcolo del ricavo totale.
+     * @return Il ricavo totale delle vendite nel periodo specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati del database.
+     */
     public float getRicavoTotalePerData(final Date dataInizio, final Date dataFine) throws SQLException {
         float ricavo = 0;
         Connection con = null;
@@ -101,6 +126,12 @@ public class VenditaDAOImpl implements VenditaDAO {
         return ricavo;
     }
 
+    /**
+     * Registra una nuova vendita nel database.
+     *
+     * @param bean Oggetto {@link VenditaBean} rappresentante i dettagli della vendita.
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati del database.
+     */
     @Override
     public void effetuaVendita(VenditaBean bean) throws SQLException {
         Connection con = null;

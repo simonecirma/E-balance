@@ -13,6 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
+/**
+ * Implementazione dell'interfaccia ReportDAO per l'accesso ai dati dei report.
+ */
 public class ReportDAOImpl implements ReportDAO {
 
     private static final Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());
@@ -32,6 +35,13 @@ public class ReportDAOImpl implements ReportDAO {
 
     private static final String TABLE_NAME_REPORT = "Report";
 
+
+    /**
+     * Recupera la lista di report ordinati per data di emissione in modo decrescente.
+     *
+     * @return Lista di oggetti ReportBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public List<ReportBean> visualizzaReport() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -67,6 +77,12 @@ public class ReportDAOImpl implements ReportDAO {
         return report;
     }
 
+    /**
+     * Restituisce il numero totale di report presenti nel database.
+     *
+     * @return Numero totale di report.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public int ultimoReport() throws SQLException {
         Connection con = null;
@@ -97,6 +113,13 @@ public class ReportDAOImpl implements ReportDAO {
         return n;
     }
 
+
+    /**
+     * Aggiunge un nuovo report al database.
+     *
+     * @param report Oggetto ReportBean da aggiungere al database.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public void aggiungiReport(ReportBean report) throws SQLException {
         Connection con = null;

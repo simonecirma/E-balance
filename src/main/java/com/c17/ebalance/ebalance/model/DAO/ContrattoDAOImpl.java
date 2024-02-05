@@ -17,6 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.List;
 
+/**
+ * Implementazione dell'interfaccia ContrattoDAO che gestisce l'accesso ai dati relativi ai contratti nel sistema eBalance.
+ * Questa classe utilizza un DataSource per interagire con il database e implementa i metodi definiti nell'interfaccia.
+ */
 public class ContrattoDAOImpl implements ContrattoDAO {
 
     private static Logger logger = Logger.getLogger(ContrattoDAOImpl.class.getName());
@@ -36,6 +40,12 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         }
     }
 
+    /**
+     * Restituisce il contratto attivo nel sistema.
+     *
+     * @return Un oggetto ContrattoBean rappresentante il contratto attivo.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public ContrattoBean visualizzaContratto() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -68,6 +78,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         return bean;
     }
 
+
+    /**
+     * Restituisce una lista degli storici contratti nel sistema.
+     *
+     * @return Una lista di oggetti ContrattoBean rappresentanti gli storici contratti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public List<ContrattoBean> visualizzaStoricoContratti() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -104,6 +121,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         return contratti;
     }
 
+    /**
+     * Aggiorna un contratto esistente nel sistema.
+     *
+     * @param contratto Il contratto da aggiornare.
+     * @return Un oggetto ContrattoBean rappresentante il contratto aggiornato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -141,6 +165,13 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         return bean;
     }
 
+    /**
+     * Aggiunge un nuovo contratto nel sistema.
+     *
+     * @param contratto Il contratto da aggiungere.
+     * @return Un oggetto ContrattoBean rappresentante il contratto aggiunto.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public ContrattoBean aggiungiContratto(final ContrattoBean contratto) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -176,6 +207,12 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         return bean;
     }
 
+    /**
+     * Verifica se è presente il primo contratto nel sistema.
+     *
+     * @return True se è presente il primo contratto, altrimenti False.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public boolean verificaPrimoContratto() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -212,6 +249,14 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         return result;
     }
 
+    /**
+     * Restituisce il contratto attivo nel sistema per un determinato periodo.
+     *
+     * @param dataInizio La data di inizio del periodo.
+     * @param dataFine   La data di fine del periodo.
+     * @return Un oggetto ContrattoBean rappresentante il contratto attivo per il periodo specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -248,6 +293,12 @@ public class ContrattoDAOImpl implements ContrattoDAO {
         return bean;
     }
 
+    /**
+     * Restituisce il prezzo di vendita corrente nel sistema.
+     *
+     * @return Il prezzo di vendita corrente.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public float ottieniPrezzoVendita() throws SQLException {
         Connection connection = null;

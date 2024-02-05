@@ -19,6 +19,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementazione dell'interfaccia ConsumoDAO che gestisce l'accesso ai dati relativi al consumo energetico nel sistema eBalance.
+ * Utilizza un DataSource per la connessione al database.
+ */
 public class ConsumoDAOImpl implements ConsumoDAO {
 
     private static Logger logger = Logger.getLogger(ConsumoDAOImpl.class.getName());
@@ -39,6 +43,13 @@ public class ConsumoDAOImpl implements ConsumoDAO {
     private static final String TABLE_NAME_CONSUMO = "ConsumoEdificio";
     private static final String TABLE_NAME_ARCHIVIO = "ArchivioConsumo";
 
+
+    /**
+     * Restituisce una lista di consumi degli edifici presenti nel sistema.
+     *
+     * @return Una lista di oggetti ConsumoEdificioBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public List<ConsumoEdificioBean> visualizzaConsumo() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -71,6 +82,13 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         return consumo;
     }
 
+
+    /**
+     * Restituisce la somma totale dei consumi energetici di tutti gli edifici nel sistema.
+     *
+     * @return La somma totale dei consumi energetici.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public float ottieniConsumiEdifici() throws SQLException {
         Connection connection = null;
@@ -99,6 +117,12 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         return consumoEdifici.getConsumoAttuale();
     }
 
+    /**
+     * Restituisce una lista di archivi dei consumi energetici nel sistema.
+     *
+     * @return Una lista di oggetti ArchivioConsumoBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public List<ArchivioConsumoBean> visualizzaStoricoConsumi() throws SQLException {
         Connection connection = null;
@@ -134,6 +158,14 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         return archivioConsumi;
     }
 
+    /**
+     * Simula il consumo energetico di un edificio in una data specifica.
+     *
+     * @param consumoOrario Il consumo energetico orario simulato.
+     * @param IdEdificio    L'identificatore dell'edificio su cui simulare il consumo.
+     * @param data          La data in cui simulare il consumo.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public void simulaConsumo(float consumoOrario, int IdEdificio, Date data) throws SQLException {
         Connection connection = null;
@@ -193,7 +225,12 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         }
     }
 
-
+    /**
+     * Restituisce il numero totale di edifici nel sistema.
+     *
+     * @return Il numero totale di edifici.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public int ottieniNumEdifici() throws SQLException {
         Connection connection = null;
@@ -222,6 +259,14 @@ public class ConsumoDAOImpl implements ConsumoDAO {
         return numEdificio;
     }
 
+    /**
+     * Restituisce il consumo energetico totale nel sistema per un periodo specificato.
+     *
+     * @param dataInizio La data di inizio del periodo.
+     * @param dataFine   La data di fine del periodo.
+     * @return Il consumo energetico totale nel sistema per il periodo specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException {
         float energia = 0.02f;
         Connection con = null;

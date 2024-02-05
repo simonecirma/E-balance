@@ -15,9 +15,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementazione dell'interfaccia {@link AmministratoreDAO} che fornisce metodi per l'accesso ai dati degli amministratori nel sistema eBalance.
+ * Utilizza un DataSource per la gestione della connessione al database.
+ */
 public class AmministratoreDAOImpl implements AmministratoreDAO {
 
     private static Logger logger = Logger.getLogger(AmministratoreDAOImpl.class.getName());
+    private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
     private static DataSource ds;
 
     static {
@@ -31,6 +36,12 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         }
     }
 
+    /**
+     * Verifica se esiste almeno un Super-Admin nel sistema.
+     *
+     * @return true se esiste almeno un super amministratore, false altrimenti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public boolean verificaSuperAdmin() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -63,8 +74,14 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         return result;
     }
 
-    private static final String TABLE_NAME_AMMINISTRATORE = "Amministratore";
-
+    /**
+     * Esegue il login di un amministratore utilizzando l'email e la password fornite.
+     *
+     * @param email    L'email dell'amministratore.
+     * @param password La password dell'amministratore.
+     * @return Un oggetto AmministratoreBean se il login ha successo, null altrimenti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public AmministratoreBean login(final String email, final String password) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -107,6 +124,12 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         }
     }
 
+    /**
+     * Restituisce una lista di tutti gli amministratori presenti nel sistema.
+     *
+     * @return Una lista di oggetti AmministratoreBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public List<AmministratoreBean> visualizzaAmministratori() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -147,6 +170,13 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         return amministratori;
     }
 
+    /**
+     * Aggiorna i dati di un amministratore nel sistema.
+     *
+     * @param amministratore L'oggetto AmministratoreBean con i nuovi dati.
+     * @return L'oggetto AmministratoreBean aggiornato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public AmministratoreBean aggiornaAmministratore(final AmministratoreBean amministratore) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -185,6 +215,12 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         return amministratoreAggiornato;
     }
 
+    /**
+     * Aggiunge un nuovo amministratore al sistema.
+     *
+     * @param amministratore L'oggetto AmministratoreBean con i dati del nuovo amministratore.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public void aggiungiAmministratore(final AmministratoreBean amministratore) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -218,6 +254,13 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
     }
 
+    /**
+     * Restituisce un amministratore per ID.
+     *
+     * @param id L'ID dell'amministratore da ottenere.
+     * @return L'oggetto AmministratoreBean corrispondente all'ID specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public AmministratoreBean getById(final int id) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -256,6 +299,12 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
         return amministratore;
     }
 
+    /**
+     * Rimuove un amministratore dal sistema utilizzando il suo ID.
+     *
+     * @param idAmministratore L'ID dell'amministratore da rimuovere.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public void rimuoviAmministratore(final int idAmministratore) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -280,6 +329,13 @@ public class AmministratoreDAOImpl implements AmministratoreDAO {
 
     }
 
+    /**
+     * Verifica la presenza di un'email nel sistema.
+     *
+     * @param email L'email da verificare.
+     * @return true se l'email è presente, false altrimenti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public boolean verificaPresenzaEmail(String email) throws SQLException {
         Connection connection = null;

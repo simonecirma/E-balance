@@ -9,12 +9,19 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementazione dell'interfaccia ProduzioneDAO per l'accesso ai dati relativi alla produzione di energia.
+ */
 public class ProduzioneDAOImpl implements ProduzioneDAO {
 
     private static Logger logger =
@@ -38,6 +45,13 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     private static final String TABLE_NAME_TIPO_SORGENTE = "TipoSorgente";
     private static final String TABLE_NAME_CONSUMO = "ConsumoEdificio";
 
+
+    /**
+     * Restituisce una lista di oggetti ArchivioProduzioneBean rappresentanti la produzione storica.
+     *
+     * @return Lista di ArchivioProduzioneBean
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     public List<ArchivioProduzioneBean> visualizzaProduzione() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -75,6 +89,12 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     }
 
 
+    /**
+     * Restituisce una lista di oggetti SorgenteBean rappresentanti le informazioni sulla produzione per ciascuna sorgente.
+     *
+     * @return Lista di SorgenteBean
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public List<SorgenteBean> visualizzaProduzioneSorgente() throws SQLException {
         Connection connection = null;
@@ -114,6 +134,12 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         return produzione;
     }
 
+    /**
+     * Restituisce la produzione totale delle sorgenti rinnovabili, escludendo il Servizio Elettrico Nazionale.
+     *
+     * @return Produzione totale delle sorgenti rinnovabili
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public float ottieniProduzioneProdotta() throws SQLException {
         Connection connection = null;
@@ -146,6 +172,12 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
 
     }
 
+    /**
+     * Restituisce la produzione del Servizio Elettrico Nazionale (SEN).
+     *
+     * @return Produzione del SEN
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     public float ottieniProduzioneSEN() throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -177,6 +209,12 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
 
     }
 
+    /**
+     * Restituisce una lista di oggetti TipoSorgenteBean rappresentanti i tipi di sorgenti disponibili.
+     *
+     * @return Lista di TipoSorgenteBean
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public List<TipoSorgenteBean> ottieniTipoSorgente() throws SQLException {
         Connection connection = null;
@@ -211,6 +249,14 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         return tipoSorgente;
     }
 
+    /**
+     * Simula la produzione di una sorgente in una data specifica.
+     *
+     * @param idSorgente         ID della sorgente da simulare
+     * @param produzioneSimulata Quantità di produzione simulata
+     * @param data               Data della simulazione
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public void simulaProduzione(int idSorgente, float produzioneSimulata, Date data) throws SQLException {
         Connection connection = null;
@@ -273,6 +319,12 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
         }
     }
 
+    /**
+     * Restituisce il numero totale di sorgenti.
+     *
+     * @return Numero totale di sorgenti
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public int ottieniSorgenti() throws SQLException {
         Connection connection = null;
@@ -305,6 +357,13 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
     }
 
 
+    /**
+     * Simula la produzione del Servizio Elettrico Nazionale (SEN) in una data specifica.
+     *
+     * @param produzioneNecessaria Quantità di produzione necessaria per il SEN
+     * @param data                Data della simulazione
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public void simulaProduzioneSEN(float produzioneNecessaria, Date data) throws SQLException {
         Connection connection = null;
@@ -363,6 +422,15 @@ public class ProduzioneDAOImpl implements ProduzioneDAO {
 
     }
 
+
+    /**
+     * Restituisce la quantità totale di energia rinnovabile prodotta in un intervallo di date.
+     *
+     * @param dataInizio Data di inizio dell'intervallo
+     * @param dataFine   Data di fine dell'intervallo
+     * @return Quantità totale di energia rinnovabile prodotta
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
     @Override
     public float energiaRinnovabileProdottaPerData(final Date dataInizio, final Date dataFine) throws SQLException {
         Connection connection = null;

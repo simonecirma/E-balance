@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementazione dell'interfaccia MeteoDAO che gestisce l'accesso ai dati meteorologici nel sistema eBalance.
+ * Utilizza un'origine dati (DataSource) per la connessione al database.
+ */
 public class MeteoDAOImpl implements MeteoDAO {
     Calendar calendario = Calendar.getInstance();
     Date data;
@@ -35,6 +39,12 @@ public class MeteoDAOImpl implements MeteoDAO {
         }
     }
 
+    /**
+     * Ottiene le condizioni meteorologiche dal database per le rilevazioni future.
+     *
+     * @return Lista di oggetti MeteoBean rappresentanti le condizioni meteorologiche future.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     public List<MeteoBean> getCondizioniMeteo() throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
@@ -70,6 +80,16 @@ public class MeteoDAOImpl implements MeteoDAO {
         return condizioni;
     }
 
+    /**
+     * Inserisce previsioni meteorologiche nel database per una data e un orario specifici.
+     *
+     * @param sqlDate           Data delle previsioni.
+     * @param orario            Orario delle previsioni (0, 6, 12, 18).
+     * @param vel               Velocità del vento.
+     * @param prob              Probabilità di pioggia.
+     * @param condizioneCasuale Condizione meteorologica casuale.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public void insertPrevisioni(java.sql.Date sqlDate, int orario, float vel, int prob, String condizioneCasuale) throws SQLException {
         Connection con = null;
@@ -86,8 +106,8 @@ public class MeteoDAOImpl implements MeteoDAO {
         }
         try {
             con = ds.getConnection();
-            String query = "INSERT INTO " + TABLE_NAME_METEO + "(DataRilevazione, OraRilevazione, VelocitaVento, ProbabilitaPioggia, CondizioniMetereologiche)" +
-                    "VALUES(?, ?, ?, ?, ?)";
+            String query = "INSERT INTO " + TABLE_NAME_METEO + "(DataRilevazione, OraRilevazione, VelocitaVento, ProbabilitaPioggia, CondizioniMetereologiche)"
+                    + "VALUES(?, ?, ?, ?, ?)";
             ps = con.prepareStatement(query);
             ps.setDate(1, sqlDate);
             ps.setTime(2, sqlTime);
@@ -107,6 +127,12 @@ public class MeteoDAOImpl implements MeteoDAO {
         }
     }
 
+    /**
+     * Ottiene la lista di tutte le possibili condizioni meteorologiche.
+     *
+     * @return Lista di stringhe rappresentanti le condizioni meteorologiche.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public List<String> getCondizione() throws SQLException {
         Connection con = null;
@@ -133,6 +159,14 @@ public class MeteoDAOImpl implements MeteoDAO {
         return condizioni;
     }
 
+    /**
+     * Verifica la presenza di rilevazioni meteorologiche per una data e un orario specifici.
+     *
+     * @param sqlDate Data delle rilevazioni.
+     * @param orario  Orario delle rilevazioni (0, 6, 12, 18).
+     * @return True se ci sono rilevazioni presenti, altrimenti False.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public boolean verificaPresenza(java.sql.Date sqlDate, int orario) throws SQLException {
         Connection con = null;
@@ -171,6 +205,12 @@ public class MeteoDAOImpl implements MeteoDAO {
         return res;
     }
 
+    /**
+     * Calcola la media giornaliera della velocità del vento e della probabilità di pioggia.
+     *
+     * @return Lista di oggetti MeteoBean rappresentanti le medie giornaliere.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public List<MeteoBean> mediaGiornaliera() throws SQLException {
         Connection con = null;
@@ -179,7 +219,7 @@ public class MeteoDAOImpl implements MeteoDAO {
 
         data = calendario.getTime();
         java.sql.Date sqlDate = new java.sql.Date(data.getTime());
-        try{
+        try {
             con = ds.getConnection();
             String query = "SELECT AVG(VelocitaVento) AS mediaVel, AVG(ProbabilitaPioggia) AS mediaPioggia, DataRilevazione FROM " + TABLE_NAME_METEO
                 + " WHERE DataRilevazione >= ? GROUP BY DataRilevazione"
@@ -221,6 +261,14 @@ public class MeteoDAOImpl implements MeteoDAO {
         return condizioni;
     }
 
+    /**
+     * Ottiene un parametro specifico per una data e un orario specifici.
+     *
+     * @param sqlData Data delle rilevazioni.
+     * @param i       Orario delle rilevazioni (0, 6, 12, 18).
+     * @return ID del parametro per la data e l'orario specifici.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public int getParametro(java.sql.Date sqlData, int i) throws SQLException {
         Connection con = null;
@@ -236,7 +284,7 @@ public class MeteoDAOImpl implements MeteoDAO {
         } else if (i == 18) {
             sqlTime = Time.valueOf("18:00:00");
         }
-        try{
+        try {
             con = ds.getConnection();
             String query = "SELECT IdMeteo FROM " + TABLE_NAME_METEO + " WHERE DataRilevazione = ? AND OraRilevazione = ?";
             ps = con.prepareStatement(query);
@@ -246,7 +294,7 @@ public class MeteoDAOImpl implements MeteoDAO {
             while (rs.next()) {
                 id = rs.getInt("IdMeteo");
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             if (ps != null) {
@@ -259,19 +307,26 @@ public class MeteoDAOImpl implements MeteoDAO {
         return id;
     }
 
+    /**
+     * Aggiorna l'associazione tra una rilevazione meteorologica e una sorgente.
+     *
+     * @param id      ID della rilevazione meteorologica.
+     * @param sorgente ID della sorgente di influenza.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
     @Override
     public void aggiornaInfluenzare(int id, int sorgente) throws SQLException {
         Connection con = null;
         PreparedStatement ps = null;
-        try{
+        try {
             con = ds.getConnection();
-            String query = "INSERT INTO "+ TABLE_NAME_INFLUENZARE + "(IdMeteo, IdSorgente)" +
-                    "VALUES(?, ?)";
+            String query = "INSERT INTO "+ TABLE_NAME_INFLUENZARE + "(IdMeteo, IdSorgente)"
+                    + "VALUES(?, ?)";
             ps = con.prepareStatement(query);
             ps.setInt(1, id);
             ps.setInt(2, sorgente);
             ps.executeUpdate();
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.log(Level.WARNING, e.getMessage());
         } finally {
             if (ps != null) {

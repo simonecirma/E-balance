@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementazione dell'interfaccia ParametriIADAO che fornisce metodi per l'accesso ai dati
+ * relativi ai parametri dell'Intelligenza Artificiale nel sistema eBalance.
+ */
 public class ParametriIADAOImpl implements ParametriIADAO {
 
     private static Logger logger = Logger.getLogger(ParametriIADAOImpl.class.getName());
@@ -36,6 +40,12 @@ public class ParametriIADAOImpl implements ParametriIADAO {
     private static final String TABLE_NAME_PARAMETRI = "ParametriIA";
     private static final String TABLE_NAME_INTERAGISCE = "Interagisce";
 
+    /**
+     * Recupera la lista di tutti i parametri IA presenti nel sistema.
+     *
+     * @return Una lista di oggetti ParametriIABean rappresentanti i parametri IA.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
     @Override
     public List<ParametriIABean> visualizzaParametri() throws SQLException {
         Connection connection = null;
@@ -73,6 +83,12 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         return parametri;
     }
 
+    /**
+     * Recupera la lista di tutte le interazioni tra parametri IA e sorgenti energetiche.
+     *
+     * @return Una lista di oggetti InteragisceBean rappresentanti le interazioni tra parametri IA e sorgenti energetiche.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
     @Override
     public List<InteragisceBean> visualizzaInterazioneParametri() throws SQLException {
         Connection connection = null;
@@ -110,6 +126,12 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         return interagisce;
     }
 
+    /**
+     * Recupera la lista di tutte le interazioni attive tra parametri IA e sorgenti energetiche.
+     *
+     * @return Una lista di oggetti InteragisceBean rappresentanti le interazioni attive tra parametri IA e sorgenti energetiche.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
     @Override
     public List<InteragisceBean> ottieniParametriAttivi() throws SQLException {
         Connection connection = null;
@@ -148,6 +170,15 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         return parametriAttivi;
     }
 
+    /**
+     * Aggiorna il piano personalizzato dei parametri IA con le nuove preferenze.
+     *
+     * @param preferenzaSorgente         La sorgente energetica preferita.
+     * @param percentualeUtilizzoPannelli La percentuale di utilizzo dei pannelli fotovoltaici.
+     * @param percentualeUtilizzoSEN      La percentuale di utilizzo del Servizio Elettrico Nazionale.
+     * @param prioritaSorgenti           Un array di stringhe contenente le priorità delle sorgenti energetiche.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
     @Override
     public void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String[] prioritaSorgenti) throws SQLException {
         Connection connection = null;
@@ -205,6 +236,14 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         }
     }
 
+    /**
+     * Aggiorna il piano attivo dei parametri IA.
+     *
+     * @param piano          Il piano da attivare.
+     * @param idAmministratore L'ID dell'amministratore che effettua l'aggiornamento.
+     * @return True se l'aggiornamento ha successo, false altrimenti.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
     @Override
     public boolean aggiornaPianoAttivo(String piano, int idAmministratore) throws SQLException {
         Connection connection = null;
@@ -247,6 +286,12 @@ public class ParametriIADAOImpl implements ParametriIADAO {
         }
     }
 
+    /**
+     * Aggiorna la percentuale di utilizzo del Servizio Elettrico Nazionale.
+     *
+     * @param percentualeAggiunta La percentuale da aggiungere o sottrarre.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
     @Override
     public void aggiornaPercentualeSEN(int percentualeAggiunta) throws SQLException {
         Connection connection = null;
