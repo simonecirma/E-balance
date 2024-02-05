@@ -91,21 +91,20 @@ public class ContrattoController extends HttpServlet {
         bean.setIdAmministatore(admin);
         try {
             contrattoService.aggiornaContratto(bean);
+
         } catch (SQLException e) {
             e.printStackTrace();
             return;
         }
-
         List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
         request.setAttribute("contratti", contratti);
         ContrattoBean contratto = contrattoService.visualizzaContratto();
         request.setAttribute("contratto", contratto);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
         dispatcher.forward(request, response);
     }
 
-    public void aggiungiContratto(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+    public void aggiungiContratto(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
         ContrattoBean bean = new ContrattoBean();
         bean.setNomeEnte(request.getParameter("nomeEnte"));
         bean.setConsumoMedioAnnuale(Float.parseFloat(request.getParameter("consumoMedioAnnuale")));
@@ -123,6 +122,10 @@ public class ContrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
+        List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
+        request.setAttribute("contratti", contratti);
+        ContrattoBean contratto = contrattoService.visualizzaContratto();
+        request.setAttribute("contratto", contratto);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
         dispatcher.forward(request, response);
     }
