@@ -102,7 +102,7 @@
 </head>
 <body style="background-image: url('img/wp1.png'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #1d1f2f; background-attachment: fixed;">
 <%@include file="navBar.jsp" %>
-<div id="notification" class="notification">Dati aggiornati correttamente!</div>
+<div id="notification" class="notification">Contratto aggiornato correttamente!</div>
 <div id="notification2" class="notification2">Contratto aggiunto correttamente!</div>
 <br>
 <%

@@ -17,10 +17,12 @@
 <head>
     <title>Profilo</title>
     <link href="css/profilo.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body style="background-image: url('img/wp1.png'); background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #1d1f2f;">
 <%@include file="navBar.jsp" %>
-<form action="AmministratoreController?action=aggiornaAmministratore" method="post" onsubmit="return validateForm()">
+<div id="notification" class="notification">Profilo aggiornato correttamente!</div>
+<form id="aggiornaAmministratoreForm" action="AmministratoreController?action=aggiornaAmministratore" method="post" onsubmit="return validateForm(event)">
     <div class="avatar">
         <img src="img/avatar.png">
     </div>
@@ -50,7 +52,7 @@
     <input type="submit" value="Salva modifiche">
 </form>
 <script>
-    function validateForm() {
+    function validateForm(event) {
         var nome = document.getElementById("nome").value;
         var cognome = document.getElementById("cognome").value;
         var email = document.getElementById("email").value;
@@ -82,8 +84,12 @@
             return false;
         }
 
+        if ((nameRegex.test(nome)) && (nameRegex.test(cognome)) && (emailRegex.test(email)) && (passwordRegex.test(password)) ) {
+            mostraNotificaProfiloAggiornato(event); // Chiamata alla funzione di notifica
+            return true; // Per inviare il modulo
+        }
 
-        return true;
+        return false;
 
     }
 
@@ -107,6 +113,34 @@
         // Imposta la data massima consentita per la selezione
         datePicker.max = maxDate;
 
+    }
+
+    // Aggiungi questa funzione per gestire la visualizzazione del div di notifica
+    function mostraNotificaProfiloAggiornato(event) {
+        event = event || window.event; // Aggiunge questa linea per gestire eventi cross-browser
+        if (event) {
+            event.preventDefault();
+            // Ottieni i dati dalla form
+            var formData = $('#aggiornaAmministratoreForm').serialize();
+
+            // Esegui la chiamata AJAX
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/ebalance_war_exploded/AmministratoreController?action=aggiornaAmministratore',
+                data: formData,
+                success: function (response) {
+                    // Dopo aver inviato i dati con successo, mostra il div di notifica.
+                    document.getElementById('notification').style.display = 'block';
+                    setTimeout(function () {
+                        window.location.href = 'http://localhost:8080/ebalance_war_exploded/profilo.jsp';
+                    }, 1000);
+                },
+                error: function (error) {
+                    // Gestisci eventuali errori qui, se necessario.
+                    console.error('Errore durante l\'invio dei dati:', error);
+                }
+            });
+        }
     }
 </script>
 </body>

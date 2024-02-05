@@ -66,9 +66,11 @@
                 </div>
             </div>
             <div class="expanded-content-energia">
-                Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                 <div class="chart-container-consumi">
                     <div id="curveChart_sommaProduzione2"></div>
+                </div>
+                <div class="elettrico-nazionale">
+                    Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
                 </div>
             </div>
         </div>
