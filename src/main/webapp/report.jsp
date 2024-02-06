@@ -47,12 +47,12 @@
                 %>
                 <td>Amministratore licenziato</td>
                 <%
-                    } else {
+                } else {
                 %>
 
                 <td><%= bean.getNome() %> <%=bean.getCognome()%> </td>
                 <%
-                }
+                    }
                 %>
                 <td><a href="report\<%=rep.getNomeReport()%>" target="_blank">
                     <button class="button">Apri</button>
@@ -65,14 +65,12 @@
             </tbody>
         </table>
 
-        <form id="generaPdf" action="AmministratoreController?action=generaReport" method="post">
+        <form id="generaPdf" action="AmministratoreController?action=generaReport" method="post" onsubmit="return validaDate()">
             <div>
-                <label for="dataInizio">Data inizio:</label> <input type="date" id="dataInizio" name="dataInizio"
-                                                                    onchange="minDataSelection()" required>
+                <label for="dataInizio">Data inizio:</label> <input type="date" id="dataInizio" name="dataInizio" required>
             </div>
             <div>
-                <label for="dataFine">Data fine:</label> <input type="date" id="dataFine" name="dataFine"
-                                                                onchange="maxDataSelection()" required>
+                <label for="dataFine">Data fine:</label> <input type="date" id="dataFine" name="dataFine" required>
             </div>
             <button class="Btn10">
                 <svg class="svgIcon" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>
@@ -82,38 +80,29 @@
         </form>
     </div>
 </div>
+
 <script>
-    function minDataSelection() {
-        // Imposta la data minima consentita
-        var minDate = "2021-01-01";
+    // Funzione per controllare che la data sia compresa tra oggi e il 01-01-2021
+    function validaDate() {
+        var dataInizio = new Date(document.getElementById("dataInizio").value);
+        var dataFine = new Date(document.getElementById("dataFine").value);
+        var oggi = new Date();
+        var limite = new Date("2021-01-01");
 
-        // Ottieni l'elemento input di tipo data
-        var datePicker = document.getElementById("dataInizio");
-
-        // Imposta la data minima consentita per la selezione
-        datePicker.min = minDate;
+        if (dataInizio > oggi || dataInizio < limite || dataInizio > dataFine || dataFine > oggi || dataFine < limite || dataFine < dataInizio) {
+            alert("Si prega di inserire date valide comprese tra oggi e il 01-01-2021, con la data di inizio non successiva alla data di fine.");
+            return false;
+        }
+        return true;
     }
 
-    function maxDataSelection() {
-        // Ottieni la data corrente
-        var today = new Date();
-
-        // Estrai l'anno, il mese e il giorno
-        var year = today.getFullYear();
-        // Aggiunge uno zero se il mese è inferiore a 10
-        var month = String(today.getMonth() + 1).padStart(2, '0');
-        // Aggiunge uno zero se il giorno è inferiore a 10
-        var day = String(today.getDate()).padStart(2, '0');
-
-        // Crea la stringa della data nel formato "YYYY-MM-DD"
-        var maxDate = year + '-' + month + '-' + day;
-
-        // Ottieni l'elemento input di tipo data
-        var datePicker = document.getElementById("dataFine");
-
-        // Imposta la data massima consentita per la selezione
-        datePicker.max = maxDate;
-    }
+    // Aggiungi un listener per la validazione quando viene inviato il modulo
+    document.getElementById("generaPdf").addEventListener("submit", function(event) {
+        if (!validaDate()) {
+            event.preventDefault(); // Impedisce l'invio del modulo se le date non sono valide
+        }
+    });
 </script>
+
 </body>
 </html>
