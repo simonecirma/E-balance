@@ -139,7 +139,11 @@ public class AmministratoreController extends HttpServlet {
                 }
                 if (action.equalsIgnoreCase("generaReport")) {
                     HttpSession session = request.getSession(false);
-                    String servletPath = request.getServletContext().getRealPath("");
+                    String servletPath = null;
+                    if (request != null && request.getServletContext() != null) {
+                        servletPath = request.getServletContext().getRealPath("");
+                    }
+
                     Date dataInizio = Date.valueOf(request.getParameter("dataInizio"));
                     Date dataFine = Date.valueOf(request.getParameter("dataFine"));
                     ReportBean report = reportService.generaReport(dataInizio, dataFine, servletPath, session);

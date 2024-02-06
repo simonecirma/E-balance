@@ -231,16 +231,18 @@ class AmministratoreControllerTest {
     @Test
     void testGeneraReport() throws ServletException, IOException, SQLException, ParseException {
         when(request.getParameter("action")).thenReturn("generaReport");
+        when(request.getParameter("dataInizio")).thenReturn("2023-01-01");
+        when(request.getParameter("dataFine")).thenReturn("2023-02-01");
 
         ReportBean reportMock = mock(ReportBean.class);
-        //HO CAMBIATO LA RIGA SOTTO VA MODIFICATA
-        //when(reportService.generaReport(request, response)).thenReturn(reportMock);
+        when(reportService.generaReport(any(), any(), any(), any())).thenReturn(reportMock);
 
         when(request.getRequestDispatcher(anyString())).thenReturn(dispatcher);
         amministratoreController.doGet(request, response);
 
+        verify(reportService).generaReport(any(), any(), any(), any());
         verify(reportService).aggiungiReport(reportMock);
-        verify(request, times(1)).getRequestDispatcher("/report.jsp");
+        verify(request).getRequestDispatcher("/report.jsp");
         verify(dispatcher).forward(request, response);
     }
 
