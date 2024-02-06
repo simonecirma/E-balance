@@ -70,7 +70,7 @@
                     <div id="curveChart_sommaProduzione2"></div>
                 </div>
                 <div class="elettrico-nazionale" id="elettrico-nazionale">
-                    Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%>
+                    Energia da Servizio Elettrico Nazionale: <%=produzioneSEN%> kWh
                 </div>
             </div>
         </div>
@@ -475,7 +475,7 @@
                                     <td>
                                         <label for="percentualeUtilizzo1">Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</label>
                                         <br>
-                                        <input type="range" id="percentualeUtilizzo1" name="<%= inter.getTipoSorgente() %>" min="0" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this, '<%= inter.getTipoSorgente() %>')">
+                                        <input type="range" id="percentualeUtilizzo1" name="<%= inter.getTipoSorgente() %>" min="1" max="100" value="<%= inter.getPercentualeUtilizzoSorgente() %>" oninput="updateSliderValue(this, '<%= inter.getTipoSorgente() %>')">
                                         <span id="<%= inter.getTipoSorgente() %>Value"><%= inter.getPercentualeUtilizzoSorgente() %></span>%
                                     </td>
                                 </tr>
@@ -548,7 +548,7 @@
                                 for (MeteoBean bean : settimana) {
                             %>
                             <tr>
-                                <td> <%= bean.getDataRilevazione() %></td>
+                                <td><%= bean.getDataRilevazione() %></td>
                                 <td style="display: none"> <%= bean.getOraRilevazione() %></td>
                                 <td></td>
                                 <td id="previsione<%= bean.getIdMeteo() %>"> <%= bean.getCondizioniMetereologiche()%></td>
