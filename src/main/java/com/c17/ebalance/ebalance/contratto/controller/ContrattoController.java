@@ -172,7 +172,6 @@ public class ContrattoController extends HttpServlet {
         try {
             contrattoService.aggiungiContratto(bean);
             if (contrattoService.verificaPrimoContratto()) {
-                System.out.println("qui");
                 response.sendRedirect("DatiController?action=generaDashboard");
                 return;
             }
@@ -180,7 +179,6 @@ public class ContrattoController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        System.out.println("qui2");
         List<ContrattoBean> contratti = contrattoService.visualizzaStoricoContratti();
         request.setAttribute("contratti", contratti);
         ContrattoBean contratto = contrattoService.visualizzaContratto();

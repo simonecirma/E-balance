@@ -255,7 +255,6 @@ public class AmministratoreController extends HttpServlet {
         } else {
             amministratore.setFlagTipo(true);
         }
-        System.out.println(amministratore.getFlagTipo());
 
         try {
             amministratoreService.aggiungiAmministratore(amministratore);
