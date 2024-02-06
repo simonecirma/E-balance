@@ -5,8 +5,6 @@
 <%
     Integer resultAttribute = (Integer) request.getAttribute("result");
 
-    // Verifica se resultAttribute è nullo o meno prima di convertirlo in int
-    int result = (resultAttribute != null) ? resultAttribute.intValue() : 0;
     ContrattoBean contratto = (ContrattoBean) request.getAttribute("contratto");
     List<ContrattoBean> contratti = (List<ContrattoBean>) request.getAttribute("contratti");
     synchronized (session) {
@@ -55,7 +53,7 @@
                     // Esegui la chiamata AJAX
                     $.ajax({
                         type: 'POST',
-                        url: 'http://localhost:8080/ebalance_war_exploded/ContrattoController?action=aggiornaContratto',
+                        url: 'ContrattoController?action=aggiornaContratto',
                         data: formData,
                         success: function (response) {
                             // Dopo aver inviato i dati con successo, mostra il div di notifica.
@@ -82,7 +80,7 @@
                 // Esegui la chiamata AJAX
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:8080/ebalance_war_exploded/ContrattoController?action=aggiungiContratto',
+                    url: 'ContrattoController?action=aggiungiContratto',
                     data: formData,
                     success: function (response) {
                         // Dopo aver inviato i dati con successo, mostra il div di notifica.
