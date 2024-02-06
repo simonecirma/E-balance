@@ -4,7 +4,7 @@
 <html class="amministratori">
 <head>
     <title>Registra Super Admin</title>
-    <link href="css/amministratori.css" rel="stylesheet" type="text/css">
+    <link href="css/superAdmin.css" rel="stylesheet" type="text/css">
 </head>
 <body style="background-image: url('img/wp1.png'); background-color: #1d1f2f;">
 <%@include file="navBar.jsp" %>
@@ -34,7 +34,7 @@
         </div>
         <input type="submit" class="bottone1" value="Conferma">
     </form>
-</div>
+
 <script>
     function validateForm() {
         var nome = document.getElementById("nome").value;
@@ -117,36 +117,6 @@
         datePicker.max = maxDate;
 
     }
-
-    function aggiornaAltezzaContainer() {
-        var tabella = document.getElementById('table-card');
-        var container = document.getElementById('cont');
-
-        if (tabella && container) {
-            var altezzaTabella = tabella.clientHeight;
-            container.style.height = altezzaTabella + 'px';
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        aggiornaAltezzaContainer();
-    });
-
-
-    window.addEventListener('resize', function () {
-        aggiornaAltezzaContainer();
-    });
-    var maxMarginTop = 50;
-
-
-    var container = document.getElementById('container');
-
-
-    var windowHeight = window.innerHeight;
-    var containerHeight = container.clientHeight;
-    var marginTop = Math.min((windowHeight - containerHeight) / 2, maxMarginTop);
-
-    container.style.marginTop = marginTop + 'px';
 </script>
 
 </body>

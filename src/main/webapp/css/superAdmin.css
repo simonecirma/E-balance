@@ -1,85 +1,22 @@
 body{
-    overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center 150px;
     background-attachment: fixed;
 }
-/*
-table {
-    width: 550px;
-    margin: auto;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 10px;
-    border: 2px solid black;
-    text-align: left;
-}
-thead {
-    background-color: #359f37;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #e6f7e6;
-}
-tbody tr:nth-child(odd) {
-    background-color: white;
-}
-*/
-table tr td:last-child {
-    text-align: center;
-}
-
-table th:last-child {
-    text-align: center;
-}
-
-table {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-collapse: collapse;
-    width: 600px;
-    height: 150px;
-    border: 1px solid #bdc3c7;
-    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
-    font-family: "Comic Sans MS";
-}
-
-tr {
-    transition: all .2s ease-in;
-    cursor: pointer;
-}
-td{
-    backdrop-filter: blur(2px);
-    background-color: rgba(255, 255, 255, 0.6);
-    font-size: 15px;
-}
-th,
-td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-#header {
-    background-color: green;
-    color: #fff;
-}
-tr:hover {
-    background-color: #f5f5f5;
-    transform: scale(1.01);
-    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.2), -1px -1px 8px rgba(0, 0, 0, 0.2);
-}
 
 @media only screen and (max-width: 768px) {
     table {
-        width: 90%;
+        width: 50%;
     }
 }
+img{
+    width: 15%;
+    position: absolute;
+    top:5%;
+    left: 50%;
 
+}
 input[type="button"]{
     width: 80px;
     border-radius: 5px;
@@ -92,7 +29,7 @@ input[type="button"]:hover {
 }
 
 form {
-    width: 550px;
+    width: 43vw;
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
@@ -102,7 +39,11 @@ form {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 label {
@@ -130,7 +71,7 @@ form div {
     justify-content: space-between;
 }
 
-form .btn1 {
+form .bottone1 {
     background-color: white;
     border: 2px solid black;
     padding: 10px 15px;
@@ -145,8 +86,12 @@ form .btn1 {
 
 .btn-container {
     text-align: center;
-    margin-top: 80px;
     width: 100%;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .btn {
@@ -169,55 +114,23 @@ form .btn1 {
     border-radius: 50px;
     font-weight: bold;
 }
-.btn1:hover {
+.bottone1:hover {
     background-color: #0aa811;
     color: white;
     font-weight: bold;
 }
 .container {
+    min-width: 45vw;
     display: flex;
-    margin-top: 30px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     text-align: center;
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
 }
-
-.card-container {
-    width: 550px;
-    perspective: 1000px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-}
-
-.card {
-    position: absolute;
-    width: 100%;
-    transition: transform 1s, opacity 0.5s;
-    backface-visibility: hidden;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    min-height: 300px;
-}
-
-#table-card {
-    transform-origin: right center;
-    z-index: 2;
-}
-
-#form-card {
-    transform-origin: left center;
-    transform: rotateY(-180deg);
-    z-index: 1;
-}
-
 .button{
     width: 80px;
     border-radius: 10px;
@@ -230,4 +143,10 @@ form .btn1 {
     color: white;
     font-weight: bold;
     background-color: red;
+}
+h1{
+    font-size: 30px;
+    margin-top: -5%;
+    font-family: "Montserrat";
+    color: white;
 }
