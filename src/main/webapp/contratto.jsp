@@ -37,7 +37,7 @@
             var oggi = new Date();
             var domani = new Date(oggi);
             domani.setDate(oggi.getDate() + 1);
-            today.setHours(0, 0, 0, 0);
+            domani.setHours(0, 0, 0, 0);
             if (dataSottoscrizione > domani) {
                 alert("La data di sottoscrizione non può essere successiva a quella odierna.");
                 return false;
