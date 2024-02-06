@@ -458,6 +458,18 @@
                                 <%
                                         }
                                     }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                %>
+                                <% if (parametriIA != null && !parametriIA.isEmpty()) {
+                                    for (ParametriIABean parametri : parametriIA) {
+                                        if(parametri.getPiano().equalsIgnoreCase("Personalizzato"))
+                                        {
+                                            for (InteragisceBean inter : interazioneParametri) {
+                                                if(parametri.getIdParametro() == inter.getIdParametro()) {
                                 %>
                                 <tr>
                                     <td>
