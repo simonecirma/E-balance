@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmministratoreServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.amministratore.service</a> &gt; <span class="el_source">AmministratoreServiceImpl.java</span></div><h1>AmministratoreServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.amministratore.service;
+
+import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAO;
+import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAOImpl;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
+
+import java.sql.SQLException;
+import java.util.List;
+
+
+/**
+ * La classe {@code AmministratoreServiceImpl} implementa l'interfaccia {@code AmministratoreService} e fornisce
+ * l'implementazione concreta per le operazioni di gestione degli amministratori nel sistema eBalance.
+ * Utilizza un'istanza di {@code AmministratoreDAO} per accedere al database e eseguire le operazioni specifiche.
+ */
+<span class="fc" id="L16">public class AmministratoreServiceImpl implements AmministratoreService {</span>
+
+<span class="fc" id="L18">    private AmministratoreDAO amministratoreDAO = new AmministratoreDAOImpl();</span>
+
+    /**
+     * Verifica se esiste almeno un Super-Admin nel sistema.
+     *
+     * @return true se esiste almeno un superadmin, false altrimenti.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public Boolean verificaSuperAdmin() throws SQLException {
+<span class="nc" id="L27">        return amministratoreDAO.verificaSuperAdmin();</span>
+    }
+
+    /**
+     * Restituisce una lista di tutti gli amministratori presenti nel sistema.
+     *
+     * @return Una lista di oggetti {@code AmministratoreBean}.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public List&lt;AmministratoreBean&gt; visualizzaAmministratori() throws SQLException {
+<span class="nc" id="L38">        return amministratoreDAO.visualizzaAmministratori();</span>
+    }
+
+    /**
+     * Aggiorna i dati di un amministratore nel sistema.
+     *
+     * @param amministratore L'oggetto {@code AmministratoreBean} con i nuovi dati.
+     * @return L'oggetto {@code AmministratoreBean} aggiornato.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public AmministratoreBean aggiornaAmministratore(final AmministratoreBean amministratore) throws SQLException {
+<span class="nc" id="L50">        return amministratoreDAO.aggiornaAmministratore(amministratore);</span>
+    }
+
+    /**
+     * Aggiunge un nuovo amministratore al sistema.
+     *
+     * @param amministratore L'oggetto {@code AmministratoreBean} con i dati del nuovo amministratore.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public void aggiungiAmministratore(final AmministratoreBean amministratore) throws SQLException {
+<span class="nc" id="L60">        amministratoreDAO.aggiungiAmministratore(amministratore);</span>
+<span class="nc" id="L61">    }</span>
+
+    /**
+     * Restituisce l'oggetto {@code AmministratoreBean} corrispondente all'ID specificato.
+     *
+     * @param id L'ID dell'amministratore.
+     * @return L'oggetto {@code AmministratoreBean} corrispondente all'ID specificato.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public AmministratoreBean getById(final int id) throws SQLException {
+<span class="nc" id="L71">        return amministratoreDAO.getById(id);</span>
+    }
+
+    /**
+     * Rimuove un amministratore dal sistema in base all'ID specificato.
+     *
+     * @param idAmministratore L'ID dell'amministratore da rimuovere.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public void rimuoviAmministratore(final int idAmministratore) throws SQLException {
+<span class="nc" id="L81">        amministratoreDAO.rimuoviAmministratore(idAmministratore);</span>
+<span class="nc" id="L82">    }</span>
+
+    /**
+     * Verifica se un'email è già presente nel sistema.
+     *
+     * @param email L'indirizzo email da verificare.
+     * @return true se l'email è presente, false altrimenti.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public boolean verificaPresenzaEmail(String email) throws SQLException {
+<span class="nc" id="L93">        return amministratoreDAO.verificaPresenzaEmail(email);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

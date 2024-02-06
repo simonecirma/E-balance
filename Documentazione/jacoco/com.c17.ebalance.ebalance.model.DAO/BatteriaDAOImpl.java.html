@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BatteriaDAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">BatteriaDAOImpl.java</span></div><h1>BatteriaDAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+
+import com.c17.ebalance.ebalance.model.entity.BatteriaBean;
+import com.c17.ebalance.ebalance.model.entity.PercentualeBatteriaBean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.List;
+
+/**
+ * Implementazione dell'interfaccia BatteriaDAO che gestisce l'accesso ai dati delle batterie nel sistema eBalance.
+ * Utilizza il database specificato nel contesto JNDI con il nome &quot;jdbc/ebalance&quot;.
+ */
+<span class="fc" id="L24">public class BatteriaDAOImpl implements BatteriaDAO {</span>
+
+<span class="fc" id="L26">    private static Logger logger = Logger.getLogger(BatteriaDAOImpl.class.getName());</span>
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L31">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L32">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L34">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L36">        } catch (NamingException e) {</span>
+<span class="fc" id="L37">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L38">        }</span>
+<span class="fc" id="L39">    }</span>
+
+    private static final String TABLE_NAME_BATTERIA = &quot;Batteria&quot;;
+
+
+    /**
+     * Restituisce una lista di tutte le batterie presenti nel sistema.
+     *
+     * @return Una lista di oggetti BatteriaBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public List&lt;BatteriaBean&gt; visualizzaBatteria() throws SQLException {
+<span class="fc" id="L51">        Connection connection = null;</span>
+<span class="fc" id="L52">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L53">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L55">        List&lt;BatteriaBean&gt; batteria = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_BATTERIA;</span>
+
+        try {
+<span class="fc" id="L59">            connection = ds.getConnection();</span>
+<span class="fc" id="L60">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L62">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L65">                BatteriaBean bean = new BatteriaBean();</span>
+<span class="fc" id="L66">                bean.setIdBatteria(resultSet.getInt(&quot;IdBatteria&quot;));</span>
+<span class="fc" id="L67">                bean.setFlagStatoBatteria(resultSet.getBoolean(&quot;FlagStatoBatteria&quot;));</span>
+<span class="fc" id="L68">                bean.setCapacitaMax(resultSet.getFloat(&quot;CapacitaMax&quot;));</span>
+<span class="fc" id="L69">                bean.setPercentualeCarica(resultSet.getFloat(&quot;PercentualeCarica&quot;));</span>
+<span class="fc" id="L70">                batteria.add(bean);</span>
+<span class="fc" id="L71">            }</span>
+        } finally {
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L74">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L77">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L80">        return batteria;</span>
+    }
+
+    /**
+     * Restituisce la percentuale complessiva di batterie nel sistema.
+     *
+     * @return La percentuale complessiva di batterie.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float ottieniPercentualeBatterie() throws SQLException {
+<span class="fc" id="L91">        Connection connection = null;</span>
+<span class="fc" id="L92">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L93">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L95">        PercentualeBatteriaBean percentuale = new PercentualeBatteriaBean();</span>
+<span class="fc" id="L96">        String selectSQL = &quot;SELECT  ROUND(SUM(PercentualeCarica)/3,2) AS Percentuale FROM &quot; + TABLE_NAME_BATTERIA</span>
+                + &quot; WHERE FlagStatoBatteria = 1 &quot;;
+
+        try {
+<span class="fc" id="L100">            connection = ds.getConnection();</span>
+<span class="fc" id="L101">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L103">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L106">                percentuale.setPercentualeBatteria(resultSet.getFloat(&quot;Percentuale&quot;));</span>
+            }
+        } finally {
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L110">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L113">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L116">        return percentuale.getPercentualeBatteria();</span>
+    }
+
+    /**
+     * Restituisce il numero di batterie attive nel sistema.
+     *
+     * @return Il numero di batterie attive.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public int ottieniNumBatterieAttive() throws SQLException {
+<span class="fc" id="L126">        Connection connection = null;</span>
+<span class="fc" id="L127">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L128">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L130">        int NumBatterie = 0;</span>
+<span class="fc" id="L131">        String selectSQL = &quot;SELECT COUNT(IdBatteria) AS NumBatterie FROM &quot; + TABLE_NAME_BATTERIA + &quot; WHERE FlagStatoBatteria = true&quot;;</span>
+
+        try {
+<span class="fc" id="L134">            connection = ds.getConnection();</span>
+<span class="fc" id="L135">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L137">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L139" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L140">                NumBatterie = resultSet.getInt(&quot;NumBatterie&quot;);</span>
+            }
+        } finally {
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L144">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L147">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L150">        return NumBatterie;</span>
+    }
+
+
+    /**
+     * Aggiorna lo stato delle batterie nel sistema sulla base dell'energia fornita e del numero di batterie.
+     *
+     * @param energia      L'energia da aggiungere o sottrarre alle batterie (positiva per aggiungere, negativa per sottrarre).
+     * @param numBatterie  Il numero di batterie su cui applicare l'aggiornamento.
+     * @return La percentuale di energia in eccesso o in deficit rispetto alle batterie nel sistema.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float aggiornaBatteria(float energia, int numBatterie) throws SQLException {
+<span class="fc" id="L164">        Connection connection = null;</span>
+<span class="fc" id="L165">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L166">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L167">        PreparedStatement preparedStatement3 = null;</span>
+<span class="fc" id="L168">        PreparedStatement preparedStatement4 = null;</span>
+
+<span class="fc" id="L170">        float percentualeCaricaAttuale = 0.00f;</span>
+<span class="fc" id="L171">        float capacitaMax = 0.00f;</span>
+<span class="fc" id="L172">        float percentualeNuova = 0.00f;</span>
+<span class="fc" id="L173">        float percentualeEccesso = 0.00f;</span>
+
+<span class="fc" id="L175">        String selectSQL = &quot;SELECT PercentualeCarica, CapacitaMax FROM &quot; + TABLE_NAME_BATTERIA + &quot; WHERE IdBatteria = ? AND FlagStatoBatteria = 1&quot;;</span>
+<span class="fc" id="L176">        String updateSQL = &quot;UPDATE &quot; + TABLE_NAME_BATTERIA + &quot; SET PercentualeCarica  = ? WHERE IdBatteria = ?&quot;;</span>
+
+
+        try {
+<span class="fc" id="L180">            connection = ds.getConnection();</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            for (int i = 1; i &lt;= numBatterie; i++) {</span>
+<span class="fc" id="L182">                preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L183">                preparedStatement.setFloat(1, i);</span>
+<span class="fc" id="L184">                ResultSet resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L186" title="All 2 branches covered.">                while (resultSet.next()) {</span>
+<span class="fc" id="L187">                    percentualeCaricaAttuale = resultSet.getFloat(&quot;PercentualeCarica&quot;);</span>
+<span class="fc" id="L188">                    capacitaMax = resultSet.getFloat(&quot;CapacitaMax&quot;);</span>
+                }
+
+<span class="fc" id="L191">                percentualeNuova = (((percentualeCaricaAttuale * (capacitaMax / 100)) + (energia)) / (capacitaMax / 100));</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">                if (percentualeNuova &lt; 0) {</span>
+<span class="nc" id="L193">                    percentualeEccesso = percentualeNuova;</span>
+<span class="nc" id="L194">                    percentualeNuova = 0;</span>
+<span class="pc bpc" id="L195" title="1 of 2 branches missed.">                } else if (percentualeNuova &gt; 100) {</span>
+<span class="nc" id="L196">                    percentualeEccesso = percentualeNuova - 100;</span>
+<span class="nc" id="L197">                    percentualeNuova = 100;</span>
+                }
+
+<span class="fc" id="L200">                preparedStatement2 = connection.prepareStatement(updateSQL);</span>
+<span class="fc" id="L201">                preparedStatement2.setFloat(1, percentualeNuova);</span>
+<span class="fc" id="L202">                preparedStatement2.setInt(2, i);</span>
+<span class="fc" id="L203">                preparedStatement2.executeUpdate();</span>
+
+
+<span class="pc bpc" id="L206" title="1 of 2 branches missed.">                if (percentualeEccesso != 0.00f) {</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                    for (int j = 1; j &lt;= numBatterie; j++) {</span>
+<span class="nc bnc" id="L208" title="All 2 branches missed.">                        if (j != i) {</span>
+<span class="nc" id="L209">                            preparedStatement3 = connection.prepareStatement(selectSQL);</span>
+<span class="nc" id="L210">                            preparedStatement3.setFloat(1, j);</span>
+<span class="nc" id="L211">                            resultSet = preparedStatement3.executeQuery();</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">                            while (resultSet.next()) {</span>
+<span class="nc" id="L213">                                percentualeCaricaAttuale = resultSet.getFloat(&quot;PercentualeCarica&quot;);</span>
+<span class="nc" id="L214">                                capacitaMax = resultSet.getFloat(&quot;CapacitaMax&quot;);</span>
+                            }
+
+<span class="nc" id="L217">                            float nuovaPercentuale = 0.00f;</span>
+
+<span class="nc bnc" id="L219" title="All 4 branches missed.">                            if (percentualeCaricaAttuale &lt; 99 &amp;&amp; percentualeCaricaAttuale &gt; 1) {</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                                if (percentualeEccesso &gt; 0) {</span>
+<span class="nc" id="L221">                                    nuovaPercentuale = Math.min(100, percentualeCaricaAttuale + percentualeEccesso);</span>
+<span class="nc" id="L222">                                    percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso - 100;</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                                } else if (percentualeEccesso &lt; 0) {</span>
+<span class="nc" id="L224">                                    nuovaPercentuale = Math.max(0, percentualeCaricaAttuale + percentualeEccesso);</span>
+<span class="nc" id="L225">                                    percentualeEccesso = percentualeCaricaAttuale + percentualeEccesso;</span>
+                                }
+<span class="nc" id="L227">                                preparedStatement4 = connection.prepareStatement(updateSQL);</span>
+<span class="nc" id="L228">                                preparedStatement4.setFloat(1, nuovaPercentuale);</span>
+<span class="nc" id="L229">                                preparedStatement4.setInt(2, j);</span>
+<span class="nc" id="L230">                                preparedStatement4.executeUpdate();</span>
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">                                if (percentualeEccesso == 0.00f) {</span>
+<span class="nc" id="L233">                                    break;</span>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+<span class="nc" id="L240">        } catch (SQLException e) {</span>
+<span class="nc" id="L241">            throw new RuntimeException(e);</span>
+        } finally {
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L244">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">            if (preparedStatement2 != null) {</span>
+<span class="fc" id="L247">                preparedStatement2.close();</span>
+            }
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">            if (preparedStatement3 != null) {</span>
+<span class="nc" id="L250">                preparedStatement3.close();</span>
+            }
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">            if (preparedStatement4 != null) {</span>
+<span class="nc" id="L253">                preparedStatement4.close();</span>
+            }
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L256">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L259">        return percentualeEccesso;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

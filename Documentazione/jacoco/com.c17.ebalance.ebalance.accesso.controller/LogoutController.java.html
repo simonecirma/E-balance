@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LogoutController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.accesso.controller</a> &gt; <span class="el_source">LogoutController.java</span></div><h1>LogoutController.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.accesso.controller;
+
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.ServletException;
+
+import java.io.IOException;
+
+/**
+ * La classe {@code LogoutController} è una servlet che gestisce la disconnessione dell'amministratore
+ * dall'applicazione eBalance. Invalida la sessione corrente e reindirizza l'utente alla pagina di login.
+ */
+@WebServlet(&quot;/LogoutController&quot;)
+<span class="fc" id="L17">public class LogoutController extends HttpServlet {</span>
+    /**
+     * Gestisce le richieste HTTP di tipo GET per la disconnessione dell'amministratore.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+<span class="fc" id="L27">        HttpSession session = request.getSession();</span>
+<span class="fc" id="L28">        session.invalidate();</span>
+<span class="fc" id="L29">        response.sendRedirect(&quot;login.jsp&quot;);</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP di tipo POST per la disconnessione dell'amministratore.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
+<span class="fc" id="L41">        doGet(request, response);</span>
+<span class="fc" id="L42">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

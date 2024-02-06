@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProduzioneDAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">ProduzioneDAOImpl.java</span></div><h1>ProduzioneDAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+import com.c17.ebalance.ebalance.model.entity.ArchivioProduzioneBean;
+import com.c17.ebalance.ebalance.model.entity.ProduzioneAttualeBean;
+import com.c17.ebalance.ebalance.model.entity.SorgenteBean;
+import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Implementazione dell'interfaccia ProduzioneDAO per l'accesso ai dati relativi alla produzione di energia.
+ */
+<span class="fc" id="L25">public class ProduzioneDAOImpl implements ProduzioneDAO {</span>
+
+<span class="fc" id="L27">    private static Logger logger =</span>
+<span class="fc" id="L28">            Logger.getLogger(ProduzioneDAOImpl.class.getName());</span>
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L33">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L34">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L36">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L38">        } catch (NamingException e) {</span>
+<span class="fc" id="L39">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L40">        }</span>
+<span class="fc" id="L41">    }</span>
+
+    private static final String TABLE_NAME_ARCHIVIO = &quot;ArchivioProduzione&quot;;
+    private static final String TABLE_NAME_SORGENTE = &quot;Sorgente&quot;;
+    private static final String TABLE_NAME_TIPO_SORGENTE = &quot;TipoSorgente&quot;;
+    private static final String TABLE_NAME_CONSUMO = &quot;ConsumoEdificio&quot;;
+
+
+    /**
+     * Restituisce una lista di oggetti ArchivioProduzioneBean rappresentanti la produzione storica.
+     *
+     * @return Lista di ArchivioProduzioneBean
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    public List&lt;ArchivioProduzioneBean&gt; visualizzaProduzione() throws SQLException {
+<span class="fc" id="L56">        Connection connection = null;</span>
+<span class="fc" id="L57">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L58">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L60">        List&lt;ArchivioProduzioneBean&gt; produzione = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L61">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_ARCHIVIO;</span>
+
+
+        try {
+<span class="fc" id="L65">            connection = ds.getConnection();</span>
+<span class="fc" id="L66">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L68">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L71">                ArchivioProduzioneBean bean = new ArchivioProduzioneBean();</span>
+<span class="fc" id="L72">                bean.setIdProduzione(resultSet.getInt(&quot;IdProduzione&quot;));</span>
+<span class="fc" id="L73">                bean.setDataProduzione(resultSet.getDate(&quot;DataProduzione&quot;));</span>
+<span class="fc" id="L74">                bean.setProduzioneGiornaliera(resultSet.getFloat(&quot;ProduzioneGiornaliera&quot;));</span>
+<span class="fc" id="L75">                produzione.add(bean);</span>
+<span class="fc" id="L76">            }</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L80">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L84">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L88">        return produzione;</span>
+    }
+
+
+    /**
+     * Restituisce una lista di oggetti SorgenteBean rappresentanti le informazioni sulla produzione per ciascuna sorgente.
+     *
+     * @return Lista di SorgenteBean
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public List&lt;SorgenteBean&gt; visualizzaProduzioneSorgente() throws SQLException {
+<span class="fc" id="L100">        Connection connection = null;</span>
+<span class="fc" id="L101">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L102">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L104">        List&lt;SorgenteBean&gt; produzione = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L105">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_SORGENTE;</span>
+
+        try {
+<span class="fc" id="L108">            connection = ds.getConnection();</span>
+<span class="fc" id="L109">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L111">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L114">                SorgenteBean bean = new SorgenteBean();</span>
+<span class="fc" id="L115">                bean.setIdSorgente(resultSet.getInt(&quot;IdSorgente&quot;));</span>
+<span class="fc" id="L116">                bean.setProduzioneAttuale(resultSet.getFloat(&quot;ProduzioneAttuale&quot;));</span>
+<span class="fc" id="L117">                bean.setDataInstallazione(resultSet.getDate(&quot;DataInstallazione&quot;));</span>
+<span class="fc" id="L118">                bean.setTipologia(resultSet.getString(&quot;Tipologia&quot;));</span>
+<span class="fc" id="L119">                bean.setFlagAttivazioneSorgente(resultSet.getBoolean(&quot;FlagAttivazioneSorgente&quot;));</span>
+<span class="fc" id="L120">                bean.setFlagStatoSorgente(resultSet.getBoolean(&quot;FlagStatoSorgente&quot;));</span>
+<span class="fc" id="L121">                produzione.add(bean);</span>
+<span class="fc" id="L122">            }</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L126">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L130">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L134">        return produzione;</span>
+    }
+
+    /**
+     * Restituisce la produzione totale delle sorgenti rinnovabili, escludendo il Servizio Elettrico Nazionale.
+     *
+     * @return Produzione totale delle sorgenti rinnovabili
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public float ottieniProduzioneProdotta() throws SQLException {
+<span class="fc" id="L145">        Connection connection = null;</span>
+<span class="fc" id="L146">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L147">        ResultSet resultSet = null;</span>
+<span class="fc" id="L148">        ProduzioneAttualeBean produzioneSorgente = new ProduzioneAttualeBean();</span>
+<span class="fc" id="L149">        String selectSQL = &quot;SELECT  ROUND(SUM(ProduzioneAttuale),2) AS ProduzioneSorgente FROM &quot; + TABLE_NAME_SORGENTE</span>
+                + &quot; WHERE Tipologia != 'Servizio Elettrico Nazionale'&quot;;
+        try {
+<span class="fc" id="L152">            connection = ds.getConnection();</span>
+<span class="fc" id="L153">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L155">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L158">                produzioneSorgente.setProduzioneAttuale(resultSet.getFloat(&quot;ProduzioneSorgente&quot;));</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L163">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L167">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L171">        return produzioneSorgente.getProduzioneAttuale();</span>
+
+    }
+
+    /**
+     * Restituisce la produzione del Servizio Elettrico Nazionale (SEN).
+     *
+     * @return Produzione del SEN
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    public float ottieniProduzioneSEN() throws SQLException {
+<span class="fc" id="L182">        Connection connection = null;</span>
+<span class="fc" id="L183">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L184">        ResultSet resultSet = null;</span>
+<span class="fc" id="L185">        ProduzioneAttualeBean produzioneSEN = new ProduzioneAttualeBean();</span>
+<span class="fc" id="L186">        String selectSQL = &quot;SELECT  ROUND(ProduzioneAttuale,2) AS ProduzioneSEN FROM &quot; + TABLE_NAME_SORGENTE</span>
+                + &quot; WHERE Tipologia = 'Servizio Elettrico Nazionale'&quot;;
+        try {
+<span class="fc" id="L189">            connection = ds.getConnection();</span>
+<span class="fc" id="L190">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L192">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L194" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L195">                produzioneSEN.setProduzioneAttuale(resultSet.getFloat(&quot;ProduzioneSEN&quot;));</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L200">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L204">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L208">        return produzioneSEN.getProduzioneAttuale();</span>
+
+    }
+
+    /**
+     * Restituisce una lista di oggetti TipoSorgenteBean rappresentanti i tipi di sorgenti disponibili.
+     *
+     * @return Lista di TipoSorgenteBean
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public List&lt;TipoSorgenteBean&gt; ottieniTipoSorgente() throws SQLException {
+<span class="fc" id="L220">        Connection connection = null;</span>
+<span class="fc" id="L221">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L222">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L224">        List&lt;TipoSorgenteBean&gt; tipoSorgente = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L225">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_TIPO_SORGENTE;</span>
+
+        try {
+<span class="fc" id="L228">            connection = ds.getConnection();</span>
+<span class="fc" id="L229">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L231">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L233" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L234">                TipoSorgenteBean bean = new TipoSorgenteBean();</span>
+<span class="fc" id="L235">                bean.setTipo(resultSet.getString(&quot;Tipo&quot;));</span>
+<span class="fc" id="L236">                tipoSorgente.add(bean);</span>
+<span class="fc" id="L237">            }</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L240" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L241">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L245">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L249">        return tipoSorgente;</span>
+    }
+
+    /**
+     * Simula la produzione di una sorgente in una data specifica.
+     *
+     * @param idSorgente         ID della sorgente da simulare
+     * @param produzioneSimulata Quantità di produzione simulata
+     * @param data               Data della simulazione
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public void simulaProduzione(int idSorgente, float produzioneSimulata, Date data) throws SQLException {
+<span class="fc" id="L262">        Connection connection = null;</span>
+<span class="fc" id="L263">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L264">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L265">        PreparedStatement preparedStatement3 = null;</span>
+<span class="fc" id="L266">        PreparedStatement preparedStatement4 = null;</span>
+<span class="fc" id="L267">        PreparedStatement preparedStatement5 = null;</span>
+
+<span class="fc" id="L269">        String selectSQL = &quot;SELECT FlagAttivazioneSorgente, FlagStatoSorgente FROM &quot; + TABLE_NAME_SORGENTE</span>
+                + &quot; WHERE IdSorgente = ?&quot;;
+<span class="fc" id="L271">        String updateSQL = &quot;UPDATE &quot; + TABLE_NAME_SORGENTE + &quot; SET ProduzioneAttuale = ? WHERE IdSorgente = ?&quot;;</span>
+<span class="fc" id="L272">        String selectSQL2 = &quot;SELECT * FROM &quot; + TABLE_NAME_ARCHIVIO + &quot; WHERE IdSorgente = ? AND DataProduzione = ?&quot;;</span>
+<span class="fc" id="L273">        String insertSQL = &quot;INSERT INTO &quot; + TABLE_NAME_ARCHIVIO + &quot; (DataProduzione, ProduzioneGiornaliera, IdSorgente) VALUES (?, 0, ?)&quot;;</span>
+<span class="fc" id="L274">        String updateSQL2 = &quot;UPDATE &quot; + TABLE_NAME_ARCHIVIO + &quot; SET ProduzioneGiornaliera = ProduzioneGiornaliera + ? WHERE IdSorgente = ? AND DataProduzione = ?&quot;;</span>
+
+        try {
+<span class="fc" id="L277">            connection = ds.getConnection();</span>
+
+<span class="fc" id="L279">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L280">            preparedStatement.setInt(1, idSorgente);</span>
+<span class="fc" id="L281">            ResultSet resultset = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L283" title="All 2 branches covered.">            while (resultset.next()) {</span>
+<span class="pc bpc" id="L284" title="2 of 4 branches missed.">                if (resultset.getBoolean(&quot;FlagStatoSorgente&quot;) &amp;&amp; resultset.getBoolean(&quot;FlagAttivazioneSorgente&quot;)) {</span>
+<span class="fc" id="L285">                    preparedStatement2 = connection.prepareStatement(updateSQL);</span>
+<span class="fc" id="L286">                    preparedStatement2.setFloat(1, produzioneSimulata);</span>
+<span class="fc" id="L287">                    preparedStatement2.setInt(2, idSorgente);</span>
+<span class="fc" id="L288">                    preparedStatement2.executeUpdate();</span>
+
+<span class="fc" id="L290">                    preparedStatement3 = connection.prepareStatement(selectSQL2);</span>
+<span class="fc" id="L291">                    preparedStatement3.setInt(1, idSorgente);</span>
+<span class="fc" id="L292">                    preparedStatement3.setDate(2, data);</span>
+<span class="fc" id="L293">                    ResultSet resultSet2 = preparedStatement3.executeQuery();</span>
+
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">                    if (!resultSet2.next()) {</span>
+<span class="fc" id="L296">                        preparedStatement4 = connection.prepareStatement(insertSQL);</span>
+<span class="fc" id="L297">                        preparedStatement4.setDate(1, data);</span>
+<span class="fc" id="L298">                        preparedStatement4.setInt(2, idSorgente);</span>
+<span class="fc" id="L299">                        preparedStatement4.executeUpdate();</span>
+                    }
+
+<span class="fc" id="L302">                    preparedStatement5 = connection.prepareStatement(updateSQL2);</span>
+<span class="fc" id="L303">                    preparedStatement5.setFloat(1, produzioneSimulata);</span>
+<span class="fc" id="L304">                    preparedStatement5.setInt(2, idSorgente);</span>
+<span class="fc" id="L305">                    preparedStatement5.setDate(3, data);</span>
+<span class="fc" id="L306">                    preparedStatement5.executeUpdate();</span>
+<span class="fc" id="L307">                }</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L311" title="1 of 2 branches missed.">                if (preparedStatement != null) preparedStatement.close();</span>
+<span class="pc bpc" id="L312" title="1 of 2 branches missed.">                if (preparedStatement2 != null) preparedStatement2.close();</span>
+<span class="pc bpc" id="L313" title="1 of 2 branches missed.">                if (preparedStatement3 != null) preparedStatement3.close();</span>
+<span class="pc bpc" id="L314" title="1 of 2 branches missed.">                if (preparedStatement4 != null) preparedStatement4.close();</span>
+<span class="pc bpc" id="L315" title="1 of 2 branches missed.">                if (preparedStatement5 != null) preparedStatement5.close();</span>
+            } finally {
+<span class="pc bpc" id="L317" title="1 of 2 branches missed.">                if (connection != null) connection.close();</span>
+            }
+        }
+<span class="fc" id="L320">    }</span>
+
+    /**
+     * Restituisce il numero totale di sorgenti.
+     *
+     * @return Numero totale di sorgenti
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public int ottieniSorgenti() throws SQLException {
+<span class="fc" id="L330">        Connection connection = null;</span>
+<span class="fc" id="L331">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L332">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L334">        int numSorgente = 0;</span>
+<span class="fc" id="L335">        String selectSQL = &quot;SELECT COUNT(IdSorgente) AS IdSorgente FROM &quot; + TABLE_NAME_SORGENTE;</span>
+        try {
+<span class="fc" id="L337">            connection = ds.getConnection();</span>
+<span class="fc" id="L338">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L340">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L342" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L343">                numSorgente = resultSet.getInt(&quot;IdSorgente&quot;);</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L347" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L348">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L351" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L352">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L356">        return numSorgente;</span>
+    }
+
+
+    /**
+     * Simula la produzione del Servizio Elettrico Nazionale (SEN) in una data specifica.
+     *
+     * @param produzioneNecessaria Quantità di produzione necessaria per il SEN
+     * @param data                Data della simulazione
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public void simulaProduzioneSEN(float produzioneNecessaria, Date data) throws SQLException {
+<span class="fc" id="L369">        Connection connection = null;</span>
+<span class="fc" id="L370">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L371">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L372">        PreparedStatement preparedStatement3 = null;</span>
+<span class="fc" id="L373">        PreparedStatement preparedStatement4 = null;</span>
+<span class="fc" id="L374">        PreparedStatement preparedStatement5 = null;</span>
+
+<span class="fc" id="L376">        String selectSQL = &quot;SELECT FlagAttivazioneSorgente, FlagStatoSorgente FROM &quot; + TABLE_NAME_SORGENTE</span>
+                + &quot; WHERE IdSorgente = 1&quot;;
+<span class="fc" id="L378">        String updateSQL = &quot;UPDATE &quot; + TABLE_NAME_SORGENTE + &quot; SET ProduzioneAttuale = ? WHERE IdSorgente = 1&quot;;</span>
+<span class="fc" id="L379">        String selectSQL2 = &quot;SELECT * FROM &quot; + TABLE_NAME_ARCHIVIO + &quot; WHERE IdSorgente = 1 AND DataProduzione = ?&quot;;</span>
+<span class="fc" id="L380">        String insertSQL = &quot;INSERT INTO &quot; + TABLE_NAME_ARCHIVIO + &quot; (DataProduzione, ProduzioneGiornaliera, IdSorgente) VALUES (?, 0, 1)&quot;;</span>
+<span class="fc" id="L381">        String updateSQL2 = &quot;UPDATE &quot; + TABLE_NAME_ARCHIVIO + &quot; SET ProduzioneGiornaliera = ProduzioneGiornaliera + ? WHERE IdSorgente = 1 AND DataProduzione = ?&quot;;</span>
+
+        try {
+<span class="fc" id="L384">            connection = ds.getConnection();</span>
+
+<span class="fc" id="L386">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L387">            ResultSet resultset = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L389" title="All 2 branches covered.">            while (resultset.next()) {</span>
+<span class="pc bpc" id="L390" title="2 of 4 branches missed.">                if (resultset.getBoolean(&quot;FlagStatoSorgente&quot;) &amp;&amp; resultset.getBoolean(&quot;FlagAttivazioneSorgente&quot;)) {</span>
+<span class="fc" id="L391">                    preparedStatement2 = connection.prepareStatement(updateSQL);</span>
+<span class="fc" id="L392">                    preparedStatement2.setFloat(1, produzioneNecessaria);</span>
+<span class="fc" id="L393">                    preparedStatement2.executeUpdate();</span>
+
+<span class="fc" id="L395">                    preparedStatement3 = connection.prepareStatement(selectSQL2);</span>
+<span class="fc" id="L396">                    preparedStatement3.setDate(1, data);</span>
+<span class="fc" id="L397">                    ResultSet resultSet2 = preparedStatement3.executeQuery();</span>
+
+<span class="pc bpc" id="L399" title="1 of 2 branches missed.">                    if (!resultSet2.next()) {</span>
+<span class="fc" id="L400">                        preparedStatement4 = connection.prepareStatement(insertSQL);</span>
+<span class="fc" id="L401">                        preparedStatement4.setDate(1, data);</span>
+<span class="fc" id="L402">                        preparedStatement4.executeUpdate();</span>
+                    }
+
+<span class="fc" id="L405">                    preparedStatement5 = connection.prepareStatement(updateSQL2);</span>
+<span class="fc" id="L406">                    preparedStatement5.setFloat(1, produzioneNecessaria);</span>
+<span class="fc" id="L407">                    preparedStatement5.setDate(2, data);</span>
+<span class="fc" id="L408">                    preparedStatement5.executeUpdate();</span>
+<span class="fc" id="L409">                }</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L413" title="1 of 2 branches missed.">                if (preparedStatement != null) preparedStatement.close();</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">                if (preparedStatement2 != null) preparedStatement2.close();</span>
+<span class="pc bpc" id="L415" title="1 of 2 branches missed.">                if (preparedStatement3 != null) preparedStatement3.close();</span>
+<span class="pc bpc" id="L416" title="1 of 2 branches missed.">                if (preparedStatement4 != null) preparedStatement4.close();</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">                if (preparedStatement5 != null) preparedStatement5.close();</span>
+            } finally {
+<span class="pc bpc" id="L419" title="1 of 2 branches missed.">                if (connection != null) connection.close();</span>
+            }
+        }
+
+<span class="fc" id="L423">    }</span>
+
+
+    /**
+     * Restituisce la quantità totale di energia rinnovabile prodotta in un intervallo di date.
+     *
+     * @param dataInizio Data di inizio dell'intervallo
+     * @param dataFine   Data di fine dell'intervallo
+     * @return Quantità totale di energia rinnovabile prodotta
+     * @throws SQLException Se si verifica un errore durante l'accesso ai dati.
+     */
+    @Override
+    public float energiaRinnovabileProdottaPerData(final Date dataInizio, final Date dataFine) throws SQLException {
+<span class="fc" id="L436">        Connection connection = null;</span>
+<span class="fc" id="L437">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L438">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L440">        float energiaTotale = 0;</span>
+<span class="fc" id="L441">        String selectSQL = &quot;SELECT SUM(ProduzioneGiornaliera) AS Produzione FROM &quot;</span>
+                + TABLE_NAME_ARCHIVIO + &quot; WHERE IdSorgente != 1 AND DataProduzione BETWEEN ? AND ? &quot;;
+        try {
+<span class="fc" id="L444">            connection = ds.getConnection();</span>
+<span class="fc" id="L445">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L446">            preparedStatement.setDate(1, dataInizio);</span>
+<span class="fc" id="L447">            preparedStatement.setDate(2, dataFine);</span>
+<span class="fc" id="L448">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L450" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L451">                energiaTotale = resultSet.getFloat(&quot;Produzione&quot;);</span>
+            }
+<span class="nc" id="L453">        } catch (Exception e) {</span>
+<span class="nc" id="L454">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="fc" id="L455">        }</span>
+<span class="fc" id="L456">        return energiaTotale;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

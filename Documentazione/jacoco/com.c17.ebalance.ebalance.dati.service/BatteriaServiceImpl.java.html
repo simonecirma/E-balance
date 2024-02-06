@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BatteriaServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.dati.service</a> &gt; <span class="el_source">BatteriaServiceImpl.java</span></div><h1>BatteriaServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.dati.service;
+
+import com.c17.ebalance.ebalance.model.DAO.BatteriaDAO;
+import com.c17.ebalance.ebalance.model.DAO.BatteriaDAOImpl;
+
+import java.sql.SQLException;
+
+/**
+ * L'implementazione di {@code BatteriaService} che gestisce le operazioni sullo stato delle batterie nel sistema eBalance.
+ * Utilizza un'istanza di {@code BatteriaDAO} per accedere al database e interagire con i dati delle batterie.
+ */
+<span class="fc" id="L12">public class BatteriaServiceImpl implements BatteriaService {</span>
+<span class="fc" id="L13">    private BatteriaDAO batteriaDAO = new BatteriaDAOImpl();</span>
+
+    /**
+     * Ottiene la percentuale di carica della batteria nel sistema.
+     *
+     * @return La percentuale di carica della batteria.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public float ottieniPercetualeBatteria() throws SQLException {
+<span class="nc" id="L23">        return batteriaDAO.ottieniPercentualeBatterie();</span>
+    }
+
+    /**
+     * Ottiene il numero di batterie attualmente attive nel sistema.
+     *
+     * @return Il numero di batterie attive.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public int ottieniNumBatterieAttive() throws SQLException {
+<span class="nc" id="L34">        return batteriaDAO.ottieniNumBatterieAttive();</span>
+    }
+
+    /**
+     * Aggiorna lo stato della batteria con l'energia fornita per un determinato numero di batterie.
+     *
+     * @param energia     L'energia da aggiungere o sottrarre alla batteria.
+     * @param numBatteria Il numero di batterie da aggiornare.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public void aggiornaBatteria(float energia, int numBatteria) throws SQLException {
+<span class="nc" id="L46">        batteriaDAO.aggiornaBatteria(energia, numBatteria);</span>
+<span class="nc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

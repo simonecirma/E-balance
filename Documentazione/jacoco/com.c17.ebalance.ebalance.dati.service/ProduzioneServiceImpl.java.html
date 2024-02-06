@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProduzioneServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.dati.service</a> &gt; <span class="el_source">ProduzioneServiceImpl.java</span></div><h1>ProduzioneServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.dati.service;
+
+import com.c17.ebalance.ebalance.model.DAO.ProduzioneDAO;
+import com.c17.ebalance.ebalance.model.DAO.ProduzioneDAOImpl;
+import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * Implementazione dell'interfaccia {@code ProduzioneService} che fornisce operazioni per ottenere informazioni sulla produzione di energia nel sistema eBalance.
+ * Questa classe utilizza un'istanza di {@code ProduzioneDAO} per accedere ai dati di produzione dal database.
+ */
+<span class="fc" id="L15">public class ProduzioneServiceImpl implements ProduzioneService {</span>
+
+<span class="fc" id="L17">    private ProduzioneDAO produzioneDAO = new ProduzioneDAOImpl();</span>
+
+    /**
+     * Ottiene e aggiorna l'array contenente la produzione prodotta da diverse sorgenti nel tempo.
+     *
+     * @param produzioneSorgente L'array contenente la produzione prodotta dalle diverse sorgenti nel tempo.
+     * @return L'array aggiornato con la produzione attuale.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float[] ottieniProduzioneProdotta(float[] produzioneSorgente) throws SQLException {
+<span class="nc" id="L28">        int numElementi = produzioneSorgente.length;</span>
+<span class="nc" id="L29">        float produzioneAttuale = produzioneDAO.ottieniProduzioneProdotta();</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">        if (produzioneAttuale != produzioneSorgente[numElementi - 1]) {</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">            for (int i = 1; i &lt; numElementi; i++) {</span>
+<span class="nc" id="L32">                produzioneSorgente[i - 1] = produzioneSorgente[i];</span>
+            }
+<span class="nc" id="L34">            produzioneSorgente[numElementi - 1] = produzioneAttuale;</span>
+        }
+<span class="nc" id="L36">        return produzioneSorgente;</span>
+    }
+
+    /**
+     * Ottiene l'energia deruivante dal Servizio Elettrico Nazionale.
+     *
+     * @return L'energia deruivante dal Servizio Elettrico Nazionale.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float ottieniProduzioneSEN() throws SQLException {
+<span class="nc" id="L47">        return produzioneDAO.ottieniProduzioneSEN();</span>
+    }
+
+    /**
+     * Ottiene i tipi di sorgenti di produzione di energia nel sistema.
+     *
+     * @return Una lista di oggetti {@code TipoSorgenteBean} rappresentanti i tipi di sorgenti di produzione di energia.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;TipoSorgenteBean&gt; ottieniTipoSorgente() throws SQLException {
+<span class="nc" id="L58">        return produzioneDAO.ottieniTipoSorgente();</span>
+    }
+
+    /**
+     * Calcola la quantità di energia rinnovabile prodotta nel sistema in un intervallo di date specificato.
+     *
+     * @param dataInizio Data di inizio dell'intervallo.
+     * @param dataFine   Data di fine dell'intervallo.
+     * @return La quantità di energia rinnovabile prodotta nel sistema nell'intervallo di date specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float energiaRinnovabileProdottaPerData(
+            final Date dataInizio, final Date dataFine)
+            throws SQLException {
+<span class="nc" id="L73">        return produzioneDAO.energiaRinnovabileProdottaPerData(</span>
+                dataInizio, dataFine);
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

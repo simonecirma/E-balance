@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContrattoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.contratto.service</a> &gt; <span class="el_source">ContrattoServiceImpl.java</span></div><h1>ContrattoServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.contratto.service;
+
+import com.c17.ebalance.ebalance.model.DAO.ContrattoDAO;
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
+import com.c17.ebalance.ebalance.model.DAO.ContrattoDAOImpl;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.List;
+
+/**
+ * La classe {@code ContrattoServiceImpl} implementa l'interfaccia {@code ContrattoService}
+ * e fornisce i metodi per la gestione dei contratti nel sistema eBalance.
+ * Si interfaccia con il {@code ContrattoDAO} per l'accesso ai dati.
+ */
+<span class="fc" id="L17">public class ContrattoServiceImpl implements ContrattoService {</span>
+<span class="fc" id="L18">    private ContrattoDAO contrattoDao = new ContrattoDAOImpl();</span>
+
+    /**
+     * Restituisce il contratto attivo nel sistema.
+     *
+     * @return Un oggetto {@code ContrattoBean} rappresentante il contratto attivo.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public ContrattoBean visualizzaContratto() throws SQLException {
+<span class="nc" id="L28">        return contrattoDao.visualizzaContratto();</span>
+    }
+
+    /**
+     * Restituisce l'elenco storico di tutti i contratti nel sistema.
+     *
+     * @return Una lista di oggetti {@code ContrattoBean} rappresentanti gli storici contratti.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public List&lt;ContrattoBean&gt; visualizzaStoricoContratti() throws SQLException {
+<span class="nc" id="L39">        return contrattoDao.visualizzaStoricoContratti();</span>
+    }
+
+    /**
+     * Aggiorna le informazioni del contratto nel sistema.
+     *
+     * @param contratto L'oggetto {@code ContrattoBean} rappresentante il contratto con le informazioni aggiornate.
+     * @return Un oggetto {@code ContrattoBean} con le informazioni aggiornate.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException {
+<span class="nc" id="L51">        return contrattoDao.aggiornaContratto(contratto);</span>
+    }
+
+    /**
+     * Aggiunge un nuovo contratto al sistema.
+     *
+     * @param contrattoNuovo L'oggetto {@code ContrattoBean} rappresentante il nuovo contratto da aggiungere.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public void aggiungiContratto(final ContrattoBean contrattoNuovo) throws SQLException {
+<span class="nc" id="L62">        ContrattoBean contrattoAttuale = contrattoDao.visualizzaContratto();</span>
+
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (contrattoAttuale.getIdContratto() &gt; 0) {</span>
+
+<span class="nc" id="L66">            Calendar calDataDiRiferimento = Calendar.getInstance();</span>
+<span class="nc" id="L67">            calDataDiRiferimento.setTime(contrattoAttuale.getDataSottoscrizione());</span>
+
+<span class="nc" id="L69">            Calendar calDataAttuale = Calendar.getInstance();</span>
+<span class="nc" id="L70">            calDataAttuale.setTime(contrattoNuovo.getDataSottoscrizione());</span>
+
+<span class="nc" id="L72">            int anniDifferenza = calDataAttuale.get(Calendar.YEAR) - calDataDiRiferimento.get(Calendar.YEAR);</span>
+<span class="nc" id="L73">            int mesiDifferenza = calDataAttuale.get(Calendar.MONTH) - calDataDiRiferimento.get(Calendar.MONTH);</span>
+
+<span class="nc" id="L75">            int mesiPassati = anniDifferenza * 12 + mesiDifferenza;</span>
+
+<span class="nc" id="L77">            contrattoAttuale.setDurata(mesiPassati);</span>
+<span class="nc" id="L78">            contrattoDao.aggiornaContratto(contrattoAttuale);</span>
+        }
+
+<span class="nc" id="L81">        contrattoDao.aggiungiContratto(contrattoNuovo);</span>
+<span class="nc" id="L82">    }</span>
+
+    /**
+     * Verifica se è presente almeno un contratto nel sistema.
+     *
+     * @return True se è presente almeno un contratto, altrimenti False.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public boolean verificaPrimoContratto() throws SQLException {
+<span class="nc" id="L91">        return contrattoDao.verificaPrimoContratto();</span>
+    }
+
+    /**
+     * Restituisce il contratto attivo nel sistema per il periodo specificato.
+     *
+     * @param dataInizio La data di inizio del periodo.
+     * @param dataFine   La data di fine del periodo.
+     * @return Un oggetto {@code ContrattoBean} rappresentante il contratto attivo nel periodo specificato.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public ContrattoBean getContrattoAttivo(
+            final Date dataInizio, final Date dataFine) throws SQLException {
+<span class="nc" id="L104">        return contrattoDao.getContrattoAttivo(dataInizio, dataFine);</span>
+    }
+
+    /**
+     * Ottiene il prezzo di vendita dal contratto attivo nel sistema.
+     *
+     * @return Il prezzo di vendita del contratto attivo.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public float ottieniPrezzoVendita() throws SQLException {
+<span class="nc" id="L115">        return contrattoDao.ottieniPrezzoVendita();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

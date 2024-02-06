@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArchivioProduzioneBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.entity</a> &gt; <span class="el_source">ArchivioProduzioneBean.java</span></div><h1>ArchivioProduzioneBean.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.entity;
+
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * La classe {@code ArchivioProduzioneBean} rappresenta un oggetto di tipo produzione energetica archiviato.
+ * Implementa l'interfaccia {@link Observable} per supportare la notifica degli osservatori.
+ */
+public class ArchivioProduzioneBean implements Observable {
+<span class="fc" id="L15">    private static List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</span>
+    private int idProduzione;
+    private Date dataProduzione;
+    private float produzioneGiornaliera;
+    private int idSorgente;
+
+    /**
+     * Costruttore vuoto per la classe {@code ArchivioProduzioneBean}.
+     */
+<span class="fc" id="L24">    public ArchivioProduzioneBean() {</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Costruttore della classe {@code ArchivioProduzioneBean} con parametri.
+     *
+     * @param idProduzione          Identificativo della produzione energetica archiviata.
+     * @param dataProduzione        Data della produzione energetica archiviata.
+     * @param produzioneGiornaliera Produzione energetica giornaliera.
+     * @param idSorgente            Identificativo della sorgente associata alla produzione energetica.
+     */
+    public ArchivioProduzioneBean(final int idProduzione, final Date dataProduzione,
+<span class="nc" id="L36">                                  final float produzioneGiornaliera, final int idSorgente) {</span>
+<span class="nc" id="L37">        this.idProduzione = idProduzione;</span>
+<span class="nc" id="L38">        this.dataProduzione = dataProduzione;</span>
+<span class="nc" id="L39">        this.produzioneGiornaliera = produzioneGiornaliera;</span>
+<span class="nc" id="L40">        this.idSorgente = idSorgente;</span>
+<span class="nc" id="L41">    }</span>
+
+    /**
+     * Restituisce l'identificativo della produzione energetica archiviata.
+     *
+     * @return Identificativo della produzione energetica archiviata.
+     */
+    public int getIdProduzione() {
+<span class="fc" id="L49">        return idProduzione;</span>
+    }
+
+    /**
+     * Imposta l'identificativo della produzione energetica archiviata.
+     *
+     * @param idProduzione Nuovo identificativo della produzione energetica archiviata.
+     */
+    public void setIdProduzione(final int idProduzione) {
+<span class="fc" id="L58">        this.idProduzione = idProduzione;</span>
+<span class="fc" id="L59">        notifyObservers(&quot;setIdProduzione&quot;);</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Restituisce la data della produzione energetica archiviata.
+     *
+     * @return Data della produzione energetica archiviata.
+     */
+    public Date getDataProduzione() {
+<span class="fc" id="L68">        return dataProduzione;</span>
+    }
+
+    /**
+     * Imposta la data della produzione energetica archiviata.
+     *
+     * @param dataProduzione Nuova data della produzione energetica archiviata.
+     */
+    public void setDataProduzione(final Date dataProduzione) {
+<span class="fc" id="L77">        this.dataProduzione = dataProduzione;</span>
+<span class="fc" id="L78">        notifyObservers(&quot;setDataProduzione&quot;);</span>
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * Restituisce la produzione energetica giornaliera.
+     *
+     * @return Produzione energetica giornaliera.
+     */
+    public float getProduzioneGiornaliera() {
+<span class="fc" id="L87">        return produzioneGiornaliera;</span>
+    }
+
+    /**
+     * Imposta la produzione energetica giornaliera.
+     *
+     * @param produzioneGiornaliera Nuovo valore della produzione energetica giornaliera.
+     */
+    public void setProduzioneGiornaliera(final float produzioneGiornaliera) {
+<span class="fc" id="L96">        this.produzioneGiornaliera = produzioneGiornaliera;</span>
+<span class="fc" id="L97">        notifyObservers(&quot;setProduzioneGiornaliera&quot;);</span>
+<span class="fc" id="L98">    }</span>
+
+    /**
+     * Restituisce l'identificativo della sorgente associata alla produzione energetica.
+     *
+     * @return Identificativo della sorgente associata alla produzione energetica.
+     */
+    public int getIdSorgente() {
+<span class="nc" id="L106">        return idSorgente;</span>
+    }
+
+    /**
+     * Imposta l'identificativo della sorgente associata alla produzione energetica.
+     *
+     * @param idSorgente Nuovo identificativo della sorgente.
+     */
+    public void setIdSorgente(final int idSorgente) {
+<span class="nc" id="L115">        this.idSorgente = idSorgente;</span>
+<span class="nc" id="L116">        notifyObservers(&quot;setIdSorgente&quot;);</span>
+<span class="nc" id="L117">    }</span>
+
+    /**
+     * Override del metodo toString che restituisce una rappresentazione testuale dell'oggetto.
+     *
+     * @return Stringa che rappresenta l'oggetto {@code ArchivioProduzioneBean}.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L126">        return &quot;ArchivioProduzioneBean{&quot;</span>
+                + &quot;idProduzione=&quot; + idProduzione
+                + &quot;, dataProduzione=&quot; + dataProduzione
+                + &quot;, produzioneGiornaliera=&quot; + produzioneGiornaliera
+                + &quot;, idSorgente=&quot; + idSorgente
+                + '}';
+    }
+
+    /**
+     * Aggiunge un osservatore alla lista degli osservatori.
+     *
+     * @param observer Osservatore da aggiungere.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+<span class="nc" id="L141">        observers.add(observer);</span>
+<span class="nc" id="L142">    }</span>
+
+    /**
+     * Rimuove un osservatore dalla lista degli osservatori.
+     *
+     * @param observer Osservatore da rimuovere.
+     */
+    @Override
+    public void removeObserver(Observer observer) {
+<span class="nc" id="L151">        observers.remove(observer);</span>
+<span class="nc" id="L152">    }</span>
+
+    /**
+     * Notifica tutti gli osservatori chiamando il loro metodo di aggiornamento.
+     *
+     * @param nomeMetodo Nome del metodo che ha generato la notifica.
+     */
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        for (Observer observer : observers) {</span>
+<span class="nc" id="L162">            observer.update(nomeMetodo);</span>
+<span class="nc" id="L163">        }</span>
+<span class="fc" id="L164">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

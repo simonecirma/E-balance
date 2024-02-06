@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContrattoDAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">ContrattoDAOImpl.java</span></div><h1>ContrattoDAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.List;
+
+/**
+ * Implementazione dell'interfaccia ContrattoDAO che gestisce l'accesso ai dati relativi ai contratti nel sistema eBalance.
+ * Questa classe utilizza un DataSource per interagire con il database e implementa i metodi definiti nell'interfaccia.
+ */
+<span class="fc" id="L24">public class ContrattoDAOImpl implements ContrattoDAO {</span>
+
+<span class="fc" id="L26">    private static Logger logger = Logger.getLogger(ContrattoDAOImpl.class.getName());</span>
+    private static final String TABLE_NAME_CONTRATTO = &quot;Contratto&quot;;
+
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L33">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L34">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L36">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L38">        } catch (NamingException e) {</span>
+<span class="fc" id="L39">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L40">        }</span>
+<span class="fc" id="L41">    }</span>
+
+    /**
+     * Restituisce il contratto attivo nel sistema.
+     *
+     * @return Un oggetto ContrattoBean rappresentante il contratto attivo.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public ContrattoBean visualizzaContratto() throws SQLException {
+<span class="fc" id="L50">        Connection con = null;</span>
+<span class="fc" id="L51">        PreparedStatement ps = null;</span>
+<span class="fc" id="L52">        ContrattoBean bean = new ContrattoBean();</span>
+        try {
+<span class="fc" id="L54">            con = ds.getConnection();</span>
+<span class="fc" id="L55">            String query = &quot;SELECT * FROM &quot; + TABLE_NAME_CONTRATTO + &quot; ORDER BY DataSottoscrizione DESC LIMIT 1&quot;;</span>
+<span class="fc" id="L56">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L57">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L59">                bean.setIdContratto(rs.getInt(&quot;IdContratto&quot;));</span>
+<span class="fc" id="L60">                bean.setNomeEnte(rs.getString(&quot;NomeEnte&quot;));</span>
+<span class="fc" id="L61">                bean.setConsumoMedioAnnuale(rs.getFloat(&quot;ConsumoMedioAnnuale&quot;));</span>
+<span class="fc" id="L62">                bean.setCostoMedioUnitario(rs.getFloat(&quot;CostoMedioUnitario&quot;));</span>
+<span class="fc" id="L63">                bean.setDataSottoscrizione(rs.getDate(&quot;DataSottoscrizione&quot;));</span>
+<span class="fc" id="L64">                bean.setDurata(rs.getInt(&quot;Durata&quot;));</span>
+<span class="fc" id="L65">                bean.setPrezzoVendita(rs.getFloat(&quot;PrezzoVendita&quot;));</span>
+<span class="fc" id="L66">                bean.setIdAmministatore(rs.getInt(&quot;IdAmministratore&quot;));</span>
+            }
+<span class="nc" id="L68">        } catch (Exception e) {</span>
+<span class="nc" id="L69">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L72">                ps.close();</span>
+            }
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L75">                con.close();</span>
+            }
+        }
+<span class="fc" id="L78">        return bean;</span>
+    }
+
+
+    /**
+     * Restituisce una lista degli storici contratti nel sistema.
+     *
+     * @return Una lista di oggetti ContrattoBean rappresentanti gli storici contratti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public List&lt;ContrattoBean&gt; visualizzaStoricoContratti() throws SQLException {
+<span class="fc" id="L89">        Connection con = null;</span>
+<span class="fc" id="L90">        PreparedStatement ps = null;</span>
+<span class="fc" id="L91">        List&lt;ContrattoBean&gt; contratti = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="fc" id="L94">            con = ds.getConnection();</span>
+<span class="fc" id="L95">            String query = &quot;SELECT * FROM &quot; + TABLE_NAME_CONTRATTO + &quot; WHERE IdContratto &lt; (SELECT MAX(IdContratto) &quot;</span>
+                    + &quot;FROM &quot; + TABLE_NAME_CONTRATTO + &quot;) ORDER BY IdContratto DESC&quot;;
+<span class="fc" id="L97">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L98">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L100">                ContrattoBean bean = new ContrattoBean();</span>
+<span class="fc" id="L101">                bean.setIdContratto(rs.getInt(&quot;IdContratto&quot;));</span>
+<span class="fc" id="L102">                bean.setNomeEnte(rs.getString(&quot;NomeEnte&quot;));</span>
+<span class="fc" id="L103">                bean.setConsumoMedioAnnuale(rs.getFloat(&quot;ConsumoMedioAnnuale&quot;));</span>
+<span class="fc" id="L104">                bean.setCostoMedioUnitario(rs.getFloat(&quot;CostoMedioUnitario&quot;));</span>
+<span class="fc" id="L105">                bean.setDataSottoscrizione(rs.getDate(&quot;DataSottoscrizione&quot;));</span>
+<span class="fc" id="L106">                bean.setDurata(rs.getInt(&quot;Durata&quot;));</span>
+<span class="fc" id="L107">                bean.setPrezzoVendita(rs.getFloat(&quot;PrezzoVendita&quot;));</span>
+<span class="fc" id="L108">                bean.setIdAmministatore(rs.getInt(&quot;IdAmministratore&quot;));</span>
+<span class="fc" id="L109">                contratti.add(bean);</span>
+<span class="fc" id="L110">            }</span>
+<span class="nc" id="L111">        } catch (Exception e) {</span>
+<span class="nc" id="L112">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L115">                ps.close();</span>
+            }
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L118">                con.close();</span>
+            }
+        }
+<span class="fc" id="L121">        return contratti;</span>
+    }
+
+    /**
+     * Aggiorna un contratto esistente nel sistema.
+     *
+     * @param contratto Il contratto da aggiornare.
+     * @return Un oggetto ContrattoBean rappresentante il contratto aggiornato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public ContrattoBean aggiornaContratto(final ContrattoBean contratto) throws SQLException {
+<span class="fc" id="L132">        Connection con = null;</span>
+<span class="fc" id="L133">        PreparedStatement ps = null;</span>
+<span class="fc" id="L134">        ContrattoBean bean = new ContrattoBean();</span>
+        try {
+<span class="fc" id="L136">            con = ds.getConnection();</span>
+<span class="fc" id="L137">            String query = &quot;UPDATE &quot; + TABLE_NAME_CONTRATTO</span>
+                    + &quot; SET NomeEnte= ?, ConsumoMedioAnnuale=?, CostoMedioUnitario=?, &quot;
+                    + &quot;DataSottoscrizione=?, Durata=?, PrezzoVendita=?, IdAmministratore=? &quot;
+                    + &quot;WHERE IdContratto=?&quot;;
+<span class="fc" id="L141">            ps = con.prepareStatement(query);</span>
+
+<span class="fc" id="L143">            ps.setString(1, contratto.getNomeEnte());</span>
+<span class="fc" id="L144">            ps.setFloat(2, contratto.getConsumoMedioAnnuale());</span>
+<span class="fc" id="L145">            ps.setFloat(3, contratto.getCostoMedioUnitario());</span>
+<span class="fc" id="L146">            ps.setDate(4, (Date) contratto.getDataSottoscrizione());</span>
+<span class="fc" id="L147">            ps.setInt(5, contratto.getDurata());</span>
+<span class="fc" id="L148">            ps.setFloat(6, contratto.getPrezzoVendita());</span>
+<span class="fc" id="L149">            ps.setInt(7, contratto.getIdAmministatore());</span>
+<span class="fc" id="L150">            ps.setInt(8, contratto.getIdContratto());</span>
+<span class="fc" id="L151">            int rows = ps.executeUpdate();</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">            if (rows &gt; 0) {</span>
+<span class="fc" id="L153">                bean = contratto;</span>
+            }
+<span class="nc" id="L155">        } catch (Exception e) {</span>
+<span class="nc" id="L156">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L159">                ps.close();</span>
+            }
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L162">                con.close();</span>
+            }
+        }
+<span class="fc" id="L165">        return bean;</span>
+    }
+
+    /**
+     * Aggiunge un nuovo contratto nel sistema.
+     *
+     * @param contratto Il contratto da aggiungere.
+     * @return Un oggetto ContrattoBean rappresentante il contratto aggiunto.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public ContrattoBean aggiungiContratto(final ContrattoBean contratto) throws SQLException {
+<span class="fc" id="L176">        Connection con = null;</span>
+<span class="fc" id="L177">        PreparedStatement ps = null;</span>
+<span class="fc" id="L178">        ContrattoBean bean = new ContrattoBean();</span>
+
+        try {
+<span class="fc" id="L181">            con = ds.getConnection();</span>
+<span class="fc" id="L182">            String query = &quot;INSERT INTO &quot; + TABLE_NAME_CONTRATTO + &quot;( NomeEnte, ConsumoMedioAnnuale, CostoMedioUnitario, &quot;</span>
+                    + &quot;DataSottoscrizione, Durata, PrezzoVendita, IdAmministratore)&quot;
+                    + &quot;VALUES(?, ?, ?, ?, ?, ?, ?)&quot;;
+<span class="fc" id="L185">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L186">            ps.setString(1, contratto.getNomeEnte());</span>
+<span class="fc" id="L187">            ps.setFloat(2, contratto.getConsumoMedioAnnuale());</span>
+<span class="fc" id="L188">            ps.setFloat(3, contratto.getCostoMedioUnitario());</span>
+<span class="fc" id="L189">            ps.setDate(4, (Date) contratto.getDataSottoscrizione());</span>
+<span class="fc" id="L190">            ps.setInt(5, contratto.getDurata());</span>
+<span class="fc" id="L191">            ps.setFloat(6, contratto.getPrezzoVendita());</span>
+<span class="fc" id="L192">            ps.setInt(7, contratto.getIdAmministatore());</span>
+<span class="fc" id="L193">            int rows = ps.executeUpdate();</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">            if (rows &gt; 0) {</span>
+<span class="fc" id="L195">                bean = contratto;</span>
+            }
+<span class="nc" id="L197">        } catch (Exception e) {</span>
+<span class="nc" id="L198">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L201">                ps.close();</span>
+            }
+<span class="pc bpc" id="L203" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L204">                con.close();</span>
+            }
+        }
+<span class="fc" id="L207">        return bean;</span>
+    }
+
+    /**
+     * Verifica se è presente il primo contratto nel sistema.
+     *
+     * @return True se è presente il primo contratto, altrimenti False.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public boolean verificaPrimoContratto() throws SQLException {
+<span class="fc" id="L217">        Connection connection = null;</span>
+<span class="fc" id="L218">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L219">        ResultSet resultSet = null;</span>
+<span class="fc" id="L220">        int cont = 0;</span>
+        boolean result;
+
+<span class="fc" id="L223">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_CONTRATTO;</span>
+
+        try {
+<span class="fc" id="L226">            connection = ds.getConnection();</span>
+<span class="fc" id="L227">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L228">            resultSet = preparedStatement.executeQuery();</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L230">                cont++;</span>
+            }
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            if (cont &lt;= 1) {</span>
+<span class="fc" id="L233">                result = true;</span>
+            } else {
+<span class="fc" id="L235">                result = false;</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L239" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L240">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L244">                    connection.close();</span>
+                }
+            }
+        }
+
+<span class="fc" id="L249">        return result;</span>
+    }
+
+    /**
+     * Restituisce il contratto attivo nel sistema per un determinato periodo.
+     *
+     * @param dataInizio La data di inizio del periodo.
+     * @param dataFine   La data di fine del periodo.
+     * @return Un oggetto ContrattoBean rappresentante il contratto attivo per il periodo specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public ContrattoBean getContrattoAttivo(final Date dataInizio, final Date dataFine) throws SQLException {
+<span class="fc" id="L261">        Connection con = null;</span>
+<span class="fc" id="L262">        PreparedStatement ps = null;</span>
+<span class="fc" id="L263">        ContrattoBean bean = new ContrattoBean();</span>
+
+<span class="fc" id="L265">        String sql = &quot;SELECT * FROM &quot; + TABLE_NAME_CONTRATTO + &quot; WHERE DataSottoscrizione &lt;= ? &quot;</span>
+                + &quot;AND DATE_ADD(DataSottoscrizione, INTERVAL Durata MONTH) &gt;= ? &quot;;
+        try {
+<span class="fc" id="L268">            con = ds.getConnection();</span>
+<span class="fc" id="L269">            ps = con.prepareStatement(sql);</span>
+<span class="fc" id="L270">            ps.setDate(1, dataFine);</span>
+<span class="fc" id="L271">            ps.setDate(2, dataInizio);</span>
+<span class="fc" id="L272">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L273" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L274">                bean.setIdContratto(rs.getInt(&quot;IdContratto&quot;));</span>
+<span class="fc" id="L275">                bean.setNomeEnte(rs.getString(&quot;NomeEnte&quot;));</span>
+<span class="fc" id="L276">                bean.setConsumoMedioAnnuale(rs.getFloat(&quot;ConsumoMedioAnnuale&quot;));</span>
+<span class="fc" id="L277">                bean.setCostoMedioUnitario(rs.getFloat(&quot;CostoMedioUnitario&quot;));</span>
+<span class="fc" id="L278">                bean.setDataSottoscrizione(rs.getDate(&quot;DataSottoscrizione&quot;));</span>
+<span class="fc" id="L279">                bean.setDurata(rs.getInt(&quot;Durata&quot;));</span>
+<span class="fc" id="L280">                bean.setPrezzoVendita(rs.getFloat(&quot;PrezzoVendita&quot;));</span>
+<span class="fc" id="L281">                bean.setIdAmministatore(rs.getInt(&quot;IdAmministratore&quot;));</span>
+            }
+<span class="nc" id="L283">        } catch (SQLException e) {</span>
+<span class="nc" id="L284">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L287">                ps.close();</span>
+            }
+<span class="pc bpc" id="L289" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L290">                con.close();</span>
+            }
+        }
+<span class="fc" id="L293">        return bean;</span>
+    }
+
+    /**
+     * Restituisce il prezzo di vendita corrente nel sistema.
+     *
+     * @return Il prezzo di vendita corrente.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float ottieniPrezzoVendita() throws SQLException {
+<span class="fc" id="L304">        Connection connection = null;</span>
+<span class="fc" id="L305">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L306">        ResultSet resultSet = null;</span>
+<span class="fc" id="L307">        float prezzoVendita = 0.00f;</span>
+
+<span class="fc" id="L309">        String selectSQL = &quot;SELECT PrezzoVendita FROM &quot; + TABLE_NAME_CONTRATTO</span>
+                + &quot; ORDER BY DataSottoscrizione DESC LIMIT 1 &quot;;
+
+        try {
+<span class="fc" id="L313">            connection = ds.getConnection();</span>
+<span class="fc" id="L314">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L315">            resultSet = preparedStatement.executeQuery();</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L317">                prezzoVendita = resultSet.getFloat(&quot;PrezzoVendita&quot;);</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L321" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L322">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L326">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L330">        return prezzoVendita;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

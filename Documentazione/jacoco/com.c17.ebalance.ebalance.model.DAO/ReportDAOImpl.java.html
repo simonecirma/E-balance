@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportDAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">ReportDAOImpl.java</span></div><h1>ReportDAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.List;
+
+/**
+ * Implementazione dell'interfaccia ReportDAO per l'accesso ai dati dei report.
+ */
+<span class="fc" id="L19">public class ReportDAOImpl implements ReportDAO {</span>
+
+<span class="fc" id="L21">    private static final Logger logger = Logger.getLogger(ReportDAOImpl.class.getName());</span>
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L26">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L27">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L29">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L31">        } catch (NamingException e) {</span>
+<span class="fc" id="L32">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L33">        }</span>
+<span class="fc" id="L34">    }</span>
+
+    private static final String TABLE_NAME_REPORT = &quot;Report&quot;;
+
+
+    /**
+     * Recupera la lista di report ordinati per data di emissione in modo decrescente.
+     *
+     * @return Lista di oggetti ReportBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public List&lt;ReportBean&gt; visualizzaReport() throws SQLException {
+<span class="fc" id="L46">        Connection connection = null;</span>
+<span class="fc" id="L47">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L48">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L50">        List&lt;ReportBean&gt; report = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L51">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_REPORT + &quot; ORDER BY DataEmissione DESC&quot;;</span>
+
+        try {
+<span class="fc" id="L54">            connection = ds.getConnection();</span>
+<span class="fc" id="L55">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L57">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L60">                ReportBean bean = new ReportBean();</span>
+<span class="fc" id="L61">                bean.setDataEmissione(resultSet.getDate(&quot;DataEmissione&quot;));</span>
+<span class="fc" id="L62">                bean.setNomeReport(resultSet.getString(&quot;NomeReport&quot;));</span>
+<span class="fc" id="L63">                bean.setIdAmministratore(resultSet.getInt(&quot;IdAmministratore&quot;));</span>
+<span class="fc" id="L64">                report.add(bean);</span>
+<span class="fc" id="L65">            }</span>
+        } finally {
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">            if (resultSet != null) {</span>
+<span class="fc" id="L68">                resultSet.close();</span>
+            }
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L71">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L74">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L77">        return report;</span>
+    }
+
+    /**
+     * Restituisce il numero totale di report presenti nel database.
+     *
+     * @return Numero totale di report.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public int ultimoReport() throws SQLException {
+<span class="fc" id="L88">        Connection con = null;</span>
+<span class="fc" id="L89">        PreparedStatement ps = null;</span>
+<span class="fc" id="L90">        ResultSet rs = null;</span>
+<span class="fc" id="L91">        int n = 0;</span>
+        try {
+<span class="fc" id="L93">            con = ds.getConnection();</span>
+<span class="fc" id="L94">            String query = &quot;SELECT COUNT(IdReport) AS count FROM &quot; + TABLE_NAME_REPORT;</span>
+<span class="fc" id="L95">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L96">            rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L98">                n = rs.getInt(&quot;count&quot;);</span>
+            }
+<span class="nc" id="L100">        } catch (Exception e) {</span>
+<span class="nc" id="L101">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">            if (rs != null) {</span>
+<span class="fc" id="L104">                rs.close();</span>
+            }
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L107">                ps.close();</span>
+            }
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L110">                con.close();</span>
+            }
+        }
+<span class="fc" id="L113">        return n;</span>
+    }
+
+
+    /**
+     * Aggiunge un nuovo report al database.
+     *
+     * @param report Oggetto ReportBean da aggiungere al database.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public void aggiungiReport(ReportBean report) throws SQLException {
+<span class="fc" id="L125">        Connection con = null;</span>
+<span class="fc" id="L126">        PreparedStatement ps = null;</span>
+        try {
+<span class="fc" id="L128">            con = ds.getConnection();</span>
+<span class="fc" id="L129">            String query = &quot;INSERT INTO &quot; + TABLE_NAME_REPORT + &quot;(DataEmissione, IdAmministratore, NomeReport)&quot;</span>
+                    + &quot; VALUES(?, ?, ?)&quot;;
+<span class="fc" id="L131">            ps = con.prepareStatement(query);</span>
+
+            java.util.Date utilDate;
+<span class="fc" id="L134">            utilDate = report.getDataEmissione();</span>
+<span class="fc" id="L135">            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());</span>
+
+<span class="fc" id="L137">            ps.setDate(1, sqlDate);</span>
+<span class="fc" id="L138">            ps.setInt(2, report.getIdAmministratore());</span>
+<span class="fc" id="L139">            ps.setString(3, report.getNomeReport());</span>
+<span class="fc" id="L140">            ps.executeUpdate();</span>
+<span class="nc" id="L141">        } catch (SQLException e) {</span>
+<span class="nc" id="L142">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L145">                ps.close();</span>
+            }
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L148">                con.close();</span>
+            }
+        }
+<span class="fc" id="L151">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.amministratore.service</a> &gt; <span class="el_source">ReportServiceImpl.java</span></div><h1>ReportServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.amministratore.service;
+
+import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
+import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.ProduzioneService;
+import com.c17.ebalance.ebalance.dati.service.ProduzioneServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.ConsumoService;
+import com.c17.ebalance.ebalance.dati.service.ConsumoServiceImpl;
+import com.c17.ebalance.ebalance.model.DAO.ReportDAO;
+import com.c17.ebalance.ebalance.model.DAO.ReportDAOImpl;
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
+import com.c17.ebalance.ebalance.model.entity.VenditaBean;
+import jakarta.servlet.http.HttpSession;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
+import java.awt.Color;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * La classe {@code ReportServiceImpl} implementa l'interfaccia {@code ReportService} e fornisce
+ * l'implementazione concreta per la gestione dei report nel sistema eBalance.
+ * Utilizza istanze di servizi correlati, come {@code VenditaService}, {@code ConsumoService},
+ * {@code ProduzioneService}, e {@code ContrattoService}, per recuperare le informazioni necessarie.
+ * Utilizza anche un'istanza di {@code ReportDAO} per l'accesso al database per le operazioni specifiche.
+ * Questa implementazione si occupa principalmente di aggregare i dati dai vari servizi e di generare i report.
+ */
+<span class="fc" id="L41">public class ReportServiceImpl implements ReportService {</span>
+    /**
+     * Service per la gestione della vendita. L'istanza {@code venditaService} fornisce metodi
+     * per operare sulla vendita.
+     */
+<span class="fc" id="L46">    public VenditaService venditaService = new VenditaServiceImpl();</span>
+
+    /**
+     * Service per la gestione dei consumi. L'istanza {@code consumoService} fornisce metodi
+     * per operare su consumi del sistema.
+     */
+<span class="fc" id="L52">    public ConsumoService consumoService = new ConsumoServiceImpl();</span>
+
+    /**
+     * Service per la gestione della produzione. L'istanza {@code produzioneService} fornisce metodi
+     * per operare sulla produzione del sistema.
+     */
+<span class="fc" id="L58">    public ProduzioneService produzioneService = new ProduzioneServiceImpl();</span>
+
+    /**
+     * Service per la gestione dei contratti. L'istanza {@code contrattoService} fornisce metodi
+     * per operare su contratti nel sistema.
+     */
+<span class="fc" id="L64">    public ContrattoService contrattoService = new ContrattoServiceImpl();</span>
+
+    /**
+     * Service per la gestione dei report. L'istanza {@code reportDAO} fornisce metodi
+     * per operare sui report nel sistema.
+     */
+<span class="fc" id="L70">    private ReportDAO reportDAO = new ReportDAOImpl();</span>
+
+
+    /**
+     * Restituisce una lista di tutti i report presenti nel sistema.
+     *
+     * @return Una lista di oggetti {@code ReportBean}.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public List&lt;ReportBean&gt; visualizzaReport() throws SQLException {
+<span class="nc" id="L81">        return reportDAO.visualizzaReport();</span>
+    }
+
+    /**
+     * Aggiunge un nuovo report al sistema.
+     *
+     * @param report L'oggetto {@code ReportBean} rappresentante il nuovo report.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public void aggiungiReport(ReportBean report) throws SQLException {
+<span class="nc" id="L92">        reportDAO.aggiungiReport(report);</span>
+<span class="nc" id="L93">    }</span>
+
+    /**
+     * Genera un nuovo report in formato PDF basato sulla data di inizio e fine, il percorso della servlet,
+     * la sessione corrente.
+     *
+     * @param dataInizio     Data di inizio del periodo del report.
+     * @param dataFine       Data di fine del periodo del report.
+     * @param servletPath    Percorso del servlet utilizzato per generare il report.
+     * @param session        Sessione HTTP corrente contenente le informazioni sull'utente.
+     * @return Oggetto {@code ReportBean} rappresentante il nuovo report generato.
+     * @throws IOException  Se si verifica un errore di I/O durante la generazione del report PDF.
+     * @throws SQLException Se si verifica un'eccezione SQL durante l'accesso al database.
+     */
+    @Override
+    public ReportBean generaReport(Date dataInizio, Date dataFine, String servletPath, HttpSession session) throws IOException, SQLException {
+<span class="nc" id="L109">        ReportBean report = new ReportBean();</span>
+
+
+<span class="nc" id="L112">        List&lt;VenditaBean&gt; vendite = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L113">        vendite = venditaService.getVendite(dataInizio, dataFine);</span>
+<span class="nc" id="L114">        float ricavo = venditaService.getRicavoTotalePerData(dataInizio, dataFine);</span>
+<span class="nc" id="L115">        ContrattoBean bean = contrattoService.getContrattoAttivo(dataInizio, dataFine);</span>
+<span class="nc" id="L116">        float energiaConsumo = consumoService.getConsumoPerData(dataInizio, dataFine);</span>
+<span class="nc" id="L117">        float energiaRinnovabileProdotta = produzioneService.energiaRinnovabileProdottaPerData(dataInizio, dataFine);</span>
+<span class="nc" id="L118">        float costoMedioUnitario = bean.getCostoMedioUnitario();</span>
+<span class="nc" id="L119">        float correnteConsumata = energiaConsumo - energiaRinnovabileProdotta;</span>
+<span class="nc" id="L120">        float speseCorrente = (energiaConsumo - energiaRinnovabileProdotta) * costoMedioUnitario;</span>
+<span class="nc" id="L121">        float resocontoFinale = ricavo - speseCorrente;</span>
+
+
+<span class="nc" id="L124">        String nome = &quot;&quot;;</span>
+<span class="nc" id="L125">        String cognome = &quot;&quot;;</span>
+<span class="nc" id="L126">        int id = 0;</span>
+<span class="nc bnc" id="L127" title="All 6 branches missed.">        if (session != null &amp;&amp; session.getAttribute(&quot;nome&quot;) != null &amp;&amp; session.getAttribute(&quot;cognome&quot;) != null) {</span>
+<span class="nc" id="L128">            nome = (String) session.getAttribute(&quot;nome&quot;);</span>
+<span class="nc" id="L129">            cognome = (String) session.getAttribute(&quot;cognome&quot;);</span>
+<span class="nc" id="L130">            id = (int) session.getAttribute(&quot;idAmministratore&quot;);</span>
+        }
+<span class="nc" id="L132">        LocalDate currentDate = LocalDate.now();</span>
+<span class="nc" id="L133">        String formattedDate = currentDate.format(DateTimeFormatter.ofPattern(&quot;dd-MM-yyyy&quot;));</span>
+<span class="nc" id="L134">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);</span>
+
+<span class="nc" id="L136">        java.util.Date date = null;</span>
+        try {
+            // Effettua il parsing della stringa nella data
+<span class="nc" id="L139">            date = sdf.parse(formattedDate);</span>
+
+<span class="nc" id="L141">        } catch (ParseException e) {</span>
+<span class="nc" id="L142">            e.printStackTrace();</span>
+            // Gestisci eventuali eccezioni di parsing
+<span class="nc" id="L144">        }</span>
+
+<span class="nc" id="L146">        String descrizione = &quot;&quot;;</span>
+<span class="nc" id="L147">        String descrizione1 = &quot;&quot;;</span>
+<span class="nc" id="L148">        int n = reportDAO.ultimoReport() + 1;</span>
+<span class="nc" id="L149">        String file = &quot;Report&quot; + n + &quot;.pdf&quot;;</span>
+
+        try {
+
+<span class="nc" id="L153">            String filePath = servletPath + &quot;report&quot; + File.separator + &quot;Report&quot; + n + &quot;.pdf&quot;;</span>
+
+            // Carica il template PDF esistente
+<span class="nc" id="L156">            File templateFile = new File(servletPath + &quot;report&quot; + File.separator + &quot;TemplateReport.pdf&quot;);</span>
+<span class="nc" id="L157">            File templateFile2 = new File(servletPath + &quot;report&quot; + File.separator + &quot;TemplateReport2.pdf&quot;);</span>
+
+            // Posizione delle celle nel template da riempire
+
+            // Posizione Corrente Elettrica Consumata
+<span class="nc" id="L162">            float xCoordinate1 = 255;</span>
+<span class="nc" id="L163">            float yCoordinate1 = 446.5F;</span>
+
+            //Posizione Ricavo Totale
+<span class="nc" id="L166">            float xCoordinate2 = 370;</span>
+<span class="nc" id="L167">            float yCoordinate2 = 192;</span>
+
+            // Posizione amministratore
+<span class="nc" id="L170">            float xCoordinate3 = 450;</span>
+<span class="nc" id="L171">            float yCoordinate3 = 678;</span>
+
+            // Posizione numero report
+<span class="nc" id="L174">            float xCoordinate4 = 130;</span>
+<span class="nc" id="L175">            float yCoordinate4 = 678;</span>
+
+            // Posizione data emissione
+<span class="nc" id="L178">            float xCoordinate5 = 185;</span>
+<span class="nc" id="L179">            float yCoordinate5 = 655;</span>
+
+            // Posizione descrizione
+<span class="nc" id="L182">            float xCoordinate10 = 50;</span>
+<span class="nc" id="L183">            float yCoordinate10 = 422.5F;</span>
+
+            // Posizione descrizione1
+<span class="nc" id="L186">            float xCoordinate6 = 50;</span>
+<span class="nc" id="L187">            float yCoordinate6 = 446.5F;</span>
+
+
+            // Posizione data inizio
+<span class="nc" id="L191">            float xCoordinate7 = 353;</span>
+<span class="nc" id="L192">            float yCoordinate7 = 655;</span>
+
+            // Posizione data fine
+<span class="nc" id="L195">            float xCoordinate8 = 475;</span>
+<span class="nc" id="L196">            float yCoordinate8 = 655;</span>
+
+            // Posizione Energia Venduta
+<span class="nc" id="L199">            float xCoordinate9 = 255;</span>
+<span class="nc" id="L200">            float yCoordinate9 = 422.5F;</span>
+
+            // Posizione Ricavo per ogni vendita
+<span class="nc" id="L203">            float xCoordinate12 = 370;</span>
+<span class="nc" id="L204">            float yCoordinate12 = 422.5F;</span>
+
+            //Posizione Soldi Spesi Corrente
+<span class="nc" id="L207">            float xCoordinate11 = 475;</span>
+<span class="nc" id="L208">            float yCoordinate11 = 446.5F;</span>
+<span class="nc" id="L209">            float xCoordinate13 = 475;</span>
+<span class="nc" id="L210">            float yCoordinate13 = 192;</span>
+
+            //Posizione Resoconto Finale
+<span class="nc" id="L213">            float xCoordinate14 = 420;</span>
+<span class="nc" id="L214">            float yCoordinate14 = 160;</span>
+
+            //Posizione Nome Ente Contratto
+<span class="nc" id="L217">            float xCoordinate15 = 304;</span>
+<span class="nc" id="L218">            float yCoordinate15 = 76;</span>
+
+            //Posizione Costo Medio Unitario
+<span class="nc" id="L221">            float xCoordinate16 = 304;</span>
+<span class="nc" id="L222">            float yCoordinate16 = 62;</span>
+
+            //Posizione Prezzo Vendita
+<span class="nc" id="L225">            float xCoordinate17 = 304;</span>
+<span class="nc" id="L226">            float yCoordinate17 = 48;</span>
+
+<span class="nc" id="L228">            int numVendite = vendite.size();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">            if (numVendite &lt;= 8) {</span>
+<span class="nc" id="L230">                PDDocument document = PDDocument.load(templateFile);</span>
+                // Ottieni la prima pagina del template
+<span class="nc" id="L232">                PDPage page = document.getPage(0);</span>
+
+                // Apertura del flusso di contenuto per scrivere nel documento PDF
+<span class="nc" id="L235">                PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true);</span>
+
+                // Scrivi i valori nel documento
+<span class="nc bnc" id="L238" title="All 2 branches missed.">                if (ricavo &gt; 0) {</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">                    for (VenditaBean Vbean : vendite) {</span>
+
+<span class="nc" id="L241">                        descrizione = &quot;VENDITA DEL &quot;;</span>
+
+<span class="nc" id="L243">                        contentStream.beginText();</span>
+<span class="nc" id="L244">                        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L245">                        contentStream.newLineAtOffset(xCoordinate10, yCoordinate10);</span>
+<span class="nc" id="L246">                        contentStream.showText(descrizione + &quot; &quot; + Vbean.getDataVendita());</span>
+<span class="nc" id="L247">                        contentStream.endText();</span>
+<span class="nc" id="L248">                        yCoordinate10 -= 24;</span>
+
+<span class="nc" id="L250">                        contentStream.beginText();</span>
+<span class="nc" id="L251">                        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L252">                        contentStream.newLineAtOffset(xCoordinate9, yCoordinate9);</span>
+<span class="nc" id="L253">                        contentStream.showText(String.valueOf(Vbean.getEnergiaVenduta()));</span>
+<span class="nc" id="L254">                        contentStream.endText();</span>
+<span class="nc" id="L255">                        yCoordinate9 -= 24;</span>
+
+<span class="nc" id="L257">                        contentStream.beginText();</span>
+<span class="nc" id="L258">                        contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro</span>
+<span class="nc" id="L259">                        contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L260">                        contentStream.newLineAtOffset(xCoordinate12, yCoordinate12);</span>
+<span class="nc" id="L261">                        contentStream.showText(String.valueOf(&quot;+&quot; + Vbean.getRicavoTotale()));</span>
+<span class="nc" id="L262">                        contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L263">                        contentStream.endText();</span>
+<span class="nc" id="L264">                        yCoordinate12 -= 24;</span>
+
+<span class="nc" id="L266">                    }</span>
+<span class="nc" id="L267">                    contentStream.beginText();</span>
+<span class="nc" id="L268">                    contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro</span>
+<span class="nc" id="L269">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L270">                    contentStream.newLineAtOffset(xCoordinate2, yCoordinate2);</span>
+<span class="nc" id="L271">                    contentStream.showText(String.valueOf(&quot;+&quot; + ricavo));</span>
+<span class="nc" id="L272">                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L273">                    contentStream.endText();</span>
+                }
+
+<span class="nc bnc" id="L276" title="All 2 branches missed.">                if (correnteConsumata &gt; 0) {</span>
+<span class="nc" id="L277">                    descrizione1 = &quot;SPESE CORRENTE&quot;;</span>
+
+<span class="nc" id="L279">                    contentStream.beginText();</span>
+<span class="nc" id="L280">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L281">                    contentStream.newLineAtOffset(xCoordinate6, yCoordinate6);</span>
+<span class="nc" id="L282">                    contentStream.showText(descrizione1);</span>
+<span class="nc" id="L283">                    contentStream.endText();</span>
+
+<span class="nc" id="L285">                    contentStream.beginText();</span>
+<span class="nc" id="L286">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L287">                    contentStream.newLineAtOffset(xCoordinate1, yCoordinate1);</span>
+<span class="nc" id="L288">                    contentStream.showText(String.valueOf(correnteConsumata));</span>
+<span class="nc" id="L289">                    contentStream.endText();</span>
+
+<span class="nc" id="L291">                    contentStream.beginText();</span>
+<span class="nc" id="L292">                    contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso</span>
+<span class="nc" id="L293">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L294">                    contentStream.newLineAtOffset(xCoordinate11, yCoordinate11);</span>
+<span class="nc" id="L295">                    contentStream.showText(String.valueOf(&quot;-&quot; + speseCorrente));</span>
+<span class="nc" id="L296">                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L297">                    contentStream.endText();</span>
+
+<span class="nc" id="L299">                    contentStream.beginText();</span>
+<span class="nc" id="L300">                    contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso</span>
+<span class="nc" id="L301">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L302">                    contentStream.newLineAtOffset(xCoordinate13, yCoordinate13);</span>
+<span class="nc" id="L303">                    contentStream.showText(String.valueOf(&quot;-&quot; + speseCorrente));</span>
+<span class="nc" id="L304">                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L305">                    contentStream.endText();</span>
+                }
+<span class="nc" id="L307">                contentStream.beginText();</span>
+<span class="nc" id="L308">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L309">                contentStream.newLineAtOffset(xCoordinate14, yCoordinate14);</span>
+<span class="nc bnc" id="L310" title="All 2 branches missed.">                if (resocontoFinale &gt; 0) {</span>
+<span class="nc" id="L311">                    contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde</span>
+<span class="nc" id="L312">                    contentStream.showText(String.valueOf(&quot;+&quot; + resocontoFinale));</span>
+<span class="nc" id="L313">                    contentStream.endText();</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">                } else if (resocontoFinale &lt; 0) {</span>
+<span class="nc" id="L315">                    contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso</span>
+<span class="nc" id="L316">                    contentStream.showText(String.valueOf(resocontoFinale));</span>
+<span class="nc" id="L317">                    contentStream.endText();</span>
+                } else {
+<span class="nc" id="L319">                    contentStream.showText(String.valueOf(resocontoFinale));</span>
+<span class="nc" id="L320">                    contentStream.endText();</span>
+                }
+<span class="nc" id="L322">                contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+
+<span class="nc" id="L324">                contentStream.setNonStrokingColor(Color.BLACK);</span>
+<span class="nc" id="L325">                contentStream.beginText();</span>
+<span class="nc" id="L326">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L327">                contentStream.newLineAtOffset(xCoordinate3, yCoordinate3);</span>
+<span class="nc" id="L328">                contentStream.showText(nome + &quot; &quot; + cognome);</span>
+<span class="nc" id="L329">                contentStream.endText();</span>
+
+<span class="nc" id="L331">                contentStream.beginText();</span>
+<span class="nc" id="L332">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L333">                contentStream.newLineAtOffset(xCoordinate4, yCoordinate4);</span>
+<span class="nc" id="L334">                contentStream.showText(String.valueOf(n));</span>
+<span class="nc" id="L335">                contentStream.endText();</span>
+
+<span class="nc" id="L337">                contentStream.beginText();</span>
+<span class="nc" id="L338">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L339">                contentStream.newLineAtOffset(xCoordinate5, yCoordinate5);</span>
+<span class="nc" id="L340">                contentStream.showText(formattedDate);</span>
+<span class="nc" id="L341">                contentStream.endText();</span>
+
+<span class="nc" id="L343">                contentStream.beginText();</span>
+<span class="nc" id="L344">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L345">                contentStream.newLineAtOffset(xCoordinate7, yCoordinate7);</span>
+<span class="nc" id="L346">                contentStream.showText(String.valueOf(dataInizio));</span>
+<span class="nc" id="L347">                contentStream.endText();</span>
+
+<span class="nc" id="L349">                contentStream.beginText();</span>
+<span class="nc" id="L350">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L351">                contentStream.newLineAtOffset(xCoordinate8, yCoordinate8);</span>
+<span class="nc" id="L352">                contentStream.showText(String.valueOf(dataFine));</span>
+<span class="nc" id="L353">                contentStream.endText();</span>
+
+<span class="nc" id="L355">                contentStream.beginText();</span>
+<span class="nc" id="L356">                contentStream.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L357">                contentStream.setNonStrokingColor(new Color(47, 47, 47)); //Grigio</span>
+<span class="nc" id="L358">                contentStream.newLineAtOffset(xCoordinate15, yCoordinate15);</span>
+<span class="nc" id="L359">                contentStream.showText(bean.getNomeEnte());</span>
+<span class="nc" id="L360">                contentStream.endText();</span>
+
+<span class="nc" id="L362">                contentStream.beginText();</span>
+<span class="nc" id="L363">                contentStream.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L364">                contentStream.newLineAtOffset(xCoordinate16, yCoordinate16);</span>
+<span class="nc" id="L365">                contentStream.showText(&quot;Costo Medio Unitario: &quot; + bean.getCostoMedioUnitario());</span>
+<span class="nc" id="L366">                contentStream.endText();</span>
+
+<span class="nc" id="L368">                contentStream.beginText();</span>
+<span class="nc" id="L369">                contentStream.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L370">                contentStream.newLineAtOffset(xCoordinate17, yCoordinate17);</span>
+<span class="nc" id="L371">                contentStream.showText(&quot;Prezzo Vendita Al kWH: &quot; + bean.getPrezzoVendita());</span>
+<span class="nc" id="L372">                contentStream.endText();</span>
+
+<span class="nc" id="L374">                contentStream.close();</span>
+
+<span class="nc" id="L376">                document.save(filePath);</span>
+<span class="nc" id="L377">                document.close();</span>
+<span class="nc" id="L378">            } else {</span>
+<span class="nc" id="L379">                PDDocument document2 = PDDocument.load(templateFile2);</span>
+                // Ottieni la prima pagina del template
+<span class="nc" id="L381">                PDPage page = document2.getPage(0);</span>
+
+                // Apertura del flusso di contenuto per scrivere nel documento PDF
+<span class="nc" id="L384">                PDPageContentStream contentStream = new PDPageContentStream(document2, page, PDPageContentStream.AppendMode.APPEND, true, true);</span>
+
+<span class="nc" id="L386">                int maxElem = 9;</span>
+<span class="nc" id="L387">                int i = 0;</span>
+
+<span class="nc bnc" id="L389" title="All 2 branches missed.">                if (correnteConsumata &gt; 0) {</span>
+<span class="nc" id="L390">                    descrizione1 = &quot;SPESE CORRENTE&quot;;</span>
+
+<span class="nc" id="L392">                    contentStream.beginText();</span>
+<span class="nc" id="L393">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L394">                    contentStream.newLineAtOffset(xCoordinate6, yCoordinate6);</span>
+<span class="nc" id="L395">                    contentStream.showText(descrizione1);</span>
+<span class="nc" id="L396">                    contentStream.endText();</span>
+
+<span class="nc" id="L398">                    contentStream.beginText();</span>
+<span class="nc" id="L399">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L400">                    contentStream.newLineAtOffset(xCoordinate1, yCoordinate1);</span>
+<span class="nc" id="L401">                    contentStream.showText(String.valueOf(correnteConsumata));</span>
+<span class="nc" id="L402">                    contentStream.endText();</span>
+
+<span class="nc" id="L404">                    contentStream.beginText();</span>
+<span class="nc" id="L405">                    contentStream.setNonStrokingColor(new Color(241, 5, 5)); // Rosso</span>
+<span class="nc" id="L406">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L407">                    contentStream.newLineAtOffset(xCoordinate11, yCoordinate11);</span>
+<span class="nc" id="L408">                    contentStream.showText(String.valueOf(&quot;-&quot; + speseCorrente));</span>
+<span class="nc" id="L409">                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L410">                    contentStream.endText();</span>
+
+<span class="nc" id="L412">                    i++;</span>
+                }
+
+<span class="nc" id="L415">                int j = 0;</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">                while (i != maxElem) {</span>
+<span class="nc" id="L417">                    VenditaBean Vbean = vendite.get(j);</span>
+<span class="nc" id="L418">                    descrizione = &quot;VENDITA DEL &quot;;</span>
+<span class="nc" id="L419">                    contentStream.beginText();</span>
+<span class="nc" id="L420">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L421">                    contentStream.newLineAtOffset(xCoordinate10, yCoordinate10);</span>
+<span class="nc" id="L422">                    contentStream.showText(descrizione + &quot; &quot; + Vbean.getDataVendita());</span>
+<span class="nc" id="L423">                    contentStream.endText();</span>
+<span class="nc" id="L424">                    yCoordinate10 -= 24.5;</span>
+
+<span class="nc" id="L426">                    contentStream.beginText();</span>
+<span class="nc" id="L427">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L428">                    contentStream.newLineAtOffset(xCoordinate9, yCoordinate9);</span>
+<span class="nc" id="L429">                    contentStream.showText(String.valueOf(Vbean.getEnergiaVenduta()));</span>
+<span class="nc" id="L430">                    contentStream.endText();</span>
+<span class="nc" id="L431">                    yCoordinate9 -= 24.5;</span>
+
+<span class="nc" id="L433">                    contentStream.beginText();</span>
+<span class="nc" id="L434">                    contentStream.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro</span>
+<span class="nc" id="L435">                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L436">                    contentStream.newLineAtOffset(xCoordinate12, yCoordinate12);</span>
+<span class="nc" id="L437">                    contentStream.showText(String.valueOf(&quot;+&quot; + Vbean.getRicavoTotale()));</span>
+<span class="nc" id="L438">                    contentStream.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L439">                    contentStream.endText();</span>
+<span class="nc" id="L440">                    yCoordinate12 -= 24.5;</span>
+
+<span class="nc" id="L442">                    j++;</span>
+<span class="nc" id="L443">                    i++;</span>
+<span class="nc" id="L444">                    numVendite--;</span>
+<span class="nc" id="L445">                }</span>
+<span class="nc" id="L446">                yCoordinate12 += 24.5 * 9;</span>
+<span class="nc" id="L447">                i = 0;</span>
+<span class="nc" id="L448">                contentStream.setNonStrokingColor(Color.BLACK);</span>
+<span class="nc" id="L449">                contentStream.beginText();</span>
+<span class="nc" id="L450">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L451">                contentStream.newLineAtOffset(xCoordinate3, yCoordinate3);</span>
+<span class="nc" id="L452">                contentStream.showText(nome + &quot; &quot; + cognome);</span>
+<span class="nc" id="L453">                contentStream.endText();</span>
+
+<span class="nc" id="L455">                contentStream.beginText();</span>
+<span class="nc" id="L456">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L457">                contentStream.newLineAtOffset(xCoordinate4, yCoordinate4);</span>
+<span class="nc" id="L458">                contentStream.showText(String.valueOf(n));</span>
+<span class="nc" id="L459">                contentStream.endText();</span>
+
+<span class="nc" id="L461">                contentStream.beginText();</span>
+<span class="nc" id="L462">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L463">                contentStream.newLineAtOffset(xCoordinate5, yCoordinate5);</span>
+<span class="nc" id="L464">                contentStream.showText(formattedDate);</span>
+<span class="nc" id="L465">                contentStream.endText();</span>
+
+<span class="nc" id="L467">                contentStream.beginText();</span>
+<span class="nc" id="L468">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L469">                contentStream.newLineAtOffset(xCoordinate7, yCoordinate7);</span>
+<span class="nc" id="L470">                contentStream.showText(String.valueOf(dataInizio));</span>
+<span class="nc" id="L471">                contentStream.endText();</span>
+
+<span class="nc" id="L473">                contentStream.beginText();</span>
+<span class="nc" id="L474">                contentStream.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L475">                contentStream.newLineAtOffset(xCoordinate8, yCoordinate8);</span>
+<span class="nc" id="L476">                contentStream.showText(String.valueOf(dataFine));</span>
+<span class="nc" id="L477">                contentStream.endText();</span>
+
+<span class="nc" id="L479">                contentStream.beginText();</span>
+<span class="nc" id="L480">                contentStream.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L481">                contentStream.setNonStrokingColor(new Color(47, 47, 47)); //Grigio</span>
+<span class="nc" id="L482">                contentStream.newLineAtOffset(xCoordinate15, yCoordinate15);</span>
+<span class="nc" id="L483">                contentStream.showText(bean.getNomeEnte());</span>
+<span class="nc" id="L484">                contentStream.endText();</span>
+
+<span class="nc" id="L486">                contentStream.beginText();</span>
+<span class="nc" id="L487">                contentStream.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L488">                contentStream.newLineAtOffset(xCoordinate16, yCoordinate16);</span>
+<span class="nc" id="L489">                contentStream.showText(&quot;Costo Medio Unitario: &quot; + bean.getCostoMedioUnitario());</span>
+<span class="nc" id="L490">                contentStream.endText();</span>
+
+<span class="nc" id="L492">                contentStream.beginText();</span>
+<span class="nc" id="L493">                contentStream.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L494">                contentStream.newLineAtOffset(xCoordinate17, yCoordinate17);</span>
+<span class="nc" id="L495">                contentStream.showText(&quot;Prezzo Vendita Al kWH: &quot; + bean.getPrezzoVendita());</span>
+<span class="nc" id="L496">                contentStream.endText();</span>
+
+<span class="nc" id="L498">                contentStream.close();</span>
+<span class="nc bnc" id="L499" title="All 2 branches missed.">                while (numVendite &gt; 9) {</span>
+<span class="nc" id="L500">                    PDDocument document3 = PDDocument.load(templateFile2);</span>
+<span class="nc" id="L501">                    PDPage newPage = document3.getPage(0);</span>
+<span class="nc" id="L502">                    document2.addPage(newPage);</span>
+
+<span class="nc" id="L504">                    PDPageContentStream contentStream2 = new PDPageContentStream(document2, newPage, PDPageContentStream.AppendMode.APPEND, true, true);</span>
+
+<span class="nc bnc" id="L506" title="All 2 branches missed.">                    while (i != maxElem) {</span>
+<span class="nc" id="L507">                        VenditaBean Vbean = vendite.get(j);</span>
+<span class="nc" id="L508">                        descrizione = &quot;VENDITA DEL &quot;;</span>
+<span class="nc" id="L509">                        contentStream2.beginText();</span>
+<span class="nc" id="L510">                        contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L511">                        contentStream2.newLineAtOffset(xCoordinate6, yCoordinate6);</span>
+<span class="nc" id="L512">                        contentStream2.showText(descrizione + &quot; &quot; + Vbean.getDataVendita());</span>
+<span class="nc" id="L513">                        contentStream2.endText();</span>
+<span class="nc" id="L514">                        yCoordinate6 -= 24.5;</span>
+
+<span class="nc" id="L516">                        contentStream2.beginText();</span>
+<span class="nc" id="L517">                        contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L518">                        contentStream2.newLineAtOffset(xCoordinate1, yCoordinate1);</span>
+<span class="nc" id="L519">                        contentStream2.showText(String.valueOf(Vbean.getEnergiaVenduta()));</span>
+<span class="nc" id="L520">                        contentStream2.endText();</span>
+<span class="nc" id="L521">                        yCoordinate1 -= 24.5;</span>
+
+<span class="nc" id="L523">                        contentStream2.beginText();</span>
+<span class="nc" id="L524">                        contentStream2.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro</span>
+<span class="nc" id="L525">                        contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L526">                        contentStream2.newLineAtOffset(xCoordinate12, yCoordinate12);</span>
+<span class="nc" id="L527">                        contentStream2.showText(String.valueOf(&quot;+&quot; + Vbean.getRicavoTotale()));</span>
+<span class="nc" id="L528">                        contentStream2.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L529">                        contentStream2.endText();</span>
+<span class="nc" id="L530">                        yCoordinate12 -= 24.5;</span>
+
+<span class="nc" id="L532">                        j++;</span>
+<span class="nc" id="L533">                        i++;</span>
+<span class="nc" id="L534">                        numVendite--;</span>
+<span class="nc" id="L535">                    }</span>
+<span class="nc" id="L536">                    yCoordinate1 += 24.5 * 9;</span>
+<span class="nc" id="L537">                    yCoordinate6 += 24.5 * 9;</span>
+<span class="nc" id="L538">                    yCoordinate12 += 24.5 * 9;</span>
+
+<span class="nc" id="L540">                    i = 0;</span>
+<span class="nc" id="L541">                    contentStream2.setNonStrokingColor(Color.BLACK);</span>
+<span class="nc" id="L542">                    contentStream2.beginText();</span>
+<span class="nc" id="L543">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L544">                    contentStream2.newLineAtOffset(xCoordinate3, yCoordinate3);</span>
+<span class="nc" id="L545">                    contentStream2.showText(nome + &quot; &quot; + cognome);</span>
+<span class="nc" id="L546">                    contentStream2.endText();</span>
+
+<span class="nc" id="L548">                    contentStream2.beginText();</span>
+<span class="nc" id="L549">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L550">                    contentStream2.newLineAtOffset(xCoordinate4, yCoordinate4);</span>
+<span class="nc" id="L551">                    contentStream2.showText(String.valueOf(n));</span>
+<span class="nc" id="L552">                    contentStream2.endText();</span>
+
+<span class="nc" id="L554">                    contentStream2.beginText();</span>
+<span class="nc" id="L555">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L556">                    contentStream2.newLineAtOffset(xCoordinate5, yCoordinate5);</span>
+<span class="nc" id="L557">                    contentStream2.showText(formattedDate);</span>
+<span class="nc" id="L558">                    contentStream2.endText();</span>
+
+<span class="nc" id="L560">                    contentStream2.beginText();</span>
+<span class="nc" id="L561">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L562">                    contentStream2.newLineAtOffset(xCoordinate7, yCoordinate7);</span>
+<span class="nc" id="L563">                    contentStream2.showText(String.valueOf(dataInizio));</span>
+<span class="nc" id="L564">                    contentStream2.endText();</span>
+
+<span class="nc" id="L566">                    contentStream2.beginText();</span>
+<span class="nc" id="L567">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L568">                    contentStream2.newLineAtOffset(xCoordinate8, yCoordinate8);</span>
+<span class="nc" id="L569">                    contentStream2.showText(String.valueOf(dataFine));</span>
+<span class="nc" id="L570">                    contentStream2.endText();</span>
+
+<span class="nc" id="L572">                    contentStream2.beginText();</span>
+<span class="nc" id="L573">                    contentStream2.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L574">                    contentStream2.setNonStrokingColor(new Color(47, 47, 47)); //Grigio</span>
+<span class="nc" id="L575">                    contentStream2.newLineAtOffset(xCoordinate15, yCoordinate15);</span>
+<span class="nc" id="L576">                    contentStream2.showText(bean.getNomeEnte());</span>
+<span class="nc" id="L577">                    contentStream2.endText();</span>
+
+<span class="nc" id="L579">                    contentStream2.beginText();</span>
+<span class="nc" id="L580">                    contentStream2.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L581">                    contentStream2.newLineAtOffset(xCoordinate16, yCoordinate16);</span>
+<span class="nc" id="L582">                    contentStream2.showText(&quot;Costo Medio Unitario: &quot; + bean.getCostoMedioUnitario());</span>
+<span class="nc" id="L583">                    contentStream2.endText();</span>
+
+<span class="nc" id="L585">                    contentStream2.beginText();</span>
+<span class="nc" id="L586">                    contentStream2.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L587">                    contentStream2.newLineAtOffset(xCoordinate17, yCoordinate17);</span>
+<span class="nc" id="L588">                    contentStream2.showText(&quot;Prezzo Vendita Al kWH: &quot; + bean.getPrezzoVendita());</span>
+<span class="nc" id="L589">                    contentStream2.endText();</span>
+
+<span class="nc" id="L591">                    contentStream2.close();</span>
+<span class="nc" id="L592">                }</span>
+<span class="nc bnc" id="L593" title="All 2 branches missed.">                if (numVendite &lt;= 9) {</span>
+<span class="nc" id="L594">                    PDDocument document = PDDocument.load(templateFile);</span>
+<span class="nc" id="L595">                    PDPage newPage = document.getPage(0);</span>
+<span class="nc" id="L596">                    document2.addPage(newPage);</span>
+<span class="nc" id="L597">                    PDPageContentStream contentStream2 = new PDPageContentStream(document2, newPage, PDPageContentStream.AppendMode.APPEND, true, true);</span>
+
+<span class="nc bnc" id="L599" title="All 4 branches missed.">                    while (i != maxElem &amp;&amp; (numVendite != 0)) {</span>
+<span class="nc" id="L600">                        VenditaBean Vbean = vendite.get(j);</span>
+<span class="nc" id="L601">                        descrizione = &quot;VENDITA DEL &quot;;</span>
+<span class="nc" id="L602">                        contentStream2.beginText();</span>
+<span class="nc" id="L603">                        contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L604">                        contentStream2.newLineAtOffset(xCoordinate6, yCoordinate6);</span>
+<span class="nc" id="L605">                        contentStream2.showText(descrizione + &quot; &quot; + Vbean.getDataVendita());</span>
+<span class="nc" id="L606">                        contentStream2.endText();</span>
+<span class="nc" id="L607">                        yCoordinate6 -= 24.5;</span>
+
+<span class="nc" id="L609">                        contentStream2.beginText();</span>
+<span class="nc" id="L610">                        contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L611">                        contentStream2.newLineAtOffset(xCoordinate1, yCoordinate1);</span>
+<span class="nc" id="L612">                        contentStream2.showText(String.valueOf(Vbean.getEnergiaVenduta()));</span>
+<span class="nc" id="L613">                        contentStream2.endText();</span>
+<span class="nc" id="L614">                        yCoordinate1 -= 24.5;</span>
+
+<span class="nc" id="L616">                        contentStream2.beginText();</span>
+<span class="nc" id="L617">                        contentStream2.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro</span>
+<span class="nc" id="L618">                        contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L619">                        contentStream2.newLineAtOffset(xCoordinate12, yCoordinate12);</span>
+<span class="nc" id="L620">                        contentStream2.showText(String.valueOf(&quot;+&quot; + Vbean.getRicavoTotale()));</span>
+<span class="nc" id="L621">                        contentStream2.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L622">                        contentStream2.endText();</span>
+<span class="nc" id="L623">                        yCoordinate12 -= 24.5;</span>
+
+<span class="nc" id="L625">                        j++;</span>
+<span class="nc" id="L626">                        i++;</span>
+<span class="nc" id="L627">                        numVendite--;</span>
+<span class="nc" id="L628">                    }</span>
+<span class="nc" id="L629">                    contentStream2.beginText();</span>
+<span class="nc" id="L630">                    contentStream2.setNonStrokingColor(new Color(0, 128, 0)); // Verde scuro</span>
+<span class="nc" id="L631">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L632">                    contentStream2.newLineAtOffset(xCoordinate2, yCoordinate2);</span>
+<span class="nc" id="L633">                    contentStream2.showText(String.valueOf(&quot;+&quot; + ricavo));</span>
+<span class="nc" id="L634">                    contentStream2.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L635">                    contentStream2.endText();</span>
+
+<span class="nc" id="L637">                    contentStream2.beginText();</span>
+<span class="nc" id="L638">                    contentStream2.setNonStrokingColor(new Color(241, 5, 5)); // Rosso</span>
+<span class="nc" id="L639">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L640">                    contentStream2.newLineAtOffset(xCoordinate13, yCoordinate13);</span>
+<span class="nc" id="L641">                    contentStream2.showText(String.valueOf(&quot;-&quot; + speseCorrente));</span>
+<span class="nc" id="L642">                    contentStream2.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+<span class="nc" id="L643">                    contentStream2.endText();</span>
+
+<span class="nc" id="L645">                    contentStream2.beginText();</span>
+<span class="nc" id="L646">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 12);</span>
+<span class="nc" id="L647">                    contentStream2.newLineAtOffset(xCoordinate14, yCoordinate14);</span>
+<span class="nc bnc" id="L648" title="All 2 branches missed.">                    if (resocontoFinale &gt; 0) {</span>
+<span class="nc" id="L649">                        contentStream2.setNonStrokingColor(new Color(0, 128, 0)); // Verde</span>
+<span class="nc" id="L650">                        contentStream2.showText(String.valueOf(&quot;+&quot; + resocontoFinale));</span>
+<span class="nc" id="L651">                        contentStream2.endText();</span>
+<span class="nc bnc" id="L652" title="All 2 branches missed.">                    } else if (resocontoFinale &lt; 0) {</span>
+<span class="nc" id="L653">                        contentStream2.setNonStrokingColor(new Color(241, 5, 5)); // Rosso</span>
+<span class="nc" id="L654">                        contentStream2.showText(String.valueOf(resocontoFinale));</span>
+<span class="nc" id="L655">                        contentStream2.endText();</span>
+                    } else {
+<span class="nc" id="L657">                        contentStream2.showText(String.valueOf(resocontoFinale));</span>
+<span class="nc" id="L658">                        contentStream2.endText();</span>
+                    }
+<span class="nc" id="L660">                    contentStream2.setNonStrokingColor(new Color(0, 0, 0)); // Nero</span>
+
+<span class="nc" id="L662">                    contentStream2.setNonStrokingColor(Color.BLACK);</span>
+<span class="nc" id="L663">                    contentStream2.beginText();</span>
+<span class="nc" id="L664">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L665">                    contentStream2.newLineAtOffset(xCoordinate3, yCoordinate3);</span>
+<span class="nc" id="L666">                    contentStream2.showText(nome + &quot; &quot; + cognome);</span>
+<span class="nc" id="L667">                    contentStream2.endText();</span>
+
+<span class="nc" id="L669">                    contentStream2.beginText();</span>
+<span class="nc" id="L670">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L671">                    contentStream2.newLineAtOffset(xCoordinate4, yCoordinate4);</span>
+<span class="nc" id="L672">                    contentStream2.showText(String.valueOf(n));</span>
+<span class="nc" id="L673">                    contentStream2.endText();</span>
+
+<span class="nc" id="L675">                    contentStream2.beginText();</span>
+<span class="nc" id="L676">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L677">                    contentStream2.newLineAtOffset(xCoordinate5, yCoordinate5);</span>
+<span class="nc" id="L678">                    contentStream2.showText(formattedDate);</span>
+<span class="nc" id="L679">                    contentStream2.endText();</span>
+
+<span class="nc" id="L681">                    contentStream2.beginText();</span>
+<span class="nc" id="L682">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L683">                    contentStream2.newLineAtOffset(xCoordinate7, yCoordinate7);</span>
+<span class="nc" id="L684">                    contentStream2.showText(String.valueOf(dataInizio));</span>
+<span class="nc" id="L685">                    contentStream2.endText();</span>
+
+<span class="nc" id="L687">                    contentStream2.beginText();</span>
+<span class="nc" id="L688">                    contentStream2.setFont(PDType1Font.HELVETICA_BOLD, 16);</span>
+<span class="nc" id="L689">                    contentStream2.newLineAtOffset(xCoordinate8, yCoordinate8);</span>
+<span class="nc" id="L690">                    contentStream2.showText(String.valueOf(dataFine));</span>
+<span class="nc" id="L691">                    contentStream2.endText();</span>
+
+<span class="nc" id="L693">                    contentStream2.beginText();</span>
+<span class="nc" id="L694">                    contentStream2.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L695">                    contentStream2.setNonStrokingColor(new Color(47, 47, 47)); //Grigio</span>
+<span class="nc" id="L696">                    contentStream2.newLineAtOffset(xCoordinate15, yCoordinate15);</span>
+<span class="nc" id="L697">                    contentStream2.showText(bean.getNomeEnte());</span>
+<span class="nc" id="L698">                    contentStream2.endText();</span>
+
+<span class="nc" id="L700">                    contentStream2.beginText();</span>
+<span class="nc" id="L701">                    contentStream2.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L702">                    contentStream2.newLineAtOffset(xCoordinate16, yCoordinate16);</span>
+<span class="nc" id="L703">                    contentStream2.showText(&quot;Costo Medio Unitario: &quot; + bean.getCostoMedioUnitario());</span>
+<span class="nc" id="L704">                    contentStream2.endText();</span>
+
+<span class="nc" id="L706">                    contentStream2.beginText();</span>
+<span class="nc" id="L707">                    contentStream2.setFont(PDType1Font.HELVETICA, 12);</span>
+<span class="nc" id="L708">                    contentStream2.newLineAtOffset(xCoordinate17, yCoordinate17);</span>
+<span class="nc" id="L709">                    contentStream2.showText(&quot;Prezzo Vendita Al kWH: &quot; + bean.getPrezzoVendita());</span>
+<span class="nc" id="L710">                    contentStream2.endText();</span>
+
+<span class="nc" id="L712">                    contentStream2.close();</span>
+
+<span class="nc" id="L714">                    document2.save(filePath);</span>
+<span class="nc" id="L715">                    document2.close();</span>
+
+                }
+            }
+
+            //Apertura PDF
+<span class="nc bnc" id="L721" title="All 2 branches missed.">            if (Desktop.isDesktopSupported()) {</span>
+<span class="nc" id="L722">                Desktop desktop = Desktop.getDesktop();</span>
+<span class="nc bnc" id="L723" title="All 2 branches missed.">                if (desktop.isSupported(Desktop.Action.OPEN)) {</span>
+<span class="nc" id="L724">                    desktop.open(new File(filePath));</span>
+                }
+            }
+
+<span class="nc" id="L728">        } catch (Exception e) {</span>
+<span class="nc" id="L729">            e.printStackTrace();</span>
+<span class="nc" id="L730">        }</span>
+        // Inserisci il nuovo report nel database
+<span class="nc" id="L732">        report.setDataEmissione(date);</span>
+<span class="nc" id="L733">        report.setIdAmministratore(id);</span>
+<span class="nc" id="L734">        report.setNomeReport(file);</span>
+
+<span class="nc" id="L736">        return report;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

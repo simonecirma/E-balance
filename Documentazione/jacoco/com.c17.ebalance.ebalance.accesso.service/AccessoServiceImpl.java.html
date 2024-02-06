@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccessoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.accesso.service</a> &gt; <span class="el_source">AccessoServiceImpl.java</span></div><h1>AccessoServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.accesso.service;
+
+import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAO;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
+import com.c17.ebalance.ebalance.model.DAO.AmministratoreDAOImpl;
+
+import java.sql.SQLException;
+
+/**
+ * La classe {@code AccessoServiceImpl} implementa l'interfaccia {@code AccessoService} e fornisce
+ * l'implementazione concreta per le operazioni di accesso e autenticazione degli amministratori nel sistema eBalance.
+ * Utilizza un'istanza di {@code AmministratoreDAO} per accedere al database e verificare le credenziali di accesso.
+ */
+<span class="fc" id="L14">public class AccessoServiceImpl implements AccessoService {</span>
+
+<span class="fc" id="L16">    private AmministratoreDAO amministratoreDAO = new AmministratoreDAOImpl();</span>
+
+    /**
+     * Effettua l'accesso di un amministratore utilizzando l'indirizzo email e la password forniti,
+     * delegando l'operazione al DAO associato.
+     *
+     * @param email    L'indirizzo email dell'amministratore.
+     * @param password La password dell'amministratore.
+     * @return L'oggetto {@code AmministratoreBean} dell'amministratore autenticato, o null se le credenziali sono sbagliate.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public AmministratoreBean login(final String email, final String password) throws SQLException {
+<span class="nc" id="L29">        return amministratoreDAO.login(email, password);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

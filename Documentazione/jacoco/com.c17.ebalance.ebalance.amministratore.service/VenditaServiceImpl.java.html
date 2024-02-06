@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VenditaServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.amministratore.service</a> &gt; <span class="el_source">VenditaServiceImpl.java</span></div><h1>VenditaServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.amministratore.service;
+
+import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
+import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.BatteriaService;
+import com.c17.ebalance.ebalance.dati.service.BatteriaServiceImpl;
+import com.c17.ebalance.ebalance.model.DAO.VenditaDAO;
+import com.c17.ebalance.ebalance.model.DAO.VenditaDAOImpl;
+import com.c17.ebalance.ebalance.model.entity.VenditaBean;
+
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
+
+/**
+ * La classe {@code VenditaServiceImpl} implementa l'interfaccia {@code VenditaService} e fornisce
+ * l'implementazione concreta per le operazioni di gestione delle vendite nel sistema eBalance.
+ * Utilizza un'istanza di {@code VenditaDAO}, {@code ContrattoService}, e {@code BatteriaService}
+ * per accedere al database e eseguire le operazioni specifiche.
+ */
+<span class="fc" id="L23">public class VenditaServiceImpl implements VenditaService {</span>
+<span class="fc" id="L24">    private VenditaDAO venditaDAO = new VenditaDAOImpl();</span>
+<span class="fc" id="L25">    private ContrattoService contrattoService = new ContrattoServiceImpl();</span>
+<span class="fc" id="L26">    private BatteriaService batteriaService = new BatteriaServiceImpl();</span>
+
+    /**
+     * Restituisce una lista di tutte le vendite nel periodo specificato.
+     *
+     * @param dataInizio La data di inizio del periodo per le vendite.
+     * @param dataFine   La data di fine del periodo per le vendite.
+     * @return Una lista di oggetti {@code VenditaBean}.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public List&lt;VenditaBean&gt; getVendite(Date dataInizio, Date dataFine) throws SQLException {
+<span class="nc" id="L38">        return venditaDAO.getVendite(dataInizio, dataFine);</span>
+    }
+
+    /**
+     * Restituisce il ricavo totale delle vendite nel periodo specificato.
+     *
+     * @param dataInizio La data di inizio del periodo per le vendite.
+     * @param dataFine   La data di fine del periodo per le vendite.
+     * @return Il ricavo totale delle vendite nel periodo.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public float getRicavoTotalePerData(Date dataInizio, Date dataFine) throws SQLException {
+<span class="nc" id="L51">        return venditaDAO.getRicavoTotalePerData(dataInizio, dataFine);</span>
+    }
+
+    /**
+     * Effettua una vendita generando un oggetto {@code VenditaBean} con dati casuali
+     * e aggiornando il database di vendite e le informazioni sulle batterie.
+     *
+     * @param idAmministratore L'ID dell'amministratore che effettua la vendita.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public void effettuaVendita(int idAmministratore) throws SQLException {
+<span class="nc" id="L63">        VenditaBean bean = new VenditaBean();</span>
+<span class="nc" id="L64">        Random random = new Random();</span>
+<span class="nc" id="L65">        LocalDate data = LocalDate.now();</span>
+<span class="nc" id="L66">        float energiaVenduta = random.nextFloat() * 1000 + 1000;</span>
+<span class="nc" id="L67">        float prezzoVendita = contrattoService.ottieniPrezzoVendita();</span>
+<span class="nc" id="L68">        bean.setEnergiaVenduta(energiaVenduta);</span>
+<span class="nc" id="L69">        bean.setRicavoTotale(energiaVenduta * prezzoVendita);</span>
+<span class="nc" id="L70">        bean.setDataVendita(Date.valueOf(data));</span>
+<span class="nc" id="L71">        bean.setIdAmministratore(idAmministratore);</span>
+<span class="nc" id="L72">        venditaDAO.effetuaVendita(bean);</span>
+<span class="nc" id="L73">        int numBatterie = batteriaService.ottieniNumBatterieAttive();</span>
+<span class="nc" id="L74">        batteriaService.aggiornaBatteria(-energiaVenduta, numBatterie);</span>
+<span class="nc" id="L75">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VenditaBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.entity</a> &gt; <span class="el_source">VenditaBean.java</span></div><h1>VenditaBean.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.entity;
+
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
+
+/**
+ * La classe {@code VenditaBean} rappresenta un oggetto contenente le informazioni su una vendita di energia.
+ * Implementa l'interfaccia {@link Observable} per supportare la notifica degli osservatori.
+ */
+public class VenditaBean implements Observable {
+<span class="fc" id="L15">    private static List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</span>
+    private int idVendita;
+    private float energiaVenduta;
+    private Date dataVendita;
+    private float ricavoTotale;
+    private int idAmministratore;
+
+    /**
+     * Costruttore vuoto di default.
+     */
+<span class="fc" id="L25">    public VenditaBean() {</span>
+<span class="fc" id="L26">    }</span>
+
+    /**
+     * Costruttore che inizializza un oggetto {@code VenditaBean} con le informazioni fornite.
+     *
+     * @param idVendita           Identificativo della vendita.
+     * @param energiaVenduta      Quantità di energia venduta.
+     * @param dataVendita         Data della vendita.
+     * @param ricavoTotale        Ricavo totale della vendita.
+     * @param idAmministratore    Identificativo dell'amministratore responsabile della vendita.
+     */
+    public VenditaBean(final int idVendita, final float energiaVenduta,
+<span class="nc" id="L38">                       final Date dataVendita, final float ricavoTotale, final int idAmministratore) {</span>
+<span class="nc" id="L39">        this.idVendita = idVendita;</span>
+<span class="nc" id="L40">        this.energiaVenduta = energiaVenduta;</span>
+<span class="nc" id="L41">        this.dataVendita = dataVendita;</span>
+<span class="nc" id="L42">        this.ricavoTotale = ricavoTotale;</span>
+<span class="nc" id="L43">        this.idAmministratore = idAmministratore;</span>
+<span class="nc" id="L44">    }</span>
+
+    /**
+     * Restituisce l'identificativo della vendita.
+     *
+     * @return Identificativo della vendita.
+     */
+    public int getIdVendita() {
+<span class="fc" id="L52">        return idVendita;</span>
+    }
+
+    /**
+     * Imposta l'identificativo della vendita e notifica gli osservatori.
+     *
+     * @param idVendita Nuovo identificativo della vendita.
+     */
+    public void setIdVendita(final int idVendita) {
+<span class="fc" id="L61">        this.idVendita = idVendita;</span>
+<span class="fc" id="L62">        notifyObservers(&quot;setIdVendita&quot;);</span>
+<span class="fc" id="L63">    }</span>
+
+    /**
+     * Restituisce la quantità di energia venduta.
+     *
+     * @return Quantità di energia venduta.
+     */
+    public float getEnergiaVenduta() {
+<span class="fc" id="L71">        return energiaVenduta;</span>
+    }
+
+    /**
+     * Imposta la quantità di energia venduta e notifica gli osservatori.
+     *
+     * @param energiaVenduta Nuova quantità di energia venduta.
+     */
+    public void setEnergiaVenduta(final float energiaVenduta) {
+<span class="fc" id="L80">        this.energiaVenduta = energiaVenduta;</span>
+<span class="fc" id="L81">        notifyObservers(&quot;setEnergiaVenduta&quot;);</span>
+<span class="fc" id="L82">    }</span>
+
+    /**
+     * Restituisce la data della vendita.
+     *
+     * @return Data della vendita.
+     */
+    public Date getDataVendita() {
+<span class="fc" id="L90">        return dataVendita;</span>
+    }
+
+    /**
+     * Imposta la data della vendita e notifica gli osservatori.
+     *
+     * @param dataVendita Nuova data della vendita.
+     */
+    public void setDataVendita(final Date dataVendita) {
+<span class="fc" id="L99">        this.dataVendita = dataVendita;</span>
+<span class="fc" id="L100">        notifyObservers(&quot;setDataVendita&quot;);</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * Restituisce il ricavo totale della vendita.
+     *
+     * @return Ricavo totale della vendita.
+     */
+    public float getRicavoTotale() {
+<span class="fc" id="L109">        return ricavoTotale;</span>
+    }
+
+    /**
+     * Imposta il ricavo totale della vendita e notifica gli osservatori.
+     *
+     * @param ricavoTotale Nuovo ricavo totale della vendita.
+     */
+    public void setRicavoTotale(final float ricavoTotale) {
+<span class="fc" id="L118">        this.ricavoTotale = ricavoTotale;</span>
+<span class="fc" id="L119">        notifyObservers(&quot;setRicavoTotale&quot;);</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Restituisce l'identificativo dell'amministratore responsabile della vendita.
+     *
+     * @return Identificativo dell'amministratore responsabile della vendita.
+     */
+    public int getIdAmministratore() {
+<span class="fc" id="L128">        return idAmministratore;</span>
+    }
+
+    /**
+     * Imposta l'identificativo dell'amministratore responsabile della vendita e notifica gli osservatori.
+     *
+     * @param idAmministratore Nuovo identificativo dell'amministratore responsabile della vendita.
+     */
+    public void setIdAmministratore(final int idAmministratore) {
+<span class="fc" id="L137">        this.idAmministratore = idAmministratore;</span>
+<span class="fc" id="L138">        notifyObservers(&quot;setIdAmministratore&quot;);</span>
+<span class="fc" id="L139">    }</span>
+
+    /**
+     * Restituisce una stringa rappresentante l'oggetto {@code VenditaBean}.
+     *
+     * @return Stringa rappresentante l'oggetto.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L148">        return &quot;VenditaBean{&quot;</span>
+                + &quot;idVendita=&quot; + idVendita
+                + &quot;, energiaVenduta=&quot; + energiaVenduta
+                + &quot;, dataVendita=&quot; + dataVendita
+                + &quot;, ricavoTotale=&quot; + ricavoTotale
+                + &quot;, idAmministratore=&quot; + idAmministratore
+                + '}';
+    }
+
+    /**
+     * Aggiunge un osservatore alla lista degli osservatori.
+     *
+     * @param observer Osservatore da aggiungere.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+<span class="nc" id="L164">        observers.add(observer);</span>
+<span class="nc" id="L165">    }</span>
+
+    /**
+     * Rimuove un osservatore dalla lista degli osservatori.
+     *
+     * @param observer Osservatore da rimuovere.
+     */
+    @Override
+    public void removeObserver(Observer observer) {
+<span class="nc" id="L174">        observers.remove(observer);</span>
+<span class="nc" id="L175">    }</span>
+
+    /**
+     * Notifica tutti gli osservatori chiamando il loro metodo di aggiornamento.
+     *
+     * @param nomeMetodo Nome del metodo che ha generato la notifica.
+     */
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">        for (Observer observer : observers) {</span>
+<span class="nc" id="L185">            observer.update(nomeMetodo);</span>
+<span class="nc" id="L186">        }</span>
+<span class="fc" id="L187">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

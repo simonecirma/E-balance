@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContrattoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.contratto.controller</a> &gt; <span class="el_source">ContrattoController.java</span></div><h1>ContrattoController.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.contratto.controller;
+
+
+import com.c17.ebalance.ebalance.contratto.service.ContrattoService;
+import com.c17.ebalance.ebalance.contratto.service.ContrattoServiceImpl;
+import com.c17.ebalance.ebalance.model.entity.ContrattoBean;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * La classe {@code ContrattoController} è un servlet che gestisce le richieste relative ai contratti nel sistema eBalance.
+ * Utilizza un'istanza di {@code ContrattoService} per eseguire operazioni di visualizzazione, aggiornamento e aggiunta di contratti.
+ * Risponde alle richieste HTTP GET e POST provenienti dalla view e interagisce con la logica di business del sistema.
+ * Inoltre, fornisce metodi per aggiornare e aggiungere contratti, oltre a visualizzare l'elenco degli storici contratti e il contratto attuale.
+ */
+@WebServlet(name = &quot;ContrattoController&quot;, value = &quot;/ContrattoController&quot;)
+public class ContrattoController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Istanza di ServletContext
+     */
+    private ServletContext servletContext;
+
+    /**
+     * Service per la gestione dei contratti. L'istanza {@code contrattoService} fornisce metodi
+     * per operare su contratti nel sistema.
+     */
+<span class="pc" id="L39">    public ContrattoService contrattoService = new ContrattoServiceImpl();</span>
+
+    /**
+     * Costruttore vuoto della classe.
+     */
+<span class="nc" id="L44">    public ContrattoController() {</span>
+<span class="nc" id="L45">    }</span>
+
+    /**
+     * Costruttore della classe che accetta un'istanza di {@code ContrattoService} e un oggetto {@code ServletContext}.
+     *
+     * @param contrattoService L'istanza di {@code ContrattoService} da utilizzare.
+     * @param servletContext   L'oggetto {@code ServletContext} da utilizzare.
+     */
+<span class="fc" id="L53">    public ContrattoController(ContrattoService contrattoService, ServletContext servletContext) {</span>
+<span class="fc" id="L54">        this.contrattoService = contrattoService;</span>
+<span class="fc" id="L55">        this.servletContext = servletContext;</span>
+<span class="fc" id="L56">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP GET relative ai contratti.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+<span class="fc" id="L66">        String action = request.getParameter(&quot;action&quot;);</span>
+
+        try {
+<span class="fc bfc" id="L69" title="All 2 branches covered.">            if (action != null) {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;aggiornaContratto&quot;)) {</span>
+<span class="fc" id="L71">                    aggiornaContratto(request, response);</span>
+<span class="fc" id="L72">                    return;</span>
+
+                }
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;aggiungiContratto&quot;)) {</span>
+<span class="fc" id="L76">                    aggiungiContratto(request, response);</span>
+<span class="fc" id="L77">                    return;</span>
+                }
+<span class="fc" id="L79">                List&lt;ContrattoBean&gt; contratti = contrattoService.visualizzaStoricoContratti();</span>
+<span class="fc" id="L80">                request.setAttribute(&quot;contratti&quot;, contratti);</span>
+<span class="fc" id="L81">                ContrattoBean contratto = contrattoService.visualizzaContratto();</span>
+<span class="fc" id="L82">                request.setAttribute(&quot;contratto&quot;, contratto);</span>
+<span class="fc" id="L83">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/contratto.jsp&quot;);</span>
+<span class="fc" id="L84">                dispatcher.forward(request, response);</span>
+<span class="fc" id="L85">            } else {</span>
+<span class="fc" id="L86">                List&lt;ContrattoBean&gt; contratti = contrattoService.visualizzaStoricoContratti();</span>
+<span class="fc" id="L87">                request.setAttribute(&quot;contratti&quot;, contratti);</span>
+<span class="fc" id="L88">                ContrattoBean contratto = contrattoService.visualizzaContratto();</span>
+<span class="fc" id="L89">                request.setAttribute(&quot;contratto&quot;, contratto);</span>
+<span class="fc" id="L90">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/contratto.jsp&quot;);</span>
+<span class="fc" id="L91">                dispatcher.forward(request, response);</span>
+            }
+<span class="nc" id="L93">        } catch (SQLException | ServletException e) {</span>
+<span class="nc" id="L94">            throw new RuntimeException(e);</span>
+<span class="fc" id="L95">        }</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP POST relative ai contratti.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+<span class="fc" id="L106">        doGet(request, response);</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
+     * Aggiorna un contratto nel sistema sulla base dei parametri ricevuti dalla richiesta HTTP.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws SQLException     in caso di errori di accesso al database.
+     */
+    public void aggiornaContratto(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException, SQLException {
+<span class="fc" id="L119">        int id = Integer.parseInt(request.getParameter(&quot;idContratto&quot;));</span>
+<span class="fc" id="L120">        String ente = request.getParameter(&quot;nomeEnte&quot;);</span>
+<span class="fc" id="L121">        float consumo = Float.parseFloat(request.getParameter(&quot;consumoMedioAnnuale&quot;));</span>
+<span class="fc" id="L122">        float costo = Float.parseFloat(request.getParameter(&quot;costoMedioUnitario&quot;));</span>
+<span class="fc" id="L123">        Date data = Date.valueOf(request.getParameter(&quot;dataSottoscrizione&quot;));</span>
+<span class="fc" id="L124">        int durata = Integer.parseInt(request.getParameter(&quot;durata&quot;));</span>
+<span class="fc" id="L125">        float prezzo = Float.parseFloat(request.getParameter(&quot;prezzoVendita&quot;));</span>
+<span class="fc" id="L126">        int admin = Integer.parseInt(request.getParameter(&quot;idAmministratore&quot;));</span>
+
+
+<span class="fc" id="L129">        ContrattoBean bean = new ContrattoBean();</span>
+
+<span class="fc" id="L131">        bean.setIdContratto(id);</span>
+<span class="fc" id="L132">        bean.setNomeEnte(ente);</span>
+<span class="fc" id="L133">        bean.setConsumoMedioAnnuale(consumo);</span>
+<span class="fc" id="L134">        bean.setCostoMedioUnitario(costo);</span>
+<span class="fc" id="L135">        bean.setDataSottoscrizione(data);</span>
+<span class="fc" id="L136">        bean.setDurata(durata);</span>
+<span class="fc" id="L137">        bean.setPrezzoVendita(prezzo);</span>
+<span class="fc" id="L138">        bean.setIdAmministatore(admin);</span>
+        try {
+<span class="fc" id="L140">            contrattoService.aggiornaContratto(bean);</span>
+
+<span class="nc" id="L142">        } catch (SQLException e) {</span>
+<span class="nc" id="L143">            e.printStackTrace();</span>
+<span class="nc" id="L144">            return;</span>
+<span class="fc" id="L145">        }</span>
+<span class="fc" id="L146">        List&lt;ContrattoBean&gt; contratti = contrattoService.visualizzaStoricoContratti();</span>
+<span class="fc" id="L147">        request.setAttribute(&quot;contratti&quot;, contratti);</span>
+<span class="fc" id="L148">        ContrattoBean contratto = contrattoService.visualizzaContratto();</span>
+<span class="fc" id="L149">        request.setAttribute(&quot;contratto&quot;, contratto);</span>
+<span class="fc" id="L150">        RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/contratto.jsp&quot;);</span>
+<span class="fc" id="L151">        dispatcher.forward(request, response);</span>
+<span class="fc" id="L152">    }</span>
+
+    /**
+     * Aggiunge un nuovo contratto al sistema sulla base dei parametri ricevuti dalla richiesta HTTP.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws SQLException     in caso di errori di accesso al database.
+     */
+    public void aggiungiContratto(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
+<span class="fc" id="L164">        ContrattoBean bean = new ContrattoBean();</span>
+<span class="fc" id="L165">        bean.setNomeEnte(request.getParameter(&quot;nomeEnte&quot;));</span>
+<span class="fc" id="L166">        bean.setConsumoMedioAnnuale(Float.parseFloat(request.getParameter(&quot;consumoMedioAnnuale&quot;)));</span>
+<span class="fc" id="L167">        bean.setCostoMedioUnitario(Float.parseFloat(request.getParameter(&quot;costoMedioUnitario&quot;)));</span>
+<span class="fc" id="L168">        bean.setDataSottoscrizione(Date.valueOf(request.getParameter(&quot;dataSottoscrizione&quot;)));</span>
+<span class="fc" id="L169">        bean.setDurata(Integer.parseInt(request.getParameter(&quot;durata&quot;)));</span>
+<span class="fc" id="L170">        bean.setPrezzoVendita(Float.parseFloat(request.getParameter(&quot;prezzoVendita&quot;)));</span>
+<span class="fc" id="L171">        bean.setIdAmministatore(Integer.parseInt(request.getParameter(&quot;idAmministratore&quot;)));</span>
+        try {
+<span class="fc" id="L173">            contrattoService.aggiungiContratto(bean);</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">            if (contrattoService.verificaPrimoContratto()) {</span>
+<span class="nc" id="L175">                response.sendRedirect(&quot;DatiController?action=generaDashboard&quot;);</span>
+<span class="nc" id="L176">                return;</span>
+            }
+<span class="nc" id="L178">        } catch (SQLException e) {</span>
+<span class="nc" id="L179">            e.printStackTrace();</span>
+<span class="nc" id="L180">            return;</span>
+<span class="fc" id="L181">        }</span>
+<span class="fc" id="L182">        List&lt;ContrattoBean&gt; contratti = contrattoService.visualizzaStoricoContratti();</span>
+<span class="fc" id="L183">        request.setAttribute(&quot;contratti&quot;, contratti);</span>
+<span class="fc" id="L184">        ContrattoBean contratto = contrattoService.visualizzaContratto();</span>
+<span class="fc" id="L185">        request.setAttribute(&quot;contratto&quot;, contratto);</span>
+<span class="fc" id="L186">        RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/contratto.jsp&quot;);</span>
+<span class="fc" id="L187">        dispatcher.forward(request, response);</span>
+<span class="fc" id="L188">    }</span>
+
+    /**
+     * Distrugge l'oggetto servlet.
+     */
+    public void destroy() {
+<span class="nc" id="L194">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

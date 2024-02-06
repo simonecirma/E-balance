@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.dati.controller</a> &gt; <span class="el_source">DatiController.java</span></div><h1>DatiController.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.dati.controller;
+
+import com.c17.ebalance.ebalance.IA.controller.IAController;
+import com.c17.ebalance.ebalance.IA.service.IAService;
+import com.c17.ebalance.ebalance.IA.service.IAServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.BatteriaService;
+import com.c17.ebalance.ebalance.dati.service.BatteriaServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.ConsumoService;
+import com.c17.ebalance.ebalance.dati.service.ConsumoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.MeteoService;
+import com.c17.ebalance.ebalance.dati.service.MeteoServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.ProduzioneService;
+import com.c17.ebalance.ebalance.dati.service.ProduzioneServiceImpl;
+import com.c17.ebalance.ebalance.dati.service.SimulazioneService;
+import com.c17.ebalance.ebalance.dati.service.SimulazioneServiceImpl;
+import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
+import com.c17.ebalance.ebalance.model.entity.ConsumoAttualeBean;
+import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
+import com.c17.ebalance.ebalance.model.entity.MeteoBean;
+import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
+import com.c17.ebalance.ebalance.model.entity.PercentualeBatteriaBean;
+import com.c17.ebalance.ebalance.model.entity.ProduzioneAttualeBean;
+import com.c17.ebalance.ebalance.model.entity.TipoSorgenteBean;
+import com.c17.ebalance.ebalance.utility.Observer;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.sql.SQLException;
+
+import java.util.List;
+
+import java.io.IOException;
+
+
+/**
+ * La classe {@code DatiController} gestisce le richieste relative ai dati energetici nel sistema eBalance.
+ * Interagisce con i servizi e il motore di Intelligenza Artificiale (IA) per fornire informazioni sulla dashboard
+ * e gestire le simulazioni energetiche.
+ * Implementa l'interfaccia {@code Observer} per ricevere aggiornamenti da oggetti osservabili.
+ */
+@WebServlet(name = &quot;DatiController&quot;, value = &quot;/DatiController&quot;)
+<span class="nc" id="L47">public class DatiController extends HttpServlet implements Observer {</span>
+    private static final long serialVersionUID = 1L;
+<span class="nc" id="L49">    private IAController iaController = new IAController();</span>
+<span class="nc" id="L50">    private IAService iaService = new IAServiceImpl();</span>
+<span class="nc" id="L51">    private BatteriaService batteriaService = new BatteriaServiceImpl();</span>
+<span class="nc" id="L52">    private ConsumoService consumoService = new ConsumoServiceImpl();</span>
+<span class="nc" id="L53">    private ProduzioneService produzioneService = new ProduzioneServiceImpl();</span>
+<span class="nc" id="L54">    private SimulazioneService simulazioneService = new SimulazioneServiceImpl();</span>
+<span class="nc" id="L55">    private MeteoService meteoService = new MeteoServiceImpl();</span>
+
+
+<span class="nc" id="L58">    boolean percentualeBatteriaUpdate = false;</span>
+
+<span class="nc" id="L60">    boolean produzioneAttualeUpdate = false;</span>
+
+<span class="nc" id="L62">    boolean consumoAttualeUpdate = false;</span>
+
+<span class="nc" id="L64">    boolean archivioConsumiUpdate = false;</span>
+
+<span class="nc" id="L66">    boolean meteoUpdate = false;</span>
+
+<span class="nc" id="L68">    boolean parametriAttiviUpdate = false;</span>
+
+<span class="nc" id="L70">    float[] consumoEdifici = new float[]{633.02f, 633.02f, 633.02f, 633.02f,</span>
+            633.02f, 633.02f, 633.02f, 633.02f, 633.02f, 633.02f};
+
+<span class="nc" id="L73">    float[] produzioneSorgente = new float[]{324.02f, 324.02f, 324.02f, 324.02f,</span>
+            324.02f, 324.02f, 324.02f, 324.02f, 324.02f, 324.02f};
+
+    ArchivioConsumoBean archivioConsumi;
+
+    ConsumoAttualeBean consumoAttuale;
+
+    PercentualeBatteriaBean percentualeBatteria;
+
+    ProduzioneAttualeBean produzioneAttuale;
+
+    MeteoBean meteo;
+
+    InteragisceBean parametriAttivi;
+
+    /**
+     * Inizializza l'oggetto {@code DatiController} durante la creazione della servlet.
+     * Inizializza gli oggetti necessari e avvia un thread per la simulazione energetica.
+     *
+     * @throws ServletException in caso di errori durante l'inizializzazione.
+     */
+    @Override
+    public void init() throws ServletException {
+<span class="nc" id="L96">        archivioConsumi = new ArchivioConsumoBean();</span>
+<span class="nc" id="L97">        consumoAttuale = new ConsumoAttualeBean();</span>
+<span class="nc" id="L98">        percentualeBatteria = new PercentualeBatteriaBean();</span>
+<span class="nc" id="L99">        produzioneAttuale = new ProduzioneAttualeBean();</span>
+<span class="nc" id="L100">        meteo = new MeteoBean();</span>
+
+<span class="nc" id="L102">        parametriAttivi = new InteragisceBean();</span>
+<span class="nc" id="L103">        archivioConsumi.addObserver(this);</span>
+<span class="nc" id="L104">        consumoAttuale.addObserver(this);</span>
+<span class="nc" id="L105">        percentualeBatteria.addObserver(this);</span>
+<span class="nc" id="L106">        produzioneAttuale.addObserver(this);</span>
+<span class="nc" id="L107">        meteo.addObserver(this);</span>
+<span class="nc" id="L108">        parametriAttivi.addObserver(this);</span>
+
+<span class="nc" id="L110">        new Thread(this::simulazione).start();</span>
+
+<span class="nc" id="L112">    }</span>
+
+    /**
+     * Gestisce le richieste GET inviate alla servlet, analizzando il parametro &quot;action&quot; per determinare l'azione da eseguire.
+     * Le azioni supportate includono la visualizzazione della dashboard e l'aggiornamento degli stati osservati.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} che rappresenta la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O.
+     */
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+<span class="nc" id="L123">        String action = request.getParameter(&quot;action&quot;);</span>
+        try {
+<span class="nc bnc" id="L125" title="All 2 branches missed.">            if (action != null) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">                if (action.equalsIgnoreCase(&quot;dashboardObserver&quot;)) {</span>
+                    try {
+<span class="nc" id="L128">                        response.setContentType(&quot;application/json&quot;);</span>
+<span class="nc" id="L129">                        response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="nc" id="L130">                        response.getWriter().write(&quot;{\&quot;percentualeBatteriaUpdate\&quot;: \&quot;&quot; + percentualeBatteriaUpdate + &quot;\&quot;, &quot;</span>
+                                + &quot;\&quot;produzioneAttualeUpdate\&quot;: \&quot;&quot; + produzioneAttualeUpdate + &quot;\&quot;, &quot;
+                                + &quot;\&quot;consumoAttualeUpdate\&quot;: \&quot;&quot; + consumoAttualeUpdate + &quot;\&quot;, &quot;
+                                + &quot;\&quot;archivioConsumiUpdate\&quot;: \&quot;&quot; + archivioConsumiUpdate + &quot;\&quot;, &quot;
+                                + &quot;\&quot;meteoUpdate\&quot;: \&quot;&quot; + meteoUpdate + &quot;\&quot;, &quot;
+                                + &quot;\&quot;parametriAttiviUpdate\&quot;: \&quot;&quot; + parametriAttiviUpdate + &quot;\&quot;}&quot;);
+<span class="nc" id="L136">                        percentualeBatteriaUpdate = false;</span>
+<span class="nc" id="L137">                        produzioneAttualeUpdate = false;</span>
+<span class="nc" id="L138">                        consumoAttualeUpdate = false;</span>
+<span class="nc" id="L139">                        archivioConsumiUpdate = false;</span>
+<span class="nc" id="L140">                        meteoUpdate = false;</span>
+<span class="nc" id="L141">                        parametriAttiviUpdate = false;</span>
+<span class="nc" id="L142">                    } catch (Exception e) {</span>
+<span class="nc" id="L143">                        e.printStackTrace();</span>
+<span class="nc" id="L144">                    }</span>
+                }
+<span class="nc bnc" id="L146" title="All 2 branches missed.">                if (action.equalsIgnoreCase(&quot;generaDashboard&quot;)) {</span>
+<span class="nc" id="L147">                    consumoEdifici = consumoService.ottieniConsumiEdifici(consumoEdifici);</span>
+<span class="nc" id="L148">                    request.setAttribute(&quot;consumoEdifici&quot;, consumoEdifici);</span>
+
+<span class="nc" id="L150">                    float percentualeBatterie = batteriaService.ottieniPercetualeBatteria();</span>
+<span class="nc" id="L151">                    request.setAttribute(&quot;percentualeBatterie&quot;, percentualeBatterie);</span>
+
+<span class="nc" id="L153">                    List&lt;ArchivioConsumoBean&gt; archivioConsumo = consumoService.visualizzaStoricoConsumi();</span>
+<span class="nc" id="L154">                    request.setAttribute(&quot;archivioConsumo&quot;, archivioConsumo);</span>
+
+<span class="nc" id="L156">                    List&lt;MeteoBean&gt; condizioniGiornaliere = meteoService.getCondizioniMeteo();</span>
+<span class="nc" id="L157">                    request.setAttribute(&quot;condizioniMeteo&quot;, condizioniGiornaliere);</span>
+<span class="nc" id="L158">                    List&lt;MeteoBean&gt; condizioniSettimanali = meteoService.getCondizioniSettimanali();</span>
+<span class="nc" id="L159">                    request.setAttribute(&quot;condizioniSettimanali&quot;, condizioniSettimanali);</span>
+
+<span class="nc" id="L161">                    produzioneSorgente = produzioneService.ottieniProduzioneProdotta(produzioneSorgente);</span>
+<span class="nc" id="L162">                    request.setAttribute(&quot;produzioneSorgente&quot;, produzioneSorgente);</span>
+<span class="nc" id="L163">                    float produzioneSEN = produzioneService.ottieniProduzioneSEN();</span>
+<span class="nc" id="L164">                    request.setAttribute(&quot;produzioneSEN&quot;, produzioneSEN);</span>
+
+<span class="nc" id="L166">                    List&lt;ParametriIABean&gt; parametriIA = iaController.ottieniParametri();</span>
+<span class="nc" id="L167">                    request.setAttribute(&quot;parametriIA&quot;, parametriIA);</span>
+<span class="nc" id="L168">                    List&lt;InteragisceBean&gt; interazioneParametri = iaController.ottieniInterazioneParametri();</span>
+<span class="nc" id="L169">                    request.setAttribute(&quot;interazioneParametri&quot;, interazioneParametri);</span>
+<span class="nc" id="L170">                    List&lt;InteragisceBean&gt; parametriAttivi = iaController.ottieniParametriAttivi();</span>
+<span class="nc" id="L171">                    request.setAttribute(&quot;parametriAttivi&quot;, parametriAttivi);</span>
+<span class="nc" id="L172">                    List&lt;TipoSorgenteBean&gt; tipoSorgente = produzioneService.ottieniTipoSorgente();</span>
+<span class="nc" id="L173">                    request.setAttribute(&quot;tipoSorgente&quot;, tipoSorgente);</span>
+
+<span class="nc" id="L175">                    RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(&quot;/dashboard.jsp&quot;);</span>
+<span class="nc" id="L176">                    dispatcher.forward(request, response);</span>
+                }
+<span class="nc bnc" id="L178" title="All 2 branches missed.">                if (action.equalsIgnoreCase(&quot;selezionaPiano&quot;)) {</span>
+<span class="nc" id="L179">                    HttpSession session = request.getSession(true);</span>
+<span class="nc" id="L180">                    String piano = request.getParameter(&quot;piano&quot;);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">                    if (piano.equalsIgnoreCase(&quot;SalvaguardiaAmbientale&quot;)) {</span>
+<span class="nc" id="L182">                        iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute(&quot;idAmministratore&quot;));</span>
+<span class="nc bnc" id="L183" title="All 2 branches missed.">                    } else if (piano.equalsIgnoreCase(&quot;EfficienzaEconomica&quot;)) {</span>
+<span class="nc" id="L184">                        iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute(&quot;idAmministratore&quot;));</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">                    } else if (piano.equalsIgnoreCase(&quot;Personalizzato&quot;)) {</span>
+<span class="nc" id="L186">                        String preferenzaSorgente = request.getParameter(&quot;preferenzaSorgente&quot;);</span>
+<span class="nc" id="L187">                        int percentualeUtilizzoPannelli = Integer.parseInt(request.getParameter(&quot;Pannello fotovoltaico&quot;));</span>
+<span class="nc" id="L188">                        int percentualeUtilizzoSEN = Integer.parseInt(request.getParameter(&quot;Servizio Elettrico Nazionale&quot;));</span>
+<span class="nc" id="L189">                        String sortableListData = request.getParameter(&quot;sortableListData&quot;);</span>
+<span class="nc" id="L190">                        iaService.aggiornaPianoPersonalizzato(preferenzaSorgente, percentualeUtilizzoPannelli, percentualeUtilizzoSEN, sortableListData);</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">                        if (!iaService.aggiornaPianoAttivo(piano, (int) session.getAttribute(&quot;idAmministratore&quot;))) {</span>
+<span class="nc" id="L192">                            request.setAttribute(&quot;result&quot;, &quot;errore aggiornamento piano&quot;);</span>
+                        }
+                    }
+<span class="nc" id="L195">                    response.sendRedirect(&quot;DatiController?action=generaDashboard&quot;);</span>
+
+<span class="nc" id="L197">                }</span>
+            } else {
+<span class="nc" id="L199">                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(&quot;/dashboard.jsp&quot;);</span>
+<span class="nc" id="L200">                dispatcher.forward(request, response);</span>
+            }
+<span class="nc" id="L202">        } catch (ServletException | SQLException e) {</span>
+<span class="nc" id="L203">            throw new RuntimeException(e);</span>
+<span class="nc" id="L204">        }</span>
+<span class="nc" id="L205">    }</span>
+
+
+    /**
+     * Gestisce le richieste POST inviate alla servlet, inoltrando semplicemente alla gestione delle richieste GET.
+     *
+     * @param request  L'oggetto {@code HttpServletRequest} che rappresenta la richiesta HTTP.
+     * @param response L'oggetto {@code HttpServletResponse} che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O.
+     */
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+<span class="nc" id="L216">        doGet(request, response);</span>
+<span class="nc" id="L217">    }</span>
+
+    /**
+     * Esegue la simulazione energetica all'interno di un thread separato durante l'inizializzazione della servlet.
+     * Gestisce l'inserimento delle previsioni iniziali e avvia la simulazione continua.
+     */
+    private void simulazione() {
+        try {
+<span class="nc" id="L225">            simulazioneService.insertPrevisioniIniziali();</span>
+            while (true) {
+                try {
+<span class="nc" id="L228">                    simulazioneService.simulazione();</span>
+<span class="nc" id="L229">                } catch (SQLException e) {</span>
+<span class="nc" id="L230">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L231">                }</span>
+            }
+<span class="nc" id="L233">        } catch (SQLException e) {</span>
+<span class="nc" id="L234">            throw new RuntimeException(e);</span>
+        }
+    }
+
+
+    /**
+     * Esegue l'operazione di pulizia prima della distruzione della servlet, rimuovendo questa servlet come osservatore
+     * dagli oggetti osservati.
+     */
+    public void destroy() {
+<span class="nc" id="L244">        archivioConsumi.removeObserver(this);</span>
+<span class="nc" id="L245">        consumoAttuale.removeObserver(this);</span>
+<span class="nc" id="L246">        percentualeBatteria.removeObserver(this);</span>
+<span class="nc" id="L247">        produzioneAttuale.removeObserver(this);</span>
+<span class="nc" id="L248">        parametriAttivi.removeObserver(this);</span>
+<span class="nc" id="L249">        meteo.removeObserver(this);</span>
+<span class="nc" id="L250">    }</span>
+
+    /**
+     * Metodo di callback richiamato quando uno degli oggetti osservati notifica un aggiornamento.
+     * Imposta i flag di aggiornamento corrispondenti agli stati osservati.
+     *
+     * @param nomeMetodo Il nome del metodo che ha notificato l'aggiornamento.
+     */
+    @Override
+    public void update(String nomeMetodo) {
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        if (nomeMetodo.equalsIgnoreCase(&quot;setPercentualeBatteria&quot;)) {</span>
+<span class="nc" id="L261">            percentualeBatteriaUpdate = true;</span>
+        }
+<span class="nc bnc" id="L263" title="All 2 branches missed.">        if (nomeMetodo.equalsIgnoreCase(&quot;setProduzioneAttuale&quot;)) {</span>
+<span class="nc" id="L264">            produzioneAttualeUpdate = true;</span>
+        }
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        if (nomeMetodo.equalsIgnoreCase(&quot;setConsumoAttuale&quot;)) {</span>
+<span class="nc" id="L267">            consumoAttualeUpdate = true;</span>
+        }
+<span class="nc bnc" id="L269" title="All 2 branches missed.">        if (nomeMetodo.equalsIgnoreCase(&quot;setIdConsumo&quot;)</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setDataConsumo&quot;)</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setConsumoGiornaliero&quot;)</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setIdEdificio&quot;)) {</span>
+<span class="nc" id="L273">            archivioConsumiUpdate = true;</span>
+        }
+<span class="nc bnc" id="L275" title="All 2 branches missed.">        if (nomeMetodo.equalsIgnoreCase(&quot;setIdMeteo&quot;)</span>
+<span class="nc bnc" id="L276" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setDataRilevazione&quot;)</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setOraRilevazione&quot;)</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setVelocitaVento&quot;)</span>
+<span class="nc bnc" id="L279" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setProbabilitaPioggia&quot;)</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setCondizioniMetereologiche&quot;)) {</span>
+<span class="nc" id="L281">            meteoUpdate = true;</span>
+
+        }
+<span class="nc bnc" id="L284" title="All 2 branches missed.">        if (nomeMetodo.equalsIgnoreCase(&quot;setIdParametro&quot;)</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setTipoSorgente&quot;)</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setFlagPreferenzaSorgente&quot;)</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setPercentualeUtilizzoSorgente&quot;)</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">                || nomeMetodo.equalsIgnoreCase(&quot;setPrioritaSorgente&quot;)) {</span>
+<span class="nc" id="L289">            parametriAttiviUpdate = true;</span>
+        }
+<span class="nc" id="L291">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParametriIADAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">ParametriIADAOImpl.java</span></div><h1>ParametriIADAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
+import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Implementazione dell'interfaccia ParametriIADAO che fornisce metodi per l'accesso ai dati
+ * relativi ai parametri dell'Intelligenza Artificiale nel sistema eBalance.
+ */
+<span class="fc" id="L23">public class ParametriIADAOImpl implements ParametriIADAO {</span>
+
+<span class="fc" id="L25">    private static Logger logger = Logger.getLogger(ParametriIADAOImpl.class.getName());</span>
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L30">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L31">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L33">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L35">        } catch (NamingException e) {</span>
+<span class="fc" id="L36">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L37">        }</span>
+<span class="fc" id="L38">    }</span>
+
+    private static final String TABLE_NAME_PARAMETRI = &quot;ParametriIA&quot;;
+    private static final String TABLE_NAME_INTERAGISCE = &quot;Interagisce&quot;;
+
+    /**
+     * Recupera la lista di tutti i parametri IA presenti nel sistema.
+     *
+     * @return Una lista di oggetti ParametriIABean rappresentanti i parametri IA.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
+    @Override
+    public List&lt;ParametriIABean&gt; visualizzaParametri() throws SQLException {
+<span class="fc" id="L51">        Connection connection = null;</span>
+<span class="fc" id="L52">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L53">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L55">        List&lt;ParametriIABean&gt; parametri = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_PARAMETRI;</span>
+
+        try {
+<span class="fc" id="L59">            connection = ds.getConnection();</span>
+<span class="fc" id="L60">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L62">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L65">                ParametriIABean bean = new ParametriIABean();</span>
+<span class="fc" id="L66">                bean.setIdParametro(resultSet.getInt(&quot;IdParametro&quot;));</span>
+<span class="fc" id="L67">                bean.setPiano(resultSet.getString(&quot;Piano&quot;));</span>
+<span class="fc" id="L68">                bean.setFlagAttivazioneParametro(resultSet.getBoolean(&quot;FlagAttivazioneParametro&quot;));</span>
+<span class="fc" id="L69">                bean.setIdAmministratore(resultSet.getInt(&quot;IdAmministratore&quot;));</span>
+<span class="fc" id="L70">                parametri.add(bean);</span>
+<span class="fc" id="L71">            }</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L75">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L79">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L83">        return parametri;</span>
+    }
+
+    /**
+     * Recupera la lista di tutte le interazioni tra parametri IA e sorgenti energetiche.
+     *
+     * @return Una lista di oggetti InteragisceBean rappresentanti le interazioni tra parametri IA e sorgenti energetiche.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
+    @Override
+    public List&lt;InteragisceBean&gt; visualizzaInterazioneParametri() throws SQLException {
+<span class="fc" id="L94">        Connection connection = null;</span>
+<span class="fc" id="L95">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L96">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L98">        List&lt;InteragisceBean&gt; interagisce = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L99">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_INTERAGISCE + &quot; ORDER BY PrioritaSorgente&quot;;</span>
+
+        try {
+<span class="fc" id="L102">            connection = ds.getConnection();</span>
+<span class="fc" id="L103">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L104">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L107">                InteragisceBean bean = new InteragisceBean();</span>
+<span class="fc" id="L108">                bean.setIdParametro(resultSet.getInt(&quot;IdParametro&quot;));</span>
+<span class="fc" id="L109">                bean.setTipoSorgente(resultSet.getString(&quot;TipoSorgente&quot;));</span>
+<span class="fc" id="L110">                bean.setFlagPreferenzaSorgente(resultSet.getBoolean(&quot;FlagPreferenzaSorgente&quot;));</span>
+<span class="fc" id="L111">                bean.setPercentualeUtilizzoSorgente(resultSet.getInt(&quot;PercentualeUtilizzoSorgente&quot;));</span>
+<span class="fc" id="L112">                bean.setPrioritaSorgente(resultSet.getInt(&quot;PrioritaSorgente&quot;));</span>
+<span class="fc" id="L113">                interagisce.add(bean);</span>
+<span class="fc" id="L114">            }</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L118">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L122">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L126">        return interagisce;</span>
+    }
+
+    /**
+     * Recupera la lista di tutte le interazioni attive tra parametri IA e sorgenti energetiche.
+     *
+     * @return Una lista di oggetti InteragisceBean rappresentanti le interazioni attive tra parametri IA e sorgenti energetiche.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
+    @Override
+    public List&lt;InteragisceBean&gt; ottieniParametriAttivi() throws SQLException {
+<span class="fc" id="L137">        Connection connection = null;</span>
+<span class="fc" id="L138">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L139">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L141">        List&lt;InteragisceBean&gt; parametriAttivi = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L142">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_INTERAGISCE + &quot; WHERE idParametro IN (SELECT idparametro FROM &quot;</span>
+                + TABLE_NAME_PARAMETRI + &quot; WHERE FlagAttivazioneParametro = TRUE) ORDER BY PrioritaSorgente&quot;;
+
+        try {
+<span class="fc" id="L146">            connection = ds.getConnection();</span>
+<span class="fc" id="L147">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L148">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L151">                InteragisceBean bean = new InteragisceBean();</span>
+<span class="fc" id="L152">                bean.setIdParametro(resultSet.getInt(&quot;IdParametro&quot;));</span>
+<span class="fc" id="L153">                bean.setTipoSorgente(resultSet.getString(&quot;TipoSorgente&quot;));</span>
+<span class="fc" id="L154">                bean.setFlagPreferenzaSorgente(resultSet.getBoolean(&quot;FlagPreferenzaSorgente&quot;));</span>
+<span class="fc" id="L155">                bean.setPercentualeUtilizzoSorgente(resultSet.getInt(&quot;PercentualeUtilizzoSorgente&quot;));</span>
+<span class="fc" id="L156">                bean.setPrioritaSorgente(resultSet.getInt(&quot;PrioritaSorgente&quot;));</span>
+<span class="fc" id="L157">                parametriAttivi.add(bean);</span>
+<span class="fc" id="L158">            }</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L162">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L166">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L170">        return parametriAttivi;</span>
+    }
+
+    /**
+     * Aggiorna il piano personalizzato dei parametri IA con le nuove preferenze.
+     *
+     * @param preferenzaSorgente         La sorgente energetica preferita.
+     * @param percentualeUtilizzoPannelli La percentuale di utilizzo dei pannelli fotovoltaici.
+     * @param percentualeUtilizzoSEN      La percentuale di utilizzo del Servizio Elettrico Nazionale.
+     * @param prioritaSorgenti           Un array di stringhe contenente le priorità delle sorgenti energetiche.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
+    @Override
+    public void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String[] prioritaSorgenti) throws SQLException {
+<span class="fc" id="L184">        Connection connection = null;</span>
+<span class="fc" id="L185">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L186">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L187">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L189">        List&lt;InteragisceBean&gt; interagisce = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L190">        String selectSQL = &quot;UPDATE &quot; + TABLE_NAME_INTERAGISCE + &quot; SET FlagPreferenzaSorgente = ?, PercentualeUtilizzoSorgente = ?,&quot;</span>
+                + &quot; PrioritaSorgente = ? WHERE IdParametro = '3' AND TipoSorgente = ?&quot;;
+
+        try {
+<span class="fc" id="L194">            connection = ds.getConnection();</span>
+<span class="fc" id="L195">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">            if (preferenzaSorgente.equalsIgnoreCase(&quot;Pannello fotovoltaico&quot;)) {</span>
+<span class="fc" id="L197">                preparedStatement.setBoolean(1, true);</span>
+            } else {
+<span class="nc" id="L199">                preparedStatement.setBoolean(1, false);</span>
+            }
+<span class="fc" id="L201">            preparedStatement.setInt(2, percentualeUtilizzoPannelli);</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">            if (prioritaSorgenti[0].equalsIgnoreCase(&quot;Pannello fotovoltaico&quot;)) {</span>
+<span class="fc" id="L203">                preparedStatement.setInt(3, 1);</span>
+            } else {
+<span class="nc" id="L205">                preparedStatement.setInt(3, 2);</span>
+            }
+<span class="fc" id="L207">            preparedStatement.setString(4, &quot;Pannello fotovoltaico&quot;);</span>
+<span class="fc" id="L208">            preparedStatement.executeUpdate();</span>
+<span class="fc" id="L209">            preparedStatement2 = connection.prepareStatement(selectSQL);</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">            if (preferenzaSorgente.equalsIgnoreCase(&quot;Servizio Elettrico Nazionale&quot;)) {</span>
+<span class="nc" id="L211">                preparedStatement2.setBoolean(1, true);</span>
+            } else {
+<span class="fc" id="L213">                preparedStatement2.setBoolean(1, false);</span>
+            }
+<span class="fc" id="L215">            preparedStatement2.setInt(2, percentualeUtilizzoSEN);</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (prioritaSorgenti[0].equalsIgnoreCase(&quot;Servizio Elettrico Nazionale&quot;)) {</span>
+<span class="nc" id="L217">                preparedStatement2.setInt(3, 1);</span>
+            } else {
+<span class="fc" id="L219">                preparedStatement2.setInt(3, 2);</span>
+            }
+<span class="fc" id="L221">            preparedStatement2.setString(4, &quot;Servizio Elettrico Nazionale&quot;);</span>
+<span class="fc" id="L222">            preparedStatement2.executeUpdate();</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L225" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L226">                    preparedStatement.close();</span>
+                }
+<span class="pc bpc" id="L228" title="1 of 2 branches missed.">                if (preparedStatement2 != null) {</span>
+<span class="fc" id="L229">                    preparedStatement2.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L233">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L237">    }</span>
+
+    /**
+     * Aggiorna il piano attivo dei parametri IA.
+     *
+     * @param piano          Il piano da attivare.
+     * @param idAmministratore L'ID dell'amministratore che effettua l'aggiornamento.
+     * @return True se l'aggiornamento ha successo, false altrimenti.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
+    @Override
+    public boolean aggiornaPianoAttivo(String piano, int idAmministratore) throws SQLException {
+<span class="fc" id="L249">        Connection connection = null;</span>
+<span class="fc" id="L250">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L251">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L252">        ResultSet resultSet = null;</span>
+        boolean result;
+<span class="fc" id="L254">        String selectSQL = &quot;UPDATE &quot; + TABLE_NAME_PARAMETRI + &quot; SET FlagAttivazioneParametro = 0, IdAmministratore = ? WHERE FlagAttivazioneParametro = 1&quot;;</span>
+<span class="fc" id="L255">        String selectSQL1 = &quot;UPDATE &quot; + TABLE_NAME_PARAMETRI + &quot; SET FlagAttivazioneParametro = 1, IdAmministratore = ? WHERE Piano = ?&quot;;</span>
+        try {
+<span class="fc" id="L257">            connection = ds.getConnection();</span>
+<span class="fc" id="L258">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L259">            preparedStatement.setInt(1, idAmministratore);</span>
+<span class="fc" id="L260">            preparedStatement.executeUpdate();</span>
+<span class="fc" id="L261">            preparedStatement2 = connection.prepareStatement(selectSQL1);</span>
+<span class="fc" id="L262">            preparedStatement2.setInt(1, idAmministratore);</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">            if (piano.equalsIgnoreCase(&quot;SalvaguardiaAmbientale&quot;)) {</span>
+<span class="fc" id="L264">                preparedStatement2.setString(2, &quot;Salvaguardia Ambientale&quot;);</span>
+<span class="fc bfc" id="L265" title="All 2 branches covered.">            } else if (piano.equalsIgnoreCase(&quot;EfficienzaEconomica&quot;)) {</span>
+<span class="fc" id="L266">                preparedStatement2.setString(2, &quot;Efficienza Economica&quot;);</span>
+<span class="pc bpc" id="L267" title="1 of 2 branches missed.">            } else if (piano.equalsIgnoreCase(&quot;Personalizzato&quot;)) {</span>
+<span class="fc" id="L268">                preparedStatement2.setString(2, &quot;Personalizzato&quot;);</span>
+            }
+<span class="fc" id="L270">            int row = preparedStatement2.executeUpdate();</span>
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">            if (row &gt; 0) {</span>
+<span class="fc" id="L272">                return true;</span>
+            } else {
+<span class="nc" id="L274">                return false;</span>
+            }
+        } finally {
+            try {
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L279">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L283">                    connection.close();</span>
+                }
+            }
+        }
+    }
+
+    /**
+     * Aggiorna la percentuale di utilizzo del Servizio Elettrico Nazionale.
+     *
+     * @param percentualeAggiunta La percentuale da aggiungere o sottrarre.
+     * @throws SQLException In caso di problemi durante l'accesso al database.
+     */
+    @Override
+    public void aggiornaPercentualeSEN(int percentualeAggiunta) throws SQLException {
+<span class="fc" id="L297">        Connection connection = null;</span>
+<span class="fc" id="L298">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L299">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L300">        PreparedStatement preparedStatement3 = null;</span>
+<span class="fc" id="L301">        int idParametro = 0;</span>
+<span class="fc" id="L302">        float percentualeUtilizzo = 0.00f;</span>
+<span class="fc" id="L303">        float percentualeNuova = 0.00f;</span>
+
+<span class="fc" id="L305">        String selectSQL = &quot;SELECT IdParametro FROM &quot; + TABLE_NAME_PARAMETRI + &quot; WHERE FlagAttivazioneParametro = 1&quot;;</span>
+
+<span class="fc" id="L307">        String selectSQL2 = &quot;SELECT PercentualeUtilizzoSorgente FROM &quot; + TABLE_NAME_INTERAGISCE</span>
+                + &quot; WHERE IdParametro = ? AND TipoSorgente = 'Servizio Elettrico Nazionale'&quot;;
+
+<span class="fc" id="L310">        String upadteSQL = &quot;UPDATE &quot; + TABLE_NAME_INTERAGISCE</span>
+                + &quot; SET PercentualeUtilizzoSorgente =  ? &quot;
+                + &quot; WHERE IdParametro = ? AND TipoSorgente = 'Servizio Elettrico Nazionale'&quot;;
+        try {
+<span class="fc" id="L314">            connection = ds.getConnection();</span>
+<span class="fc" id="L315">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L316">            ResultSet resultSet = preparedStatement.executeQuery();</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L318">                idParametro = resultSet.getInt(&quot;IdParametro&quot;);</span>
+            }
+
+<span class="fc" id="L321">            preparedStatement2 = connection.prepareStatement(selectSQL2);</span>
+<span class="fc" id="L322">            preparedStatement2.setInt(1, idParametro);</span>
+<span class="fc" id="L323">            ResultSet resultSet2 = preparedStatement2.executeQuery();</span>
+<span class="pc bpc" id="L324" title="1 of 2 branches missed.">            while (resultSet2.next()) {</span>
+<span class="nc" id="L325">                percentualeUtilizzo = resultSet2.getFloat(&quot;PercentualeUtilizzoSorgente&quot;);</span>
+            }
+
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">            if (percentualeAggiunta &gt; 0) {</span>
+<span class="fc" id="L329">                percentualeNuova = Math.min(100, percentualeUtilizzo + percentualeAggiunta);</span>
+            } else {
+<span class="nc" id="L331">                percentualeNuova = Math.max(0, percentualeUtilizzo + percentualeAggiunta);</span>
+            }
+
+<span class="fc" id="L334">            preparedStatement3 = connection.prepareStatement(upadteSQL);</span>
+<span class="fc" id="L335">            preparedStatement3.setFloat(1, percentualeNuova);</span>
+<span class="fc" id="L336">            preparedStatement3.setInt(2, idParametro);</span>
+<span class="fc" id="L337">            preparedStatement3.executeUpdate();</span>
+        } finally {
+            try {
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">                if (preparedStatement != null) {</span>
+<span class="fc" id="L341">                    preparedStatement.close();</span>
+                }
+            } finally {
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">                if (connection != null) {</span>
+<span class="fc" id="L345">                    connection.close();</span>
+                }
+            }
+        }
+<span class="fc" id="L349">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

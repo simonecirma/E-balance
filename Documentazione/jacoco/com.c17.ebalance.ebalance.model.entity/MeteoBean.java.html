@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MeteoBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.entity</a> &gt; <span class="el_source">MeteoBean.java</span></div><h1>MeteoBean.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.entity;
+
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+/**
+ * La classe {@code MeteoBean} rappresenta un oggetto di rilevazione meteorologica.
+ * Implementa l'interfaccia {@link Observable} per supportare la notifica degli osservatori.
+ */
+public class MeteoBean implements Observable {
+<span class="fc" id="L16">    private static List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</span>
+    private int idMeteo;
+    private Date dataRilevazione;
+    private Time oraRilevazione;
+    private float velocitaVento;
+    private int probabilitaPioggia;
+    private String condizioniMetereologiche;
+
+    /**
+     * Costruttore di default.
+     */
+<span class="fc" id="L27">    public MeteoBean() {</span>
+<span class="fc" id="L28">    }</span>
+
+    /**
+     * Costruttore con parametri per inizializzare un oggetto MeteoBean.
+     *
+     * @param idMeteo                   Identificatore della rilevazione meteorologica.
+     * @param dataRilevazione           Data della rilevazione meteorologica.
+     * @param oraRilevazione            Ora della rilevazione meteorologica.
+     * @param velocitaVento             Velocità del vento rilevata.
+     * @param probabilitaPioggia         Probabilità di pioggia rilevata.
+     * @param condizioniMetereologiche  Condizioni meteorologiche rilevate.
+     */
+    public MeteoBean(final int idMeteo, final Date dataRilevazione,
+                     final Time oraRilevazione, final float velocitaVento,
+                     final int probabilitaPioggia,
+<span class="nc" id="L43">                     final String condizioniMetereologiche) {</span>
+<span class="nc" id="L44">        this.idMeteo = idMeteo;</span>
+<span class="nc" id="L45">        this.dataRilevazione = dataRilevazione;</span>
+<span class="nc" id="L46">        this.oraRilevazione = oraRilevazione;</span>
+<span class="nc" id="L47">        this.velocitaVento = velocitaVento;</span>
+<span class="nc" id="L48">        this.probabilitaPioggia = probabilitaPioggia;</span>
+<span class="nc" id="L49">        this.condizioniMetereologiche = condizioniMetereologiche;</span>
+<span class="nc" id="L50">    }</span>
+
+    /**
+     * Restituisce l'identificatore della rilevazione meteorologica.
+     *
+     * @return Identificatore della rilevazione meteorologica.
+     */
+    public int getIdMeteo() {
+<span class="fc" id="L58">        return idMeteo;</span>
+    }
+
+    /**
+     * Imposta l'identificatore della rilevazione meteorologica e notifica gli osservatori.
+     *
+     * @param idMeteo Nuovo identificatore della rilevazione meteorologica.
+     */
+    public void setIdMeteo(final int idMeteo) {
+<span class="fc" id="L67">        this.idMeteo = idMeteo;</span>
+<span class="fc" id="L68">        notifyObservers(&quot;setIdMeteo&quot;);</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Restituisce la data della rilevazione meteorologica.
+     *
+     * @return Data della rilevazione meteorologica.
+     */
+    public Date getDataRilevazione() {
+<span class="fc" id="L77">        return dataRilevazione;</span>
+    }
+
+    /**
+     * Imposta la data della rilevazione meteorologica e notifica gli osservatori.
+     *
+     * @param dataRilevazione Nuova data della rilevazione meteorologica.
+     */
+    public void setDataRilevazione(final Date dataRilevazione) {
+<span class="fc" id="L86">        this.dataRilevazione = dataRilevazione;</span>
+<span class="fc" id="L87">        notifyObservers(&quot;setDataRilevazione&quot;);</span>
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * Restituisce l'ora della rilevazione meteorologica.
+     *
+     * @return Ora della rilevazione meteorologica.
+     */
+    public Time getOraRilevazione() {
+<span class="fc" id="L96">        return oraRilevazione;</span>
+    }
+
+    /**
+     * Imposta l'ora della rilevazione meteorologica e notifica gli osservatori.
+     *
+     * @param oraRilevazione Nuova ora della rilevazione meteorologica.
+     */
+    public void setOraRilevazione(final Time oraRilevazione) {
+<span class="fc" id="L105">        this.oraRilevazione = oraRilevazione;</span>
+<span class="fc" id="L106">        notifyObservers(&quot;setOraRilevazione&quot;);</span>
+<span class="fc" id="L107">    }</span>
+
+    /**
+     * Restituisce la velocità del vento rilevata.
+     *
+     * @return Velocità del vento rilevata.
+     */
+    public float getVelocitaVento() {
+<span class="fc" id="L115">        return velocitaVento;</span>
+    }
+
+    /**
+     * Imposta la velocità del vento rilevata e notifica gli osservatori.
+     *
+     * @param velocitaVento Nuova velocità del vento rilevata.
+     */
+    public void setVelocitaVento(final float velocitaVento) {
+<span class="fc" id="L124">        this.velocitaVento = velocitaVento;</span>
+<span class="fc" id="L125">        notifyObservers(&quot;setVelocitaVento&quot;);</span>
+<span class="fc" id="L126">    }</span>
+
+    /**
+     * Restituisce la probabilità di pioggia rilevata.
+     *
+     * @return Probabilità di pioggia rilevata.
+     */
+    public int getProbabilitaPioggia() {
+<span class="fc" id="L134">        return probabilitaPioggia;</span>
+    }
+
+    /**
+     * Imposta la probabilità di pioggia rilevata e notifica gli osservatori.
+     *
+     * @param probabilitaPioggia Nuova probabilità di pioggia rilevata.
+     */
+    public void setProbabilitaPioggia(final int probabilitaPioggia) {
+<span class="fc" id="L143">        this.probabilitaPioggia = probabilitaPioggia;</span>
+<span class="fc" id="L144">        notifyObservers(&quot;setProbabilitaPioggia&quot;);</span>
+<span class="fc" id="L145">    }</span>
+
+    /**
+     * Restituisce le condizioni meteorologiche rilevate.
+     *
+     * @return Condizioni meteorologiche rilevate.
+     */
+    public String getCondizioniMetereologiche() {
+<span class="fc" id="L153">        return condizioniMetereologiche;</span>
+    }
+
+    /**
+     * Imposta le condizioni meteorologiche rilevate e notifica gli osservatori.
+     *
+     * @param condizioniMetereologiche Nuove condizioni meteorologiche rilevate.
+     */
+    public void setCondizioniMetereologiche(final String condizioniMetereologiche) {
+<span class="fc" id="L162">        this.condizioniMetereologiche = condizioniMetereologiche;</span>
+<span class="fc" id="L163">        notifyObservers(&quot;setCondizioniMetereologiche&quot;);</span>
+<span class="fc" id="L164">    }</span>
+
+    /**
+     * Restituisce una rappresentazione in formato stringa dell'oggetto MeteoBean.
+     *
+     * @return Stringa che rappresenta l'oggetto MeteoBean.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L173">        return &quot;MeteoBean{&quot;</span>
+                + &quot;idMeteo=&quot; + idMeteo
+                + &quot;, dataRilevazione=&quot; + dataRilevazione
+                + &quot;, oraRilevazione=&quot; + oraRilevazione
+                + &quot;, velocitaVento=&quot; + velocitaVento
+                + &quot;, probabilitaPioggia=&quot; + probabilitaPioggia
+                + &quot;, condizioniMetereologiche='&quot; + condizioniMetereologiche + '\''
+                + '}';
+    }
+
+    /**
+     * Aggiunge un osservatore alla lista degli osservatori.
+     *
+     * @param observer Osservatore da aggiungere.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+<span class="nc" id="L190">        observers.add(observer);</span>
+<span class="nc" id="L191">    }</span>
+
+    /**
+     * Rimuove un osservatore dalla lista degli osservatori.
+     *
+     * @param observer Osservatore da rimuovere.
+     */
+    @Override
+    public void removeObserver(Observer observer) {
+<span class="nc" id="L200">        observers.remove(observer);</span>
+<span class="nc" id="L201">    }</span>
+
+    /**
+     * Notifica tutti gli osservatori chiamando il loro metodo di aggiornamento.
+     *
+     * @param nomeMetodo Nome del metodo che ha generato la notifica.
+     */
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        for (Observer observer : observers) {</span>
+<span class="nc" id="L211">            observer.update(nomeMetodo);</span>
+<span class="nc" id="L212">        }</span>
+<span class="fc" id="L213">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BatteriaBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.entity</a> &gt; <span class="el_source">BatteriaBean.java</span></div><h1>BatteriaBean.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.entity;
+
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * La classe {@code BatteriaBean} rappresenta un oggetto di tipo batteria archiviato.
+ * Implementa l'interfaccia {@link Observable} per supportare la notifica degli osservatori.
+ */
+public class BatteriaBean implements Observable {
+<span class="fc" id="L14">    private static List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</span>
+    private int idBatteria;
+    private boolean flagStatoBatteria;
+    private float capacitaMax;
+    private float percentualeCarica;
+
+    /**
+     * Costruttore vuoto per la classe {@code BatteriaBean}.
+     */
+<span class="fc" id="L23">    public BatteriaBean() {</span>
+<span class="fc" id="L24">    }</span>
+
+    /**
+     * Costruttore della classe {@code BatteriaBean} con parametri.
+     *
+     * @param idBatteria         Identificativo della batteria archiviata.
+     * @param flagStatoBatteria Flag che rappresenta lo stato della batteria (carica o scarica).
+     * @param capacitaMax        Capacità massima della batteria.
+     * @param percentualeCarica  Percentuale di carica attuale della batteria.
+     */
+    public BatteriaBean(final int idBatteria, final boolean flagStatoBatteria,
+<span class="nc" id="L35">                        final float capacitaMax, final float percentualeCarica) {</span>
+<span class="nc" id="L36">        this.idBatteria = idBatteria;</span>
+<span class="nc" id="L37">        this.flagStatoBatteria = flagStatoBatteria;</span>
+<span class="nc" id="L38">        this.capacitaMax = capacitaMax;</span>
+<span class="nc" id="L39">        this.percentualeCarica = percentualeCarica;</span>
+<span class="nc" id="L40">    }</span>
+
+    /**
+     * Restituisce l'identificativo della batteria archiviata.
+     *
+     * @return Identificativo della batteria archiviata.
+     */
+    public int getIdBatteria() {
+<span class="fc" id="L48">        return idBatteria;</span>
+    }
+
+    /**
+     * Imposta l'identificativo della batteria archiviata.
+     *
+     * @param idBatteria Nuovo identificativo della batteria archiviata.
+     */
+    public void setIdBatteria(final int idBatteria) {
+<span class="fc" id="L57">        this.idBatteria = idBatteria;</span>
+<span class="fc" id="L58">        notifyObservers(&quot;setIdBatteria&quot;);</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Restituisce lo stato della batteria (carica o scarica).
+     *
+     * @return {@code true} se la batteria è carica, {@code false} altrimenti.
+     */
+    public boolean getFlagStatoBatteria() {
+<span class="fc" id="L67">        return flagStatoBatteria;</span>
+    }
+
+    /**
+     * Imposta lo stato della batteria (carica o scarica).
+     *
+     * @param flagStatoBatteria Nuovo stato della batteria.
+     */
+    public void setFlagStatoBatteria(final boolean flagStatoBatteria) {
+<span class="fc" id="L76">        this.flagStatoBatteria = flagStatoBatteria;</span>
+<span class="fc" id="L77">        notifyObservers(&quot;setFlagStatoBatteria&quot;);</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Restituisce la capacità massima della batteria.
+     *
+     * @return Capacità massima della batteria.
+     */
+    public float getCapacitaMax() {
+<span class="fc" id="L86">        return capacitaMax;</span>
+    }
+
+    /**
+     * Imposta la capacità massima della batteria.
+     *
+     * @param capacitaMax Nuova capacità massima della batteria.
+     */
+    public void setCapacitaMax(final float capacitaMax) {
+<span class="fc" id="L95">        this.capacitaMax = capacitaMax;</span>
+<span class="fc" id="L96">        notifyObservers(&quot;setCapacitaMax&quot;);</span>
+<span class="fc" id="L97">    }</span>
+
+    /**
+     * Restituisce la percentuale di carica attuale della batteria.
+     *
+     * @return Percentuale di carica attuale della batteria.
+     */
+    public float getPercentualeCarica() {
+<span class="fc" id="L105">        return percentualeCarica;</span>
+    }
+
+    /**
+     * Imposta la percentuale di carica attuale della batteria.
+     *
+     * @param percentualeCarica Nuova percentuale di carica attuale della batteria.
+     */
+    public void setPercentualeCarica(final float percentualeCarica) {
+<span class="fc" id="L114">        this.percentualeCarica = percentualeCarica;</span>
+<span class="fc" id="L115">        notifyObservers(&quot;setPercentualeCarica&quot;);</span>
+<span class="fc" id="L116">    }</span>
+
+    /**
+     * Override del metodo toString che restituisce una rappresentazione testuale dell'oggetto.
+     *
+     * @return Stringa che rappresenta l'oggetto {@code BatteriaBean}.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L125">        return &quot;BatteriaBean{&quot;</span>
+                + &quot;idBatteria=&quot; + idBatteria
+                + &quot;, flagStatoBatteria=&quot; + flagStatoBatteria
+                + &quot;, capacitaMax=&quot; + capacitaMax
+                + &quot;, percentualeCarica=&quot; + percentualeCarica
+                + '}';
+    }
+
+    /**
+     * Aggiunge un osservatore alla lista degli osservatori.
+     *
+     * @param observer Osservatore da aggiungere.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+<span class="nc" id="L140">        observers.add(observer);</span>
+<span class="nc" id="L141">    }</span>
+
+    /**
+     * Rimuove un osservatore dalla lista degli osservatori.
+     *
+     * @param observer Osservatore da rimuovere.
+     */
+    @Override
+    public void removeObserver(Observer observer) {
+<span class="nc" id="L150">        observers.remove(observer);</span>
+<span class="nc" id="L151">    }</span>
+
+    /**
+     * Notifica tutti gli osservatori chiamando il loro metodo di aggiornamento.
+     *
+     * @param nomeMetodo Nome del metodo che ha generato la notifica.
+     */
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">        for (Observer observer : observers) {</span>
+<span class="nc" id="L161">            observer.update(nomeMetodo);</span>
+<span class="nc" id="L162">        }</span>
+<span class="fc" id="L163">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

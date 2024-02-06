@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmministratoreController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.amministratore.controller</a> &gt; <span class="el_source">AmministratoreController.java</span></div><h1>AmministratoreController.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.amministratore.controller;
+
+import com.c17.ebalance.ebalance.accesso.controller.AccessoController;
+import com.c17.ebalance.ebalance.amministratore.service.*;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
+import com.c17.ebalance.ebalance.model.entity.ReportBean;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * La classe {@code AmministratoreController} è una servlet che gestisce le operazioni
+ * legate agli amministratori nel sistema eBalance, come l'aggiornamento, l'aggiunta e la visualizzazione dei report.
+ * Interagisce con i servizi di amministrazione e di report per fornire funzionalità avanzate agli amministratori.
+ */
+@WebServlet(name = &quot;AmministratoreController&quot;, value = &quot;/AmministratoreController&quot;)
+public class AmministratoreController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    /**
+     * Service per la gestione degli amministratori. L'istanza {@code amministratoreService} fornisce metodi
+     * per operare sugli amministratori del sistema.
+     */
+<span class="pc" id="L38">    private AmministratoreService amministratoreService = new AmministratoreServiceImpl();</span>
+    /**
+     * Service per la gestione dei report. L'istanza {@code reportDAO} fornisce metodi
+     * per operare sui report nel sistema.
+     */
+<span class="pc" id="L43">    private ReportService reportService = new ReportServiceImpl();</span>
+
+    /**
+     * Service per la gestione degli accessi. L'istanza {@code accessoController} fornisce metodi
+     * per effettuare gli accessi al sistema.
+     */
+<span class="pc" id="L49">    private AccessoController accessoController = new AccessoController();</span>
+
+    /**
+     * Service per la gestione della vendita. L'istanza {@code venditaService} fornisce metodi
+     * per effettuare la vendita dell'energia.
+     */
+<span class="pc" id="L55">    private VenditaService venditaService = new VenditaServiceImpl();</span>
+    private ServletContext servletContext;
+
+    /**
+     * Costruttore predefinito per AmministratoreController.
+     */
+<span class="nc" id="L61">    public AmministratoreController() {</span>
+<span class="nc" id="L62">    }</span>
+
+    /**
+     * Costruttore parametrizzato per AmministratoreController.
+     *
+     * @param amministratoreService Il servizio per le operazioni sugli amministratori.
+     * @param reportService        Il servizio per le operazioni sui report.
+     * @param venditaService       Il servizio per le operazioni di vendita.
+     * @param servletContext       Il contesto della servlet associato a questo controller.
+     */
+    public AmministratoreController(AmministratoreService amministratoreService, ReportService reportService,
+<span class="fc" id="L73">                                    VenditaService venditaService, ServletContext servletContext) {</span>
+<span class="fc" id="L74">        this.amministratoreService = amministratoreService;</span>
+<span class="fc" id="L75">        this.reportService = reportService;</span>
+<span class="fc" id="L76">        this.venditaService = venditaService;</span>
+<span class="fc" id="L77">        this.servletContext = servletContext;</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP di tipo GET relative alle operazioni degli amministratori e dei report.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+
+<span class="fc" id="L89">        String action = request.getParameter(&quot;action&quot;);</span>
+
+        try {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">            if (action != null) {</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;verificaSuperAdmin&quot;)) {</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">                    if (amministratoreService.verificaSuperAdmin()) {</span>
+<span class="fc" id="L95">                        request.setAttribute(&quot;result&quot;, &quot;Risulta già un sistema configurato, accedi!&quot;);</span>
+<span class="fc" id="L96">                        RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/login.jsp&quot;);</span>
+<span class="fc" id="L97">                        dispatcher.forward(request, response);</span>
+<span class="fc" id="L98">                    } else {</span>
+<span class="nc" id="L99">                        RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/registraSuperAdmin.jsp&quot;);</span>
+<span class="nc" id="L100">                        dispatcher.forward(request, response);</span>
+                    }
+                }
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;verificaPresenzaEmail&quot;)) {</span>
+<span class="fc" id="L104">                    String email = request.getParameter(&quot;email&quot;);</span>
+<span class="fc" id="L105">                    boolean flagPresenza = amministratoreService.verificaPresenzaEmail(email);</span>
+<span class="fc" id="L106">                    response.setContentType(&quot;application/json&quot;);</span>
+<span class="fc" id="L107">                    response.setCharacterEncoding(&quot;UTF-8&quot;);</span>
+<span class="fc" id="L108">                    PrintWriter out = response.getWriter();</span>
+<span class="fc" id="L109">                    out.print(&quot;{\&quot;flagPresenza\&quot;: &quot; + flagPresenza + &quot;}&quot;);</span>
+<span class="fc" id="L110">                    out.flush();</span>
+                }
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;aggiornaAmministratore&quot;)) {</span>
+<span class="fc" id="L113">                    aggiornaAmministratore(request, response);</span>
+                }
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">                if (action.equalsIgnoreCase(&quot;aggiungiAmministratore&quot;)) {</span>
+<span class="nc" id="L116">                    aggiungiAmministratore(request, response);</span>
+                }
+<span class="fc bfc" id="L118" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;gestisciAmministratori&quot;)) {</span>
+<span class="fc" id="L119">                    List&lt;AmministratoreBean&gt; amministratori = amministratoreService.visualizzaAmministratori();</span>
+<span class="fc" id="L120">                    request.setAttribute(&quot;amministratori&quot;, amministratori);</span>
+<span class="fc" id="L121">                    RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/amministratori.jsp&quot;);</span>
+<span class="fc" id="L122">                    dispatcher.forward(request, response);</span>
+                }
+<span class="fc bfc" id="L124" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;rimuoviAmministratore&quot;)) {</span>
+<span class="fc" id="L125">                    int idAmministratore = Integer.parseInt(request.getParameter(&quot;idAmministratore&quot;));</span>
+<span class="fc" id="L126">                    amministratoreService.rimuoviAmministratore(idAmministratore);</span>
+<span class="fc" id="L127">                    response.sendRedirect(&quot;AmministratoreController?action=gestisciAmministratori&quot;);</span>
+                }
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;vediReport&quot;)) {</span>
+<span class="fc" id="L130">                    visualizzazioneReport(request, response);</span>
+<span class="fc" id="L131">                    RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/report.jsp&quot;);</span>
+<span class="fc" id="L132">                    dispatcher.forward(request, response);</span>
+                }
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;vendita&quot;)) {</span>
+<span class="fc" id="L135">                    String idAmministratoreParam = request.getParameter(&quot;idAmministratore&quot;);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">                    int idAmministratore = idAmministratoreParam != null ? Integer.parseInt(idAmministratoreParam) : 0;</span>
+<span class="fc" id="L137">                    venditaService.effettuaVendita(idAmministratore);</span>
+<span class="fc" id="L138">                    response.sendRedirect(&quot;DatiController?action=generaDashboard&quot;);</span>
+                }
+<span class="fc bfc" id="L140" title="All 2 branches covered.">                if (action.equalsIgnoreCase(&quot;generaReport&quot;)) {</span>
+<span class="fc" id="L141">                    HttpSession session = request.getSession(false);</span>
+<span class="fc" id="L142">                    String servletPath = null;</span>
+<span class="pc bpc" id="L143" title="2 of 4 branches missed.">                    if (request != null &amp;&amp; request.getServletContext() != null) {</span>
+<span class="nc" id="L144">                        servletPath = request.getServletContext().getRealPath(&quot;&quot;);</span>
+                    }
+
+<span class="fc" id="L147">                    Date dataInizio = Date.valueOf(request.getParameter(&quot;dataInizio&quot;));</span>
+<span class="fc" id="L148">                    Date dataFine = Date.valueOf(request.getParameter(&quot;dataFine&quot;));</span>
+<span class="fc" id="L149">                    ReportBean report = reportService.generaReport(dataInizio, dataFine, servletPath, session);</span>
+<span class="fc" id="L150">                    reportService.aggiungiReport(report);</span>
+<span class="fc" id="L151">                    visualizzazioneReport(request, response);</span>
+<span class="fc" id="L152">                    RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/report.jsp&quot;);</span>
+<span class="fc" id="L153">                    dispatcher.forward(request, response);</span>
+<span class="fc" id="L154">                }</span>
+            } else {
+<span class="fc" id="L156">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/profilo.jsp&quot;);</span>
+<span class="fc" id="L157">                dispatcher.forward(request, response);</span>
+            }
+<span class="nc" id="L159">        } catch (SQLException | ServletException | ParseException e) {</span>
+<span class="nc" id="L160">            throw new RuntimeException(e);</span>
+<span class="fc" id="L161">        }</span>
+<span class="fc" id="L162">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP di tipo POST relative alle operazioni degli amministratori e dei report.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+<span class="nc" id="L172">        doGet(request, response);</span>
+<span class="nc" id="L173">    }</span>
+
+
+    /**
+     * Gestisce l'aggiornamento dei dati di un amministratore e reindirizza alla pagina del profilo.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws ParseException  in caso di errori durante il parsing della data di nascita.
+     */
+    public void aggiornaAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, ParseException {
+<span class="fc" id="L186">        String nome = request.getParameter(&quot;nome&quot;);</span>
+<span class="fc" id="L187">        String cognome = request.getParameter(&quot;cognome&quot;);</span>
+<span class="fc" id="L188">        String email = request.getParameter(&quot;email&quot;);</span>
+<span class="fc" id="L189">        String password = request.getParameter(&quot;password&quot;);</span>
+<span class="fc" id="L190">        String dataNascitaString = request.getParameter(&quot;dataNascita&quot;);</span>
+<span class="fc" id="L191">        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
+<span class="fc" id="L192">        Date dataNascita = new Date(dateFormat.parse(dataNascitaString).getTime());</span>
+
+<span class="fc" id="L194">        int idAmministratore = Integer.parseInt(request.getParameter(&quot;idAmministratore&quot;));</span>
+<span class="fc" id="L195">        boolean flagTipo = Boolean.parseBoolean(request.getParameter(&quot;flagTipo&quot;));</span>
+
+<span class="fc" id="L197">        AmministratoreBean amministratore = new AmministratoreBean();</span>
+
+<span class="fc" id="L199">        amministratore.setNome(nome);</span>
+<span class="fc" id="L200">        amministratore.setCognome(cognome);</span>
+<span class="fc" id="L201">        amministratore.setEmail(email);</span>
+<span class="fc" id="L202">        amministratore.setPassword(password);</span>
+<span class="fc" id="L203">        amministratore.setDataNascita(dataNascita);</span>
+<span class="fc" id="L204">        amministratore.setIdAmministratore(idAmministratore);</span>
+<span class="fc" id="L205">        amministratore.setFlagTipo(flagTipo);</span>
+
+        try {
+<span class="fc" id="L208">            amministratoreService.aggiornaAmministratore(amministratore);</span>
+<span class="nc" id="L209">        } catch (SQLException e) {</span>
+<span class="nc" id="L210">            e.printStackTrace();</span>
+<span class="nc" id="L211">            return;</span>
+<span class="fc" id="L212">        }</span>
+
+<span class="fc" id="L214">        HttpSession session = request.getSession(true);</span>
+<span class="fc" id="L215">        session.setAttribute(&quot;nome&quot;, nome);</span>
+<span class="fc" id="L216">        session.setAttribute(&quot;cognome&quot;, cognome);</span>
+<span class="fc" id="L217">        session.setAttribute(&quot;email&quot;, email);</span>
+<span class="fc" id="L218">        session.setAttribute(&quot;password&quot;, password);</span>
+<span class="fc" id="L219">        session.setAttribute(&quot;dataNascita&quot;, dataNascita);</span>
+<span class="fc" id="L220">        session.setAttribute(&quot;idAmministratore&quot;, idAmministratore);</span>
+<span class="fc" id="L221">        session.setAttribute(&quot;flagTipo&quot;, flagTipo);</span>
+
+<span class="fc" id="L223">        RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/profilo.jsp&quot;);</span>
+<span class="fc" id="L224">        dispatcher.forward(request, response);</span>
+<span class="fc" id="L225">    }</span>
+
+    /**
+     * Gestisce l'aggiunta di un nuovo amministratore e reindirizza alla pagina del profilo o della gestione amministratori.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
+     * @throws ServletException in caso di errori durante la gestione della richiesta.
+     * @throws SQLException     in caso di errori durante le operazioni di accesso al database.
+     */
+    public void aggiungiAmministratore(final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException, SQLException {
+
+<span class="nc" id="L238">        AmministratoreBean amministratore = new AmministratoreBean();</span>
+
+<span class="nc" id="L240">        amministratore.setNome(request.getParameter(&quot;nome&quot;));</span>
+<span class="nc" id="L241">        amministratore.setCognome(request.getParameter(&quot;cognome&quot;));</span>
+<span class="nc" id="L242">        amministratore.setEmail(request.getParameter(&quot;email&quot;));</span>
+<span class="nc" id="L243">        amministratore.setPassword(request.getParameter(&quot;password&quot;));</span>
+<span class="nc" id="L244">        String dataNascitaString = request.getParameter(&quot;dataNascita&quot;);</span>
+<span class="nc" id="L245">        SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
+        try {
+<span class="nc" id="L247">            Date dataNascita = new Date(dateFormat.parse(dataNascitaString).getTime());</span>
+<span class="nc" id="L248">            amministratore.setDataNascita(dataNascita);</span>
+<span class="nc" id="L249">        } catch (ParseException e) {</span>
+<span class="nc" id="L250">            return;</span>
+<span class="nc" id="L251">        }</span>
+<span class="nc" id="L252">        HttpSession session = request.getSession(true);</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">        if (session.getAttribute(&quot;email&quot;) != null) {</span>
+<span class="nc" id="L254">            amministratore.setFlagTipo(false);</span>
+        } else {
+<span class="nc" id="L256">            amministratore.setFlagTipo(true);</span>
+        }
+
+        try {
+<span class="nc" id="L260">            amministratoreService.aggiungiAmministratore(amministratore);</span>
+<span class="nc" id="L261">        } catch (SQLException e) {</span>
+<span class="nc" id="L262">            e.printStackTrace();</span>
+<span class="nc" id="L263">            return;</span>
+<span class="nc" id="L264">        }</span>
+<span class="nc bnc" id="L265" title="All 2 branches missed.">        if (session.getAttribute(&quot;email&quot;) != null) {</span>
+<span class="nc" id="L266">            response.sendRedirect(&quot;AmministratoreController?action=gestisciAmministratori&quot;);</span>
+        } else {
+<span class="nc" id="L268">            AmministratoreBean admin = accessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);</span>
+<span class="nc bnc" id="L269" title="All 2 branches missed.">            if (admin != null) {</span>
+<span class="nc" id="L270">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/registraPrimoContratto.jsp&quot;);</span>
+<span class="nc" id="L271">                dispatcher.forward(request, response);</span>
+<span class="nc" id="L272">            } else {</span>
+<span class="nc" id="L273">                response.sendRedirect(&quot;AmministratoreController?action=verificaSuperAdmin&quot;);</span>
+            }
+        }
+
+<span class="nc" id="L277">    }</span>
+
+    /**
+     * Gestisce la visualizzazione dei report e imposta gli attributi necessari per la visualizzazione nella pagina JSP.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     */
+    private void visualizzazioneReport(final HttpServletRequest request, final HttpServletResponse response) {
+        try {
+<span class="fc" id="L287">            List&lt;ReportBean&gt; listReport = reportService.visualizzaReport();</span>
+<span class="fc" id="L288">            request.setAttribute(&quot;listReport&quot;, listReport);</span>
+<span class="fc" id="L289">            List&lt;AmministratoreBean&gt; amministratori = new ArrayList&lt;AmministratoreBean&gt;();</span>
+<span class="fc" id="L290">            AmministratoreBean bean = new AmministratoreBean();</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">            for (ReportBean rep : listReport) {</span>
+<span class="nc" id="L292">                int i = rep.getIdAmministratore();</span>
+<span class="nc" id="L293">                bean = amministratoreService.getById(i);</span>
+<span class="nc" id="L294">                amministratori.add(bean);</span>
+<span class="nc" id="L295">            }</span>
+<span class="fc" id="L296">            request.setAttribute(&quot;amministratori&quot;, amministratori);</span>
+<span class="nc" id="L297">        } catch (SQLException e) {</span>
+<span class="nc" id="L298">            throw new RuntimeException(e);</span>
+<span class="fc" id="L299">        }</span>
+
+<span class="fc" id="L301">    }</span>
+
+    /**
+     * Distrugge la servlet quando viene chiamato.
+     */
+    public void destroy() {
+<span class="nc" id="L307">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

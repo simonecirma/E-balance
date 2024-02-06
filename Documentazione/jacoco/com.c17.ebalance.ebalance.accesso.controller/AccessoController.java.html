@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccessoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.accesso.controller</a> &gt; <span class="el_source">AccessoController.java</span></div><h1>AccessoController.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.accesso.controller;
+
+import com.c17.ebalance.ebalance.accesso.service.AccessoService;
+import com.c17.ebalance.ebalance.accesso.service.AccessoServiceImpl;
+import com.c17.ebalance.ebalance.model.entity.AmministratoreBean;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
+/**
+ * La classe {@code AccessoController} è una servlet che gestisce l'autenticazione
+ * dell'amministratore per l'applicazione eBalance. Interagisce con il servizio {@code AccessoService}
+ * per eseguire operazioni di login e gestisce le sessioni degli amministratori.
+ */
+@WebServlet(name = &quot;AccessoController&quot;, value = &quot;/AccessoController&quot;)
+public class AccessoController extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * Service per la gestione degli accessi. L'istanza {@code accessoService} fornisce metodi
+     * per effettuare l'accesso al sistema.
+     */
+<span class="fc" id="L32">    private AccessoService accessoService = new AccessoServiceImpl();</span>
+    private ServletContext servletContext;
+
+    /**
+     * Costruttore predefinito per AccessoController.
+     */
+<span class="fc" id="L38">    public AccessoController() {</span>
+<span class="fc" id="L39">    }</span>
+
+    /**
+     * Costruttore parametrizzato per AccessoController.
+     *
+     * @param accessoService  L'implementazione di AccessoService da utilizzare.
+     * @param servletContext Il contesto della servlet associato a questo controller.
+     */
+<span class="fc" id="L47">    public AccessoController(AccessoService accessoService, ServletContext servletContext) {</span>
+<span class="fc" id="L48">        this.accessoService = accessoService;</span>
+<span class="fc" id="L49">        this.servletContext = servletContext;</span>
+<span class="fc" id="L50">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP di tipo GET per l'autenticazione dell'amministratore.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+
+<span class="fc" id="L61">        AmministratoreBean amministratore = new AmministratoreBean();</span>
+<span class="fc" id="L62">        String email = request.getParameter(&quot;email&quot;);</span>
+<span class="fc" id="L63">        String pass = request.getParameter(&quot;password&quot;);</span>
+<span class="fc" id="L64">        HttpSession session = request.getSession(true);</span>
+        try {
+<span class="fc" id="L66">            amministratore = login(email, pass, session);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (amministratore != null) {</span>
+<span class="fc" id="L68">                response.sendRedirect(&quot;DatiController?action=generaDashboard&quot;);</span>
+            } else {
+<span class="fc" id="L70">                request.setAttribute(&quot;result&quot;, &quot;Credenziali sbagliate riprova!&quot;);</span>
+<span class="fc" id="L71">                RequestDispatcher dispatcher = request.getRequestDispatcher(&quot;/login.jsp&quot;);</span>
+<span class="fc" id="L72">                dispatcher.forward(request, response);</span>
+            }
+<span class="nc" id="L74">        } catch (SQLException | ServletException e) {</span>
+<span class="nc" id="L75">            throw new RuntimeException(e);</span>
+<span class="fc" id="L76">        }</span>
+
+
+<span class="fc" id="L79">    }</span>
+
+    /**
+     * Gestisce le richieste HTTP di tipo POST per l'autenticazione dell'amministratore.
+     *
+     * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
+     * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
+     * @throws IOException in caso di errori di I/O durante la gestione della richiesta.
+     */
+    public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+<span class="nc" id="L89">        doGet(request, response);</span>
+<span class="nc" id="L90">    }</span>
+
+    /**
+     * Esegue l'operazione di login e restituisce l'oggetto AmministratoreBean se le credenziali sono valide.
+     *
+     * @param email   L'indirizzo email dell'amministratore.
+     * @param pass    La password dell'amministratore.
+     * @param session La sessione HTTP associata alla richiesta.
+     * @return L'oggetto AmministratoreBean dell'amministratore autenticato, o null se le credenziali sono sbagliate.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public AmministratoreBean login(final String email, final String pass, final HttpSession session) throws SQLException {
+<span class="fc" id="L102">        AmministratoreBean admin = new AmministratoreBean();</span>
+<span class="fc" id="L103">        admin = accessoService.login(email, pass);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (admin != null) {</span>
+<span class="fc" id="L105">            session.setAttribute(&quot;email&quot;, admin.getEmail());</span>
+<span class="fc" id="L106">            session.setAttribute(&quot;password&quot;, admin.getPassword());</span>
+<span class="fc" id="L107">            session.setAttribute(&quot;nome&quot;, admin.getNome());</span>
+<span class="fc" id="L108">            session.setAttribute(&quot;cognome&quot;, admin.getCognome());</span>
+<span class="fc" id="L109">            session.setAttribute(&quot;flagTipo&quot;, admin.getFlagTipo());</span>
+<span class="fc" id="L110">            session.setAttribute(&quot;idAmministratore&quot;, admin.getIdAmministratore());</span>
+<span class="fc" id="L111">            session.setAttribute(&quot;dataNascita&quot;, admin.getDataNascita());</span>
+        }
+<span class="fc" id="L113">        return admin;</span>
+    }
+
+    /**
+     * Distrugge la servlet quando viene chiamato.
+     */
+    public void destroy() {
+<span class="nc" id="L120">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

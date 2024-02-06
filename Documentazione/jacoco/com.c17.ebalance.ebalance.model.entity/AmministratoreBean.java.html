@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AmministratoreBean.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.entity</a> &gt; <span class="el_source">AmministratoreBean.java</span></div><h1>AmministratoreBean.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.entity;
+
+import com.c17.ebalance.ebalance.utility.Observable;
+import com.c17.ebalance.ebalance.utility.Observer;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * La classe {@code AmministratoreBean} rappresenta un oggetto di tipo amministratore.
+ * Implementa l'interfaccia {@link Observable} per supportare la notifica degli osservatori.
+ */
+public class AmministratoreBean implements Observable {
+
+<span class="fc" id="L16">    private static List&lt;Observer&gt; observers = new ArrayList&lt;&gt;();</span>
+
+    private int idAmministratore;
+    private String nome;
+    private String cognome;
+    private Date dataNascita;
+    private String email;
+    private String password;
+    private boolean flagTipo;
+
+    /**
+     * Costruttore vuoto per la classe {@code AmministratoreBean}.
+     */
+<span class="fc" id="L29">    public AmministratoreBean() {</span>
+<span class="fc" id="L30">    }</span>
+
+    /**
+     * Costruttore della classe {@code AmministratoreBean} con parametri.
+     *
+     * @param idAmministratore Identificativo dell'amministratore.
+     * @param nome             Nome dell'amministratore.
+     * @param cognome          Cognome dell'amministratore.
+     * @param dataNascita      Data di nascita dell'amministratore.
+     * @param email            Indirizzo email dell'amministratore.
+     * @param password         Password dell'amministratore.
+     * @param flagTipo         Flag che indica il tipo di amministratore.
+     */
+    public AmministratoreBean(final int idAmministratore, final String nome,
+                              final String cognome, final Date dataNascita,
+                              final String email, final String password,
+<span class="nc" id="L46">                              final boolean flagTipo) {</span>
+<span class="nc" id="L47">        this.idAmministratore = idAmministratore;</span>
+<span class="nc" id="L48">        this.nome = nome;</span>
+<span class="nc" id="L49">        this.cognome = cognome;</span>
+<span class="nc" id="L50">        this.dataNascita = dataNascita;</span>
+<span class="nc" id="L51">        this.email = email;</span>
+<span class="nc" id="L52">        this.password = password;</span>
+<span class="nc" id="L53">        this.flagTipo = flagTipo;</span>
+<span class="nc" id="L54">    }</span>
+
+    /**
+     * Restituisce l'identificativo dell'amministratore.
+     *
+     * @return Identificativo dell'amministratore.
+     */
+    public int getIdAmministratore() {
+<span class="fc" id="L62">        return idAmministratore;</span>
+    }
+
+    /**
+     * Imposta l'identificativo dell'amministratore.
+     *
+     * @param idAmministratore Nuovo identificativo dell'amministratore.
+     */
+    public void setIdAmministratore(int idAmministratore) {
+<span class="fc" id="L71">        this.idAmministratore = idAmministratore;</span>
+<span class="fc" id="L72">        notifyObservers(&quot;setIdAmministratore&quot;);</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Restituisce il nome dell'amministratore.
+     *
+     * @return Nome dell'amministratore.
+     */
+    public String getNome() {
+<span class="fc" id="L81">        return nome;</span>
+    }
+
+    /**
+     * Imposta il nome dell'amministratore.
+     *
+     * @param nome Nuovo nome dell'amministratore.
+     */
+    public void setNome(final String nome) {
+<span class="fc" id="L90">        this.nome = nome;</span>
+<span class="fc" id="L91">        notifyObservers(&quot;setNome&quot;);</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Restituisce il cognome dell'amministratore.
+     *
+     * @return Cognome dell'amministratore.
+     */
+    public String getCognome() {
+<span class="fc" id="L100">        return cognome;</span>
+    }
+
+    /**
+     * Imposta il cognome dell'amministratore.
+     *
+     * @param cognome Nuovo cognome dell'amministratore.
+     */
+    public void setCognome(final String cognome) {
+<span class="fc" id="L109">        this.cognome = cognome;</span>
+<span class="fc" id="L110">        notifyObservers(&quot;setCognome&quot;);</span>
+<span class="fc" id="L111">    }</span>
+
+    /**
+     * Restituisce la data di nascita dell'amministratore.
+     *
+     * @return Data di nascita dell'amministratore.
+     */
+    public Date getDataNascita() {
+<span class="fc" id="L119">        return dataNascita;</span>
+    }
+
+    /**
+     * Imposta la data di nascita dell'amministratore.
+     *
+     * @param dataNascita Nuova data di nascita dell'amministratore.
+     */
+    public void setDataNascita(final Date dataNascita) {
+<span class="fc" id="L128">        this.dataNascita = dataNascita;</span>
+<span class="fc" id="L129">        notifyObservers(&quot;setDataNascita&quot;);</span>
+<span class="fc" id="L130">    }</span>
+
+    /**
+     * Restituisce l'indirizzo email dell'amministratore.
+     *
+     * @return Indirizzo email dell'amministratore.
+     */
+    public String getEmail() {
+<span class="fc" id="L138">        return email;</span>
+    }
+
+    /**
+     * Imposta l'indirizzo email dell'amministratore.
+     *
+     * @param email Nuovo indirizzo email dell'amministratore.
+     */
+    public void setEmail(final String email) {
+<span class="fc" id="L147">        this.email = email;</span>
+<span class="fc" id="L148">        notifyObservers(&quot;setEmail&quot;);</span>
+<span class="fc" id="L149">    }</span>
+
+    /**
+     * Restituisce la password dell'amministratore.
+     *
+     * @return Password dell'amministratore.
+     */
+    public String getPassword() {
+<span class="fc" id="L157">        return password;</span>
+    }
+
+    /**
+     * Imposta la password dell'amministratore.
+     *
+     * @param password Nuova password dell'amministratore.
+     */
+    public void setPassword(final String password) {
+<span class="fc" id="L166">        this.password = password;</span>
+<span class="fc" id="L167">        notifyObservers(&quot;setPassword&quot;);</span>
+<span class="fc" id="L168">    }</span>
+
+    /**
+     * Restituisce il flag che indica il tipo di amministratore.
+     *
+     * @return True se l'amministratore è di tipo &quot;admin&quot;, false se è di tipo &quot;user&quot;.
+     */
+    public boolean getFlagTipo() {
+<span class="fc" id="L176">        return flagTipo;</span>
+    }
+
+    /**
+     * Imposta il flag che indica il tipo di amministratore.
+     *
+     * @param flagTipo Nuovo valore del flag.
+     */
+    public void setFlagTipo(final boolean flagTipo) {
+<span class="fc" id="L185">        this.flagTipo = flagTipo;</span>
+<span class="fc" id="L186">        notifyObservers(&quot;setFlagTipo&quot;);</span>
+<span class="fc" id="L187">    }</span>
+
+    /**
+     * Override del metodo toString che restituisce una rappresentazione testuale dell'oggetto.
+     *
+     * @return Stringa che rappresenta l'oggetto {@code AmministratoreBean}.
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L196">        return &quot;AmministratoreBean{&quot;</span>
+                + &quot;idAmministratore=&quot; + idAmministratore
+                + &quot;, nome='&quot; + nome + '\''
+                + &quot;, cognome='&quot; + cognome + '\''
+                + &quot;, dataNascita=&quot; + dataNascita
+                + &quot;, email='&quot; + email + '\''
+                + &quot;, password='&quot; + password + '\''
+                + &quot;, flagTipo=&quot; + flagTipo
+                + '}';
+    }
+
+    /**
+     * Aggiunge un osservatore alla lista degli osservatori.
+     *
+     * @param observer Osservatore da aggiungere.
+     */
+    @Override
+    public void addObserver(Observer observer) {
+<span class="nc" id="L214">        observers.add(observer);</span>
+<span class="nc" id="L215">    }</span>
+
+    /**
+     * Rimuove un osservatore dalla lista degli osservatori.
+     *
+     * @param observer Osservatore da rimuovere.
+     */
+    @Override
+    public void removeObserver(Observer observer) {
+<span class="nc" id="L224">        observers.remove(observer);</span>
+<span class="nc" id="L225">    }</span>
+
+    /**
+     * Notifica tutti gli osservatori chiamando il loro metodo di aggiornamento.
+     *
+     * @param nomeMetodo Nome del metodo che ha generato la notifica.
+     */
+    @Override
+    public void notifyObservers(String nomeMetodo) {
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">        for (Observer observer : observers) {</span>
+<span class="nc" id="L235">            observer.update(nomeMetodo);</span>
+<span class="nc" id="L236">        }</span>
+<span class="fc" id="L237">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConsumoDAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">ConsumoDAOImpl.java</span></div><h1>ConsumoDAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
+import com.c17.ebalance.ebalance.model.entity.ConsumoAttualeBean;
+import com.c17.ebalance.ebalance.model.entity.ConsumoEdificioBean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Implementazione dell'interfaccia ConsumoDAO che gestisce l'accesso ai dati relativi al consumo energetico nel sistema eBalance.
+ * Utilizza un DataSource per la connessione al database.
+ */
+<span class="fc" id="L26">public class ConsumoDAOImpl implements ConsumoDAO {</span>
+
+<span class="fc" id="L28">    private static Logger logger = Logger.getLogger(ConsumoDAOImpl.class.getName());</span>
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L33">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L34">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L36">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L38">        } catch (NamingException e) {</span>
+<span class="fc" id="L39">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L40">        }</span>
+<span class="fc" id="L41">    }</span>
+
+    private static final String TABLE_NAME_CONSUMO = &quot;ConsumoEdificio&quot;;
+    private static final String TABLE_NAME_ARCHIVIO = &quot;ArchivioConsumo&quot;;
+
+
+    /**
+     * Restituisce una lista di consumi degli edifici presenti nel sistema.
+     *
+     * @return Una lista di oggetti ConsumoEdificioBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public List&lt;ConsumoEdificioBean&gt; visualizzaConsumo() throws SQLException {
+<span class="fc" id="L54">        Connection connection = null;</span>
+<span class="fc" id="L55">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L56">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L58">        List&lt;ConsumoEdificioBean&gt; consumo = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L59">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_CONSUMO;</span>
+
+        try {
+<span class="fc" id="L62">            connection = ds.getConnection();</span>
+<span class="fc" id="L63">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L65">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L68">                ConsumoEdificioBean bean = new ConsumoEdificioBean();</span>
+<span class="fc" id="L69">                bean.setIdEdificio(resultSet.getInt(&quot;IdEdificio&quot;));</span>
+<span class="fc" id="L70">                bean.setNomeEdificio(resultSet.getString(&quot;NomeEdificio&quot;));</span>
+<span class="fc" id="L71">                bean.setConsumoAttuale(resultSet.getFloat(&quot;ConsumoAttuale&quot;));</span>
+<span class="fc" id="L72">                consumo.add(bean);</span>
+<span class="fc" id="L73">            }</span>
+        } finally {
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L76">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L79">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L82">        return consumo;</span>
+    }
+
+
+    /**
+     * Restituisce la somma totale dei consumi energetici di tutti gli edifici nel sistema.
+     *
+     * @return La somma totale dei consumi energetici.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public float ottieniConsumiEdifici() throws SQLException {
+<span class="fc" id="L94">        Connection connection = null;</span>
+<span class="fc" id="L95">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L96">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L98">        ConsumoAttualeBean consumoEdifici = new ConsumoAttualeBean();</span>
+<span class="fc" id="L99">        String selectSQL = &quot;SELECT ROUND(SUM(ConsumoAttuale),2) AS Consumo FROM &quot; + TABLE_NAME_CONSUMO;</span>
+        try {
+<span class="fc" id="L101">            connection = ds.getConnection();</span>
+<span class="fc" id="L102">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L104">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L107">                consumoEdifici.setConsumoAttuale(resultSet.getFloat(&quot;Consumo&quot;));</span>
+            }
+        } finally {
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L111">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L114">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L117">        return consumoEdifici.getConsumoAttuale();</span>
+    }
+
+    /**
+     * Restituisce una lista di archivi dei consumi energetici nel sistema.
+     *
+     * @return Una lista di oggetti ArchivioConsumoBean.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;ArchivioConsumoBean&gt; visualizzaStoricoConsumi() throws SQLException {
+<span class="fc" id="L128">        Connection connection = null;</span>
+<span class="fc" id="L129">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L130">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L132">        List&lt;ArchivioConsumoBean&gt; archivioConsumi = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L133">        String selectSQL = &quot; SELECT Consumo, DataConsumo &quot;</span>
+                + &quot; FROM ( SELECT SUM(ConsumoGiornaliero) AS Consumo, DataConsumo FROM &quot; + TABLE_NAME_ARCHIVIO
+                + &quot; GROUP BY DataConsumo ORDER BY Consumo DESC limit 10 ) AS Subquery&quot;
+                + &quot; ORDER BY DataConsumo&quot;;
+        try {
+<span class="fc" id="L138">            connection = ds.getConnection();</span>
+<span class="fc" id="L139">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L141">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L144">                ArchivioConsumoBean bean = new ArchivioConsumoBean();</span>
+<span class="fc" id="L145">                bean.setConsumoGiornaliero(resultSet.getInt(&quot;Consumo&quot;));</span>
+<span class="fc" id="L146">                bean.setDataConsumo(resultSet.getDate(&quot;DataConsumo&quot;));</span>
+<span class="fc" id="L147">                archivioConsumi.add(bean);</span>
+<span class="fc" id="L148">            }</span>
+        } finally {
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L151">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L154">                connection.close();</span>
+            }
+        }
+
+<span class="fc" id="L158">        return archivioConsumi;</span>
+    }
+
+    /**
+     * Simula il consumo energetico di un edificio in una data specifica.
+     *
+     * @param consumoOrario Il consumo energetico orario simulato.
+     * @param IdEdificio    L'identificatore dell'edificio su cui simulare il consumo.
+     * @param data          La data in cui simulare il consumo.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public void simulaConsumo(float consumoOrario, int IdEdificio, Date data) throws SQLException {
+<span class="fc" id="L171">        Connection connection = null;</span>
+<span class="fc" id="L172">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L173">        PreparedStatement preparedStatement2 = null;</span>
+<span class="fc" id="L174">        PreparedStatement preparedStatement3 = null;</span>
+<span class="fc" id="L175">        PreparedStatement preparedStatement4 = null;</span>
+
+<span class="fc" id="L177">        String updateSQL = &quot;UPDATE &quot; + TABLE_NAME_CONSUMO + &quot; SET ConsumoAttuale = ? WHERE IdEdificio = ?&quot;;</span>
+<span class="fc" id="L178">        String selectSQL = &quot;SELECT * FROM &quot; + TABLE_NAME_ARCHIVIO + &quot; WHERE IdEdificio = ? AND DataConsumo = ?&quot;;</span>
+<span class="fc" id="L179">        String insertSQL = &quot;INSERT INTO &quot; + TABLE_NAME_ARCHIVIO + &quot; (DataConsumo, ConsumoGiornaliero, IdEdificio) VALUES (?, 0, ?)&quot;;</span>
+<span class="fc" id="L180">        String updateSQL2 = &quot;UPDATE &quot; + TABLE_NAME_ARCHIVIO + &quot; SET ConsumoGiornaliero = ConsumoGiornaliero + ? WHERE IdEdificio = ? AND DataConsumo = ?&quot;;</span>
+
+        try {
+<span class="fc" id="L183">            connection = ds.getConnection();</span>
+
+<span class="fc" id="L185">            preparedStatement = connection.prepareStatement(updateSQL);</span>
+<span class="fc" id="L186">            preparedStatement.setFloat(1, consumoOrario);</span>
+<span class="fc" id="L187">            preparedStatement.setInt(2, IdEdificio);</span>
+<span class="fc" id="L188">            preparedStatement.executeUpdate();</span>
+
+
+<span class="fc" id="L191">            preparedStatement2 = connection.prepareStatement(selectSQL);</span>
+<span class="fc" id="L192">            preparedStatement2.setInt(1, IdEdificio);</span>
+<span class="fc" id="L193">            preparedStatement2.setDate(2, data);</span>
+<span class="fc" id="L194">            ResultSet resultSet = preparedStatement2.executeQuery();</span>
+
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">            if (!resultSet.next()) {</span>
+<span class="nc" id="L197">                preparedStatement3 = connection.prepareStatement(insertSQL);</span>
+<span class="nc" id="L198">                preparedStatement3.setDate(1, data);</span>
+<span class="nc" id="L199">                preparedStatement3.setInt(2, IdEdificio);</span>
+<span class="nc" id="L200">                preparedStatement3.executeUpdate();</span>
+
+            }
+
+<span class="fc" id="L204">            preparedStatement4 = connection.prepareStatement(updateSQL2);</span>
+<span class="fc" id="L205">            preparedStatement4.setFloat(1, consumoOrario);</span>
+<span class="fc" id="L206">            preparedStatement4.setInt(2, IdEdificio);</span>
+<span class="fc" id="L207">            preparedStatement4.setDate(3, data);</span>
+<span class="fc" id="L208">            preparedStatement4.executeUpdate();</span>
+        } finally {
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L211">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L213" title="1 of 2 branches missed.">            if (preparedStatement2 != null) {</span>
+<span class="fc" id="L214">                preparedStatement2.close();</span>
+            }
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (preparedStatement3 != null) {</span>
+<span class="nc" id="L217">                preparedStatement3.close();</span>
+            }
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            if (preparedStatement4 != null) {</span>
+<span class="fc" id="L220">                preparedStatement4.close();</span>
+            }
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L223">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L226">    }</span>
+
+    /**
+     * Restituisce il numero totale di edifici nel sistema.
+     *
+     * @return Il numero totale di edifici.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public int ottieniNumEdifici() throws SQLException {
+<span class="fc" id="L236">        Connection connection = null;</span>
+<span class="fc" id="L237">        PreparedStatement preparedStatement = null;</span>
+<span class="fc" id="L238">        ResultSet resultSet = null;</span>
+
+<span class="fc" id="L240">        int numEdificio = 0;</span>
+<span class="fc" id="L241">        String selectSQL = &quot;SELECT COUNT(IdEdificio) AS IdEdificio FROM &quot; + TABLE_NAME_CONSUMO;</span>
+        try {
+<span class="fc" id="L243">            connection = ds.getConnection();</span>
+<span class="fc" id="L244">            preparedStatement = connection.prepareStatement(selectSQL);</span>
+
+<span class="fc" id="L246">            resultSet = preparedStatement.executeQuery();</span>
+
+<span class="fc bfc" id="L248" title="All 2 branches covered.">            while (resultSet.next()) {</span>
+<span class="fc" id="L249">                numEdificio = resultSet.getInt(&quot;IdEdificio&quot;);</span>
+            }
+        } finally {
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">            if (preparedStatement != null) {</span>
+<span class="fc" id="L253">                preparedStatement.close();</span>
+            }
+<span class="pc bpc" id="L255" title="1 of 2 branches missed.">            if (connection != null) {</span>
+<span class="fc" id="L256">                connection.close();</span>
+            }
+        }
+<span class="fc" id="L259">        return numEdificio;</span>
+    }
+
+    /**
+     * Restituisce il consumo energetico totale nel sistema per un periodo specificato.
+     *
+     * @param dataInizio La data di inizio del periodo.
+     * @param dataFine   La data di fine del periodo.
+     * @return Il consumo energetico totale nel sistema per il periodo specificato.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public float getConsumoPerData(final Date dataInizio, final Date dataFine) throws SQLException {
+<span class="fc" id="L271">        float energia = 0.02f;</span>
+<span class="fc" id="L272">        Connection con = null;</span>
+<span class="fc" id="L273">        PreparedStatement ps = null;</span>
+        try {
+<span class="fc" id="L275">            con = ds.getConnection();</span>
+<span class="fc" id="L276">            String query = &quot;SELECT SUM(ConsumoGiornaliero) AS &quot;</span>
+                    + &quot;ConsumoTotale FROM &quot; + TABLE_NAME_ARCHIVIO + &quot; WHERE &quot;
+                    + &quot;DataConsumo BETWEEN ? AND ?&quot;;
+
+<span class="fc" id="L280">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L281">            ps.setDate(1, dataInizio);</span>
+<span class="fc" id="L282">            ps.setDate(2, dataFine);</span>
+<span class="fc" id="L283">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L284" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L285">                energia = rs.getFloat(&quot;ConsumoTotale&quot;);</span>
+            }
+<span class="nc" id="L287">        } catch (Exception e) {</span>
+<span class="nc" id="L288">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L291">                ps.close();</span>
+            }
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L294">                con.close();</span>
+            }
+        }
+<span class="fc" id="L297">        return energia;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

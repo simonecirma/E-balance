@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ConsumoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.dati.service</a> &gt; <span class="el_source">ConsumoServiceImpl.java</span></div><h1>ConsumoServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.dati.service;
+
+import com.c17.ebalance.ebalance.model.DAO.ConsumoDAO;
+import com.c17.ebalance.ebalance.model.DAO.ConsumoDAOImpl;
+import com.c17.ebalance.ebalance.model.entity.ArchivioConsumoBean;
+
+import java.sql.SQLException;
+import java.util.List;
+
+/**
+ * Implementazione del servizio per la gestione dei dati di consumo nel sistema eBalance.
+ * Utilizza un oggetto {@code ConsumoDAO} per l'accesso ai dati di consumo nel database.
+ * Fornisce metodi per ottenere i consumi degli edifici, visualizzare lo storico dei consumi e ottenere il consumo per un periodo specifico.
+ *
+ * @author Il Tuo Nome
+ * @version 1.0
+ */
+<span class="fc" id="L18">public class ConsumoServiceImpl implements ConsumoService {</span>
+<span class="fc" id="L19">    private ConsumoDAO consumoDAO = new ConsumoDAOImpl();</span>
+
+    /**
+     * Ottiene i consumi degli edifici per il periodo corrente.
+     *
+     * @param consumoEdifici Un array contenente i consumi degli edifici da aggiornare.
+     * @return Un array con i consumi aggiornati degli edifici.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public float[] ottieniConsumiEdifici(float consumoEdifici[]) throws SQLException {
+<span class="nc" id="L30">        int numElementi = consumoEdifici.length;</span>
+<span class="nc" id="L31">        float consumoAttuale = consumoDAO.ottieniConsumiEdifici();</span>
+<span class="nc bnc" id="L32" title="All 2 branches missed.">        if (consumoAttuale != consumoEdifici[numElementi - 1]) {</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">            for (int i = 1; i &lt; numElementi; i++) {</span>
+<span class="nc" id="L34">                consumoEdifici[i - 1] = consumoEdifici[i];</span>
+            }
+<span class="nc" id="L36">            consumoEdifici[numElementi - 1] = consumoAttuale;</span>
+        }
+<span class="nc" id="L38">        return consumoEdifici;</span>
+    }
+
+    /**
+     * Restituisce lo storico dei consumi nel sistema.
+     *
+     * @return Una lista di oggetti {@code ArchivioConsumoBean}.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    @Override
+    public List&lt;ArchivioConsumoBean&gt; visualizzaStoricoConsumi() throws SQLException {
+<span class="nc" id="L49">        return consumoDAO.visualizzaStoricoConsumi();</span>
+    }
+
+
+    /**
+     * Ottiene il consumo totale per un periodo specificato.
+     *
+     * @param dataInizio La data di inizio del periodo.
+     * @param dataFine   La data di fine del periodo.
+     * @return Il consumo totale per il periodo specificato.
+     * @throws SQLException in caso di errori di accesso al database.
+     */
+    public float getConsumoPerData(java.sql.Date dataInizio, java.sql.Date dataFine) throws SQLException {
+<span class="nc" id="L62">        return consumoDAO.getConsumoPerData(dataInizio, dataFine);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

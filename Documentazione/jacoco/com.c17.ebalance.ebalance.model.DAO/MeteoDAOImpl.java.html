@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MeteoDAOImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.model.DAO</a> &gt; <span class="el_source">MeteoDAOImpl.java</span></div><h1>MeteoDAOImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.model.DAO;
+
+import com.c17.ebalance.ebalance.model.entity.MeteoBean;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.*;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Implementazione dell'interfaccia MeteoDAO che gestisce l'accesso ai dati meteorologici nel sistema eBalance.
+ * Utilizza un'origine dati (DataSource) per la connessione al database.
+ */
+<span class="fc" id="L19">public class MeteoDAOImpl implements MeteoDAO {</span>
+<span class="fc" id="L20">    Calendar calendario = Calendar.getInstance();</span>
+    Date data;
+<span class="fc" id="L22">    Random random = new Random();</span>
+<span class="fc" id="L23">    private static Logger logger = Logger.getLogger(ContrattoDAOImpl.class.getName());</span>
+    private static final String TABLE_NAME_METEO = &quot;Meteo&quot;;
+    private static final String TABLE_NAME_CONDIZIONI = &quot;CondizioneMeteo&quot;;
+    private static final String TABLE_NAME_INFLUENZARE = &quot;Influenzare&quot;;
+
+    private static DataSource ds;
+
+    static {
+        try {
+<span class="fc" id="L32">            Context initCtx = new InitialContext();</span>
+<span class="nc" id="L33">            Context envCtx = (Context) initCtx.lookup(&quot;java:comp/env&quot;);</span>
+
+<span class="nc" id="L35">            ds = (DataSource) envCtx.lookup(&quot;jdbc/ebalance&quot;);</span>
+
+<span class="fc" id="L37">        } catch (NamingException e) {</span>
+<span class="fc" id="L38">            logger.log(Level.WARNING, e.getMessage());</span>
+<span class="nc" id="L39">        }</span>
+<span class="fc" id="L40">    }</span>
+
+    /**
+     * Ottiene le condizioni meteorologiche dal database per le rilevazioni future.
+     *
+     * @return Lista di oggetti MeteoBean rappresentanti le condizioni meteorologiche future.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    public List&lt;MeteoBean&gt; getCondizioniMeteo() throws SQLException {
+<span class="fc" id="L49">        Connection con = null;</span>
+<span class="fc" id="L50">        PreparedStatement ps = null;</span>
+<span class="fc" id="L51">        List&lt;MeteoBean&gt; condizioni = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L52">        data = calendario.getTime();</span>
+<span class="fc" id="L53">        java.sql.Date sqlDate = new java.sql.Date(data.getTime());</span>
+        try {
+<span class="fc" id="L55">            con = ds.getConnection();</span>
+<span class="fc" id="L56">            String query = &quot;SELECT * FROM &quot; + TABLE_NAME_METEO + &quot; WHERE DataRilevazione &gt;= ? ORDER BY DataRilevazione ASC, OraRilevazione ASC&quot;;</span>
+<span class="fc" id="L57">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L58">            ps.setDate(1, sqlDate);</span>
+<span class="fc" id="L59">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L61">                MeteoBean bean = new MeteoBean();</span>
+<span class="fc" id="L62">                bean.setIdMeteo(rs.getInt(&quot;IdMeteo&quot;));</span>
+<span class="fc" id="L63">                bean.setDataRilevazione(rs.getDate(&quot;DataRilevazione&quot;));</span>
+<span class="fc" id="L64">                bean.setOraRilevazione(rs.getTime(&quot;OraRilevazione&quot;));</span>
+<span class="fc" id="L65">                bean.setVelocitaVento(rs.getFloat(&quot;VelocitaVento&quot;));</span>
+<span class="fc" id="L66">                bean.setProbabilitaPioggia(rs.getInt(&quot;ProbabilitaPioggia&quot;));</span>
+<span class="fc" id="L67">                bean.setCondizioniMetereologiche(rs.getString(&quot;CondizioniMetereologiche&quot;));</span>
+<span class="fc" id="L68">                condizioni.add(bean);</span>
+<span class="fc" id="L69">            }</span>
+<span class="nc" id="L70">        } catch (Exception e) {</span>
+<span class="nc" id="L71">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L74">                ps.close();</span>
+            }
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L77">                con.close();</span>
+            }
+        }
+<span class="fc" id="L80">        return condizioni;</span>
+    }
+
+    /**
+     * Inserisce previsioni meteorologiche nel database per una data e un orario specifici.
+     *
+     * @param sqlDate           Data delle previsioni.
+     * @param orario            Orario delle previsioni (0, 6, 12, 18).
+     * @param vel               Velocità del vento.
+     * @param prob              Probabilità di pioggia.
+     * @param condizioneCasuale Condizione meteorologica casuale.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public void insertPrevisioni(java.sql.Date sqlDate, int orario, float vel, int prob, String condizioneCasuale) throws SQLException {
+<span class="fc" id="L95">        Connection con = null;</span>
+<span class="fc" id="L96">        PreparedStatement ps = null;</span>
+<span class="fc" id="L97">        Time sqlTime = null;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (orario == 0) {</span>
+<span class="nc" id="L99">            sqlTime = Time.valueOf(&quot;00:00:00&quot;);</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        } else if (orario == 6) {</span>
+<span class="nc" id="L101">            sqlTime = Time.valueOf(&quot;06:00:00&quot;);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        } else if (orario == 12) {</span>
+<span class="fc" id="L103">            sqlTime = Time.valueOf(&quot;12:00:00&quot;);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        } else if (orario == 18) {</span>
+<span class="nc" id="L105">            sqlTime = Time.valueOf(&quot;18:00:00&quot;);</span>
+        }
+        try {
+<span class="fc" id="L108">            con = ds.getConnection();</span>
+<span class="fc" id="L109">            String query = &quot;INSERT INTO &quot; + TABLE_NAME_METEO + &quot;(DataRilevazione, OraRilevazione, VelocitaVento, ProbabilitaPioggia, CondizioniMetereologiche)&quot;</span>
+                    + &quot;VALUES(?, ?, ?, ?, ?)&quot;;
+<span class="fc" id="L111">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L112">            ps.setDate(1, sqlDate);</span>
+<span class="fc" id="L113">            ps.setTime(2, sqlTime);</span>
+<span class="fc" id="L114">            ps.setFloat(3, vel);</span>
+<span class="fc" id="L115">            ps.setInt(4, prob);</span>
+<span class="fc" id="L116">            ps.setString(5, condizioneCasuale);</span>
+<span class="fc" id="L117">            ps.executeUpdate();</span>
+<span class="nc" id="L118">        } catch (Exception e) {</span>
+<span class="nc" id="L119">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L122">                ps.close();</span>
+            }
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L125">                con.close();</span>
+            }
+        }
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Ottiene la lista di tutte le possibili condizioni meteorologiche.
+     *
+     * @return Lista di stringhe rappresentanti le condizioni meteorologiche.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;String&gt; getCondizione() throws SQLException {
+<span class="fc" id="L138">        Connection con = null;</span>
+<span class="fc" id="L139">        PreparedStatement ps = null;</span>
+<span class="fc" id="L140">        List&lt;String&gt; condizioni = new ArrayList&lt;&gt;();</span>
+        try {
+<span class="fc" id="L142">            con = ds.getConnection();</span>
+<span class="fc" id="L143">            String query = &quot;SELECT * FROM &quot; + TABLE_NAME_CONDIZIONI;</span>
+<span class="fc" id="L144">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L145">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L147">                condizioni.add(rs.getString(&quot;Condizione&quot;));</span>
+            }
+<span class="nc" id="L149">        } catch (Exception e) {</span>
+<span class="nc" id="L150">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L153">                ps.close();</span>
+            }
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L156">                con.close();</span>
+            }
+        }
+<span class="fc" id="L159">        return condizioni;</span>
+    }
+
+    /**
+     * Verifica la presenza di rilevazioni meteorologiche per una data e un orario specifici.
+     *
+     * @param sqlDate Data delle rilevazioni.
+     * @param orario  Orario delle rilevazioni (0, 6, 12, 18).
+     * @return True se ci sono rilevazioni presenti, altrimenti False.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public boolean verificaPresenza(java.sql.Date sqlDate, int orario) throws SQLException {
+<span class="fc" id="L172">        Connection con = null;</span>
+<span class="fc" id="L173">        PreparedStatement ps = null;</span>
+<span class="fc" id="L174">        Time sqlTime = null;</span>
+<span class="fc" id="L175">        boolean res = false;</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">        if (orario == 0) {</span>
+<span class="nc" id="L177">            sqlTime = Time.valueOf(&quot;00:00:00&quot;);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">        } else if (orario == 6) {</span>
+<span class="nc" id="L179">            sqlTime = Time.valueOf(&quot;06:00:00&quot;);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        } else if (orario == 12) {</span>
+<span class="fc" id="L181">            sqlTime = Time.valueOf(&quot;12:00:00&quot;);</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        } else if (orario == 18) {</span>
+<span class="nc" id="L183">            sqlTime = Time.valueOf(&quot;18:00:00&quot;);</span>
+        }
+        try {
+<span class="fc" id="L186">            con = ds.getConnection();</span>
+<span class="fc" id="L187">            String query = &quot;SELECT * FROM &quot; + TABLE_NAME_METEO + &quot; WHERE DataRilevazione = ? AND OraRilevazione = ?&quot;;</span>
+<span class="fc" id="L188">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L189">            ps.setDate(1, sqlDate);</span>
+<span class="fc" id="L190">            ps.setTime(2, sqlTime);</span>
+<span class="fc" id="L191">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L193">                res = true;</span>
+            }
+<span class="nc" id="L195">        } catch (Exception e) {</span>
+<span class="nc" id="L196">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L199">                ps.close();</span>
+            }
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L202">                con.close();</span>
+            }
+        }
+<span class="fc" id="L205">        return res;</span>
+    }
+
+    /**
+     * Calcola la media giornaliera della velocità del vento e della probabilità di pioggia.
+     *
+     * @return Lista di oggetti MeteoBean rappresentanti le medie giornaliere.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;MeteoBean&gt; mediaGiornaliera() throws SQLException {
+<span class="fc" id="L216">        Connection con = null;</span>
+<span class="fc" id="L217">        PreparedStatement ps = null;</span>
+<span class="fc" id="L218">        List&lt;MeteoBean&gt; condizioni = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L220">        data = calendario.getTime();</span>
+<span class="fc" id="L221">        java.sql.Date sqlDate = new java.sql.Date(data.getTime());</span>
+        try {
+<span class="fc" id="L223">            con = ds.getConnection();</span>
+<span class="fc" id="L224">            String query = &quot;SELECT AVG(VelocitaVento) AS mediaVel, AVG(ProbabilitaPioggia) AS mediaPioggia, DataRilevazione FROM &quot; + TABLE_NAME_METEO</span>
+                + &quot; WHERE DataRilevazione &gt;= ? GROUP BY DataRilevazione&quot;
+                + &quot; ORDER BY DataRilevazione ASC LIMIT 7&quot;;
+<span class="fc" id="L227">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L228">            ps.setDate(1, sqlDate);</span>
+<span class="fc" id="L229">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L231">                MeteoBean bean = new MeteoBean();</span>
+<span class="fc" id="L232">                bean.setDataRilevazione(rs.getDate(&quot;DataRilevazione&quot;));</span>
+<span class="fc" id="L233">                bean.setVelocitaVento(rs.getFloat(&quot;mediaVel&quot;));</span>
+<span class="fc" id="L234">                bean.setProbabilitaPioggia(rs.getInt(&quot;mediaPioggia&quot;));</span>
+
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">                if(rs.getInt(&quot;mediaPioggia&quot;) &lt;= 10) {</span>
+<span class="nc" id="L237">                    bean.setCondizioniMetereologiche(&quot;Soleggiato&quot;);</span>
+<span class="pc bpc" id="L238" title="2 of 4 branches missed.">                } else if (rs.getInt(&quot;mediaPioggia&quot;) &gt; 10 &amp;&amp; rs.getInt(&quot;mediaPioggia&quot;) &lt;= 20) {</span>
+<span class="nc" id="L239">                    bean.setCondizioniMetereologiche(&quot;Sereno&quot;);</span>
+<span class="pc bpc" id="L240" title="2 of 4 branches missed.">                } else if (rs.getInt(&quot;mediaPioggia&quot;) &gt; 20 &amp;&amp; rs.getInt(&quot;mediaPioggia&quot;) &lt;= 30) {</span>
+<span class="fc" id="L241">                    bean.setCondizioniMetereologiche(&quot;Ventilato&quot;);</span>
+<span class="nc bnc" id="L242" title="All 4 branches missed.">                } else if (rs.getInt(&quot;mediaPioggia&quot;) &gt; 30 &amp;&amp; rs.getInt(&quot;mediaPioggia&quot;) &lt;= 40) {</span>
+<span class="nc" id="L243">                    bean.setCondizioniMetereologiche(&quot;Nuvoloso&quot;);</span>
+<span class="nc bnc" id="L244" title="All 4 branches missed.">                } else if (rs.getInt(&quot;mediaPioggia&quot;) &gt; 40 &amp;&amp; rs.getInt(&quot;mediaPioggia&quot;) &lt;= 50) {</span>
+<span class="nc" id="L245">                    bean.setCondizioniMetereologiche(&quot;Nevoso&quot;);</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">                }else if (rs.getInt(&quot;mediaPioggia&quot;) &gt; 50) {</span>
+<span class="nc" id="L247">                    bean.setCondizioniMetereologiche(&quot;Piovoso&quot;);</span>
+                }
+<span class="fc" id="L249">                condizioni.add(bean);</span>
+<span class="fc" id="L250">            }</span>
+<span class="nc" id="L251">        } catch (Exception e) {</span>
+<span class="nc" id="L252">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L255">                ps.close();</span>
+            }
+<span class="pc bpc" id="L257" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L258">                con.close();</span>
+            }
+        }
+<span class="fc" id="L261">        return condizioni;</span>
+    }
+
+    /**
+     * Ottiene un parametro specifico per una data e un orario specifici.
+     *
+     * @param sqlData Data delle rilevazioni.
+     * @param i       Orario delle rilevazioni (0, 6, 12, 18).
+     * @return ID del parametro per la data e l'orario specifici.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public int getParametro(java.sql.Date sqlData, int i) throws SQLException {
+<span class="fc" id="L274">        Connection con = null;</span>
+<span class="fc" id="L275">        PreparedStatement ps = null;</span>
+<span class="fc" id="L276">        int id = 0;</span>
+<span class="fc" id="L277">        Time sqlTime = null;</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        if (i == 0) {</span>
+<span class="nc" id="L279">            sqlTime = Time.valueOf(&quot;00:00:00&quot;);</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">        } else if (i == 6) {</span>
+<span class="fc" id="L281">            sqlTime = Time.valueOf(&quot;06:00:00&quot;);</span>
+<span class="nc bnc" id="L282" title="All 2 branches missed.">        } else if (i == 12) {</span>
+<span class="nc" id="L283">            sqlTime = Time.valueOf(&quot;12:00:00&quot;);</span>
+<span class="nc bnc" id="L284" title="All 2 branches missed.">        } else if (i == 18) {</span>
+<span class="nc" id="L285">            sqlTime = Time.valueOf(&quot;18:00:00&quot;);</span>
+        }
+        try {
+<span class="fc" id="L288">            con = ds.getConnection();</span>
+<span class="fc" id="L289">            String query = &quot;SELECT IdMeteo FROM &quot; + TABLE_NAME_METEO + &quot; WHERE DataRilevazione = ? AND OraRilevazione = ?&quot;;</span>
+<span class="fc" id="L290">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L291">            ps.setDate(1, sqlData);</span>
+<span class="fc" id="L292">            ps.setTime(2, sqlTime);</span>
+<span class="fc" id="L293">            ResultSet rs = ps.executeQuery();</span>
+<span class="fc bfc" id="L294" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L295">                id = rs.getInt(&quot;IdMeteo&quot;);</span>
+            }
+<span class="nc" id="L297">        } catch (Exception e) {</span>
+<span class="nc" id="L298">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L300" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L301">                ps.close();</span>
+            }
+<span class="pc bpc" id="L303" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L304">                con.close();</span>
+            }
+        }
+<span class="fc" id="L307">        return id;</span>
+    }
+
+    /**
+     * Aggiorna l'associazione tra una rilevazione meteorologica e una sorgente.
+     *
+     * @param id      ID della rilevazione meteorologica.
+     * @param sorgente ID della sorgente di influenza.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public void aggiornaInfluenzare(int id, int sorgente) throws SQLException {
+<span class="fc" id="L319">        Connection con = null;</span>
+<span class="fc" id="L320">        PreparedStatement ps = null;</span>
+        try {
+<span class="fc" id="L322">            con = ds.getConnection();</span>
+<span class="fc" id="L323">            String query = &quot;INSERT INTO &quot;+ TABLE_NAME_INFLUENZARE + &quot;(IdMeteo, IdSorgente)&quot;</span>
+                    + &quot;VALUES(?, ?)&quot;;
+<span class="fc" id="L325">            ps = con.prepareStatement(query);</span>
+<span class="fc" id="L326">            ps.setInt(1, id);</span>
+<span class="fc" id="L327">            ps.setInt(2, sorgente);</span>
+<span class="fc" id="L328">            ps.executeUpdate();</span>
+<span class="nc" id="L329">        } catch (Exception e) {</span>
+<span class="nc" id="L330">            logger.log(Level.WARNING, e.getMessage());</span>
+        } finally {
+<span class="pc bpc" id="L332" title="1 of 2 branches missed.">            if (ps != null) {</span>
+<span class="fc" id="L333">                ps.close();</span>
+            }
+<span class="pc bpc" id="L335" title="1 of 2 branches missed.">            if (con != null) {</span>
+<span class="fc" id="L336">                con.close();</span>
+            }
+        }
+<span class="fc" id="L339">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

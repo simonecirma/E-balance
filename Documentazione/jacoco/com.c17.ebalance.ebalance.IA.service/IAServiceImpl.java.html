@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="it"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IAServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ebalance</a> &gt; <a href="index.source.html" class="el_package">com.c17.ebalance.ebalance.IA.service</a> &gt; <span class="el_source">IAServiceImpl.java</span></div><h1>IAServiceImpl.java</h1><pre class="source lang-java linenums">package com.c17.ebalance.ebalance.IA.service;
+
+import com.c17.ebalance.ebalance.model.DAO.ParametriIADAO;
+import com.c17.ebalance.ebalance.model.DAO.ParametriIADAOImpl;
+import com.c17.ebalance.ebalance.model.entity.InteragisceBean;
+import com.c17.ebalance.ebalance.model.entity.ParametriIABean;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Implementazione del servizio IA (Intelligenza Artificiale) che fornisce operazioni
+ * per la gestione dei parametri IA e delle interazioni con le sorgenti nel sistema eBalance.
+ */
+<span class="fc" id="L19">public class IAServiceImpl implements IAService {</span>
+<span class="fc" id="L20">    private ParametriIADAO parametriIA = new ParametriIADAOImpl();</span>
+
+
+    /**
+     * Restituisce la lista dei parametri IA.
+     *
+     * @return La lista dei parametri IA.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;ParametriIABean&gt; visualizzaParametri() throws SQLException {
+<span class="nc" id="L31">        return parametriIA.visualizzaParametri();</span>
+    }
+
+    /**
+     * Restituisce la lista delle interazioni tra parametri IA e le sorgenti.
+     *
+     * @return La lista delle interazioni tra parametri IA e le sorgenti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;InteragisceBean&gt; visualizzaInterazioneParametri() throws SQLException {
+<span class="nc" id="L42">        return parametriIA.visualizzaInterazioneParametri();</span>
+    }
+
+    /**
+     * Restituisce la lista dei parametri IA attivi.
+     *
+     * @return La lista dei parametri IA attivi.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public List&lt;InteragisceBean&gt; ottieniParametriAttivi() throws SQLException {
+<span class="nc" id="L53">        return parametriIA.ottieniParametriAttivi();</span>
+    }
+
+    /**
+     * Aggiorna il piano personalizzato dell'utente con le preferenze specificate.
+     *
+     * @param preferenzaSorgente       La preferenza della sorgente (es. Pannello Fotovoltaico, Servizio Elettrico Nazionale, etc.).
+     * @param percentualeUtilizzoPannelli La percentuale di utilizzo dei pannelli fotovoltaici.
+     * @param percentualeUtilizzoSEN  La percentuale di utilizzo del Servizio Elettrico Nazionale.
+     * @param sortableListData        I dati relativi all'ordinamento della lista.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public void aggiornaPianoPersonalizzato(String preferenzaSorgente, int percentualeUtilizzoPannelli, int percentualeUtilizzoSEN, String sortableListData) throws SQLException {
+<span class="nc" id="L67">        Gson gson = new Gson();</span>
+<span class="nc" id="L68">        Type type = new TypeToken&lt;List&lt;Map&lt;String, String&gt;&gt;&gt;() {</span>
+<span class="nc" id="L69">        }.getType();</span>
+<span class="nc" id="L70">        List&lt;Map&lt;String, String&gt;&gt; priorities = gson.fromJson(sortableListData, type);</span>
+<span class="nc" id="L71">        String prioritaSorgenti[] = new String[10];</span>
+<span class="nc" id="L72">        int i = 0;</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        for (Map&lt;String, String&gt; priority : priorities) {</span>
+<span class="nc" id="L74">            prioritaSorgenti[i] = priority.get(&quot;text&quot;);</span>
+<span class="nc" id="L75">            i++;</span>
+<span class="nc" id="L76">        }</span>
+<span class="nc" id="L77">        parametriIA.aggiornaPianoPersonalizzato(preferenzaSorgente, percentualeUtilizzoPannelli, percentualeUtilizzoSEN, prioritaSorgenti);</span>
+<span class="nc" id="L78">    }</span>
+
+    /**
+     * Aggiorna il piano attivo dei parametri IA effettuato da un amministratore specifico.
+     *
+     * @param piano          Il piano attivo da impostare.
+     * @param idAmministratore L'ID dell'amministratore a cui associare il piano.
+     * @return true se l'aggiornamento ha avuto successo, false altrimenti.
+     * @throws SQLException Se si verifica un errore durante l'accesso al database.
+     */
+    @Override
+    public boolean aggiornaPianoAttivo(String piano, int idAmministratore) throws SQLException {
+<span class="nc" id="L90">        return parametriIA.aggiornaPianoAttivo(piano, idAmministratore);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
