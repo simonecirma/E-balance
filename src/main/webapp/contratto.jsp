@@ -28,15 +28,17 @@
             var durata = parseFloat(form.querySelector('input[name="durata"]').value);
 
             // Controllo Nome Ente
-            if (nomeEnte.length < 2 || nomeEnte.length > 244) {
+            if (nomeEnte.length < 1 || nomeEnte.length > 244) {
                 alert("Il nome dell'ente deve essere compreso tra 1 e 244 caratteri.");
                 return false;
             }
 
             // Controllo Data Sottoscrizione
-            var today = new Date();
+            var oggi = new Date();
+            var domani = new Date(oggi);
+            domani.setDate(oggi.getDate() + 1);
             today.setHours(0, 0, 0, 0);
-            if (dataSottoscrizione > today) {
+            if (dataSottoscrizione > domani) {
                 alert("La data di sottoscrizione non può essere successiva a quella odierna.");
                 return false;
             }
