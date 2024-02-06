@@ -81,7 +81,7 @@
                 </div>
                 <div>
                     <label for="dataNascita">Data Nascita:</label>
-                    <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita" onchange="maxDataSelection()" required ><br>
+                    <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita"  required ><br>
                 </div>
                 <input type="submit" class="btn1" value="Conferma">
             </form>
@@ -126,16 +126,26 @@
         var cognome = document.getElementById("cognome").value;
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
+        var dataNascita = document.getElementById("dataNascita").value;
 
-        // Validazione del nome e cognome (solo caratteri alfabetici)
-        var nameRegex = /^[a-zA-Z\s]+$/;
-        if (!nameRegex.test(nome)) {
-            alert("Il nome deve contenere solo caratteri alfabetici.");
+        // Validazione della lunghezza del nome e cognome
+        if (nome.length < 1 || nome.length > 255) {
+            alert("Il nome deve avere una lunghezza compresa tra 1 e 255 caratteri.");
             return false;
         }
 
-        if (!nameRegex.test(cognome)) {
-            alert("Il cognome deve contenere solo caratteri alfabetici.");
+        if (cognome.length < 1 || cognome.length > 255) {
+            alert("Il cognome deve avere una lunghezza compresa tra 1 e 255 caratteri.");
+            return false;
+        }
+
+        // Validazione della data di nascita
+        var today = new Date();
+        var minDate = new Date(today.getFullYear() - 16, today.getMonth(), today.getDate()); // 16 anni fa
+        var selectedDate = new Date(dataNascita);
+
+        if (selectedDate >= today || selectedDate >= minDate) {
+            alert("La data di nascita deve essere precedente a 16 anni fa.");
             return false;
         }
 
@@ -178,27 +188,6 @@
         }
 
         return true;
-
-    }
-    function maxDataSelection() {
-        // Ottieni la data corrente
-        var today = new Date();
-
-        // Estrai l'anno, il mese e il giorno
-        var year = today.getFullYear();
-        // Aggiunge uno zero se il mese è inferiore a 10
-        var month = String(today.getMonth() + 1).padStart(2, '0');
-        // Aggiunge uno zero se il giorno è inferiore a 10
-        var day = String(today.getDate()).padStart(2, '0');
-
-        // Crea la stringa della data nel formato "YYYY-MM-DD"
-        var maxDate = year + '-' + month + '-' + day;
-
-        // Ottieni l'elemento input di tipo data
-        var datePicker = document.getElementById("dataNascita");
-
-        // Imposta la data massima consentita per la selezione
-        datePicker.max = maxDate;
 
     }
 
