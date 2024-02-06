@@ -19,6 +19,57 @@
     <link href="css/contratto.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
+        function validateForm(formId) {
+            var form = document.getElementById(formId);
+            var nomeEnte = form.querySelector('input[name="nomeEnte"]').value.trim();
+            var dataSottoscrizione = new Date(form.querySelector('input[name="dataSottoscrizione"]').value);
+            var costoMedioUnitario = parseFloat(form.querySelector('input[name="costoMedioUnitario"]').value);
+            var consumoMedioAnnuale = parseFloat(form.querySelector('input[name="consumoMedioAnnuale"]').value);
+            var durata = parseFloat(form.querySelector('input[name="durata"]').value);
+
+            // Controllo Nome Ente
+            if (nomeEnte.length < 2 || nomeEnte.length > 244) {
+                alert("Il nome dell'ente deve essere compreso tra 1 e 244 caratteri.");
+                return false;
+            }
+
+            // Controllo Data Sottoscrizione
+            var today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (dataSottoscrizione > today) {
+                alert("La data di sottoscrizione non può essere successiva a quella odierna.");
+                return false;
+            }
+
+            // Controllo Costo Medio Unitario
+            if (costoMedioUnitario <= 0) {
+                alert("Il costo medio unitario deve essere maggiore di zero.");
+                return false;
+            }
+
+            // Controllo Consumo Medio Annuale
+            if (consumoMedioAnnuale <= 0) {
+                alert("Il consumo medio annuale deve essere maggiore di zero.");
+                return false;
+            }
+
+            // Controllo Durata
+            if (durata <= 0) {
+                alert("La durata deve essere maggiore di zero.");
+                return false;
+            }
+
+            if (formId === 'aggiornaContrattoForm')
+            {
+                gestisciAggiornaContratto(event);
+            } else  if (formId === 'aggiungiContrattoForm') {
+                gestisciAggiuntaContratto(event)
+            }
+
+            // Se tutti i controlli passano, restituisci true per consentire l'invio del modulo
+            return true;
+        }
+
         function toggleFormVisibility(formId) {
             var form = document.getElementById(formId);
             var otherFormId = formId === 'aggiornaContrattoForm' ? 'aggiungiContrattoForm' : 'aggiornaContrattoForm';
@@ -166,7 +217,7 @@
         </div>
 
         <form id="aggiornaContrattoForm" action="ContrattoController?action=aggiornaContratto" method="post"
-              style="display: none;"  onsubmit="gestisciAggiornaContratto(event)">
+              style="display: none;"  onsubmit="return validateForm('aggiornaContrattoForm')">
             <div>
                 <label>Ente:</label>
                 <input type="text" name="nomeEnte" value="<%=contratto != null ? contratto.getNomeEnte() : null%>"
@@ -205,7 +256,7 @@
         </form>
 
         <form id="aggiungiContrattoForm" action="ContrattoController?action=aggiungiContratto" method="post"
-              style="display: none;" onsubmit="gestisciAggiuntaContratto(event)">
+              style="display: none;" onsubmit="return validateForm('aggiungiContrattoForm')">
             <div>
                 <label for="ente">Ente:</label>
                 <input type="text" name="nomeEnte" id="ente" placeholder="Dammi il nome ente" required><br>
