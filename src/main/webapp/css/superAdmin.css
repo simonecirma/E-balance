@@ -1,3 +1,6 @@
+*{
+    font-family: "Montserrat";
+}
 body{
     background-repeat: no-repeat;
     background-size: cover;
@@ -10,13 +13,7 @@ body{
         width: 50%;
     }
 }
-img{
-    width: 15%;
-    position: absolute;
-    top:5%;
-    left: 50%;
 
-}
 input[type="button"]{
     width: 80px;
     border-radius: 5px;
@@ -30,6 +27,7 @@ input[type="button"]:hover {
 
 form {
     width: 43vw;
+    min-width: 420px;
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
@@ -149,4 +147,10 @@ h1{
     margin-top: -5%;
     font-family: "Montserrat";
     color: white;
+}
+.navdiv .nav-buttons {
+    display: none;
+}
+.navdiv .btnLogout{
+    display: none;
 }

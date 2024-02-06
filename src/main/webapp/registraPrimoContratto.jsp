@@ -4,7 +4,7 @@
 <html class="contratto">
 <head>
     <title>Contratto</title>
-    <link href="css/contratto.css" rel="stylesheet" type="text/css">
+    <link href="css/primoContratto.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body style="background-image: url('img/wp1.png'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #1d1f2f; background-attachment: fixed;">
