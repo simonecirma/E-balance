@@ -39,10 +39,34 @@ import java.util.List;
  * Questa implementazione si occupa principalmente di aggregare i dati dai vari servizi e di generare i report.
  */
 public class ReportServiceImpl implements ReportService {
+    /**
+     * Service per la gestione della vendita. L'istanza {@code venditaService} fornisce metodi
+     * per operare sulla vendita.
+     */
     public VenditaService venditaService = new VenditaServiceImpl();
+
+    /**
+     * Service per la gestione dei consumi. L'istanza {@code consumoService} fornisce metodi
+     * per operare su consumi del sistema.
+     */
     public ConsumoService consumoService = new ConsumoServiceImpl();
+
+    /**
+     * Service per la gestione della produzione. L'istanza {@code produzioneService} fornisce metodi
+     * per operare sulla produzione del sistema.
+     */
     public ProduzioneService produzioneService = new ProduzioneServiceImpl();
+
+    /**
+     * Service per la gestione dei contratti. L'istanza {@code contrattoService} fornisce metodi
+     * per operare su contratti nel sistema.
+     */
     public ContrattoService contrattoService = new ContrattoServiceImpl();
+
+    /**
+     * Service per la gestione dei report. L'istanza {@code reportDAO} fornisce metodi
+     * per operare sui report nel sistema.
+     */
     private ReportDAO reportDAO = new ReportDAOImpl();
 
 

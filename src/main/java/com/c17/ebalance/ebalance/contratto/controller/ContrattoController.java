@@ -26,7 +26,16 @@ import java.util.List;
 @WebServlet(name = "ContrattoController", value = "/ContrattoController")
 public class ContrattoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Istanza di ServletContext
+     */
     private ServletContext servletContext;
+
+    /**
+     * Service per la gestione dei contratti. L'istanza {@code contrattoService} fornisce metodi
+     * per operare su contratti nel sistema.
+     */
     public ContrattoService contrattoService = new ContrattoServiceImpl();
 
     /**
@@ -52,7 +61,6 @@ public class ContrattoController extends HttpServlet {
      * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
      * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
      * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
-     * @throws ServletException in caso di errori durante la gestione della richiesta.
      */
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
@@ -93,7 +101,6 @@ public class ContrattoController extends HttpServlet {
      * @param request  L'oggetto {@code HttpServletRequest} rappresentante la richiesta HTTP.
      * @param response L'oggetto {@code HttpServletResponse} rappresentante la risposta HTTP.
      * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
-     * @throws ServletException in caso di errori durante la gestione della richiesta.
      */
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);

@@ -31,11 +31,27 @@ import java.util.List;
 @WebServlet(name = "AmministratoreController", value = "/AmministratoreController")
 public class AmministratoreController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    /**
+     * Service per la gestione degli amministratori. L'istanza {@code amministratoreService} fornisce metodi
+     * per operare sugli amministratori del sistema.
+     */
     private AmministratoreService amministratoreService = new AmministratoreServiceImpl();
+    /**
+     * Service per la gestione dei report. L'istanza {@code reportDAO} fornisce metodi
+     * per operare sui report nel sistema.
+     */
     private ReportService reportService = new ReportServiceImpl();
 
+    /**
+     * Service per la gestione degli accessi. L'istanza {@code accessoController} fornisce metodi
+     * per effettuare gli accessi al sistema.
+     */
     private AccessoController accessoController = new AccessoController();
 
+    /**
+     * Service per la gestione della vendita. L'istanza {@code venditaService} fornisce metodi
+     * per effettuare la vendita dell'energia.
+     */
     private VenditaService venditaService = new VenditaServiceImpl();
     private ServletContext servletContext;
 
@@ -67,7 +83,6 @@ public class AmministratoreController extends HttpServlet {
      * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
      * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
      * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
-     * @throws ServletException in caso di errori durante la gestione della richiesta.
      */
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
 
@@ -148,7 +163,6 @@ public class AmministratoreController extends HttpServlet {
      * @param request  L'oggetto HttpServletRequest che rappresenta la richiesta HTTP.
      * @param response L'oggetto HttpServletResponse che rappresenta la risposta HTTP.
      * @throws IOException      in caso di errori di I/O durante la gestione della richiesta.
-     * @throws ServletException in caso di errori durante la gestione della richiesta.
      */
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);

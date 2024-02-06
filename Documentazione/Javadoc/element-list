@@ -1,0 +1,13 @@
+com.c17.ebalance.ebalance.accesso.controller
+com.c17.ebalance.ebalance.accesso.service
+com.c17.ebalance.ebalance.amministratore.controller
+com.c17.ebalance.ebalance.amministratore.service
+com.c17.ebalance.ebalance.contratto.controller
+com.c17.ebalance.ebalance.contratto.service
+com.c17.ebalance.ebalance.dati.controller
+com.c17.ebalance.ebalance.dati.service
+com.c17.ebalance.ebalance.IA.controller
+com.c17.ebalance.ebalance.IA.service
+com.c17.ebalance.ebalance.model.DAO
+com.c17.ebalance.ebalance.model.entity
+com.c17.ebalance.ebalance.utility

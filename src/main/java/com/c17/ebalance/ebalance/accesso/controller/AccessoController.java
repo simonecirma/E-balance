@@ -24,6 +24,11 @@ import java.sql.SQLException;
 public class AccessoController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+
+    /**
+     * Service per la gestione degli accessi. L'istanza {@code accessoService} fornisce metodi
+     * per effettuare l'accesso al sistema.
+     */
     private AccessoService accessoService = new AccessoServiceImpl();
     private ServletContext servletContext;
 

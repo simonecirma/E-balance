@@ -54,6 +54,7 @@ public class DatiController extends HttpServlet implements Observer {
     private SimulazioneService simulazioneService = new SimulazioneServiceImpl();
     private MeteoService meteoService = new MeteoServiceImpl();
 
+
     boolean percentualeBatteriaUpdate = false;
 
     boolean produzioneAttualeUpdate = false;
@@ -117,7 +118,6 @@ public class DatiController extends HttpServlet implements Observer {
      * @param request  L'oggetto {@code HttpServletRequest} che rappresenta la richiesta HTTP.
      * @param response L'oggetto {@code HttpServletResponse} che rappresenta la risposta HTTP.
      * @throws IOException      in caso di errori di I/O.
-     * @throws ServletException in caso di errori durante la gestione della richiesta.
      */
     public void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         String action = request.getParameter("action");
@@ -211,7 +211,6 @@ public class DatiController extends HttpServlet implements Observer {
      * @param request  L'oggetto {@code HttpServletRequest} che rappresenta la richiesta HTTP.
      * @param response L'oggetto {@code HttpServletResponse} che rappresenta la risposta HTTP.
      * @throws IOException      in caso di errori di I/O.
-     * @throws ServletException in caso di errori durante la gestione della richiesta.
      */
     public void doPost(final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         doGet(request, response);
