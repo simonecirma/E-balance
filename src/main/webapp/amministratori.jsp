@@ -7,11 +7,16 @@
         session = request.getSession();
         email = (String) session.getAttribute("email");
     }
-    boolean isTableVisible = (amministratori != null && !amministratori.isEmpty());
 %>
 <html class="amministratori">
 <head>
     <title>Gestione amministratori</title>
+    <script>
+        function toggleFormVisibility() {
+            var form = document.getElementById('aggiungiAmministratoreForm');
+            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+        }
+    </script>
     <link href="css/amministratori.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
@@ -22,8 +27,6 @@
     if (email != null) {
 %>
 <div class="container" id="container">
-    <div class="card-container" id="cont">
-        <div id="table-card" class="card">
             <table id="tab">
                 <thead>
                 <tr id="header">
@@ -53,19 +56,21 @@
                     <% }
     }
     %>
-
             </table>
-        </div>
         <%
         } else {
         %>
         <h1 align="center">Aggiungi i tuoi dati personali</h1>
+        <script>
+            window.onload = function() {
+                toggleFormVisibility();
+            };
+        </script>
         <%
             }
         %>
-        <div id="form-card" class="card">
             <form id="aggiungiAmministratoreForm" action="AmministratoreController?action=aggiungiAmministratore"
-                  method="post" onsubmit="return validateForm()">
+                  method="post" onsubmit="return validateForm()" style="display: none">
                 <div>
                     <label for="nome">Nome:</label>
                     <input type="text" id="nome" name="nome" placeholder="Dammi il nome" required><br>
@@ -87,58 +92,33 @@
                     <input type="date" id="dataNascita" name="dataNascita" placeholder="Dammi la data di nascita"
                            onchange="maxDataSelection()" required><br>
                 </div>
-                <input type="submit" class="btn1" value="Conferma">
+                <input type="submit" class="bottone1" value="Conferma">
             </form>
-        </div>
-    </div>
-    <div class="btn-container">
-        <button class="btn" onclick="toggleCard()">Aggiungi un nuovo amministratore</button>
-    </div>
+</div>
+<div class="btn-container">
+    <button class="btn" onclick="toggleCard()">Aggiungi un nuovo amministratore</button>
 </div>
 <script>
-    let tableCard = document.getElementById('table-card');
-    let formCard = document.getElementById('form-card');
-    let button = document.querySelector('.btn');
-
-    var isTableVisible = <%= isTableVisible %>;
-if(isTableVisible) {
     function toggleCard() {
-        if (button.textContent === "Aggiungi un nuovo amministratore") {
+        var button = document.querySelector('.btn');
+        var buttonText = button.textContent.trim();
+        var table = document.getElementById('tab');
+        var form = document.getElementById('aggiungiAmministratoreForm');
+
             button.textContent = "Indietro";
+        if (buttonText === "Aggiungi un nuovo amministratore") {
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+                table.style.display = 'none';
+            }
         } else {
             button.textContent = "Aggiungi un nuovo amministratore";
+            if (table.style.display === 'none') {
+                table.style.display = 'block';
+                form.style.display = 'none';
+            }
         }
-        if (isTableVisible) {
-            // Ruota la tabella fuori dalla vista e mostra il form
-            tableCard.style.transform = 'rotateY(180deg)';
-            tableCard.style.opacity = '0'; // Rendi la tabella trasparente
-            formCard.style.transform = 'rotateY(0deg)';
-            formCard.style.opacity = '1'; // Rendi il form opaco
-        } else {
-            // Ruota il form fuori dalla vista e mostra la tabella
-            formCard.style.transform = 'rotateY(-180deg)';
-            formCard.style.opacity = '0'; // Rendi il form trasparente
-            tableCard.style.transform = 'rotateY(0deg)';
-            tableCard.style.opacity = '1'; // Rendi la tabella opaca
-        }
-
-        isTableVisible = !isTableVisible; // Inverti lo stato della variabile
     }
-     // Richiama la funzione toggleCard() all'apertura della pagina
-}else {
-            // Ruota la tabella fuori dalla vista e mostra il form
-            tableCard.style.transform = 'rotateY(180deg)';
-            tableCard.style.opacity = '0'; // Rendi la tabella trasparente
-            formCard.style.transform = 'rotateY(0deg)';
-            formCard.style.opacity = '1'; // Rendi il form opaco
-
-            isTableVisible = !isTableVisible; // Inverti lo stato della variabile
-
-            toggleCard();
-        }
-
-
-
 
 
     function validateForm() {

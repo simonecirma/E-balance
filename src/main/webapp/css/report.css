@@ -7,8 +7,7 @@
 }
 
 .container {
-
-    width: 30vw;
+    max-width: 33vw;
     padding: 10px;
     margin-top: 50px;
     box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4), 2px 8px 16px rgba(0, 0, 0, 0.4);
