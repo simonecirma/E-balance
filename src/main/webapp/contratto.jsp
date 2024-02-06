@@ -252,17 +252,7 @@
 </div>
 <br>
 <%
-} else {
-%>
-<script>
-    window.onload = function () {
-        toggleFormVisibility('aggiungiContrattoForm');
-    };
-</script>
-<h1>Aggiungi i dati del contratto</h1>
-
-<%
-    }
+}
 %>
 
 </body>

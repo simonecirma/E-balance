@@ -96,7 +96,7 @@ public class AmministratoreController extends HttpServlet {
                         RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
                         dispatcher.forward(request, response);
                     } else {
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("/amministratori.jsp");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/registraSuperAdmin.jsp");
                         dispatcher.forward(request, response);
                     }
                 }
@@ -246,11 +246,12 @@ public class AmministratoreController extends HttpServlet {
             return;
         }
         HttpSession session = request.getSession(true);
-        if (session != null) {
+        if (session.getAttribute("email") != null) {
             amministratore.setFlagTipo(false);
         } else {
             amministratore.setFlagTipo(true);
         }
+        System.out.println(amministratore.getFlagTipo());
 
         try {
             amministratoreService.aggiungiAmministratore(amministratore);
@@ -258,12 +259,12 @@ public class AmministratoreController extends HttpServlet {
             e.printStackTrace();
             return;
         }
-        if (session != null) {
+        if (session.getAttribute("email") != null) {
             response.sendRedirect("AmministratoreController?action=gestisciAmministratori");
         } else {
             AmministratoreBean admin = accessoController.login(amministratore.getEmail(), amministratore.getPassword(), session);
             if (admin != null) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/contratto.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/registraPrimoContratto.jsp");
                 dispatcher.forward(request, response);
             } else {
                 response.sendRedirect("AmministratoreController?action=verificaSuperAdmin");
