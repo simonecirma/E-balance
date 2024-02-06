@@ -33,7 +33,6 @@
                     <th>Elimina Admin</th>
                 </tr>
 
-
                     <% if (amministratori != null && !amministratori.isEmpty()) {
         for (AmministratoreBean admin : amministratori) { %>
                 <tr>
