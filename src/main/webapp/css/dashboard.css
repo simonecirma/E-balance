@@ -274,6 +274,8 @@ table {
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 50px;
+    font-family: Montserrat;
+    font-size: 12px;
 }
 .btnIA:hover{
     background-color: green;
@@ -317,8 +319,8 @@ table {
 .expandendIA .tabelle2,
 .expandendIA .tabelle3 {
     position: relative;
-    height: 420px;
-    width: 400px;
+    height: 65vh;
+    width: 28vw;
     margin: 15px;
     border: 2px solid black;
     text-align: center;
@@ -326,9 +328,11 @@ table {
     border-radius: 15px;
     -webkit-transition: .5s;
     transition: .5s;
-    background-color: #28293f;
-    font-size: 15px !important;
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.1);
     text-align: center;
+    min-width: 400px;
+    min-height: 400px;
 }
 .tabelle:hover{
     -webkit-transform: scale(1.05);
@@ -344,24 +348,27 @@ table {
 }
 .dashboard .section.section-expanded #tab1IA{
     width: 90%;
-    font-size: 15px;
+    margin-top: 2vh;
 }
 .dashboard .section.section-expanded #tabIA{
     width: 90%;
-    font-size: 15px;
+    margin-top: 9vh;
 }
 #tabIA{
     width: 90%;
-    font-size: 15px;
 }
 #tab1IA{
     width: 90%;
-    font-size: 15px;
     margin-top: -10px;
 }
 
-.IATab{
-    font-size: 13px;
+.dashboard .section.section-expanded .IATab{
+    margin-top: 8vh;
+}
+.IATab td, .IATab th{
+    border: 0.5px solid #1d2b44;
+    padding: 5px;
+    background-color: rgba(91, 143, 248, 0.1);
 }
 .contIA{
     height: 80%;
@@ -394,16 +401,29 @@ table {
     margin-bottom: 0;
     margin-top: 0;
     min-width: 24vw;
+    min-height:50px;
 }
 
-#vistabIA th, td{
+#vistabIA th, #vistabIA td{
     font-size: 13px;
-    border: 1px solid #ddd;
+    border: 0.5px solid #1d2b44;
     padding: 5px;
+    background-color: rgba(91, 143, 248, 0.1);
 }
-#vistab1IA th, td{
+#vistab1IA th, #vistab1IA td{
     font-size: 12px;
-    border: 1px solid #ddd;
+    border: 0.4px solid #1d2b44;
+    background-color: rgba(91, 143, 248, 0.1);
+}
+#tabIA th, #tabIA td{
+    border: 0.5px solid #1d2b44;;
+    padding: 5px;
+    background-color: rgba(91, 143, 248, 0.1);
+}
+#tab1IA th, #tab1IA td{
+    border: 0.5px solid #1d2b44;;
+    padding: 5px;
+    background-color: rgba(91, 143, 248, 0.1);
 }/*
 th, td {
     border: 1px solid #dddddd;
@@ -426,8 +446,6 @@ th {
     position: relative;
     height: 15vh;
     width: 5vw;
-    min-height: 100px;
-    min-width: 40px;
     border: 2px solid black;;
     border-radius: 10px;
     margin-top: 30px;
@@ -438,7 +456,7 @@ th {
     justify-content: center;
     align-items: center;
     position: relative;
-    height: 30vh;
+    height: 35vh;
     width: 10vw;
     border: 2px solid black;;
     border-radius: 20px;
@@ -609,6 +627,7 @@ input[type="range"] {
     height: 50vh;
     margin-left: -23vw;
     min-width: 300px;
+    border: 1px solid #f2f2f2;
 }
 
 @media screen and (max-width: 1000px) {
@@ -625,6 +644,7 @@ input[type="range"] {
     #consumi td{
         padding: 0;
         height: 32px;
+        border: 0.5px solid #f2f2f2;
     }
 
 .chart1 {
@@ -786,6 +806,7 @@ input[type="range"] {
 }
 .section-expanded .contentMeteoTab{
     margin-top: 5%;
+    width: 50vw;
     overflow-y: auto;
 }
 .section-expanded  #meteoTable1 thead {

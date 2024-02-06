@@ -248,7 +248,7 @@
                         %>
                         <tr>
                             <td>Percentuale Utilizzo "<%= par.getTipoSorgente() %>":</td>
-                            <td><%= par.getPercentualeUtilizzoSorgente()%></td>
+                            <td><%= par.getPercentualeUtilizzoSorgente()%> %</td>
                         </tr>
                         <%
                             }
@@ -314,7 +314,7 @@
                             %>
                             <tr>
                                 <td>Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</td>
-                                <td><%= inter.getPercentualeUtilizzoSorgente()%></td>
+                                <td><%= inter.getPercentualeUtilizzoSorgente()%> %</td>
                             </tr>
                             <%
                                     }
@@ -383,7 +383,7 @@
                             %>
                             <tr>
                                 <td>Percentuale Utilizzo "<%= inter.getTipoSorgente() %>":</td>
-                                <td><%= inter.getPercentualeUtilizzoSorgente()%></td>
+                                <td><%= inter.getPercentualeUtilizzoSorgente()%> %</td>
                             </tr>
                             <%
                                     }
