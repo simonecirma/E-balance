@@ -199,7 +199,7 @@
                             %>
                             <tr>
                                 <td> <%= archivio.getDataConsumo() %></td>
-                                <td> <%= archivio.getConsumoGiornaliero() %></td>
+                                <td> <%= archivio.getConsumoGiornaliero() %>  kWh</td>
                             </tr>
                             <%
                                 }
@@ -692,7 +692,7 @@
             data: {
                 labels: date,
                 datasets: [{
-                    label: 'Consumo Giornaliero',
+                    label: 'Consumo Giornaliero (kWh)',
                     data: consumi,
                     backgroundColor: colors,
                     borderColor: 'rgba(75, 192, 192, 1)',
@@ -737,7 +737,7 @@
             data: {
                 labels: date,
                 datasets: [{
-                    label: 'Consumo Giornaliero',
+                    label: 'Consumo Giornaliero (kWh)',
                     data: consumi,
                     backgroundColor: colors,
                     borderColor: 'rgba(75, 192, 192, 1)',
@@ -811,7 +811,7 @@
         // Crea un DataTable con i dati estratti
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Label');
-        data.addColumn('number', 'Consumo');
+        data.addColumn('number', 'Consumo (kWh)');
 
         for (var i = 0; i < dataArray.length; i++) {
             var label = "Edificio " + (i + 1);
@@ -851,7 +851,7 @@
         // Crea un DataTable con i dati estratti
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Label');
-        data.addColumn('number', 'Consumo');
+        data.addColumn('number', 'Consumo (kWh)');
 
         for (var i = 0; i < dataArray.length; i++) {
             var label = "Edificio " + (i + 1);
@@ -895,10 +895,10 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Sorg');
-        data.addColumn('number', 'Produzione');
+        data.addColumn('number', 'Produzione (kWh)');
 
         for (var i = 0; i < dataArray.length; i++) {
-            var sorg = "Valore " + (i + 1) + " kWh";
+            var sorg = "Valore " + (i + 1);
             var prod = parseFloat(dataArray[i]);
             data.addRow([sorg, prod]);
         }
@@ -935,10 +935,10 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Sorg');
-        data.addColumn('number', 'Produzione');
+        data.addColumn('number', 'Produzione (kWh)');
 
         for (var i = 0; i < dataArray.length; i++) {
-            var sorg = "Valore " + (i + 1) + " kWh";
+            var sorg = "Valore " + (i + 1);
             var prod = parseFloat(dataArray[i]);
             data.addRow([sorg, prod]);
         }
