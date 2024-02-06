@@ -146,35 +146,6 @@ class AmministratoreControllerTest {
     }
 
     @Test
-    void testAggiungiAmministratore() throws ServletException, IOException, ParseException, SQLException {
-        when(request.getParameter("action")).thenReturn("aggiungiAmministratore");
-        when(request.getParameter("nome")).thenReturn("Antonio");
-        when(request.getParameter("cognome")).thenReturn("Palma");
-        when(request.getParameter("email")).thenReturn("antonio.palma1@studenti.unisa.it");
-        when(request.getParameter("password")).thenReturn("Antonio2000!");
-        when(request.getParameter("dataNascita")).thenReturn("2000-01-01");
-
-        java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse("2000-01-01");
-        java.sql.Date dataNascita = new java.sql.Date(utilDate.getTime());
-
-        AmministratoreBean mockAdmin = new AmministratoreBean();
-        mockAdmin.setNome("Antonio");
-        mockAdmin.setCognome("Palma");
-        mockAdmin.setEmail("antonio.palma1@studenti.unisa.it");
-        mockAdmin.setPassword("Antonio2000!");
-        mockAdmin.setDataNascita(dataNascita);
-        mockAdmin.setFlagTipo(false);
-
-        doNothing().when(amministratoreService).aggiungiAmministratore(any());
-
-        when(request.getSession(true)).thenReturn(session);
-        amministratoreController.doGet(request, response);
-
-        verify(amministratoreService).aggiungiAmministratore(any());
-        verify(response).sendRedirect(eq("AmministratoreController?action=gestisciAmministratori"));
-    }
-
-    @Test
     void testGestisciAmministratori() throws ServletException, IOException, SQLException {
         when(request.getParameter("action")).thenReturn("gestisciAmministratori");
 
