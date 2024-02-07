@@ -34,7 +34,7 @@ public class SimulazioneServiceImpl implements SimulazioneService {
     private Date data;
     private int y = 0;
     float percentualeEccesso = 0.00f;
-    private boolean simulazioneVenditaFlag = false; //setta a true se vuoi far simulare la generazione di una vendita
+    private boolean simulazioneVenditaFlag = true; //setta a true se vuoi far simulare la generazione di una vendita
 
     /**
      * Esegue la simulazione dei dati nel sistema eBalance.

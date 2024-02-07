@@ -10,6 +10,9 @@
 <body style="background-image: url('img/wp1.png'); background-repeat: no-repeat; background-size: cover; background-position: center 150px; background-color: #1d1f2f; background-attachment: fixed;">
 <%@include file="navBar.jsp" %>
     <form id="aggiungiContrattoForm" action="ContrattoController?action=aggiungiContratto" method="post">
+        <br>
+        <h1 align="center" style="color: black">Registra i dati del contratto</h1>
+        <br>
         <div>
             <label for="ente">Ente:</label>
             <input type="text" name="nomeEnte" id="ente" placeholder="Dammi il nome ente" required><br>

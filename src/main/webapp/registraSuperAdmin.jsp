@@ -9,8 +9,12 @@
 <body style="background-image: url('img/wp1.png'); background-color: #1d1f2f;">
 <%@include file="navBar.jsp" %>
 <br>
+
     <form id="aggiungiAmministratoreForm" action="AmministratoreController?action=aggiungiAmministratore"
           method="post" onsubmit="return validateForm()">
+        <br>
+        <h1 align="center" style="color: black">Registra i tuoi dati personali</h1>
+        <br>
         <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" placeholder="Dammi il nome" required><br>
