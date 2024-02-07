@@ -186,27 +186,6 @@ VALUES(1, 7000, 30);
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
 VALUES(0, 7000, 0);
 
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(01, 01);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(02, 01);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(03, 01);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(03, 02);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(01, 03);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(02, 03);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(01, 04);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(02, 04);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(03, 04);
-INSERT INTO Disporre(IdBatteria, IdVendita)
-VALUES(02, 05);
-
 INSERT INTO ConsumoEdificio(NomeEdificio, ConsumoAttuale)
 VALUES("A1", 17);
 INSERT INTO ConsumoEdificio(NomeEdificio, ConsumoAttuale)
