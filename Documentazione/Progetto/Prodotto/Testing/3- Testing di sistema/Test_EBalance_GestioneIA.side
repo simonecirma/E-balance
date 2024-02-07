@@ -1,0 +1,393 @@
+{
+  "id": "3204f09c-1fe0-4a25-a001-9b03c7d39701",
+  "version": "2.0",
+  "name": "Test_EBalance_GestioneIA",
+  "url": "http://localhost:8080/ebalance/DatiController?action=generaDashboard",
+  "tests": [{
+    "id": "f28b8152-32d4-41ad-9b56-b8d657a972d7",
+    "name": "TC_GIA_1.01",
+    "commands": [{
+      "id": "e14eee30-c857-4d9b-82d8-85438dc5ca9d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/DatiController?action=generaDashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ba357186-26f2-4f7a-84c8-f06f7f853276",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d2a3ec36-c158-4074-8f76-c64149aff8fb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.contentIA",
+      "targets": [
+        ["css=.contentIA", "css:finder"],
+        ["xpath=//div[5]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7aef112e-91f1-49a0-81af-a6bf2c93a515",
+      "comment": "",
+      "command": "click",
+      "target": "id=preferenzaSorgente",
+      "targets": [
+        ["id=preferenzaSorgente", "id"],
+        ["name=preferenzaSorgente", "name"],
+        ["css=#preferenzaSorgente", "css:finder"],
+        ["xpath=//select[@id='preferenzaSorgente']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr/td/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a6e50e8c-5b86-4a86-a6ac-9c9e5e3002de",
+      "comment": "",
+      "command": "select",
+      "target": "id=preferenzaSorgente",
+      "targets": [],
+      "value": "label=Pannello Fotovoltaico"
+    }, {
+      "id": "83542ba8-c2e3-4354-bcba-44f93b94f17e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnIA:nth-child(3)",
+      "targets": [
+        ["css=.btnIA:nth-child(3)", "css:finder"],
+        ["xpath=//input[@value='Invia']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "32d3496c-5429-428e-8e22-2facaaf36de9",
+    "name": "TC_GIA_1.02",
+    "commands": [{
+      "id": "1d886e74-3632-47eb-be7d-ebbffa29df16",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/DatiController?action=generaDashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4362e2fb-7e61-4734-a0bb-2f9e164ecd59",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c0b4458f-cc35-492a-be3e-58711419bcf8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.section:nth-child(5)",
+      "targets": [
+        ["css=.section:nth-child(5)", "css:finder"],
+        ["xpath=//div[@onclick='toggleExpansion(5)']", "xpath:attributes"],
+        ["xpath=//div[5]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "59c04f9a-bcdf-4de6-bf82-2b921673330b",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": "-182.1383056640625,23.49688720703125"
+    }, {
+      "id": "bea8b1bd-d213-4d8c-9bf5-add3e40823ab",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": "-182.1383056640625,23.49688720703125"
+    }, {
+      "id": "fae23db1-3365-4022-b777-ed3c714a9d23",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": "-182.1383056640625,23.49688720703125"
+    }, {
+      "id": "dcd7ee81-87d3-4191-ae69-1e0669b7cf57",
+      "comment": "",
+      "command": "type",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "8f48d588-d9a8-4a73-b64f-99cb2331a2fc",
+      "comment": "",
+      "command": "click",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "43252ff8-778c-40c2-a7f0-9ba55efd08b7",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": "-128.1383056640625,5.196868896484375"
+    }, {
+      "id": "f6cf414a-4471-4085-b15c-a19b6faad701",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": "-128.1383056640625,5.196868896484375"
+    }, {
+      "id": "0bd63208-8812-43a5-b734-1802432c72aa",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": "-128.1383056640625,5.196868896484375"
+    }, {
+      "id": "cd8fa702-1578-4e1e-9f2a-143c229292b2",
+      "comment": "",
+      "command": "type",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": "1"
+    }, {
+      "id": "77ecc4d6-6648-4a0a-9b39-aa83de7369f7",
+      "comment": "",
+      "command": "click",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69306f20-8d63-4b03-8d18-1a3cf236f65a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnIA:nth-child(3)",
+      "targets": [
+        ["css=.btnIA:nth-child(3)", "css:finder"],
+        ["xpath=//input[@value='Invia']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "58922d49-ebf2-4c30-b1c8-2078cb5d8607",
+    "name": "TC_GIA_1.03",
+    "commands": [{
+      "id": "14336db1-456d-47a7-9a25-a296cf41d8e6",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/DatiController?action=generaDashboard",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "987291f9-c377-48e3-90b6-c8eb014babb9",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7e36e520-0c46-4204-99a4-a63aa53a0724",
+      "comment": "",
+      "command": "click",
+      "target": "css=.contentIA",
+      "targets": [
+        ["css=.contentIA", "css:finder"],
+        ["xpath=//div[5]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ea55cf46-73b3-4152-a77c-ebb34767545a",
+      "comment": "",
+      "command": "click",
+      "target": "id=preferenzaSorgente",
+      "targets": [
+        ["id=preferenzaSorgente", "id"],
+        ["name=preferenzaSorgente", "name"],
+        ["css=#preferenzaSorgente", "css:finder"],
+        ["xpath=//select[@id='preferenzaSorgente']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr/td/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f537fe75-f5c8-4d98-ba27-535abe894a13",
+      "comment": "",
+      "command": "select",
+      "target": "id=preferenzaSorgente",
+      "targets": [],
+      "value": "label=Servizio Elettrico Nazionale"
+    }, {
+      "id": "4f0d6a72-dd81-4407-b18d-dab8c8930a32",
+      "comment": "",
+      "command": "type",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": "50"
+    }, {
+      "id": "38ca552d-5090-44c2-a61f-396097e98530",
+      "comment": "",
+      "command": "click",
+      "target": "id=percentualeUtilizzo1",
+      "targets": [
+        ["id=percentualeUtilizzo1", "id"],
+        ["name=Servizio Elettrico Nazionale", "name"],
+        ["css=tr:nth-child(2) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=//input[@id='percentualeUtilizzo1']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[2]/td/input", "xpath:idRelative"],
+        ["xpath=//td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2f4c985-4ad6-453d-b75e-eebc2e20136b",
+      "comment": "",
+      "command": "type",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": "49"
+    }, {
+      "id": "6809cdfc-43cd-40f2-a3f6-4fd37613833b",
+      "comment": "",
+      "command": "click",
+      "target": "name=Pannello fotovoltaico",
+      "targets": [
+        ["name=Pannello fotovoltaico", "name"],
+        ["css=tr:nth-child(3) #percentualeUtilizzo1", "css:finder"],
+        ["xpath=(//input[@id='percentualeUtilizzo1'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/div/table/tbody/tr[3]/td/input", "xpath:idRelative"],
+        ["xpath=//tr[3]/td/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2533869-8f76-4abf-a1dd-1c115615964f",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.ui-state-default:nth-child(1)",
+      "targets": [
+        ["css=.ui-state-default:nth-child(1)", "css:finder"],
+        ["xpath=//ul[@id='sortable-list']/li", "xpath:idRelative"],
+        ["xpath=//td/ul/li", "xpath:position"],
+        ["xpath=//li[contains(.,'Servizio Elettrico Nazionale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "83f31a89-f8db-4d83-b9db-98988830c89f",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.ui-state-default:nth-child(2)",
+      "targets": [
+        ["css=.ui-state-default:nth-child(2)", "css:finder"],
+        ["xpath=//ul[@id='sortable-list']/li[2]", "xpath:idRelative"],
+        ["xpath=//td/ul/li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'Servizio Elettrico Nazionale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c2d9d782-2082-4bc4-81cb-31a2b1941132",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnIA:nth-child(3)",
+      "targets": [
+        ["css=.btnIA:nth-child(3)", "css:finder"],
+        ["xpath=//input[@value='Invia']", "xpath:attributes"],
+        ["xpath=//form[@id='priority-form-1']/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "0106b457-1142-42ad-a729-492550ec24f9",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/ebalance/DatiController?action=generaDashboard"],
+  "plugins": []
+}

@@ -1,0 +1,474 @@
+{
+  "id": "18f77856-e6d9-490a-b684-8f0565568df6",
+  "version": "2.0",
+  "name": "Test_EBalance_GeneraReport",
+  "url": "http://localhost:8080/ebalance/AmministratoreController?action=vediReport",
+  "tests": [{
+    "id": "fd90111e-dac2-484d-ace2-cac90ad9804f",
+    "name": "TC_GA_2.01",
+    "commands": [{
+      "id": "b0ec62ee-e46e-49a8-8ab2-b077daa34f68",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/AmministratoreController?action=vediReport",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "db67b68b-2027-4b31-8bc9-cf6dae4fa7a0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e0a2e145-7150-40bc-8f19-955b3265471f",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad064aba-624b-4fe4-abee-b8053cccc9d8",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2024-02-20"
+    }, {
+      "id": "3c576db6-072b-4c8a-9bb9-41d19963562a",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8410c9e5-d40c-4910-9fe5-60197f5504bc",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "2021-11-11"
+    }, {
+      "id": "3a1c9609-f602-4ed3-937e-2113874e1aa1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.svgIcon > path",
+      "targets": [
+        ["css=.svgIcon > path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "68777b81-6511-4f28-9978-f2056fc6ea3b",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Si prega di inserire date valide comprese tra oggi e il 01-01-2021, con la data di inizio non successiva alla data di fine.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "cde5478b-d00d-4ba2-b851-7445b36e2fb5",
+    "name": "TC_GA_2.02",
+    "commands": [{
+      "id": "55dda904-d350-4ad0-8b70-064246204068",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/AmministratoreController?action=vediReport",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cfab2493-6ebb-454d-ae90-f323edc7b86b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "683c2602-2bee-4393-aa1a-f774a897bcbb",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e230d136-bd24-45bc-92d3-14a5769af816",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2020-01-01"
+    }, {
+      "id": "0e405c74-0a15-48a6-9bb2-5d3b293d8273",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "593cad8c-aeb5-4c1d-8820-3bc0e0e100ea",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "2021-11-11"
+    }, {
+      "id": "bb7e44e1-8b83-456e-851e-c558bcf3590e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.svgIcon > path",
+      "targets": [
+        ["css=.svgIcon > path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd1697b7-b6c8-4db2-a235-f696b06bd4d2",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Si prega di inserire date valide comprese tra oggi e il 01-01-2021, con la data di inizio non successiva alla data di fine.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "554d3e06-1bf7-4b89-90ab-2740d225e38c",
+    "name": "TC_GA_2.03",
+    "commands": [{
+      "id": "7ef44e94-81f2-4cd3-9421-c8db46c302f4",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/AmministratoreController?action=vediReport",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "db1dca71-f632-48bf-b608-79edc6abcfb8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e0b8a932-38fd-43da-8001-344a123ce42d",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "662dd3a9-0a05-4be6-b6d0-a38a920479f7",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2023-01-01"
+    }, {
+      "id": "f922cf1d-e22d-4830-958d-d07e298000ca",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9b0791e7-66b8-4335-84f0-fe84a251dadf",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "2024-02-20"
+    }, {
+      "id": "d63667bb-37a6-45b5-b777-52b576fb270a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.svgIcon > path",
+      "targets": [
+        ["css=.svgIcon > path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "3c998613-41e8-4f22-84a1-9ce659851ad2",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Si prega di inserire date valide comprese tra oggi e il 01-01-2021, con la data di inizio non successiva alla data di fine.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "fd0c2c1e-2df7-4055-ba63-35f7d6a3b4fd",
+    "name": "TC_GA_2.04",
+    "commands": [{
+      "id": "1785c083-be1c-490b-b8e6-d3fc61eb766e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/AmministratoreController?action=vediReport",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2242753d-0470-407e-9c3f-fdf4c9f64a69",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ca054150-cffe-4ad7-937b-c0d614589c12",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b57c23d4-1bc5-4496-854e-742d55f77335",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2023-01-01"
+    }, {
+      "id": "71d4eb7c-91cc-4b1f-b500-489563a6e712",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d7e64d57-1696-45f9-a0b3-50268a22100d",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "2020-01-01"
+    }, {
+      "id": "6f067105-1181-467a-b4fd-1ff85be911dd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.svgIcon > path",
+      "targets": [
+        ["css=.svgIcon > path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "55d2dcd3-b71e-4c26-9320-8d5e823a0776",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "Si prega di inserire date valide comprese tra oggi e il 01-01-2021, con la data di inizio non successiva alla data di fine.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "ffb30afa-7d59-4656-877a-7821ea7253bf",
+    "name": "TC_GA_2.05",
+    "commands": [{
+      "id": "ba40963b-3a15-43de-a45f-bd4113f12402",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/AmministratoreController?action=vediReport",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ebe7080c-5211-40e7-bcdd-6bea06d8cd7c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "0721d503-547c-4fe5-b870-a46e0f7342de",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f1117982-98be-43b8-9c5e-36798fd6ec07",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1e0650f-1954-4b44-bb20-88fd914e1ea3",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataInizio",
+      "targets": [
+        ["id=dataInizio", "id"],
+        ["name=dataInizio", "name"],
+        ["css=#dataInizio", "css:finder"],
+        ["xpath=//input[@id='dataInizio']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2023-01-01"
+    }, {
+      "id": "d539f034-b0ce-4201-9f8a-439b79e1c497",
+      "comment": "",
+      "command": "click",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "142858d8-86d5-4095-9e3b-1dd612e12308",
+      "comment": "",
+      "command": "type",
+      "target": "id=dataFine",
+      "targets": [
+        ["id=dataFine", "id"],
+        ["name=dataFine", "name"],
+        ["css=#dataFine", "css:finder"],
+        ["xpath=//input[@id='dataFine']", "xpath:attributes"],
+        ["xpath=//form[@id='generaPdf']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "2024-01-01"
+    }, {
+      "id": "162d6b01-d214-47b9-ac49-96f36ed4f3e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.svgIcon",
+      "targets": [
+        ["css=.svgIcon", "css:finder"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "29e96de5-ef86-4d43-9549-06a2b16ba46c",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/ebalance/AmministratoreController?action=vediReport"],
+  "plugins": []
+}

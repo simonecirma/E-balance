@@ -1,0 +1,826 @@
+{
+  "id": "fee72270-ba92-45a9-89fa-18b17657e73a",
+  "version": "2.0",
+  "name": "Test_EBalance_ModificaContratto",
+  "url": "http://localhost:8080/ebalance/ContrattoController",
+  "tests": [{
+    "id": "6ee3fbfb-b729-4746-8087-27214bab1638",
+    "name": "TC_GC_2.01",
+    "commands": [{
+      "id": "6fab2d44-5f9c-4782-a2aa-e7e1a865e34f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "978696cb-c8bb-4264-9abe-ceff606cf2aa",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "409a33e0-dc76-43f6-aec7-0568eb135828",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a91dab51-02ee-4589-982d-d2b5bdf057cd",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(1)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(1)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1193a7a2-4588-4f5d-af2a-0e2d22b672d3",
+      "comment": "",
+      "command": "type",
+      "target": "name=nomeEnte",
+      "targets": [
+        ["name=nomeEnte", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(1) > input", "css:finder"],
+        ["xpath=//input[@name='nomeEnte']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2ece397-9897-4d69-8568-62f5aaaf0422",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "97e295a2-cdfb-4deb-a4a5-cb43bde5eb8d",
+    "name": "TC_GC_2.02",
+    "commands": [{
+      "id": "cbea5e76-764e-4b5a-9a49-ba5fcdffde77",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0e36d29-c4a0-4c61-a3c3-c05f44f5d91a",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d16fcd2-f312-4d87-9d09-68fb3f1b31e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3408b221-aaed-4b76-89be-1383b66b0e99",
+      "comment": "",
+      "command": "click",
+      "target": "name=dataSottoscrizione",
+      "targets": [
+        ["name=dataSottoscrizione", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(4) > input", "css:finder"],
+        ["xpath=//input[@name='dataSottoscrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dfd09336-6545-453a-b919-fd19d93e0c6e",
+      "comment": "",
+      "command": "type",
+      "target": "name=dataSottoscrizione",
+      "targets": [
+        ["name=dataSottoscrizione", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(4) > input", "css:finder"],
+        ["xpath=//input[@name='dataSottoscrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-22"
+    }, {
+      "id": "a0440f95-7d20-43f9-8dfa-ffa98b9efc77",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6dc566cd-b4a2-496a-9e48-42d1beacd771",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "La data di sottoscrizione non può essere successiva a quella odierna.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "905c8600-8b01-4026-84c9-da0db0ffdc99",
+    "name": "TC_GC_2.03",
+    "commands": [{
+      "id": "98e7bd18-db84-4c14-bee2-ea11ac08c348",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "03bf0140-64f4-4488-af3f-17c7d090c19c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "015092de-9e7a-43ba-ac49-37ef3d6ecc34",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a56bcaf6-bdb1-4ef9-8f63-fa793a2ba61e",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(3)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(3)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]", "xpath:idRelative"],
+        ["xpath=//form/div[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4cf736ce-2e20-4fba-8f21-14a2a0685c0e",
+      "comment": "",
+      "command": "type",
+      "target": "name=costoMedioUnitario",
+      "targets": [
+        ["name=costoMedioUnitario", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='costoMedioUnitario']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b187a212-bf59-44ff-bf20-b614470645e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a7504661-27d3-4828-8407-6214fa60e1eb",
+    "name": "TC_GC_2.04",
+    "commands": [{
+      "id": "f363730c-5927-4544-b8be-7d0262a78a87",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "66ebbd40-a273-4d9a-b227-6c60caad3c12",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b2dd2f7c-8795-4533-abbc-0a20c54532c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2a62fb8-602e-403e-a379-aa340e27fdf1",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Consumo Annuale:')]", "xpath:innerText"]
+      ],
+      "value": "9.046875,9"
+    }, {
+      "id": "6c9612d7-3128-4c15-8a6f-6b23c0deccb9",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Consumo Annuale:')]", "xpath:innerText"]
+      ],
+      "value": "9.046875,9"
+    }, {
+      "id": "bea58007-5c78-448a-882d-ebf024ee9e78",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Consumo Annuale:')]", "xpath:innerText"]
+      ],
+      "value": "9.046875,9"
+    }, {
+      "id": "77e45df3-6be7-4ae0-a308-aa6962d02eaa",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ac6ca9b-f010-4062-bdfb-7f232aef47ec",
+      "comment": "",
+      "command": "type",
+      "target": "name=consumoMedioAnnuale",
+      "targets": [
+        ["name=consumoMedioAnnuale", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='consumoMedioAnnuale']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2bcdb8a2-8e52-4f55-a049-e88d12e62bfa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "6725dbe9-3298-41e9-a7e4-4f4b7d846d2e",
+    "name": "TC_GC_2.05",
+    "commands": [{
+      "id": "8e5f9c82-a2be-4777-8663-8930045d82fb",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4542344f-fe9f-487d-8d40-523e835c5ba1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b78ce2b8-4186-4dd3-aa42-8ac287b67cd9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d6391cb-fcfd-481a-b051-510bdaa5bc1b",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=table:nth-child(1) th:nth-child(3)",
+      "targets": [
+        ["css=table:nth-child(1) th:nth-child(3)", "css:finder"],
+        ["xpath=//div[2]/div/table/thead/tr/th[3]", "xpath:position"]
+      ],
+      "value": "88.71875,14"
+    }, {
+      "id": "edb53faa-aba4-419d-8a94-d054afebf855",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=table:nth-child(1) th:nth-child(3)",
+      "targets": [
+        ["css=table:nth-child(1) th:nth-child(3)", "css:finder"],
+        ["xpath=//div[2]/div/table/thead/tr/th[3]", "xpath:position"]
+      ],
+      "value": "88.71875,14"
+    }, {
+      "id": "ea42094a-c655-4966-996c-fc9ad8224e39",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=table:nth-child(1) th:nth-child(3)",
+      "targets": [
+        ["css=table:nth-child(1) th:nth-child(3)", "css:finder"],
+        ["xpath=//div[2]/div/table/thead/tr/th[3]", "xpath:position"]
+      ],
+      "value": "88.71875,14"
+    }, {
+      "id": "26fe8ce1-588b-4971-9c3c-838cc2dfc791",
+      "comment": "",
+      "command": "click",
+      "target": "css=.container",
+      "targets": [
+        ["css=.container", "css:finder"],
+        ["xpath=//div[3]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ffe2af5-8277-42d7-bc0a-3e36ebc3a9d0",
+      "comment": "",
+      "command": "type",
+      "target": "name=durata",
+      "targets": [
+        ["name=durata", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(5) > input", "css:finder"],
+        ["xpath=//input[@name='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8c33d70a-b07d-4075-9b87-29b40576d44e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "fc28b448-b3c3-45d1-bdc5-36e304629de6",
+    "name": "TC_GC_2.06",
+    "commands": [{
+      "id": "e924ad2a-51e9-4624-abcb-0f9315410a98",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cf2d3d80-3ab2-434f-afb9-d4b029d28f47",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "861fe1e6-935b-4c29-a61a-ce55827588f2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b216b63c-c91c-45fc-b07a-cd5ba06d8753",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(6) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(6) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]/label", "xpath:idRelative"],
+        ["xpath=//div[6]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Prezzo Vendita:')]", "xpath:innerText"]
+      ],
+      "value": "19.046875,3.5"
+    }, {
+      "id": "720a0687-af93-429a-9c2e-6c072b4fface",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(6) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(6) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]/label", "xpath:idRelative"],
+        ["xpath=//div[6]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Prezzo Vendita:')]", "xpath:innerText"]
+      ],
+      "value": "19.046875,3.5"
+    }, {
+      "id": "ccc29b9e-d556-43d6-9468-86afb3061725",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(6) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(6) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]/label", "xpath:idRelative"],
+        ["xpath=//div[6]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Prezzo Vendita:')]", "xpath:innerText"]
+      ],
+      "value": "19.046875,3.5"
+    }, {
+      "id": "cc086f4a-4309-49e0-8393-be0936271dfd",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(6)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(6)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]", "xpath:idRelative"],
+        ["xpath=//div[6]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "04cb8ddb-abfb-475b-a3a8-777561a85250",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoVendita",
+      "targets": [
+        ["name=prezzoVendita", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(6) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoVendita']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08fa4aea-3277-4b14-9b41-4eb7b92be328",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "be4562c7-8535-427c-ae75-67fa614503f8",
+    "name": "TC_GC_2.07",
+    "commands": [{
+      "id": "23df209e-141b-41ba-8e5a-8cfbe4265225",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "baeba395-c436-49df-8993-1a17614e9975",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5d2b64b8-0446-48ef-95b1-720646639b27",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(1)",
+      "targets": [
+        ["css=.btn:nth-child(1)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiornaContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//div[3]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Modifica contratto attuale')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b80314c9-b5ce-4558-9157-5f2e947cb1bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(1)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(1)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div", "xpath:idRelative"],
+        ["xpath=//form/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0bced041-4078-4981-9350-c2b1420eb128",
+      "comment": "",
+      "command": "type",
+      "target": "name=nomeEnte",
+      "targets": [
+        ["name=nomeEnte", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(1) > input", "css:finder"],
+        ["xpath=//input[@name='nomeEnte']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Edison"
+    }, {
+      "id": "ee4b7a25-080e-4868-9cdf-fefb34aa0a2f",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Consumo Annuale:')]", "xpath:innerText"]
+      ],
+      "value": "78.046875,8"
+    }, {
+      "id": "5551ebef-fa92-44e6-92cf-87d5a236d6b8",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Consumo Annuale:')]", "xpath:innerText"]
+      ],
+      "value": "78.046875,8"
+    }, {
+      "id": "b729f621-f918-4686-9102-acdc95f83922",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/label", "xpath:idRelative"],
+        ["xpath=//div[2]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Consumo Annuale:')]", "xpath:innerText"]
+      ],
+      "value": "78.046875,8"
+    }, {
+      "id": "99ee9120-a432-4c5f-9800-65db5a8455af",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(2)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(2)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3fe7d1d-16fb-4f5c-92b2-1096aac75e2a",
+      "comment": "",
+      "command": "type",
+      "target": "name=consumoMedioAnnuale",
+      "targets": [
+        ["name=consumoMedioAnnuale", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(2) > input", "css:finder"],
+        ["xpath=//input[@name='consumoMedioAnnuale']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "4500"
+    }, {
+      "id": "8cff166e-3a16-4e19-8201-30271ad24dca",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "name=costoMedioUnitario",
+      "targets": [
+        ["name=costoMedioUnitario", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='costoMedioUnitario']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "18.875,14"
+    }, {
+      "id": "b1cc46ea-f070-4925-8471-3acc8040ebb6",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "name=costoMedioUnitario",
+      "targets": [
+        ["name=costoMedioUnitario", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='costoMedioUnitario']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "18.875,14"
+    }, {
+      "id": "b3b36ea2-7365-49e7-8ee3-6f9d0daac60c",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "name=costoMedioUnitario",
+      "targets": [
+        ["name=costoMedioUnitario", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='costoMedioUnitario']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "18.875,14"
+    }, {
+      "id": "c2492a48-2f66-4e87-a43f-6880042c2c2a",
+      "comment": "",
+      "command": "click",
+      "target": "name=costoMedioUnitario",
+      "targets": [
+        ["name=costoMedioUnitario", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='costoMedioUnitario']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "591d6abe-b489-49d1-ad3c-006b0657d2f8",
+      "comment": "",
+      "command": "type",
+      "target": "name=costoMedioUnitario",
+      "targets": [
+        ["name=costoMedioUnitario", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(3) > input", "css:finder"],
+        ["xpath=//input[@name='costoMedioUnitario']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "0.17"
+    }, {
+      "id": "81d8527b-c25d-4cce-b9b2-568fa6d5b511",
+      "comment": "",
+      "command": "click",
+      "target": "name=dataSottoscrizione",
+      "targets": [
+        ["name=dataSottoscrizione", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(4) > input", "css:finder"],
+        ["xpath=//input[@name='dataSottoscrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ff7225df-f1b9-412b-b7cc-84834462a63d",
+      "comment": "",
+      "command": "type",
+      "target": "name=dataSottoscrizione",
+      "targets": [
+        ["name=dataSottoscrizione", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(4) > input", "css:finder"],
+        ["xpath=//input[@name='dataSottoscrizione']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-05"
+    }, {
+      "id": "0afad106-2f38-47cc-a0c2-6c4d594fd540",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(5) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(5) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[5]/label", "xpath:idRelative"],
+        ["xpath=//div[5]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Durata:')]", "xpath:innerText"]
+      ],
+      "value": "128.046875,7.5"
+    }, {
+      "id": "affcb768-44eb-4ac6-a547-87bd9884f3e8",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(5) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(5) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[5]/label", "xpath:idRelative"],
+        ["xpath=//div[5]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Durata:')]", "xpath:innerText"]
+      ],
+      "value": "128.046875,7.5"
+    }, {
+      "id": "d214111e-2156-49aa-bd68-e1d1ce6a77d7",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(5) > label",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(5) > label", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[5]/label", "xpath:idRelative"],
+        ["xpath=//div[5]/label", "xpath:position"],
+        ["xpath=//label[contains(.,'Durata:')]", "xpath:innerText"]
+      ],
+      "value": "128.046875,7.5"
+    }, {
+      "id": "4584dbef-ea63-4538-95f8-57cf0236f724",
+      "comment": "",
+      "command": "click",
+      "target": "css=#aggiornaContrattoForm > div:nth-child(5)",
+      "targets": [
+        ["css=#aggiornaContrattoForm > div:nth-child(5)", "css:finder"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[5]", "xpath:idRelative"],
+        ["xpath=//div[5]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d946761e-ae58-48b5-8882-0e2cfd364bf4",
+      "comment": "",
+      "command": "type",
+      "target": "name=durata",
+      "targets": [
+        ["name=durata", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(5) > input", "css:finder"],
+        ["xpath=//input[@name='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//div[5]/input", "xpath:position"]
+      ],
+      "value": "24"
+    }, {
+      "id": "04e7ac02-7faa-40e6-a87b-4cc6e55f1485",
+      "comment": "",
+      "command": "click",
+      "target": "name=prezzoVendita",
+      "targets": [
+        ["name=prezzoVendita", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(6) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoVendita']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a7702c46-0307-49df-9898-754b4c7de1a7",
+      "comment": "",
+      "command": "type",
+      "target": "name=prezzoVendita",
+      "targets": [
+        ["name=prezzoVendita", "name"],
+        ["css=#aggiornaContrattoForm > div:nth-child(6) > input", "css:finder"],
+        ["xpath=//input[@name='prezzoVendita']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//div[6]/input", "xpath:position"]
+      ],
+      "value": "0.09"
+    }, {
+      "id": "fcce9d44-a1e6-4209-a341-d14897fd3f6e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(9) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(9) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Conferma modifica']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiornaContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "f118e175-29b6-4786-a1aa-4cea885b913e",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/ebalance/ContrattoController"],
+  "plugins": []
+}

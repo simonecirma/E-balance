@@ -1,0 +1,1397 @@
+{
+  "id": "be927bdf-3552-430c-a198-6f025efbd4b9",
+  "version": "2.0",
+  "name": "Test_EBalance_AggiungiNuovoContratto",
+  "url": "http://localhost:8080/ebalance/ContrattoController",
+  "tests": [{
+    "id": "5c400090-b4e6-4209-b44e-2086720b77f8",
+    "name": "TC_GC_1.01",
+    "commands": [{
+      "id": "8219643b-affa-4dd0-be3f-03e99fa8000a",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "caa9eb66-d719-4269-a059-a47bc57d98a0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b71f0259-1fb7-4f17-9a41-2bd0ed02b18e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "60d5073d-8342-40fd-ab55-da68935148fe",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fab06ac8-93aa-4887-bddb-8c05a201cb24",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "579dc06b-7942-4cc6-a24f-c2f59b1465ce",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fec45a53-4087-49db-ac0c-3ca4acf590ae",
+      "comment": "",
+      "command": "type",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "5500"
+    }, {
+      "id": "69ef0029-d1c0-49d5-b45a-7b75db2cc39b",
+      "comment": "",
+      "command": "click",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6cc56d5-e020-404c-bea3-7e61d1c2715c",
+      "comment": "",
+      "command": "type",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "adc49378-0b0b-4027-b3fe-352c332163f8",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1530e8c9-86ca-424f-a054-3dce43d4c334",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2021-11-11"
+    }, {
+      "id": "37db1ed9-d0da-45da-a8e3-62e0838e75be",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a54c37b1-fa0b-4b6e-88b3-2fcf4632af02",
+      "comment": "",
+      "command": "type",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": "36"
+    }, {
+      "id": "bfeb75da-0895-4228-91b0-18455bef3848",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b6ea7289-2c0d-4fef-bde2-f2b20f9ae234",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "85152640-203a-4393-bf90-12c2c473c974",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "fb906961-04e4-4c4b-b42c-090f9a1f24e9",
+    "name": "TC_GC_1.02",
+    "commands": [{
+      "id": "c6cf077b-dcf3-43e8-94d0-dd02252237b9",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "32cace85-7e5e-405b-b66b-892663e57b76",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ae74dc4-db54-4014-b001-428eccff21aa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fea30cc-ada7-46fc-a3fa-d4fcae49f16a",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "56c93fd6-82fc-426b-8810-8f89f87c1187",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eacc926a-861d-490f-bb4c-f0cca3cb7374",
+      "comment": "",
+      "command": "type",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "Enel Energia"
+    }, {
+      "id": "56c84d9e-25f9-4236-8eae-d644542e754f",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c255ede0-a6a1-4970-a646-20e3740d16bc",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "28a9a42a-690c-499b-b731-01a80d9c59ef",
+      "comment": "",
+      "command": "type",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "5500"
+    }, {
+      "id": "2b84eaa8-5a0e-4a20-823c-6ef970410803",
+      "comment": "",
+      "command": "click",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19bcca1f-79d5-4619-b491-65a58964d942",
+      "comment": "",
+      "command": "type",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "9b65219d-c5d7-4cf1-bb6e-ba9e927b1b79",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "70d54d05-e9a3-4ac3-9060-0177dce3107d",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-20"
+    }, {
+      "id": "1a2aeb3b-bf6e-4593-8c1b-9b7ff8fbed1b",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e553f7b-a578-499e-9702-532e380b6d7a",
+      "comment": "",
+      "command": "type",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": "36"
+    }, {
+      "id": "6edaf362-cdee-455a-8f95-6e0c832b79b4",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "57523f91-eff5-41b0-9978-0633f0f6ac2b",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": "0.15"
+    }, {
+      "id": "c2803154-dd85-48fe-8e56-7f35b9f95a69",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7194951a-5dc5-4f36-ab4b-8fb56c6d4b73",
+      "comment": "",
+      "command": "assertAlert",
+      "target": "La data di sottoscrizione non può essere successiva a quella odierna.",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "1313fd22-49d4-4e6e-90ec-e93f6d3bbf00",
+    "name": "TC_GC_1.03",
+    "commands": [{
+      "id": "6f84fe7d-da97-4b84-834f-3b62625e2931",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ec967e32-468e-426e-a9a6-b58d47820258",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "54e7de2a-8f20-436c-90fd-d611661647cb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a7ffe2a-28a9-4942-849a-b9b37f06e5e7",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "18fccaea-646f-4f32-93a1-830ce9b26094",
+      "comment": "",
+      "command": "type",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "Enel Energia"
+    }, {
+      "id": "c261af62-476e-475e-9ed4-55a7cf3f44ac",
+      "comment": "",
+      "command": "mouseDownAt",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "131.8125,18"
+    }, {
+      "id": "fc002f50-95d3-4fec-beed-e953e8ea55ad",
+      "comment": "",
+      "command": "mouseMoveAt",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "131.8125,18"
+    }, {
+      "id": "02785851-ea5e-4ef7-9578-8fd3d3b6d4ce",
+      "comment": "",
+      "command": "mouseUpAt",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "131.8125,18"
+    }, {
+      "id": "3091ddb5-ed4a-4ba8-87f0-1ad3187943e1",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f77be1d5-adce-408b-8617-ab6189c4c933",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b960e120-4e41-4be1-9e57-7e1e0504fc15",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-06"
+    }, {
+      "id": "3ada0e0a-fabb-460a-9297-2b1540bf272a",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "493c272c-23c9-484d-be3d-16b80f6ffd58",
+      "comment": "",
+      "command": "type",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "5500"
+    }, {
+      "id": "ac3e545a-c69d-483a-9297-ef8855cfdf60",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1726727b-65a2-4a8b-91a2-0e49b937b71d",
+      "comment": "",
+      "command": "type",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": "36"
+    }, {
+      "id": "acfa5256-18fa-4a61-befd-955cf47a6ed7",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cb94b428-67d2-42e3-b522-21326163b7d7",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": "0.15"
+    }, {
+      "id": "ff1a82d1-9995-49e7-889e-8ada536b64e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "b70ac5cf-84df-4daa-815c-b6ac812b2270",
+    "name": "TC_GC_1.04",
+    "commands": [{
+      "id": "f8e7c9ad-87ff-4dd1-b3f3-593327d327bb",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9e74bb58-b851-4130-92cf-8d5071cd4e56",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "13926b60-80bb-4394-8d54-111c96ea79d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ea100024-0220-4bcb-b3a8-c54a14407f2c",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dcbf5d49-078f-4855-ad00-7f9c718008b6",
+      "comment": "",
+      "command": "type",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "Enel Energia"
+    }, {
+      "id": "b2d4bfdc-71c0-45f5-b911-cc39ab6db575",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b26f7fa2-899e-463a-9a1f-5d7bdc7df8c8",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-06"
+    }, {
+      "id": "f36acd0f-ace4-46c1-80c0-5771aad738fd",
+      "comment": "",
+      "command": "click",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "905d864f-7c19-4334-b5ed-6b217f6e5356",
+      "comment": "",
+      "command": "type",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "4ce5b20c-a73f-4394-a34c-5bbac19f2971",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "78797092-b881-42d1-9471-729b36c0b090",
+      "comment": "",
+      "command": "type",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": "36"
+    }, {
+      "id": "90c9c127-b597-4803-a8ec-cae4049c39ae",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f6df5fe9-6862-4dec-a078-b045f6bf395a",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": "0.15"
+    }, {
+      "id": "5f14d28e-23e9-4158-a396-4a0fc61a4dcc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "ee6a570f-05ce-4b1a-a4bc-172e209b6f56",
+    "name": "TC_GC_1.05",
+    "commands": [{
+      "id": "6c090d9a-5d5a-405d-8778-8d79aaf3f689",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c964ba55-2bba-47c1-b4f9-1fa0928e51bb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ac326733-6183-46ac-9a1a-f4afc2a9a549",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e03de7da-f5d2-4724-b1f4-6125ab3b0412",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "494e1f44-09da-4bed-92b6-4089c4faef95",
+      "comment": "",
+      "command": "type",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "Enel Energia"
+    }, {
+      "id": "95f486e6-4783-44d9-b7ad-75706f247c62",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd59d627-439b-4913-b250-dbf06b68311d",
+      "comment": "",
+      "command": "type",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "5500"
+    }, {
+      "id": "068c8f4f-73cc-4c84-833e-a72e841068fa",
+      "comment": "",
+      "command": "click",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a62389d8-8379-422e-82ab-acc844b04948",
+      "comment": "",
+      "command": "type",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "43821d6b-2318-4d47-a99c-bb3b94702ebe",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5357695b-bfb8-4572-90e1-d25ca367b9b7",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-06"
+    }, {
+      "id": "0ad7013d-412b-4802-a4cb-05054788ccfe",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1b53479-d650-4b3b-8079-c388c28d1f1e",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "be68935c-fae9-4034-bd8c-cec5656c565d",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": "0.15"
+    }, {
+      "id": "1e6c3c4e-619d-410d-8292-9d4ee61285dc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "3ade1d40-2056-42e9-b919-221fa1e24458",
+    "name": "TC_GC_1.06",
+    "commands": [{
+      "id": "a0e5a8ab-84e3-4220-82a0-82d21fdb749f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eb522e8b-e2e8-4058-9d80-c97683077b09",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "974x1032",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "db806027-5e10-4f2b-abef-64ac90b7f4b6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "71e4744d-adc6-45f7-9d37-9f84879e6a76",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0eec4a0d-14fc-4851-b01d-d730f19cafb5",
+      "comment": "",
+      "command": "type",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "Enel Energia"
+    }, {
+      "id": "64b7737f-7d8e-42c2-aaa9-cc5c36066304",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d2fdd18-4418-4d54-84fa-7f6faa813508",
+      "comment": "",
+      "command": "type",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "5500"
+    }, {
+      "id": "2cb2a9a1-c129-4973-90af-0a35b59bc01a",
+      "comment": "",
+      "command": "click",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4ee38ba9-e8f5-4286-a829-5f0dedf86f8e",
+      "comment": "",
+      "command": "type",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "bf77f61d-6e3e-46f8-a7b7-077588731428",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6dcace17-716d-4e55-82f0-d1104abdd936",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-06"
+    }, {
+      "id": "b8d7e88c-0b92-4f2c-99d2-6106c980d315",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5dc93873-0182-43cd-9808-c80e630aaa55",
+      "comment": "",
+      "command": "type",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": "36"
+    }, {
+      "id": "47b387d0-9027-4de5-8f9b-20adca6b407d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "469b999e-dfcb-4e56-95e3-ff9af17abd6c",
+    "name": "TC_GC_1.07",
+    "commands": [{
+      "id": "3d761ff8-af21-4497-a05c-a52b213d27ab",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/ContrattoController",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "43cf2b85-cde5-4ceb-a575-a9b216a702ae",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a81e6fca-464f-4cc9-b345-8df1a7c8a983",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@onclick=\"toggleFormVisibility('aggiungiContrattoForm')\"]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi un nuovo contratto')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "aa750891-2f52-412e-beb2-21cbf88ce743",
+      "comment": "",
+      "command": "click",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ecc10574-30d6-4b2c-ba22-106b937637cb",
+      "comment": "",
+      "command": "type",
+      "target": "id=ente",
+      "targets": [
+        ["id=ente", "id"],
+        ["css=#ente", "css:finder"],
+        ["xpath=//input[@id='ente']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "Enel Energia"
+    }, {
+      "id": "0ffe76f1-4820-49b0-81b1-51d8194900e0",
+      "comment": "",
+      "command": "click",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2c5650c-ea5b-4ad3-8b40-5662f4e8fac3",
+      "comment": "",
+      "command": "type",
+      "target": "id=consumo",
+      "targets": [
+        ["id=consumo", "id"],
+        ["css=#consumo", "css:finder"],
+        ["xpath=//input[@id='consumo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[2]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "5500"
+    }, {
+      "id": "1c480fb0-7ce7-459d-a26c-e2f68f5fea7f",
+      "comment": "",
+      "command": "click",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6a64d68f-bb8f-45c3-8556-073419871233",
+      "comment": "",
+      "command": "type",
+      "target": "id=costo",
+      "targets": [
+        ["id=costo", "id"],
+        ["css=#costo", "css:finder"],
+        ["xpath=//input[@id='costo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[3]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/input", "xpath:position"]
+      ],
+      "value": "0.23"
+    }, {
+      "id": "eb463386-fb07-492c-aaa2-43716128d3fc",
+      "comment": "",
+      "command": "click",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d50ce6b1-e486-425d-8140-7d5aceb922ee",
+      "comment": "",
+      "command": "type",
+      "target": "id=data",
+      "targets": [
+        ["id=data", "id"],
+        ["css=#data", "css:finder"],
+        ["xpath=//input[@id='data']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[4]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[4]/input", "xpath:position"]
+      ],
+      "value": "2024-02-05"
+    }, {
+      "id": "6d38d382-1760-4541-8da7-fbfe24c286e8",
+      "comment": "",
+      "command": "click",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ac91efea-6c0f-4702-b506-7a843bfb3e80",
+      "comment": "",
+      "command": "type",
+      "target": "id=durata",
+      "targets": [
+        ["id=durata", "id"],
+        ["css=#durata", "css:finder"],
+        ["xpath=//input[@id='durata']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[5]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[5]/input", "xpath:position"]
+      ],
+      "value": "36"
+    }, {
+      "id": "a2371fb5-0926-40b9-a21f-6186f4e412d4",
+      "comment": "",
+      "command": "click",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a29f9d3c-8555-4990-a737-803fe1c30bfd",
+      "comment": "",
+      "command": "type",
+      "target": "id=prezzo",
+      "targets": [
+        ["id=prezzo", "id"],
+        ["css=#prezzo", "css:finder"],
+        ["xpath=//input[@id='prezzo']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[6]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[6]/input", "xpath:position"]
+      ],
+      "value": "0.15"
+    }, {
+      "id": "efc1598e-3e76-4be0-b1a1-722f80907566",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btnCont:nth-child(8) > .btn1",
+      "targets": [
+        ["css=.btnCont:nth-child(8) > .btn1", "css:finder"],
+        ["xpath=//input[@value='Registra nuovo contratto']", "xpath:attributes"],
+        ["xpath=//form[@id='aggiungiContrattoForm']/div[7]/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div[7]/input", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "60069bd9-9fa8-4da1-8f8c-5813159ab144",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/ebalance/ContrattoController"],
+  "plugins": []
+}

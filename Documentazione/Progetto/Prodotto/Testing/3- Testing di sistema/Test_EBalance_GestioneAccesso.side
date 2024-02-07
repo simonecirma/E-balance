@@ -1,0 +1,287 @@
+{
+  "id": "440aba84-eef3-413b-8ba0-0a1a36d7a953",
+  "version": "2.0",
+  "name": "Test_EBalance_GestioneAccesso",
+  "url": "http://localhost:8080/ebalance",
+  "tests": [{
+    "id": "6d04cda5-4781-4378-a9b8-ba4bcd3bf023",
+    "name": "TC_GAL_1.01",
+    "commands": [{
+      "id": "15124978-e8e6-44f1-8b0e-e2f9f5b34b83",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c2f437ca-e427-4f32-98fa-15621bb36863",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f56f4e16-5b03-444d-9843-206628bb13ad",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=button:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "23004b35-65f5-415c-950b-d5b7d3dc5e45",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "42a44ac8-7b34-4171-94ca-13aeaba1df9c",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Luca@Argentero.it"
+    }, {
+      "id": "55521839-f40f-4c30-927e-eb905eba26cd",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "91f9c8ee-2999-46d6-bc16-ecdaaf2f6bc0",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Matteo2024!"
+    }, {
+      "id": "1f1d6819-8ce1-4004-9515-fb199050f03e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.icon",
+      "targets": [
+        ["css=.icon", "css:finder"],
+        ["xpath=//button/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "5e52c62d-2265-4a16-b6f1-d97919eba79f",
+    "name": "TC_GAL_1.02",
+    "commands": [{
+      "id": "400b2a3b-589c-4e30-8209-46df24997347",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5ab0cf2c-5127-4f4c-844d-8fedaa197917",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c40381ec-37bd-4699-8a4b-99e52f6ad386",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=button:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b902f36-d2e3-4057-b7e1-eff9df70fad5",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d70463f0-091d-4f56-9b6d-304f6ef19072",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "m.ercolino1@studenti.unisa.it"
+    }, {
+      "id": "caae7fa8-6b9a-4873-aece-ed350c4d49a2",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6383bf27-c543-40ae-9b21-6b1bcdc90652",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Luca2024!"
+    }, {
+      "id": "f3b66ef7-04d5-4643-a366-25d3875b483e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.icon",
+      "targets": [
+        ["css=.icon", "css:finder"],
+        ["xpath=//button/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "562a109b-a765-46b0-bf59-e56f04402c77",
+    "name": "TC_GAL_1.03",
+    "commands": [{
+      "id": "3b37ed1d-5b82-4ab3-bd43-b62ae37b637d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:8080/ebalance/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "23d1ccdf-2295-438f-93ef-ee2914bb0809",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "86135995-6d49-4a06-854c-1e5f4ec30e38",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Login",
+      "targets": [
+        ["linkText=Login", "linkText"],
+        ["css=button:nth-child(3) > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Login')]", "xpath:link"],
+        ["xpath=//a[contains(@href, 'login.jsp')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a12b144-73d2-4180-863d-37af0058e94b",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "87b9bd60-2f60-4f5c-9ac9-003f38a72cf1",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=input:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "m.ercolino1@studenti.unisa.it"
+    }, {
+      "id": "f8753d57-6bcc-4345-8ee4-a38b87184399",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "53f45b82-0305-4d78-9243-3877c6d9ff37",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=input:nth-child(3)", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "Matteo2024!"
+    }, {
+      "id": "3e39b6cc-c759-45c6-a71d-791d46c72581",
+      "comment": "",
+      "command": "click",
+      "target": "css=.icon",
+      "targets": [
+        ["css=.icon", "css:finder"],
+        ["xpath=//button/div", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "a80878aa-b7f0-4e47-ac64-622ab1ac80c7",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": []
+  }],
+  "urls": ["http://localhost:8080/", "http://localhost:8080/ebalance"],
+  "plugins": []
+}
