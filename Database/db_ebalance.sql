@@ -350,7 +350,7 @@ FROM
         SELECT ROW_NUMBER() OVER () AS n
         FROM information_schema.columns
     ) AS Numbers
-WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-01-22';
+WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-02-12';
 
 -- Utilizza la serie di date per eseguire gli statement INSERT INTO
 INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
@@ -645,7 +645,7 @@ FROM
         SELECT ROW_NUMBER() OVER () AS n
         FROM information_schema.columns
     ) AS Numbers
-WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-01-22';
+WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-02-12';
 
 -- Utilizza la serie di date per eseguire gli statement INSERT INTO
 INSERT INTO ArchivioProduzione(DataProduzione, ProduzioneGiornaliera, IdSorgente)

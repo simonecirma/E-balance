@@ -176,7 +176,6 @@ CREATE TABLE Interagisce
 );
 
 
-
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
 VALUES(1, 7000, 33);
 INSERT INTO Batteria(FlagStatoBatteria, CapacitaMax, PercentualeCarica)
@@ -265,40 +264,26 @@ VALUES("S1", 17);
 INSERT INTO ConsumoEdificio(NomeEdificio, ConsumoAttuale)
 VALUES("S2", 17);
 
-
--- INSERT INTO PER TABELLA CONSUMO
-
--- Crea una tabella temporanea con una colonna di date
-CREATE TEMPORARY TABLE DateSeries (DateValue DATE);
-
--- Genera una serie di date dal 2023-01-12 al 2024-01-12
-INSERT INTO DateSeries (DateValue)
-SELECT DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) AS DateValue
-FROM
-    (
-        SELECT ROW_NUMBER() OVER () AS n
-        FROM information_schema.columns
-    ) AS Numbers
-WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-01-22';
-
--- Utilizza la serie di date per eseguire gli statement INSERT INTO
 INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
-SELECT
-    DateSeries.DateValue,
-    ROUND(RAND() * (700 - 50) + 50) AS ConsumoGiornaliero,
-    Numbers.n AS IdEdificio
-FROM
-    DateSeries,
-    (
-        SELECT ROW_NUMBER() OVER () AS n
-        FROM information_schema.columns
-    ) AS Numbers
-WHERE
-    Numbers.n BETWEEN 1 AND 39;
-
--- Elimina la tabella temporanea
-DROP TEMPORARY TABLE IF EXISTS DateSeries;
-
+VALUES ('2024-02-12', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-11', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-10', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-09', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-08', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-07', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-06', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-05', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-04', 0, '01');
+INSERT INTO ArchivioConsumo(DataConsumo, ConsumoGiornaliero, IdEdificio)
+VALUES ('2024-02-03', 0, '01');
 
 INSERT INTO Utilizza(IdBatteria, IdEdificio)
 VALUES(01, 01);
@@ -563,35 +548,6 @@ VALUES("Pannello Fotovoltaico", "2023-01-01", 9, 1, 1);
 INSERT INTO Sorgente(Tipologia, DataInstallazione, ProduzioneAttuale, FlagStatoSorgente, FlagAttivazioneSorgente)
 VALUES("Pannello Fotovoltaico", "2023-01-01", 80, 1, 1);
 
--- Crea una tabella temporanea con una colonna di date
-CREATE TEMPORARY TABLE DateSeries (DateValue DATE);
-
--- Genera una serie di date dal 2023-01-12 al 2024-01-12
-INSERT INTO DateSeries (DateValue)
-SELECT DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) AS DateValue
-FROM
-    (
-        SELECT ROW_NUMBER() OVER () AS n
-        FROM information_schema.columns
-    ) AS Numbers
-WHERE DATE_ADD('2021-01-01', INTERVAL (n-1) DAY) <= '2024-01-22';
-
--- Utilizza la serie di date per eseguire gli statement INSERT INTO
-INSERT INTO ArchivioProduzione(DataProduzione, ProduzioneGiornaliera, IdSorgente)
-SELECT
-    DateSeries.DateValue,
-    ROUND(RAND() * (2000 - 0) + 0) AS ProduzioneGiornaliera,
-    Numbers.n AS IdSorgente
-FROM
-    DateSeries
-        JOIN (
-        SELECT ROW_NUMBER() OVER () AS n
-        FROM information_schema.columns
-    ) AS Numbers ON Numbers.n BETWEEN 2 AND 11;
-
--- Elimina la tabella temporanea
-DROP TEMPORARY TABLE IF EXISTS DateSeries;
-
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(01, 01);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
@@ -658,7 +614,6 @@ INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(03, 10);
 INSERT INTO Caricare(IdBatteria, IdSorgente)
 VALUES(03, 11);
-
 
 INSERT INTO CondizioneMeteo(Condizione)
 VALUES("Nuvoloso");
